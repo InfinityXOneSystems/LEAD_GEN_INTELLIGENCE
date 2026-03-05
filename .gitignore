@@ -1,0 +1,6 @@
+node_modules/
+
+# Runtime-generated lead data (produced by scoring_pipeline.js)
+data/leads/scored_leads.json
+data/leads/scoring_report.json
+data/leads/leads.json
