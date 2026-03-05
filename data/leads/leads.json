@@ -1,0 +1,12 @@
+[
+  {
+    "company": "Acme Epoxy",
+    "city": "Columbus",
+    "outreach": [
+      {
+        "template_id": "1",
+        "sent_at": "2026-03-05T18:15:47.601Z"
+      }
+    ]
+  }
+]
