@@ -1,25 +1,25 @@
-﻿const sqlite3=require('sqlite3').verbose()
+﻿const sqlite3 = require('sqlite3').verbose()
 
-const db=new sqlite3.Database('./database/leads.db')
+const db = new sqlite3.Database('./database/leads.db')
 
-db.serialize(()=>{
+db.serialize(() => {
 
-db.run(
+db.run(\
 CREATE TABLE IF NOT EXISTS leads (
-id INTEGER PRIMARY KEY,
+id INTEGER PRIMARY KEY AUTOINCREMENT,
 company TEXT,
 phone TEXT,
 website TEXT,
-rating TEXT,
-reviews TEXT,
+rating REAL,
+reviews INTEGER,
 address TEXT,
 city TEXT,
 state TEXT,
 email TEXT,
 score INTEGER
 )
-)
+\)
 
 })
 
-module.exports=db
+module.exports = db
