@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-03-05T23:00:00.000Z",
+  "total_leads": 5,
+  "average_score": 72,
+  "tiers": {
+    "HOT": 3,
+    "WARM": 1,
+    "COLD": 1
+  },
+  "industries": {
+    "Epoxy": 2,
+    "Concrete": 1,
+    "SurfacePrep": 1,
+    "Industrial": 1
+  }
+}
