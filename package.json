@@ -1,0 +1,28 @@
+{
+  "name": "_lead_gen_intelligence",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/issues"
+  },
+  "homepage": "https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE#readme",
+  "dependencies": {
+    "crawlee": "^3.16.0",
+    "express": "^5.2.1",
+    "node-cron": "^4.2.1",
+    "playwright": "^1.58.2",
+    "simple-git": "^3.32.3"
+  }
+}
