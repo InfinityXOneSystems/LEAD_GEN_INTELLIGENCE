@@ -1,4 +1,8 @@
 node_modules/
+npm-debug.log*
+.env
+.env.local
+data/outreach/outreach_log.json
 
 # Runtime-generated lead data (produced by scoring_pipeline.js)
 data/leads/scored_leads.json
