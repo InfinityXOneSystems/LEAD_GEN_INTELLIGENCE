@@ -9,6 +9,9 @@ jobs:
   update-python-deps:
     name: Update Python Dependencies
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
@@ -38,6 +41,9 @@ jobs:
   update-node-deps:
     name: Update Node Dependencies
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 

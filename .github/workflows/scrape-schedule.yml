@@ -18,6 +18,7 @@ jobs:
   trigger-scrape:
     name: Trigger Scraper Agent
     runs-on: ubuntu-latest
+    permissions: {}
     steps:
       - name: Trigger scrape via API
         env:
