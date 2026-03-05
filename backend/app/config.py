@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str = ""
     SENDGRID_API_KEY: str = ""
     GITHUB_TOKEN: str = ""
+    GITHUB_REPO: str = "your-org/LEAD_GEN_INTELLIGENCE"
     GOOGLE_SHEETS_CREDENTIALS: str = ""
     SCRAPER_CONCURRENCY: int = 10
     MAX_LEADS_PER_DAY: int = 100000

@@ -6,7 +6,7 @@ logger = structlog.get_logger()
 EMAIL_TEMPLATES = {
     "default": {
         "subject": "Partnership Opportunity - {company_name}",
-        "body": """Hi {owner_name or 'there'},
+        "body": """Hi {owner_name},
 
 I came across {company_name} and was impressed by your work in the {industry} space.
 
@@ -21,7 +21,7 @@ To unsubscribe, reply with UNSUBSCRIBE.
     },
     "followup": {
         "subject": "Following up - {company_name}",
-        "body": """Hi {owner_name or 'there'},
+        "body": """Hi {owner_name},
 
 Just following up on my previous message about partnership opportunities for {company_name}.
 

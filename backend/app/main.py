@@ -1,10 +1,10 @@
+from contextlib import asynccontextmanager
+
 import structlog
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from starlette.responses import Response
-
-from app.config import settings
 
 logger = structlog.get_logger()
 
@@ -12,12 +12,27 @@ logger = structlog.get_logger()
 REQUEST_COUNT = Counter("http_requests_total", "Total HTTP requests", ["method", "endpoint", "status"])
 REQUEST_LATENCY = Histogram("http_request_duration_seconds", "HTTP request latency", ["endpoint"])
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info("starting_application")
+    try:
+        from app.database import engine, Base
+        from app.models import contractor  # noqa: F401 - register models
+        Base.metadata.create_all(bind=engine)
+        logger.info("database_tables_created")
+    except Exception as e:
+        logger.error("startup_failed", error=str(e))
+    yield
+
+
 app = FastAPI(
     title="LEAD_GEN_INTELLIGENCE API",
     description="Enterprise-grade lead intelligence platform",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -27,18 +42,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.on_event("startup")
-async def startup_event():
-    logger.info("starting_application")
-    try:
-        from app.database import engine, Base
-        from app.models import contractor  # noqa: F401 - register models
-        Base.metadata.create_all(bind=engine)
-        logger.info("database_tables_created")
-    except Exception as e:
-        logger.error("startup_failed", error=str(e))
 
 
 @app.get("/health")

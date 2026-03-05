@@ -84,7 +84,7 @@ export default function OutreachPage() {
           <div>
             <p className="text-sm text-gray-500">By Email</p>
             <p className="text-2xl font-bold">
-              {statsData?.by_channel?.find((c: { channel: string }) => c.channel === 'email')?.count ?? 0}
+              {statsData?.by_channel?.find((c: { channel: string; count: number }) => c.channel === 'email')?.count ?? 0}
             </p>
           </div>
         </div>

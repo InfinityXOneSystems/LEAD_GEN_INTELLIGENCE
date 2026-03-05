@@ -1,9 +1,14 @@
 import json
+import os
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, String
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.types import TypeDecorator, Text
+
+# Set test DATABASE_URL BEFORE any app modules are imported so that
+# `settings` picks it up and database.py creates a SQLite engine.
+os.environ.setdefault("DATABASE_URL", "sqlite:///./test.db")
 
 # ---------------------------------------------------------------------------
 # Monkeypatch PostgreSQL-specific types so the SQLite test DB works.

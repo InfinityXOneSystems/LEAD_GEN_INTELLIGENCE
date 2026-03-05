@@ -37,7 +37,6 @@ def test_create_lead(client):
     data = resp.json()
     assert data["company_name"] == "Test Epoxy Co"
     assert data["lead_score"] == 100.0  # all factors present
-    return data["id"]
 
 
 def test_get_lead(client):

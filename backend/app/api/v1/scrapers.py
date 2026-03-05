@@ -8,7 +8,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models.contractor import ScrapeJob
+from app.models.contractor import Contractor, ScrapeJob
 from app.schemas.contractor import ScrapeJobCreate, ScrapeJobResponse
 
 router = APIRouter(prefix="/scrapers", tags=["scrapers"])
@@ -90,7 +90,7 @@ def scraper_status(db: Session = Depends(get_db)):
         .all()
     )
     status_map = {row[0]: row[1] for row in counts}
-    total_leads = db.query(func.count()).select_from(__import__("app.models.contractor", fromlist=["Contractor"]).Contractor).scalar()
+    total_leads = db.query(func.count(Contractor.id)).scalar()
 
     return {
         "jobs": status_map,
