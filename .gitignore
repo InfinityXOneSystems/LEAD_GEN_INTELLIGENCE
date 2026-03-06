@@ -6,6 +6,10 @@ npm-debug.log*
 .env
 .env.local
 
+# OS artifacts
+.DS_Store
+*.log
+
 # Runtime-generated lead data
 data/outreach/outreach_log.json
 data/leads/scored_leads.json
@@ -14,4 +18,8 @@ data/leads/leads.json
 
 # Build / cache artifacts
 dist/
+build/
 .cache/
+.next/
+storage/
+crawlee_storage/
