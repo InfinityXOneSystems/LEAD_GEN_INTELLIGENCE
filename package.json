@@ -8,6 +8,8 @@
     "score": "node agents/scoring/scoring_pipeline.js",
     "export": "node tools/export_snapshot.js",
     "pipeline": "npm run score && npm run export",
+    "generate-city-leads": "node scripts/generate_city_leads.js",
+    "city-pipeline": "node scripts/generate_city_leads.js && npm run score && node tools/city_export.js",
     "gpt-actions": "node agents/gpt_actions/server.js",
     "docs": "node tools/docs/evolve_docs.js",
     "docs:issues": "node tools/docs/create_issues.js"

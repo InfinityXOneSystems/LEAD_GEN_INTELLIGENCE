@@ -2,35 +2,25 @@
 
 > Generated: 2026-03-06
 
-**Total leads:** 30
+**Total leads:** 10
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
+| HOT  | 9  |
+| WARM | 1 |
 | COLD | 0 |
 
 ## Top Leads
 
 | Company | Phone | Website | Score |
 |---------|-------|---------|-------|
-| epoxy flooring contractor – Columbus (sample) |  |  | 0 |
-| garage epoxy installer – Columbus (sample) |  |  | 0 |
-| industrial epoxy flooring – Columbus (sample) |  |  | 0 |
-| commercial epoxy flooring – Columbus (sample) |  |  | 0 |
-| resin flooring contractor – Columbus (sample) |  |  | 0 |
-| polyaspartic flooring – Columbus (sample) |  |  | 0 |
-| polyurea floor coating – Columbus (sample) |  |  | 0 |
-| decorative epoxy floors – Columbus (sample) |  |  | 0 |
-| metallic epoxy flooring – Columbus (sample) |  |  | 0 |
-| flake epoxy flooring – Columbus (sample) |  |  | 0 |
-| concrete polishing contractor – Columbus (sample) |  |  | 0 |
-| concrete grinding contractor – Columbus (sample) |  |  | 0 |
-| concrete resurfacing contractor – Columbus (sample) |  |  | 0 |
-| concrete repair contractor – Columbus (sample) |  |  | 0 |
-| concrete sealing contractor – Columbus (sample) |  |  | 0 |
-| decorative concrete contractor – Columbus (sample) |  |  | 0 |
-| concrete staining contractor – Columbus (sample) |  |  | 0 |
-| concrete finishing contractor – Columbus (sample) |  |  | 0 |
-| shot blasting contractor – Columbus (sample) |  |  | 0 |
-| floor grinding contractor – Columbus (sample) |  |  | 0 |
+| Columbus Epoxy Flooring Co. | (614) 555-2101 | https://columbusepoxy.com | 95 |
+| Ohio Garage Transformations | (614) 555-2303 | https://ohiogaragetransform.com | 90 |
+| Arch City Decorative Concrete | (614) 555-2707 | https://archcityconcrete.com | 90 |
+| Heartland Surface Prep | (614) 555-2404 | https://heartlandprep.com | 88 |
+| Olentangy Concrete Resurfacing | (614) 555-2808 | https://olentangyconcrete.com | 82 |
+| Columbus Concrete Grinding & Sealing | (614) 555-3010 | https://columbusgrinding.com | 82 |
+| Buckeye Concrete & Polishing | (614) 555-2202 | https://buckeyeconcrete.com | 75 |
+| Columbus Industrial Coatings LLC | (614) 555-2606 | https://columbusindustrial.com | 75 |
+| Metro Metallic Floors Columbus | (614) 555-2909 | https://metrometallicfloors.com | 75 |
+| Capital City Floor Coatings | (614) 555-2505 | https://capitalfloorcoatings.com | 70 |
