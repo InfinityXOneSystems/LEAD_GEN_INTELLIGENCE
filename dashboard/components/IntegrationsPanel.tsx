@@ -140,7 +140,7 @@ export default function IntegrationsPanel() {
               {["Actions", "Issues", "Pull Reqs"].map((link) => (
                 <a
                   key={link}
-                  href={`https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/${link.toLowerCase().replace(" ", "")}`}
+                  href={`https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/${link.toLowerCase().replace(/\s/g, "")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-center py-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg text-xs text-gray-400 hover:text-yellow-400 hover:border-yellow-400/30 transition-all"

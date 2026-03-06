@@ -141,6 +141,7 @@ export default function Home() {
         <button
           onClick={() => setChatOpen(true)}
           className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-yellow-400 hover:bg-yellow-500 text-black text-xl flex items-center justify-center shadow-lg shadow-yellow-400/20 transition-all hover:scale-110 gold-pulse"
+          aria-label="Open AI Command Chat"
         >
           💬
         </button>

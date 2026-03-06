@@ -26,6 +26,8 @@ function SparkBars({ color }: { color: string }) {
   );
 }
 
+const EMPTY_STATS: Stats = { totalLeads: 0, hotLeads: 0, warmLeads: 0, coldLeads: 0, averageScore: 0 };
+
 export default function StatsCards() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -65,12 +67,12 @@ export default function StatsCards() {
             averageScore: report.average_score || 0,
           });
         } else {
-          setStats({ totalLeads: 0, hotLeads: 0, warmLeads: 0, coldLeads: 0, averageScore: 0 });
+          setStats(EMPTY_STATS);
         }
         setLoading(false);
       })
       .catch(() => {
-        setStats({ totalLeads: 0, hotLeads: 0, warmLeads: 0, coldLeads: 0, averageScore: 0 });
+        setStats(EMPTY_STATS);
         setLoading(false);
       });
   }, []);

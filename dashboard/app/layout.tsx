@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "XPS Lead Intelligence Dashboard",
   description: "Contractor Lead Generation Platform - Phase 6",
   manifest: "/manifest.json",
+  other: { "color-scheme": "dark" },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -23,23 +25,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <head>
-        <meta name="color-scheme" content="dark" />
-        <script
+      <body className="antialiased bg-black text-white">
+        {children}
+        <Script
+          id="sw-register"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js').catch(function(err) {
-                    console.log('SW registration failed:', err);
-                  });
+                navigator.serviceWorker.register('/sw.js').catch(function(err) {
+                  console.log('SW registration failed:', err);
                 });
               }
             `,
           }}
         />
-      </head>
-      <body className="antialiased bg-black text-white">{children}</body>
+      </body>
     </html>
   );
 }

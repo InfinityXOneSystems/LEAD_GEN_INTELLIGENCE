@@ -111,6 +111,7 @@ export default function Sidebar({
           <button
             onClick={onCollapsedToggle}
             className="hidden md:flex items-center justify-center w-7 h-7 rounded text-gray-500 hover:text-white hover:bg-[#2a2a2a] transition-colors flex-shrink-0"
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             <svg

@@ -47,6 +47,9 @@ function getAIResponse(command: string): string {
   return `🧠 **Processing:** "${command}"\n\nI understood your request. In the full deployment, this command would be processed by the AI orchestration engine and routed to the appropriate system agent.\n\n💡 Try one of the quick commands below, or type **help** to see all available commands.`;
 }
 
+const MIN_RESPONSE_DELAY = 800;
+const MAX_RESPONSE_JITTER = 600;
+
 interface ChatPanelProps {
   isOpen: boolean;
   onClose: () => void;
@@ -100,7 +103,7 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
       };
       setMessages((prev) => [...prev, aiMsg]);
       setIsTyping(false);
-    }, 800 + Math.random() * 600);
+    }, MIN_RESPONSE_DELAY + Math.random() * MAX_RESPONSE_JITTER);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
