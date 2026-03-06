@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-06
 
-**Total leads:** 290
+**Total leads:** 234
 
 | Tier | Count |
 |------|-------|
-| HOT  | 9  |
-| WARM | 64 |
-| COLD | 217 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -24,13 +24,13 @@
 | Southwest Concrete & Polish | (480) 555-1202 | https://swconcrete.com | 75 |
 | Sun Devil Industrial Floors | (480) 555-1808 | https://sundevilfloors.com | 75 |
 | Tempe Flake & Chip Floor Systems | (480) 555-2010 | https://tempeflakefloors.com | 67 |
-| REI Distribution Center |  |  | 60 |
 | Clean Air Epoxy |  |  | 55 |
 | Superior Epoxy Floors |  |  | 55 |
 | Two Brothers Epoxy Flooring |  |  | 55 |
 | Epoxy Flooring Phoenix |  |  | 55 |
 | Quality Epoxy |  |  | 55 |
-| Ultimate Concrete Coatings & Epoxy Flooring |  |  | 55 |
 | Marvelous Epoxy Flooring |  |  | 55 |
+| Ultimate Concrete Coatings & Epoxy Flooring |  |  | 55 |
+| Epoxy Werx - Epoxy Garage Floors |  |  | 55 |
 | Garage Floor Coating Direct |  |  | 55 |
 | Epoxy Strong Phoenix |  |  | 55 |
