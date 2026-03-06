@@ -61,12 +61,14 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      - name: Run Google Maps scraper
+      - name: Bootstrap seed leads for target cities (Rockford IL / Columbus OH / Tempe AZ)
+        run: node scripts/generate_city_leads.js
+
+      - name: Run Google Maps scraper for target cities
         env:
-          SCRAPER_BATCH_SIZE: ${{ github.event.inputs.batch_size || '10' }}
-          SCRAPER_CONCURRENCY: '3'
+          SCRAPER_CITIES: 'Rockford:IL,Columbus:OH,Tempe:AZ'
+          SCRAPER_CONCURRENCY: '2'
           SCRAPER_RATE_LIMIT_MS: '2000'
-          SCRAPER_STATE: ${{ github.event.inputs.state_filter || '' }}
         run: node scrapers/google_maps_scraper.js
         continue-on-error: true
 

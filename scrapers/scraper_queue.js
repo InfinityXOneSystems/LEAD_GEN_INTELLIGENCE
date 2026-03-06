@@ -112,6 +112,32 @@ function getNextBatch(batchSize, stateFilter) {
   return pending.slice(0, batchSize);
 }
 
+// Return specific locations by city+state pairs, regardless of progress state.
+// targets can be:
+//   - An array of { city, state } objects
+//   - A comma-separated string in "City:State" format, e.g. "Rockford:IL,Columbus:OH,Tempe:AZ"
+function getTargetCities(targets) {
+  const locations = loadLocations();
+
+  let pairs;
+  if (typeof targets === "string") {
+    pairs = targets.split(",").map((t) => {
+      const [city, state] = t.trim().split(":");
+      return { city: (city || "").trim(), state: (state || "").trim() };
+    });
+  } else {
+    pairs = Array.isArray(targets) ? targets : [];
+  }
+
+  return locations.filter((loc) =>
+    pairs.some(
+      (t) =>
+        t.city.toLowerCase() === loc.City.toLowerCase() &&
+        t.state.toUpperCase() === loc.State.toUpperCase(),
+    ),
+  );
+}
+
 // Return all pending locations grouped by state.
 function getPendingByState() {
   const locations = loadLocations();
@@ -189,6 +215,7 @@ module.exports = {
   loadProgress,
   saveProgress,
   getNextBatch,
+  getTargetCities,
   getPendingByState,
   markComplete,
   resetProgress,

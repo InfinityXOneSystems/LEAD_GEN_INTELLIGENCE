@@ -29,8 +29,10 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const LEADS_JSON = path.join(ROOT, "data", "leads", "leads.json");
+const SCORED_JSON = path.join(ROOT, "data", "leads", "scored_leads.json");
 const DATA_DIR = path.join(ROOT, "data", "leads");
 const DASH_DATA_DIR = path.join(ROOT, "dashboard", "public", "data");
+const PAGES_DATA_DIR = path.join(ROOT, "pages", "data");
 
 const EXPORT_LIMIT = parseInt(process.env.EXPORT_LIMIT || "1000", 10);
 
@@ -46,6 +48,8 @@ function writeBoth(filename, data) {
   fs.writeFileSync(path.join(DATA_DIR, filename), json);
   ensureDir(DASH_DATA_DIR);
   fs.writeFileSync(path.join(DASH_DATA_DIR, filename), json);
+  ensureDir(PAGES_DATA_DIR);
+  fs.writeFileSync(path.join(PAGES_DATA_DIR, filename), json);
   console.log(`[export_snapshot] Wrote ${filename}`);
 }
 
@@ -133,14 +137,19 @@ async function exportFromDb() {
 // ── JSON fallback export ─────────────────────────────────────────────────────
 
 async function exportFromJson() {
-  if (!fs.existsSync(LEADS_JSON)) {
+  // Prefer pre-scored output; fall back to raw leads.json.
+  const sourcePath = fs.existsSync(SCORED_JSON) ? SCORED_JSON : LEADS_JSON;
+  const sourceLabel =
+    sourcePath === SCORED_JSON ? "scored_leads.json" : "leads.json";
+
+  if (!fs.existsSync(sourcePath)) {
     console.warn(
-      "[export_snapshot] No leads.json found — exporting empty set.",
+      "[export_snapshot] No leads file found — exporting empty set.",
     );
     return [];
   }
   try {
-    const raw = fs.readFileSync(LEADS_JSON, "utf8");
+    const raw = fs.readFileSync(sourcePath, "utf8");
     const leads = JSON.parse(raw);
     if (!Array.isArray(leads)) return [];
 
@@ -150,11 +159,14 @@ async function exportFromJson() {
       .slice(0, EXPORT_LIMIT);
 
     console.log(
-      `[export_snapshot] Loaded ${normalised.length} leads from JSON fallback.`,
+      `[export_snapshot] Loaded ${normalised.length} leads from ${sourceLabel}.`,
     );
     return normalised;
   } catch (err) {
-    console.error("[export_snapshot] Failed to parse leads.json:", err.message);
+    console.error(
+      `[export_snapshot] Failed to parse ${sourceLabel}:`,
+      err.message,
+    );
     return [];
   }
 }
