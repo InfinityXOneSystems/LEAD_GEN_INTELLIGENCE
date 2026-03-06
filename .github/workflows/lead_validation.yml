@@ -19,6 +19,11 @@ on:
       - 'scrapers/**'
       - 'agents/scoring/**'
   workflow_dispatch:
+    inputs:
+      enforce_gates:
+        description: 'Enforce quality gates (1 = yes)'
+        required: false
+        default: '1'
 
 permissions:
   contents: read
@@ -47,6 +52,10 @@ jobs:
         run: npm test
 
       - name: Run lead validation pipeline
+        id: validation
+        env:
+          VALIDATION_MAX_INVALID_RATE:   '0.8'
+          VALIDATION_MAX_DUPLICATE_RATE: '0.8'
         run: |
           node -e "
             const fs   = require('fs');
@@ -59,24 +68,83 @@ jobs:
                 console.error('Failed to parse leads.json:', e.message);
               }
             } else {
-              console.log('No leads.json found — skipping data validation.');
+              console.log('No leads.json found — skipping validation.');
             }
-            const result = runValidationPipeline(leads);
+            const enforceGates = ('${{ github.event.inputs.enforce_gates }}' === '1');
+            const result = runValidationPipeline(leads, { writeReports: true, enforceGates });
             const s = result.summary;
+            // Write summary for next step
+            const lines = [
+              'total='   + s.total,
+              'valid='   + s.valid,
+              'invalid=' + s.invalid,
+              'unique='  + s.unique,
+              'dupes='   + s.duplicates,
+            ];
+            require('fs').appendFileSync(process.env.GITHUB_OUTPUT || '/dev/null', lines.join('\n') + '\n');
             console.log('Validation complete:', JSON.stringify(s));
-            process.exit(0);
           "
 
-      - name: Run scoring pipeline
-        run: node agents/scoring/scoring_pipeline.js
-
-      - name: Upload validation artifacts
+      - name: Upload validation reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: validation-reports-${{ github.run_number }}
           path: |
-            data/leads/scored_leads.json
-            data/leads/scoring_report.json
+            data/leads/validation_report.json
+            data/leads/duplicates.json
+            data/leads/invalid_leads.json
           if-no-files-found: ignore
           retention-days: 7
+
+      - name: Comment PR with validation summary
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const reportPath = 'data/leads/validation_report.json';
+            if (!fs.existsSync(reportPath)) {
+              console.log('No validation report to post.');
+              return;
+            }
+            const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+            const s = report.summary || {};
+            const body = [
+              '## 🔍 Lead Validation Report',
+              '',
+              '| Metric | Value |',
+              '|---|---|',
+              `| Total leads | ${s.total || 0} |`,
+              `| Valid leads | ${s.valid || 0} |`,
+              `| Invalid leads | ${s.invalid || 0} |`,
+              `| Unique leads | ${s.unique || 0} |`,
+              `| Duplicates removed | ${s.duplicates || 0} |`,
+              '',
+              `_Generated at ${s.generated_at || new Date().toISOString()}_`,
+            ].join('\n');
+
+            // Find existing bot comment to update rather than creating duplicates
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find(c =>
+              c.user.type === 'Bot' && c.body.includes('Lead Validation Report')
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner:      context.repo.owner,
+                repo:       context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner:        context.repo.owner,
+                repo:         context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
