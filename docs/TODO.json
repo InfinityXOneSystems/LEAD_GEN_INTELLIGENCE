@@ -1,0 +1,31 @@
+{
+  "generated": "2026-03-06T02:26:27.863Z",
+  "total": 2,
+  "summary": {
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 2
+  },
+  "items": [
+    {
+      "id": "TODO-1",
+      "file": "outreach/follow_up_scheduler.js",
+      "line": 24,
+      "text": "integrate with SMTP or SendGrid using environment credentials",
+      "priority": "LOW",
+      "label": "enhancement",
+      "status": "open",
+      "discovered": "2026-03-06T02:26:27.863Z"
+    },
+    {
+      "id": "TODO-2",
+      "file": "outreach/outreach_engine.js",
+      "line": 63,
+      "text": "integrate with SMTP or SendGrid using environment credentials",
+      "priority": "LOW",
+      "label": "enhancement",
+      "status": "open",
+      "discovered": "2026-03-06T02:26:27.863Z"
+    }
+  ]
+}

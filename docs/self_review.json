@@ -1,0 +1,38 @@
+{
+  "generated": "2026-03-06T02:26:27.863Z",
+  "total": 3,
+  "summary": {
+    "HIGH": 1,
+    "MEDIUM": 1,
+    "LOW": 1
+  },
+  "recommendations": [
+    {
+      "id": "SR-001",
+      "severity": "HIGH",
+      "category": "pipeline",
+      "title": "No leads in pipeline",
+      "description": "data/leads/scored_leads.json is empty or missing. The scraper pipeline has not produced results.",
+      "action": "Run the lead scraper pipeline: trigger `.github/workflows/lead_scraper.yml` or run `npm run score` locally.",
+      "fingerprint": "sr-no-leads-in-pipeline"
+    },
+    {
+      "id": "SR-003",
+      "severity": "MEDIUM",
+      "category": "outreach",
+      "title": "Email outreach not fully configured",
+      "description": "outreach/outreach_engine.js contains TODO markers for nodemailer configuration.",
+      "action": "Configure SMTP credentials and complete nodemailer setup in outreach/outreach_engine.js.",
+      "fingerprint": "sr-outreach-not-configured"
+    },
+    {
+      "id": "SR-004",
+      "severity": "LOW",
+      "category": "testing",
+      "title": "Limited test coverage",
+      "description": "Only 2 test file(s) found in tests/. Scraper, outreach, and enrichment modules lack tests.",
+      "action": "Add test files for outreach_engine.js, google_maps_scraper.js, and enrichment agents.",
+      "fingerprint": "sr-limited-test-coverage"
+    }
+  ]
+}
