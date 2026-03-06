@@ -2,24 +2,86 @@
 
 import { useState, useEffect } from "react";
 
-export default function LeadsTable({ filters }: any) {
-  const [allLeads, setAllLeads] = useState<any[]>([]);
-  const [displayLeads, setDisplayLeads] = useState<any[]>([]);
+interface Lead {
+  company?: string;
+  company_name?: string;
+  city?: string;
+  state?: string;
+  industry_detected?: string;
+  industry?: string;
+  lead_score?: number;
+  score?: number;
+  tier?: string;
+  phone?: string;
+  email?: string;
+  rating?: number;
+  reviews?: number;
+}
+
+interface LeadsTableProps {
+  filters?: { tier?: string; search?: string };
+}
+
+function getTier(lead: Lead): string {
+  if (lead.tier) return lead.tier;
+  const s = lead.lead_score || lead.score || 0;
+  return s >= 75 ? "HOT" : s >= 50 ? "WARM" : "COLD";
+}
+
+function TierBadge({ tier }: { tier: string }) {
+  const cls =
+    tier === "HOT"
+      ? "status-hot"
+      : tier === "WARM"
+      ? "status-warm"
+      : "status-cold";
+  const icon = tier === "HOT" ? "🔥" : tier === "WARM" ? "⚡" : "❄️";
+  return (
+    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${cls}`}>
+      {icon} {tier}
+    </span>
+  );
+}
+
+function exportCSV(leads: Lead[]) {
+  const headers = ["Company", "City", "State", "Industry", "Score", "Tier", "Phone", "Email", "Rating", "Reviews"];
+  const rows = leads.map((l) => [
+    l.company || l.company_name || "",
+    l.city || "",
+    l.state || "",
+    l.industry_detected || l.industry || "",
+    (l.lead_score || l.score || 0).toString(),
+    getTier(l),
+    l.phone || "",
+    l.email || "",
+    l.rating?.toFixed(1) || "",
+    l.reviews?.toString() || "",
+  ]);
+  const csv = [headers, ...rows].map((r) => r.map((v) => `"${v.replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `leads_export_${new Date().toISOString().split("T")[0]}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+export default function LeadsTable({ filters = {} }: LeadsTableProps) {
+  const [allLeads, setAllLeads] = useState<Lead[]>([]);
+  const [displayLeads, setDisplayLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const leadsPerPage = 50;
 
   useEffect(() => {
     fetch("/data/scored_leads.json")
-      .then((res) => res.json())
+      .then((r) => r.json())
       .then((data) => {
-        if (Array.isArray(data)) {
-          setAllLeads(data);
-        }
+        if (Array.isArray(data)) setAllLeads(data);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error("Error:", err);
+      .catch(() => {
         setAllLeads([]);
         setLoading(false);
       });
@@ -27,34 +89,18 @@ export default function LeadsTable({ filters }: any) {
 
   useEffect(() => {
     let filtered = [...allLeads];
-
     if (filters.tier && filters.tier !== "ALL") {
-      filtered = filtered.filter((lead: any) => {
-        const score = lead.lead_score || lead.score || 0;
-        const tier =
-          lead.tier || (score >= 75 ? "HOT" : score >= 50 ? "WARM" : "COLD");
-        return tier === filters.tier;
-      });
+      filtered = filtered.filter((l) => getTier(l) === filters.tier);
     }
-
     if (filters.search) {
-      const searchLower = filters.search.toLowerCase();
-      filtered = filtered.filter((lead: any) => {
-        const company = (lead.company || lead.company_name || "").toLowerCase();
-        const city = (lead.city || "").toLowerCase();
-        const industry = (
-          lead.industry ||
-          lead.industry_detected ||
-          ""
-        ).toLowerCase();
-        return (
-          company.includes(searchLower) ||
-          city.includes(searchLower) ||
-          industry.includes(searchLower)
-        );
+      const q = filters.search.toLowerCase();
+      filtered = filtered.filter((l) => {
+        const company = (l.company || l.company_name || "").toLowerCase();
+        const city = (l.city || "").toLowerCase();
+        const industry = (l.industry_detected || l.industry || "").toLowerCase();
+        return company.includes(q) || city.includes(q) || industry.includes(q);
       });
     }
-
     setDisplayLeads(filtered);
     setPage(1);
   }, [filters, allLeads]);
@@ -65,80 +111,91 @@ export default function LeadsTable({ filters }: any) {
 
   if (loading) {
     return (
-      <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800 overflow-hidden p-8 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-600 dark:border-yellow-500 mx-auto"></div>
-        <p className="mt-4 text-zinc-600 dark:text-zinc-400">
-          Loading leads...
-        </p>
+      <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-12 text-center">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-yellow-400 mx-auto" />
+        <p className="mt-4 text-gray-500 text-sm">Loading leads...</p>
       </div>
     );
   }
 
   if (displayLeads.length === 0) {
     return (
-      <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800 p-8 text-center">
-        <p className="text-zinc-600 dark:text-zinc-400">
+      <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-12 text-center">
+        <p className="text-gray-500 text-sm">
           {allLeads.length === 0
             ? "No leads data available. Run the scoring pipeline to generate leads."
-            : "No leads found matching your filters."}
+            : "No leads match your current filters."}
         </p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+    <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl overflow-hidden">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[#2a2a2a]">
+        <span className="text-sm text-gray-400">
+          Showing <span className="text-white font-medium">{displayLeads.length}</span> leads
+        </span>
+        <button
+          onClick={() => exportCSV(displayLeads)}
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg text-xs text-gray-400 hover:text-yellow-400 hover:border-yellow-400/30 transition-all"
+        >
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Export CSV
+        </button>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-zinc-50 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
+          <thead className="bg-[#111111] border-b border-[#2a2a2a]">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                Company
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                Location
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                Industry
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                Score
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                Contact
-              </th>
+              {["Company", "Location", "Industry", "Score", "Tier", "Contact"].map((h) => (
+                <th
+                  key={h}
+                  className="px-5 py-3 text-left text-xs font-semibold text-yellow-400 uppercase tracking-wider"
+                >
+                  {h}
+                </th>
+              ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
-            {paginatedLeads.map((lead: any, idx: number) => (
+          <tbody className="divide-y divide-[#1a1a1a]">
+            {paginatedLeads.map((lead, idx) => (
               <tr
                 key={idx}
-                className="hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                className="hover:bg-[#0f0f0f] transition-colors group"
               >
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                <td className="px-5 py-3">
+                  <div className="text-sm font-medium text-white group-hover:text-yellow-400/90 transition-colors">
                     {lead.company || lead.company_name || "Unknown"}
                   </div>
-                  {lead.rating && (
-                    <div className="text-sm text-zinc-500 dark:text-zinc-400">
-                      ⭐ {lead.rating.toFixed(1)} ({lead.reviews} reviews)
+                  {lead.rating != null && (
+                    <div className="text-xs text-gray-500 mt-0.5">
+                      ⭐ {lead.rating.toFixed(1)}
+                      {lead.reviews != null && ` (${lead.reviews})`}
                     </div>
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900 dark:text-zinc-100">
-                  {lead.city || "Unknown"}, {lead.state}
+                <td className="px-5 py-3 text-sm text-gray-300 whitespace-nowrap">
+                  {lead.city || "—"}{lead.state ? `, ${lead.state}` : ""}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900 dark:text-zinc-100">
-                  {lead.industry_detected || lead.industry || "Unknown"}
+                <td className="px-5 py-3 text-sm text-gray-300">
+                  {lead.industry_detected || lead.industry || "—"}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-semibold text-yellow-600 dark:text-yellow-500">
+                <td className="px-5 py-3 whitespace-nowrap">
+                  <span className="text-sm font-bold text-yellow-400">
                     {lead.lead_score || lead.score || 0}
-                  </div>
+                  </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  {lead.phone && <div>📞 {lead.phone}</div>}
-                  {lead.email && <div>✉️ {lead.email}</div>}
+                <td className="px-5 py-3 whitespace-nowrap">
+                  <TierBadge tier={getTier(lead)} />
+                </td>
+                <td className="px-5 py-3 text-xs text-gray-400 space-y-0.5">
+                  {lead.phone && <div className="flex items-center gap-1"><span>📞</span>{lead.phone}</div>}
+                  {lead.email && <div className="flex items-center gap-1"><span>✉️</span>{lead.email}</div>}
+                  {!lead.phone && !lead.email && <span className="text-gray-600">—</span>}
                 </td>
               </tr>
             ))}
@@ -147,26 +204,24 @@ export default function LeadsTable({ filters }: any) {
       </div>
 
       {totalPages > 1 && (
-        <div className="bg-zinc-50 dark:bg-zinc-800 px-6 py-4 border-t border-zinc-200 dark:border-zinc-700">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => setPage(Math.max(1, page - 1))}
-              disabled={page === 1}
-              className="px-4 py-2 text-sm font-medium rounded-md bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-600 hover:bg-zinc-50 dark:hover:bg-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Previous
-            </button>
-            <span className="text-sm text-zinc-700 dark:text-zinc-300">
-              Page {page} of {totalPages} ({displayLeads.length} leads)
-            </span>
-            <button
-              onClick={() => setPage(Math.min(totalPages, page + 1))}
-              disabled={page === totalPages}
-              className="px-4 py-2 text-sm font-medium rounded-md bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-600 hover:bg-zinc-50 dark:hover:bg-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Next
-            </button>
-          </div>
+        <div className="bg-[#111111] px-5 py-3 border-t border-[#2a2a2a] flex items-center justify-between">
+          <button
+            onClick={() => setPage(Math.max(1, page - 1))}
+            disabled={page === 1}
+            className="px-3 py-1.5 text-xs bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg text-gray-400 hover:text-white hover:border-gray-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+          >
+            ← Previous
+          </button>
+          <span className="text-xs text-gray-500">
+            Page <span className="text-white">{page}</span> of <span className="text-white">{totalPages}</span>
+          </span>
+          <button
+            onClick={() => setPage(Math.min(totalPages, page + 1))}
+            disabled={page === totalPages}
+            className="px-3 py-1.5 text-xs bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg text-gray-400 hover:text-white hover:border-gray-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+          >
+            Next →
+          </button>
         </div>
       )}
     </div>
