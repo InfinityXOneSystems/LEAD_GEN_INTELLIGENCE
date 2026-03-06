@@ -1,10 +1,10 @@
 {
-  "generated": "2026-03-06T03:48:41.979Z",
-  "total": 3,
+  "generated": "2026-03-06T04:19:42.148Z",
+  "total": 2,
   "summary": {
     "HIGH": 1,
     "MEDIUM": 1,
-    "LOW": 1
+    "LOW": 0
   },
   "recommendations": [
     {
@@ -24,15 +24,6 @@
       "description": "outreach/outreach_engine.js contains TODO markers for nodemailer configuration.",
       "action": "Configure SMTP credentials and complete nodemailer setup in outreach/outreach_engine.js.",
       "fingerprint": "sr-outreach-not-configured"
-    },
-    {
-      "id": "SR-004",
-      "severity": "LOW",
-      "category": "testing",
-      "title": "Limited test coverage",
-      "description": "Only 2 test file(s) found in tests/. Scraper, outreach, and enrichment modules lack tests.",
-      "action": "Add test files for outreach_engine.js, google_maps_scraper.js, and enrichment agents.",
-      "fingerprint": "sr-limited-test-coverage"
     }
   ]
 }
