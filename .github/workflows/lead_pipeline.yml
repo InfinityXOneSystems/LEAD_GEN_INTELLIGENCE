@@ -194,39 +194,7 @@ jobs:
         run: node agents/scoring/scoring_pipeline.js
 
       - name: Normalize scored leads (canonical field names)
-        run: |
-          node -e "
-            const fs = require('fs');
-            const src = 'data/leads/scored_leads.json';
-            if (!fs.existsSync(src)) { console.log('[normalize] No scored_leads.json, skipping.'); process.exit(0); }
-            const leads = JSON.parse(fs.readFileSync(src, 'utf8'));
-            const now = new Date().toISOString().split('T')[0];
-            const normalized = leads.map((l, i) => ({
-              id:           l.id || (i + 1),
-              company:      l.company || l.company_name || 'Unknown',
-              phone:        l.phone || '',
-              email:        l.email || '',
-              website:      l.website || '',
-              address:      l.address || '',
-              city:         l.city || '',
-              state:        l.state || '',
-              country:      l.country || 'US',
-              industry:     l.industry || l.category || 'Unknown',
-              category:     l.category || l.industry || 'Unknown',
-              rating:       Number(l.rating) || 0,
-              reviews:      Number(l.reviews) || 0,
-              score:        Number(l.lead_score || l.score || 0),
-              lead_score:   Number(l.lead_score || l.score || 0),
-              tier:         l.tier || (Number(l.lead_score||l.score||0) >= 75 ? 'HOT' : Number(l.lead_score||l.score||0) >= 50 ? 'WARM' : 'COLD'),
-              status:       l.status || 'new',
-              source:       l.source || 'google_maps',
-              contact:      l.contact || l.contact_name || '',
-              date_scraped: l.date_scraped || l.scraped_at || l.date || now,
-              date:         l.date || l.date_scraped || l.scraped_at || now,
-            }));
-            fs.writeFileSync(src, JSON.stringify(normalized, null, 2));
-            console.log('[normalize] Normalized', normalized.length, 'leads.');
-          "
+        run: node scripts/normalize_leads.js
 
       - name: Copy scored leads to pages/data for GitHub Pages
         run: |
