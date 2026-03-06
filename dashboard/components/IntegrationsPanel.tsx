@@ -65,6 +65,10 @@ export default function IntegrationsPanel() {
   const [testStatus, setTestStatus] = useState<
     "idle" | "testing" | "success" | "error"
   >("idle");
+  const [driveConnected, setDriveConnected] = useState(false);
+  const [sheetsAutoExport, setSheetsAutoExport] = useState(false);
+  const [driveAutoBackup, setDriveAutoBackup] = useState(false);
+  const [sheetsExportStatus, setSheetsExportStatus] = useState<"idle" | "running" | "done">("idle");
 
   const handleTestConnection = () => {
     if (!apiKey) return;
@@ -72,6 +76,11 @@ export default function IntegrationsPanel() {
     setTimeout(() => {
       setTestStatus(apiKey.length > 10 ? "success" : "error");
     }, 1500);
+  };
+
+  const handleSheetsExport = () => {
+    setSheetsExportStatus("running");
+    setTimeout(() => setSheetsExportStatus("done"), 2000);
   };
 
   return (
@@ -308,6 +317,137 @@ export default function IntegrationsPanel() {
                   <span className="text-gray-400">{item.label}</span>
                 </div>
               ))}
+            </div>
+          </div>
+        </SectionCard>
+
+        {/* Google Workspace */}
+        <SectionCard title="Google Workspace" icon="🔵">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm text-white">Connection Status</div>
+                <div className={`text-xs ${driveConnected ? "text-green-400" : "text-gray-500"}`}>
+                  {driveConnected ? "✓ Connected" : "Not connected"}
+                </div>
+              </div>
+              <button
+                onClick={() => setDriveConnected(!driveConnected)}
+                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+                  driveConnected
+                    ? "bg-red-400/10 border border-red-400/30 text-red-400 hover:bg-red-400/20"
+                    : "bg-yellow-400 hover:bg-yellow-500 text-black"
+                }`}
+              >
+                {driveConnected ? "Disconnect" : "Connect Google"}
+              </button>
+            </div>
+            <div className="bg-[#111111] rounded-lg p-3 text-xs space-y-1.5">
+              <div className="text-gray-400 font-medium mb-1">Services:</div>
+              {[
+                { icon: "📬", name: "Gmail", desc: "Outreach email sending" },
+                { icon: "📊", name: "Sheets", desc: "Lead export to spreadsheet" },
+                { icon: "💾", name: "Drive", desc: "Report backup & storage" },
+                { icon: "📅", name: "Calendar", desc: "Schedule scraping events" },
+              ].map((svc) => (
+                <div key={svc.name} className="flex items-center gap-2">
+                  <span>{svc.icon}</span>
+                  <span className="text-white">{svc.name}</span>
+                  <span className="text-gray-500">— {svc.desc}</span>
+                </div>
+              ))}
+            </div>
+            <div className="text-xs text-gray-500 bg-[#111111] rounded-lg p-3">
+              <div className="text-gray-400 font-medium mb-1">Setup Required:</div>
+              <div>Set <span className="font-mono text-yellow-400">GOOGLE_CLIENT_ID</span></div>
+              <div>Set <span className="font-mono text-yellow-400">GOOGLE_CLIENT_SECRET</span></div>
+              <div>Set <span className="font-mono text-yellow-400">GOOGLE_REFRESH_TOKEN</span></div>
+            </div>
+          </div>
+        </SectionCard>
+
+        {/* Google Sheets Export */}
+        <SectionCard title="Google Sheets Export" icon="📊">
+          <div className="space-y-3">
+            <div className="text-xs text-gray-500">
+              Export leads directly to a Google Sheets spreadsheet for analysis and sharing.
+            </div>
+            <Toggle
+              checked={sheetsAutoExport}
+              onChange={() => setSheetsAutoExport(!sheetsAutoExport)}
+              label="Auto-export after each pipeline run"
+              description="Creates a new sheet with latest scored leads"
+            />
+            <Toggle
+              checked={driveAutoBackup}
+              onChange={() => setDriveAutoBackup(!driveAutoBackup)}
+              label="Auto-backup reports to Drive"
+              description="Stores validation & scoring reports in Drive"
+            />
+            <button
+              onClick={handleSheetsExport}
+              disabled={sheetsExportStatus === "running"}
+              className="w-full py-2 bg-yellow-400 hover:bg-yellow-500 text-black text-xs font-semibold rounded-lg transition-colors disabled:opacity-50"
+            >
+              {sheetsExportStatus === "running"
+                ? "Exporting..."
+                : sheetsExportStatus === "done"
+                ? "✓ Exported to Sheets"
+                : "Export Leads to Google Sheets"}
+            </button>
+            {sheetsExportStatus === "done" && (
+              <div className="text-xs text-green-400 text-center">
+                Spreadsheet created — check Google Drive
+              </div>
+            )}
+            <div className="bg-[#111111] rounded-lg p-3 text-xs text-gray-500 space-y-1">
+              <div>• Exports all fields: company, phone, email, city, score, tier</div>
+              <div>• Creates new sheet per export with date stamp</div>
+              <div>• Supports append mode for incremental updates</div>
+            </div>
+          </div>
+        </SectionCard>
+
+        {/* GPT Actions / Copilot Mobile */}
+        <SectionCard title="Copilot Mobile + GPT Actions" icon="📱">
+          <div className="space-y-3">
+            <div className="text-xs text-gray-500">
+              Control the platform from Copilot Mobile or any Custom GPT via the Actions API.
+            </div>
+            <div className="bg-[#111111] rounded-lg p-3 text-xs space-y-2">
+              <div className="text-gray-400 font-medium mb-1">API Endpoints:</div>
+              {[
+                { method: "GET",  path: "/status",              desc: "System health" },
+                { method: "GET",  path: "/leads",               desc: "List leads" },
+                { method: "POST", path: "/scrape",              desc: "Trigger scraper" },
+                { method: "POST", path: "/pipeline/run",        desc: "Run full pipeline" },
+                { method: "POST", path: "/validate",            desc: "Validate leads" },
+                { method: "GET",  path: "/export",              desc: "Export snapshot" },
+                { method: "POST", path: "/workspace/sheets/export", desc: "Export to Sheets" },
+              ].map((ep) => (
+                <div key={ep.path} className="flex items-center gap-2">
+                  <span className={`font-mono text-[9px] px-1 py-0.5 rounded ${
+                    ep.method === "GET" ? "bg-blue-400/20 text-blue-400" : "bg-yellow-400/20 text-yellow-400"
+                  }`}>{ep.method}</span>
+                  <span className="font-mono text-[10px] text-gray-300">{ep.path}</span>
+                  <span className="text-gray-500 text-[10px]">— {ep.desc}</span>
+                </div>
+              ))}
+            </div>
+            <a
+              href="/openapi.json"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between p-2 bg-[#111111] rounded-lg text-xs hover:bg-[#1a1a1a] transition-colors"
+            >
+              <span className="text-gray-400">OpenAPI Spec (for Custom GPT)</span>
+              <span className="text-yellow-400">Download ↗</span>
+            </a>
+            <div className="text-xs text-gray-500 bg-[#111111] rounded-lg p-3">
+              <div className="text-gray-400 font-medium mb-1">Copilot Mobile cURL Example:</div>
+              <div className="font-mono text-[10px] text-gray-300 break-all">
+                curl -X POST http://localhost:3100/pipeline/run
+              </div>
             </div>
           </div>
         </SectionCard>
