@@ -219,7 +219,9 @@
                   "properties": {
                     "templates": {
                       "type": "array",
-                      "items": { "$ref": "#/components/schemas/OutreachTemplate" }
+                      "items": {
+                        "$ref": "#/components/schemas/OutreachTemplate"
+                      }
                     }
                   }
                 }
@@ -295,10 +297,27 @@
           "city": { "type": "string", "description": "City" },
           "state": { "type": "string", "description": "State abbreviation" },
           "phone": { "type": "string", "description": "Phone number" },
-          "email": { "type": "string", "format": "email", "description": "Email address" },
-          "website": { "type": "string", "format": "uri", "description": "Website URL" },
-          "rating": { "type": "number", "minimum": 0, "maximum": 5, "description": "Google rating" },
-          "reviews": { "type": "integer", "minimum": 0, "description": "Number of reviews" }
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address"
+          },
+          "website": {
+            "type": "string",
+            "format": "uri",
+            "description": "Website URL"
+          },
+          "rating": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5,
+            "description": "Google rating"
+          },
+          "reviews": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of reviews"
+          }
         }
       },
       "StatusResponse": {
@@ -313,7 +332,10 @@
       "LeadsResponse": {
         "type": "object",
         "properties": {
-          "leads": { "type": "array", "items": { "$ref": "#/components/schemas/Lead" } },
+          "leads": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Lead" }
+          },
           "count": { "type": "integer" }
         }
       },

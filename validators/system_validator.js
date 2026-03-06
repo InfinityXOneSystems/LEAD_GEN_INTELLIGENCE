@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * System Validator
@@ -6,28 +6,28 @@
  * required directories, files, and module functionality.
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 const REQUIRED_DIRS = [
-  'data/leads',
-  'data/datasets',
-  'data/outreach',
-  'agents/scoring',
-  'validation',
-  'validators',
-  'db',
+  "data/leads",
+  "data/datasets",
+  "data/outreach",
+  "agents/scoring",
+  "validation",
+  "validators",
+  "db",
 ];
 
 const REQUIRED_FILES = [
-  'package.json',
-  'agents/scoring/lead_scoring.js',
-  'agents/scoring/scoring_pipeline.js',
-  'validation/lead_validation_pipeline.js',
-  'validators/lead_validator.js',
-  'db/db.js',
-  'db/leadStore.js',
-  'db/schema.sql',
+  "package.json",
+  "agents/scoring/lead_scoring.js",
+  "agents/scoring/scoring_pipeline.js",
+  "validation/lead_validation_pipeline.js",
+  "validators/lead_validator.js",
+  "db/db.js",
+  "db/leadStore.js",
+  "db/schema.sql",
 ];
 
 /**
@@ -59,20 +59,22 @@ function validateSystem() {
  * Exits with code 1 if critical files are missing.
  */
 function runSystemValidation() {
-  console.log('[SystemValidator] Starting system validation...');
+  console.log("[SystemValidator] Starting system validation...");
   const result = validateSystem();
 
   for (const w of result.warnings) {
-    console.warn('[SystemValidator] WARN:', w);
+    console.warn("[SystemValidator] WARN:", w);
   }
   for (const m of result.missing) {
-    console.error('[SystemValidator] ERROR:', m);
+    console.error("[SystemValidator] ERROR:", m);
   }
 
   if (result.ok) {
-    console.log('[SystemValidator] System validation passed.');
+    console.log("[SystemValidator] System validation passed.");
   } else {
-    console.error(`[SystemValidator] Validation FAILED: ${result.missing.length} critical file(s) missing.`);
+    console.error(
+      `[SystemValidator] Validation FAILED: ${result.missing.length} critical file(s) missing.`,
+    );
   }
 
   return result;

@@ -1,29 +1,23 @@
-const axios=require("axios")
-const cheerio=require("cheerio")
+const axios = require("axios");
+const cheerio = require("cheerio");
 
-async function scrapeWebsite(url){
+async function scrapeWebsite(url) {
+  try {
+    let html = (await axios.get(url, { timeout: 8000 })).data;
 
-try{
+    const $ = cheerio.load(html);
 
-let html=(await axios.get(url,{timeout:8000})).data
+    let email = html.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi);
 
-const $=cheerio.load(html)
+    let phone = $("a[href^='tel']").text();
 
-let email=html.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig)
-
-let phone=$("a[href^='tel']").text()
-
-return{
-email:email?email[0]:"",
-phone:phone
+    return {
+      email: email ? email[0] : "",
+      phone: phone,
+    };
+  } catch (e) {
+    return {};
+  }
 }
 
-}catch(e){
-
-return{}
-
-}
-
-}
-
-module.exports=scrapeWebsite
+module.exports = scrapeWebsite;

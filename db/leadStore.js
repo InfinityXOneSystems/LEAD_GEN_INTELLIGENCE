@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const db = require('./db');
+const db = require("./db");
 
 /**
  * Upsert a single lead into the database.
@@ -25,16 +25,16 @@ async function upsertLead(lead) {
   const {
     company_name,
     contact_name = null,
-    phone        = null,
-    email        = null,
-    website      = null,
-    city         = '',
-    state        = '',
-    industry     = null,
-    rating       = null,
-    reviews      = null,
-    lead_score   = 0,
-    source       = null,
+    phone = null,
+    email = null,
+    website = null,
+    city = "",
+    state = "",
+    industry = null,
+    rating = null,
+    reviews = null,
+    lead_score = 0,
+    source = null,
   } = lead;
 
   const result = await db.query(
@@ -55,8 +55,20 @@ async function upsertLead(lead) {
        source        = EXCLUDED.source,
        date_scraped  = NOW()
      RETURNING *`,
-    [company_name, contact_name, phone, email, website,
-     city, state, industry, rating, reviews, lead_score, source]
+    [
+      company_name,
+      contact_name,
+      phone,
+      email,
+      website,
+      city,
+      state,
+      industry,
+      rating,
+      reviews,
+      lead_score,
+      source,
+    ],
   );
 
   return result.rows[0];
@@ -88,8 +100,8 @@ async function upsertLeads(leads) {
  */
 async function getTopLeads(limit = 100) {
   const result = await db.query(
-    'SELECT * FROM leads ORDER BY lead_score DESC LIMIT $1',
-    [limit]
+    "SELECT * FROM leads ORDER BY lead_score DESC LIMIT $1",
+    [limit],
   );
   return result.rows;
 }
@@ -101,8 +113,8 @@ async function getTopLeads(limit = 100) {
  */
 async function getAllLeads(limit = 500) {
   const result = await db.query(
-    'SELECT * FROM leads ORDER BY date_scraped DESC LIMIT $1',
-    [limit]
+    "SELECT * FROM leads ORDER BY date_scraped DESC LIMIT $1",
+    [limit],
   );
   return result.rows;
 }

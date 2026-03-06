@@ -1,15 +1,12 @@
-'use client';
+"use client";
 
 interface FilterBarProps {
-  onFilterChange: (filters: {
-    tier?: string;
-    search?: string;
-  }) => void;
+  onFilterChange: (filters: { tier?: string; search?: string }) => void;
 }
 
 export default function FilterBar({ onFilterChange }: FilterBarProps) {
   const handleTierChange = (tier: string) => {
-    onFilterChange({ tier: tier === 'ALL' ? undefined : tier });
+    onFilterChange({ tier: tier === "ALL" ? undefined : tier });
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,25 +18,25 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
       <div className="flex flex-col md:flex-row gap-4 items-center">
         <div className="flex gap-2">
           <button
-            onClick={() => handleTierChange('ALL')}
+            onClick={() => handleTierChange("ALL")}
             className="px-4 py-2 rounded-md bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-sm font-medium transition-colors"
           >
             All Leads
           </button>
           <button
-            onClick={() => handleTierChange('HOT')}
+            onClick={() => handleTierChange("HOT")}
             className="px-4 py-2 rounded-md bg-red-100 dark:bg-red-950 hover:bg-red-200 dark:hover:bg-red-900 text-red-900 dark:text-red-100 text-sm font-medium transition-colors"
           >
             🔥 HOT
           </button>
           <button
-            onClick={() => handleTierChange('WARM')}
+            onClick={() => handleTierChange("WARM")}
             className="px-4 py-2 rounded-md bg-amber-100 dark:bg-amber-950 hover:bg-amber-200 dark:hover:bg-amber-900 text-amber-900 dark:text-amber-100 text-sm font-medium transition-colors"
           >
             ⚡ WARM
           </button>
           <button
-            onClick={() => handleTierChange('COLD')}
+            onClick={() => handleTierChange("COLD")}
             className="px-4 py-2 rounded-md bg-blue-100 dark:bg-blue-950 hover:bg-blue-200 dark:hover:bg-blue-900 text-blue-900 dark:text-blue-100 text-sm font-medium transition-colors"
           >
             ❄️ COLD

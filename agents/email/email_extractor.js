@@ -1,21 +1,15 @@
-﻿const axios=require('axios')
+﻿const axios = require("axios");
 
-async function extractEmails(url){
+async function extractEmails(url) {
+  try {
+    let res = await axios.get(url);
 
-try{
+    let matches = res.data.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi);
 
-let res=await axios.get(url)
-
-let matches=res.data.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig)
-
-return matches
-
-}catch(e){
-
-return null
-
+    return matches;
+  } catch (e) {
+    return null;
+  }
 }
 
-}
-
-module.exports=extractEmails
+module.exports = extractEmails;

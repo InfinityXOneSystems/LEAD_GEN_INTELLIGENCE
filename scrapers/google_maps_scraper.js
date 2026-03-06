@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * google_maps_scraper.js
@@ -13,8 +13,8 @@
  *   SCRAPER_RESET         – set to "1" to reset progress first   (default: off)
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 const {
   loadKeywords,
   getNextBatch,
@@ -22,18 +22,18 @@ const {
   generateSearchTasks,
   resetProgress,
   getCoverageSummary,
-} = require('./scraper_queue');
+} = require("./scraper_queue");
 
 // ── Configuration ────────────────────────────────────────────────────────────
 
-const BATCH_SIZE    = parseInt(process.env.SCRAPER_BATCH_SIZE    || '10',   10);
-const CONCURRENCY   = parseInt(process.env.SCRAPER_CONCURRENCY   || '3',    10);
-const RATE_LIMIT_MS = parseInt(process.env.SCRAPER_RATE_LIMIT_MS || '2000', 10);
-const STATE_FILTER  = process.env.SCRAPER_STATE  || null;
-const RESET_FLAG    = process.env.SCRAPER_RESET  === '1';
+const BATCH_SIZE = parseInt(process.env.SCRAPER_BATCH_SIZE || "10", 10);
+const CONCURRENCY = parseInt(process.env.SCRAPER_CONCURRENCY || "3", 10);
+const RATE_LIMIT_MS = parseInt(process.env.SCRAPER_RATE_LIMIT_MS || "2000", 10);
+const STATE_FILTER = process.env.SCRAPER_STATE || null;
+const RESET_FLAG = process.env.SCRAPER_RESET === "1";
 
-const LEADS_DIR  = path.join(__dirname, '../data/leads');
-const LEADS_FILE = path.join(LEADS_DIR, 'leads.json');
+const LEADS_DIR = path.join(__dirname, "../data/leads");
+const LEADS_FILE = path.join(LEADS_DIR, "leads.json");
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -42,15 +42,18 @@ function ensureDir(dir) {
 }
 
 function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function loadExistingLeads() {
   try {
-    return JSON.parse(fs.readFileSync(LEADS_FILE, 'utf8'));
+    return JSON.parse(fs.readFileSync(LEADS_FILE, "utf8"));
   } catch (err) {
-    if (err.code !== 'ENOENT') {
-      console.warn('[scraper] Warning: could not read existing leads file:', err.message);
+    if (err.code !== "ENOENT") {
+      console.warn(
+        "[scraper] Warning: could not read existing leads file:",
+        err.message,
+      );
     }
     return [];
   }
@@ -64,11 +67,11 @@ function saveLeads(leads) {
 /** Remove duplicate leads keyed on (company, city). */
 function dedupeLeads(leads) {
   const seen = new Set();
-  return leads.filter(lead => {
+  return leads.filter((lead) => {
     const key =
-      (lead.company || '').toLowerCase().trim() +
-      '|' +
-      (lead.city || '').toLowerCase().trim();
+      (lead.company || "").toLowerCase().trim() +
+      "|" +
+      (lead.city || "").toLowerCase().trim();
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -87,17 +90,17 @@ async function scrapeTask(task) {
   // A real implementation would launch a headless browser here.
   return [
     {
-      company:   `${task.keyword} – ${task.city} (sample)`,
-      city:      task.city,
-      state:     task.state,
-      country:   task.country,
-      keyword:   task.keyword,
-      category:  task.category,
-      phone:     '',
-      website:   '',
-      email:     '',
-      rating:    0,
-      reviews:   0,
+      company: `${task.keyword} – ${task.city} (sample)`,
+      city: task.city,
+      state: task.state,
+      country: task.country,
+      keyword: task.keyword,
+      category: task.category,
+      phone: "",
+      website: "",
+      email: "",
+      rating: 0,
+      reviews: 0,
       scrapedAt: new Date().toISOString(),
     },
   ];
@@ -106,7 +109,7 @@ async function scrapeTask(task) {
 // ── Retry wrapper ─────────────────────────────────────────────────────────────
 
 async function scrapeWithRetry(task, retries, backoffMs) {
-  retries   = retries   !== undefined ? retries   : 3;
+  retries = retries !== undefined ? retries : 3;
   backoffMs = backoffMs !== undefined ? backoffMs : RATE_LIMIT_MS;
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
@@ -115,7 +118,7 @@ async function scrapeWithRetry(task, retries, backoffMs) {
       const isLast = attempt === retries;
       console.error(
         `[scraper] Attempt ${attempt}/${retries} failed for "${task.keyword}" ` +
-        `in ${task.city}, ${task.state}: ${err.message}`
+          `in ${task.city}, ${task.state}: ${err.message}`,
       );
       if (isLast) throw err;
       await delay(backoffMs * attempt);
@@ -137,11 +140,11 @@ async function processTasksConcurrently(tasks, concurrency) {
         results.push(...leads);
         console.log(
           `[scraper] ✓ "${task.keyword}" in ${task.city}, ${task.state}` +
-          ` → ${leads.length} lead(s)`
+            ` → ${leads.length} lead(s)`,
         );
       } catch (err) {
         console.error(
-          `[scraper] ✗ Skipping "${task.keyword}" in ${task.city}: ${err.message}`
+          `[scraper] ✗ Skipping "${task.keyword}" in ${task.city}: ${err.message}`,
         );
       }
       await delay(RATE_LIMIT_MS);
@@ -155,12 +158,12 @@ async function processTasksConcurrently(tasks, concurrency) {
 // ── Entry point ───────────────────────────────────────────────────────────────
 
 async function runScraper() {
-  console.log('[scraper] ════════════════════════════════════════════════');
-  console.log('[scraper] Nationwide Contractor Lead Scraper – Phase 8');
-  console.log('[scraper] ════════════════════════════════════════════════');
+  console.log("[scraper] ════════════════════════════════════════════════");
+  console.log("[scraper] Nationwide Contractor Lead Scraper – Phase 8");
+  console.log("[scraper] ════════════════════════════════════════════════");
   console.log(
     `[scraper] Config: batch=${BATCH_SIZE}  concurrency=${CONCURRENCY}` +
-    `  rateLimit=${RATE_LIMIT_MS}ms  state=${STATE_FILTER || 'all'}`
+      `  rateLimit=${RATE_LIMIT_MS}ms  state=${STATE_FILTER || "all"}`,
   );
 
   if (RESET_FLAG) {
@@ -171,17 +174,17 @@ async function runScraper() {
   const before = getCoverageSummary();
   console.log(
     `[scraper] Coverage before run: ${before.completedLocations}/${before.totalLocations} locations` +
-    ` (${before.pendingLocations} remaining)`
+      ` (${before.pendingLocations} remaining)`,
   );
 
   const batch = getNextBatch(BATCH_SIZE, STATE_FILTER);
   if (batch.length === 0) {
     console.log(
-      '[scraper] No pending locations. ' +
-      'Set SCRAPER_RESET=1 to restart the scraping cycle.'
+      "[scraper] No pending locations. " +
+        "Set SCRAPER_RESET=1 to restart the scraping cycle.",
     );
     const summary = getCoverageSummary();
-    console.log('[scraper] Final coverage by state:');
+    console.log("[scraper] Final coverage by state:");
     for (const [state, info] of Object.entries(summary.byState).sort()) {
       console.log(`  ${state}: ${info.done}/${info.total}`);
     }
@@ -190,21 +193,21 @@ async function runScraper() {
 
   console.log(
     `[scraper] Processing ${batch.length} location(s): ` +
-    batch.map(l => `${l.City}, ${l.State}`).join(' | ')
+      batch.map((l) => `${l.City}, ${l.State}`).join(" | "),
   );
 
   const keywords = loadKeywords();
-  const tasks    = generateSearchTasks(batch, keywords);
+  const tasks = generateSearchTasks(batch, keywords);
   console.log(
     `[scraper] ${tasks.length} search tasks` +
-    ` (${batch.length} locations × ${keywords.length} keywords)`
+      ` (${batch.length} locations × ${keywords.length} keywords)`,
   );
 
   const newLeads = await processTasksConcurrently(tasks, CONCURRENCY);
 
   // Merge with existing leads and deduplicate before saving.
   const existing = loadExistingLeads();
-  const merged   = dedupeLeads([...existing, ...newLeads]);
+  const merged = dedupeLeads([...existing, ...newLeads]);
   saveLeads(merged);
 
   // Mark all locations in this batch as complete.
@@ -213,18 +216,18 @@ async function runScraper() {
   }
 
   const after = getCoverageSummary();
-  console.log('[scraper] ────────────────────────────────────────────────');
+  console.log("[scraper] ────────────────────────────────────────────────");
   console.log(`[scraper] New leads collected : ${newLeads.length}`);
   console.log(`[scraper] Total unique leads  : ${merged.length}`);
   console.log(
     `[scraper] Coverage after run  : ` +
-    `${after.completedLocations}/${after.totalLocations} locations` +
-    ` (${after.pendingLocations} remaining)`
+      `${after.completedLocations}/${after.totalLocations} locations` +
+      ` (${after.pendingLocations} remaining)`,
   );
-  console.log('[scraper] Done.');
+  console.log("[scraper] Done.");
 }
 
-runScraper().catch(err => {
-  console.error('[scraper] Fatal error:', err);
+runScraper().catch((err) => {
+  console.error("[scraper] Fatal error:", err);
   process.exit(1);
 });

@@ -1,12 +1,12 @@
-const { google } = require('googleapis');
+const { google } = require("googleapis");
 
 async function createEvent() {
-  const calendar = google.calendar({ version: 'v3' });
+  const calendar = google.calendar({ version: "v3" });
 
   await calendar.events.insert({
-    calendarId: 'primary',
+    calendarId: "primary",
     requestBody: {
-      summary: 'Run Lead Scraper',
+      summary: "Run Lead Scraper",
       start: { dateTime: new Date().toISOString() },
       end: { dateTime: new Date().toISOString() },
     },

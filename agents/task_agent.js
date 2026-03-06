@@ -1,7 +1,7 @@
-const fs = require('fs');
+const fs = require("fs");
 
 function loadTasks() {
-  const tasks = fs.readFileSync('todo/todo.csv');
+  const tasks = fs.readFileSync("todo/todo.csv");
   console.log(tasks);
 }
 

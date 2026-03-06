@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const { execFile } = require('child_process');
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
+const { execFile } = require("child_process");
 
 const app = express();
 app.use(express.json());
@@ -13,7 +13,7 @@ app.use(express.json());
 function createRateLimiter({ windowMs = 60_000, max = 30 } = {}) {
   const store = new Map();
   return (req, res, next) => {
-    const key = req.ip || 'unknown';
+    const key = req.ip || "unknown";
     const now = Date.now();
     const entry = store.get(key) || { count: 0, resetAt: now + windowMs };
     if (now > entry.resetAt) {
@@ -23,7 +23,7 @@ function createRateLimiter({ windowMs = 60_000, max = 30 } = {}) {
     entry.count += 1;
     store.set(key, entry);
     if (entry.count > max) {
-      return res.status(429).json({ error: 'Too Many Requests' });
+      return res.status(429).json({ error: "Too Many Requests" });
     }
     next();
   };
@@ -31,17 +31,22 @@ function createRateLimiter({ windowMs = 60_000, max = 30 } = {}) {
 
 const apiLimiter = createRateLimiter({ windowMs: 60_000, max: 30 });
 
-const ROOT = path.resolve(__dirname, '..', '..');
-const LEADS_FILE = path.join(ROOT, 'data', 'leads', 'leads.json');
-const TODO_FILE = path.join(ROOT, 'todo', 'todo.csv');
-const TEMPLATES_FILE = path.join(ROOT, 'outreach', 'templates', 'outreach_templates.csv');
+const ROOT = path.resolve(__dirname, "..", "..");
+const LEADS_FILE = path.join(ROOT, "data", "leads", "leads.json");
+const TODO_FILE = path.join(ROOT, "todo", "todo.csv");
+const TEMPLATES_FILE = path.join(
+  ROOT,
+  "outreach",
+  "templates",
+  "outreach_templates.csv",
+);
 
 // ── helpers ────────────────────────────────────────────────────────────────
 
 function readLeads() {
   if (!fs.existsSync(LEADS_FILE)) return [];
   try {
-    return JSON.parse(fs.readFileSync(LEADS_FILE, 'utf8'));
+    return JSON.parse(fs.readFileSync(LEADS_FILE, "utf8"));
   } catch {
     return [];
   }
@@ -55,10 +60,10 @@ function writeLeads(leads) {
 function scoreLead(lead) {
   let score = 0;
   if (lead.website) score += 10;
-  if (lead.email)   score += 15;
-  if (lead.phone)   score += 10;
+  if (lead.email) score += 15;
+  if (lead.phone) score += 10;
   if (lead.reviews > 10) score += 5;
-  if (lead.rating  > 4)  score += 10;
+  if (lead.rating > 4) score += 10;
   return score;
 }
 
@@ -66,20 +71,28 @@ function readUtf16File(filePath) {
   const buf = fs.readFileSync(filePath);
   // Detect UTF-16 LE BOM (FF FE)
   if (buf[0] === 0xff && buf[1] === 0xfe) {
-    return buf.slice(2).toString('utf16le');
+    return buf.slice(2).toString("utf16le");
   }
-  return buf.toString('utf8');
+  return buf.toString("utf8");
 }
 
 function parseTasks() {
   if (!fs.existsSync(TODO_FILE)) return [];
   const content = readUtf16File(TODO_FILE);
-  const lines = content.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-  const header = lines.shift().split(',').map(h => h.trim());
-  return lines.map(line => {
-    const cols = line.split(',').map(c => c.trim());
+  const lines = content
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter(Boolean);
+  const header = lines
+    .shift()
+    .split(",")
+    .map((h) => h.trim());
+  return lines.map((line) => {
+    const cols = line.split(",").map((c) => c.trim());
     const obj = {};
-    header.forEach((h, i) => { obj[h] = cols[i] || ''; });
+    header.forEach((h, i) => {
+      obj[h] = cols[i] || "";
+    });
     return obj;
   });
 }
@@ -87,12 +100,12 @@ function parseTasks() {
 // ── routes ─────────────────────────────────────────────────────────────────
 
 /** GET /status – system health */
-app.get('/status', (_req, res) => {
+app.get("/status", (_req, res) => {
   const leads = readLeads();
   const tasks = parseTasks();
-  const pending = tasks.filter(t => t.STATUS === 'pending').length;
+  const pending = tasks.filter((t) => t.STATUS === "pending").length;
   res.json({
-    status: 'ok',
+    status: "ok",
     lead_count: leads.length,
     pending_tasks: pending,
     timestamp: new Date().toISOString(),
@@ -100,7 +113,7 @@ app.get('/status', (_req, res) => {
 });
 
 /** GET /leads – return all stored leads (optional ?limit=N) */
-app.get('/leads', (req, res) => {
+app.get("/leads", (req, res) => {
   let leads = readLeads();
   const limit = parseInt(req.query.limit, 10);
   if (!isNaN(limit) && limit > 0) leads = leads.slice(0, limit);
@@ -108,13 +121,15 @@ app.get('/leads', (req, res) => {
 });
 
 /** POST /leads – add or update a lead */
-app.post('/leads', (req, res) => {
+app.post("/leads", (req, res) => {
   const lead = req.body;
   if (!lead || !lead.company) {
-    return res.status(400).json({ error: 'company field is required' });
+    return res.status(400).json({ error: "company field is required" });
   }
   const leads = readLeads();
-  const idx = leads.findIndex(l => l.company === lead.company && l.city === lead.city);
+  const idx = leads.findIndex(
+    (l) => l.company === lead.company && l.city === lead.city,
+  );
   if (idx >= 0) {
     leads[idx] = { ...leads[idx], ...lead };
   } else {
@@ -125,83 +140,93 @@ app.post('/leads', (req, res) => {
 });
 
 /** POST /score – score a lead object */
-app.post('/score', (req, res) => {
+app.post("/score", (req, res) => {
   const lead = req.body;
-  if (!lead || typeof lead !== 'object') {
-    return res.status(400).json({ error: 'lead object required in request body' });
+  if (!lead || typeof lead !== "object") {
+    return res
+      .status(400)
+      .json({ error: "lead object required in request body" });
   }
   const score = scoreLead(lead);
   res.json({ score, lead });
 });
 
 /** GET /tasks – return todo tasks (optional ?status=pending|complete) */
-app.get('/tasks', apiLimiter, (req, res) => {
+app.get("/tasks", apiLimiter, (req, res) => {
   let tasks = parseTasks();
   if (req.query.status) {
-    tasks = tasks.filter(t => t.STATUS === req.query.status);
+    tasks = tasks.filter((t) => t.STATUS === req.query.status);
   }
   res.json({ tasks, count: tasks.length });
 });
 
 /** POST /scrape – trigger the lead scraper */
-app.post('/scrape', apiLimiter, (_req, res) => {
-  const scraperPath = path.join(ROOT, 'scrapers', 'google_maps_scraper.js');
-  execFile('node', [scraperPath], (err, stdout, stderr) => {
+app.post("/scrape", apiLimiter, (_req, res) => {
+  const scraperPath = path.join(ROOT, "scrapers", "google_maps_scraper.js");
+  execFile("node", [scraperPath], (err, stdout, stderr) => {
     if (err) {
-      return res.status(500).json({ success: false, error: err.message, stderr });
+      return res
+        .status(500)
+        .json({ success: false, error: err.message, stderr });
     }
     res.json({ success: true, output: stdout });
   });
 });
 
 /** GET /outreach/templates – list outreach templates */
-app.get('/outreach/templates', apiLimiter, (_req, res) => {
+app.get("/outreach/templates", apiLimiter, (_req, res) => {
   if (!fs.existsSync(TEMPLATES_FILE)) {
     return res.json({ templates: [] });
   }
-  const raw = fs.readFileSync(TEMPLATES_FILE, 'utf8');
+  const raw = fs.readFileSync(TEMPLATES_FILE, "utf8");
   const lines = raw.split(/\r?\n/).filter(Boolean);
   lines.shift(); // skip header
-  const templates = lines.map(line => {
-    // Parse CSV with optional quoted fields.
-    // Format: id,"subject","message" – extract first numeric id then two
-    // remaining fields, handling commas inside double-quoted values.
-    const fields = [];
-    let cur = '';
-    let inQuote = false;
-    for (let i = 0; i < line.length; i++) {
-      const ch = line[i];
-      if (ch === '"') {
-        inQuote = !inQuote;
-      } else if (ch === ',' && !inQuote) {
-        fields.push(cur);
-        cur = '';
-      } else {
-        cur += ch;
+  const templates = lines
+    .map((line) => {
+      // Parse CSV with optional quoted fields.
+      // Format: id,"subject","message" – extract first numeric id then two
+      // remaining fields, handling commas inside double-quoted values.
+      const fields = [];
+      let cur = "";
+      let inQuote = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          inQuote = !inQuote;
+        } else if (ch === "," && !inQuote) {
+          fields.push(cur);
+          cur = "";
+        } else {
+          cur += ch;
+        }
       }
-    }
-    fields.push(cur);
-    if (fields.length < 3) return null;
-    return {
-      id: fields[0].trim(),
-      subject: fields[1].trim(),
-      message: fields[2].trim(),
-    };
-  }).filter(Boolean);
+      fields.push(cur);
+      if (fields.length < 3) return null;
+      return {
+        id: fields[0].trim(),
+        subject: fields[1].trim(),
+        message: fields[2].trim(),
+      };
+    })
+    .filter(Boolean);
   res.json({ templates });
 });
 
 /** POST /outreach/send – record an outreach action for a lead */
-app.post('/outreach/send', (req, res) => {
+app.post("/outreach/send", (req, res) => {
   const { lead, template_id } = req.body;
   if (!lead || !template_id) {
-    return res.status(400).json({ error: 'lead and template_id are required' });
+    return res.status(400).json({ error: "lead and template_id are required" });
   }
   // Record the outreach in the leads store
   const leads = readLeads();
-  const idx = leads.findIndex(l => l.company === lead.company && l.city === lead.city);
+  const idx = leads.findIndex(
+    (l) => l.company === lead.company && l.city === lead.city,
+  );
   if (idx < 0) {
-    return res.status(404).json({ error: 'lead not found – upsert it first via POST /leads' });
+    return res
+      .status(404)
+      .json({ error: "lead not found – upsert it first via POST /leads" });
   }
   const record = {
     template_id,
@@ -215,8 +240,8 @@ app.post('/outreach/send', (req, res) => {
 
 // ── serve OpenAPI spec ──────────────────────────────────────────────────────
 
-app.get('/openapi.json', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'openapi.json'));
+app.get("/openapi.json", (_req, res) => {
+  res.sendFile(path.join(__dirname, "openapi.json"));
 });
 
 // ── start ───────────────────────────────────────────────────────────────────
@@ -224,12 +249,14 @@ app.get('/openapi.json', (_req, res) => {
 const PORT = process.env.GPT_ACTIONS_PORT || 3100;
 
 if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`GPT Actions server running on port ${PORT}`);
-  }).on('error', (err) => {
-    console.error(`Failed to start GPT Actions server: ${err.message}`);
-    process.exit(1);
-  });
+  app
+    .listen(PORT, () => {
+      console.log(`GPT Actions server running on port ${PORT}`);
+    })
+    .on("error", (err) => {
+      console.error(`Failed to start GPT Actions server: ${err.message}`);
+      process.exit(1);
+    });
 }
 
 module.exports = app;

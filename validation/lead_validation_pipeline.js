@@ -1,5 +1,5 @@
-const { validateLead } = require('../validators/lead_validator');
-const { dedupe } = require('./dedupe');
+const { validateLead } = require("../validators/lead_validator");
+const { dedupe } = require("./dedupe");
 
 /**
  * Runs the full lead validation pipeline:
@@ -36,10 +36,10 @@ function runValidationPipeline(leads) {
     valid: valid.length,
     invalid: invalid.length,
     unique: unique.length,
-    duplicates: duplicates.length
+    duplicates: duplicates.length,
   };
 
-  console.log('[LeadValidation] Pipeline summary:', summary);
+  console.log("[LeadValidation] Pipeline summary:", summary);
 
   return { valid: unique, invalid, duplicates, summary };
 }

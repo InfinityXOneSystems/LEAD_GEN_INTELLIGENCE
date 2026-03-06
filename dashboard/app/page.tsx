@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import StatsCards from '@/components/StatsCards';
-import FilterBar from '@/components/FilterBar';
-import LeadsTable from '@/components/LeadsTable';
-import ThemeToggle from '@/components/ThemeToggle';
+import { useState } from "react";
+import StatsCards from "@/components/StatsCards";
+import FilterBar from "@/components/FilterBar";
+import LeadsTable from "@/components/LeadsTable";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Home() {
   const [filters, setFilters] = useState<{
@@ -12,8 +12,11 @@ export default function Home() {
     search?: string;
   }>({});
 
-  const handleFilterChange = (newFilters: { tier?: string; search?: string }) => {
-    setFilters(prev => ({ ...prev, ...newFilters }));
+  const handleFilterChange = (newFilters: {
+    tier?: string;
+    search?: string;
+  }) => {
+    setFilters((prev) => ({ ...prev, ...newFilters }));
   };
 
   return (
@@ -61,7 +64,12 @@ export default function Home() {
               © 2026 XPS Lead Intelligence Platform
             </p>
             <div className="flex gap-4 text-sm text-zinc-600 dark:text-zinc-400">
-              <a href="https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-600 dark:hover:text-yellow-500 transition-colors">
+              <a
+                href="https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-yellow-600 dark:hover:text-yellow-500 transition-colors"
+              >
                 GitHub
               </a>
               <span>•</span>

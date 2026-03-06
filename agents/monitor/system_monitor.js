@@ -1,5 +1,5 @@
 function monitor() {
-  console.log('Checking system health');
+  console.log("Checking system health");
 }
 
 monitor();

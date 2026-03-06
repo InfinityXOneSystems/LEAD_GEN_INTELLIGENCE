@@ -1,21 +1,15 @@
-﻿const axios=require("axios")
+﻿const axios = require("axios");
 
-async function findEmails(url){
+async function findEmails(url) {
+  try {
+    let html = (await axios.get(url, { timeout: 5000 })).data;
 
-try{
+    let emails = html.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi);
 
-let html=(await axios.get(url,{timeout:5000})).data
-
-let emails=html.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig)
-
-return emails
-
-}catch(e){
-
-return []
-
+    return emails;
+  } catch (e) {
+    return [];
+  }
 }
 
-}
-
-module.exports=findEmails
+module.exports = findEmails;
