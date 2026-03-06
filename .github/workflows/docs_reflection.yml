@@ -1,0 +1,103 @@
+name: Docs Reflection & Self-Review
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Run daily at 06:00 UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  evolve-docs:
+    name: Generate Living Docs & Self-Review
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Run evolve_docs.js
+        id: evolve
+        run: |
+          node tools/docs/evolve_docs.js 2>&1 | tee /tmp/evolve_docs_output.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
+          # Extract summary JSON from last line
+          SUMMARY=$(grep '"todos"' /tmp/evolve_docs_output.txt | tail -1 | grep -o '{.*}' || echo '{}')
+          echo "summary=$SUMMARY" >> $GITHUB_OUTPUT
+        env:
+          NODE_ENV: production
+
+      - name: Check for doc changes
+        id: changes
+        run: |
+          git diff --quiet docs/ || echo "changed=true" >> $GITHUB_OUTPUT
+          git diff --quiet docs/ || true
+          CHANGED_FILES=$(git diff --name-only docs/ || true)
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGED_FILES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Commit updated docs
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git commit -m "docs: auto-update living docs [$(date -u +%Y-%m-%dT%H:%M:%SZ)]
+
+          Updated by docs_reflection workflow.
+          Files: ${{ steps.changes.outputs.files }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload docs artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: living-docs-${{ github.run_number }}
+          path: |
+            docs/REPO_MAP.md
+            docs/TODO.md
+            docs/TODO.json
+            docs/STATUS.md
+            docs/SELF_REVIEW.md
+            docs/self_review.json
+          retention-days: 30
+
+      - name: Create GitHub issues from recommendations
+        run: node tools/docs/create_issues.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Report summary
+        run: |
+          echo "### Docs Reflection Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          node -e "
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('docs/self_review.json', 'utf8'));
+            const t = JSON.parse(fs.readFileSync('docs/TODO.json', 'utf8'));
+            console.log('| Recommendations | ' + r.total + ' |');
+            console.log('| HIGH severity | ' + r.summary.HIGH + ' |');
+            console.log('| MEDIUM severity | ' + r.summary.MEDIUM + ' |');
+            console.log('| Open TODOs | ' + t.total + ' |');
+          " >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Docs updated: \`docs/REPO_MAP.md\`, \`docs/TODO.md\`, \`docs/STATUS.md\`, \`docs/SELF_REVIEW.md\`" >> $GITHUB_STEP_SUMMARY
