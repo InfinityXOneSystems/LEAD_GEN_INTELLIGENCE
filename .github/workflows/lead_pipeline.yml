@@ -89,6 +89,7 @@ jobs:
             echo "No new leads to commit."
           else
             git commit -m "data: scrape batch — $(date -u '+%Y-%m-%d %H:%M') UTC [skip ci]"
+            git pull --rebase origin main || true
             git push
           fi
 
@@ -129,9 +130,10 @@ jobs:
             const result = runValidationPipeline(leads);
             console.log('[validate] Summary:', JSON.stringify(result.summary));
             // Write validated leads back
+            const validLeads = result.valid || [];
             fs.mkdirSync('data/leads', { recursive: true });
-            fs.writeFileSync('data/leads/validated_leads.json', JSON.stringify(result.validLeads, null, 2));
-            console.log('[validate] Wrote', result.validLeads.length, 'validated leads.');
+            fs.writeFileSync('data/leads/validated_leads.json', JSON.stringify(validLeads, null, 2));
+            console.log('[validate] Wrote', validLeads.length, 'validated leads.');
           "
 
       - name: Commit validated leads
@@ -143,6 +145,7 @@ jobs:
             echo "No validation changes to commit."
           else
             git commit -m "data: validate leads [skip ci]"
+            git pull --rebase origin main || true
             git push
           fi
 
@@ -223,6 +226,7 @@ jobs:
             echo "No scoring changes to commit."
           else
             git commit -m "data: score leads — $(date -u '+%Y-%m-%d %H:%M') UTC [skip ci]"
+            git pull --rebase origin main || true
             git push
           fi
 
@@ -278,6 +282,7 @@ jobs:
             echo "No outreach changes to commit."
           else
             git commit -m "data: outreach log update [skip ci]"
+            git pull --rebase origin main || true
             git push
           fi
 
@@ -319,6 +324,7 @@ jobs:
             echo "Docs already current."
           else
             git commit -m "docs: auto-update pipeline docs [skip ci]"
+            git pull --rebase origin main || true
             git push
           fi
 
