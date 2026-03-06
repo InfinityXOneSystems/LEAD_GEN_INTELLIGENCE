@@ -190,3 +190,124 @@ pre {
   color: #9CA3AF !important;
   fill: #9CA3AF !important;
 }
+
+/* ── Glass Morphism ────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.glass-card {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(234, 179, 8, 0.12);
+}
+.glass-dark {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* ── Electric Gold Border Glow ─────────────────────────── */
+@keyframes electric-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(234, 179, 8, 0.2), 0 0 15px rgba(234, 179, 8, 0.06), inset 0 0 5px rgba(234, 179, 8, 0.02);
+    border-color: rgba(234, 179, 8, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.45), 0 0 40px rgba(234, 179, 8, 0.15), inset 0 0 10px rgba(234, 179, 8, 0.06);
+    border-color: rgba(234, 179, 8, 0.55);
+  }
+}
+.gold-glow-card {
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  animation: electric-glow 4s ease-in-out infinite;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.gold-glow-card:hover {
+  animation: none;
+  box-shadow: 0 0 30px rgba(234, 179, 8, 0.45), 0 0 60px rgba(234, 179, 8, 0.15);
+  border-color: rgba(234, 179, 8, 0.65);
+}
+
+/* Stagger glow delays for variety */
+.gold-glow-card:nth-child(2) { animation-delay: 0.8s; }
+.gold-glow-card:nth-child(3) { animation-delay: 1.6s; }
+.gold-glow-card:nth-child(4) { animation-delay: 2.4s; }
+.gold-glow-card:nth-child(5) { animation-delay: 3.2s; }
+
+/* Gold gradient text */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #EAB308, #F59E0B, #D97706);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Mobile Bottom Navigation ──────────────────────────── */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: rgba(8, 8, 8, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(234, 179, 8, 0.18);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ── Mobile Lead Cards ─────────────────────────────────── */
+.lead-card-mobile {
+  background: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  border-radius: 16px;
+  padding: 14px 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.lead-card-mobile:active {
+  border-color: rgba(234, 179, 8, 0.5);
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.12);
+}
+
+/* ── Score Ring ────────────────────────────────────────── */
+.score-ring {
+  background: conic-gradient(#EAB308 var(--pct, 0%), #1a1a1a 0%);
+  border-radius: 50%;
+}
+
+/* ── Chat Mobile Full Screen ───────────────────────────── */
+@keyframes slide-up-full {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.chat-mobile-enter {
+  animation: slide-up-full 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* ── Action Buttons ────────────────────────────────────── */
+.action-btn-gold {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(234, 179, 8, 0.1);
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  color: #EAB308;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+.action-btn-gold:hover, .action-btn-gold:active {
+  background: rgba(234, 179, 8, 0.2);
+  border-color: rgba(234, 179, 8, 0.6);
+  box-shadow: 0 0 10px rgba(234, 179, 8, 0.2);
+}
+
+/* ── Recharts mobile override ──────────────────────────── */
+@media (max-width: 640px) {
+  .recharts-text { font-size: 9px; }
+}

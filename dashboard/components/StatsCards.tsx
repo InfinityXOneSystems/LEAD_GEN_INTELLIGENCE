@@ -91,14 +91,14 @@ export default function StatsCards() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 animate-pulse"
+            className="glass-card gold-glow-card rounded-2xl p-4 animate-pulse"
           >
-            <div className="h-3 bg-[#2a2a2a] rounded w-1/2 mb-3" />
-            <div className="h-8 bg-[#2a2a2a] rounded w-3/4" />
+            <div className="h-3 bg-yellow-400/10 rounded w-1/2 mb-3" />
+            <div className="h-8 bg-yellow-400/10 rounded w-3/4" />
           </div>
         ))}
       </div>
@@ -156,30 +156,33 @@ export default function StatsCards() {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
       {cards.map((card, i) => (
         <div
           key={i}
-          className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover relative overflow-hidden"
+          className="glass-card gold-glow-card rounded-2xl p-4 relative overflow-hidden cursor-default select-none"
         >
+          {/* Live dot */}
           <div className="absolute top-3 right-3">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 live-dot block" />
           </div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-sm">{card.icon}</span>
-            <span className="text-xs text-gray-500 font-medium">
+
+          {/* Icon + label */}
+          <div className="flex items-center gap-1.5 mb-2">
+            <span className="text-base">{card.icon}</span>
+            <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider leading-none">
               {card.label}
             </span>
           </div>
-          <div
-            className={`text-3xl font-black ${card.valueColor} mb-3 leading-none`}
-          >
+
+          {/* Value */}
+          <div className={`text-3xl font-black ${card.valueColor} mb-2 leading-none`}>
             {card.value}
           </div>
+
+          {/* Change + sparkline */}
           <div className="flex items-end justify-between">
-            <span
-              className={`text-xs font-medium ${card.changePos ? "text-green-400" : "text-red-400"}`}
-            >
+            <span className={`text-xs font-semibold ${card.changePos ? "text-green-400" : "text-red-400"}`}>
               {card.change}
             </span>
             <SparkBars color={card.sparkColor} />
