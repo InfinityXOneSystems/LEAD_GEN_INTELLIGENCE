@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-06
 
-**Total leads:** 275
+**Total leads:** 188
 
 | Tier | Count |
 |------|-------|
-| HOT  | 4  |
-| WARM | 57 |
-| COLD | 214 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -26,11 +26,11 @@
 | Northern IL Floor Prep & Grind | (815) 555-1010 | https://nilfloorprep.com | 62 |
 | SBRI Epoxy |  |  | 55 |
 | Diedrich Epoxy Flooring |  |  | 55 |
+| Perry's Decorative Concrete and Painting |  |  | 55 |
 | Epoxy Worx - Concrete Coatings |  |  | 55 |
 | Deluxe Epoxy Flooring |  |  | 55 |
-| Perry's Decorative Concrete and Painting |  |  | 55 |
+| Miller’s Epoxy Solutions |  |  | 55 |
 | Precision Epoxy |  |  | 55 |
-| Royal Epoxy Coating Ltd |  |  | 55 |
-| GlossEdge Epoxy Flooring |  |  | 55 |
 | ECM Epoxy Flooring |  |  | 55 |
-| Central Illinois Epoxy LLC |  |  | 55 |
+| Chi Resin Custom Coatings |  |  | 55 |
+| Naperville Painting and Epoxy Flooring |  |  | 55 |
