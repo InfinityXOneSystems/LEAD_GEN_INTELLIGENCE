@@ -61,28 +61,20 @@ jobs:
         run: npx playwright install --with-deps chromium
         continue-on-error: true
 
-      # ── Step 1: Scrape ──────────────────────────────────────────────────
-      - name: Scrape leads
+      # ── Step 1a: Bootstrap seed leads for target cities ──────────────────
+      - name: Bootstrap seed leads (Rockford IL / Columbus OH / Tempe AZ)
+        if: ${{ github.event.inputs.skip_scrape != '1' }}
+        run: node scripts/generate_city_leads.js
+
+      # ── Step 1b: Scrape ──────────────────────────────────────────────────
+      - name: Scrape leads for target cities
         if: ${{ github.event.inputs.skip_scrape != '1' }}
         env:
-          DATABASE_HOST:     ${{ secrets.DATABASE_HOST }}
-          DATABASE_PORT:     ${{ secrets.DATABASE_PORT || '5432' }}
-          DATABASE_NAME:     ${{ secrets.DATABASE_NAME }}
-          DATABASE_USER:     ${{ secrets.DATABASE_USER }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          DATABASE_SSL:      ${{ secrets.DATABASE_SSL || 'false' }}
-          SCRAPER_MAX_KEYWORDS:  ${{ github.event.inputs.max_keywords  || '5' }}
-          SCRAPER_MAX_LOCATIONS: ${{ github.event.inputs.max_locations || '5' }}
-        run: |
-          node -e "
-            require('dotenv').config();
-            const { runEngine } = require('./scrapers/engine');
-            const maxK = parseInt(process.env.SCRAPER_MAX_KEYWORDS  || '5',  10) || null;
-            const maxL = parseInt(process.env.SCRAPER_MAX_LOCATIONS || '5', 10) || null;
-            runEngine({ maxKeywords: maxK, maxLocations: maxL })
-              .then(leads => { console.log('Scraped leads:', leads.length); process.exit(0); })
-              .catch(err  => { console.error('Scrape error:', err.message); process.exit(0); });
-          "
+          SCRAPER_CITIES: 'Rockford:IL,Columbus:OH,Tempe:AZ'
+          SCRAPER_CONCURRENCY: '2'
+          SCRAPER_RATE_LIMIT_MS: '2000'
+        run: node scrapers/google_maps_scraper.js
+        continue-on-error: true
 
       # ── Step 2: Validate ─────────────────────────────────────────────────
       - name: Validate leads
@@ -138,6 +130,8 @@ jobs:
             data/leads/invalid_leads.json \
             data/scraper_progress.json \
             data/exports/ \
+            pages/data/scored_leads.json \
+            pages/data/scoring_report.json \
             dashboard/public/data/scored_leads.json \
             dashboard/public/data/scoring_report.json \
             2>/dev/null || true
