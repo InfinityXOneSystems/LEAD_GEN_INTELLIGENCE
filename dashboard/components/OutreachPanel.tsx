@@ -259,7 +259,9 @@ export default function OutreachPanel() {
           ) : (
             <div className="space-y-3">
               <div className="flex items-center gap-3 p-3 bg-[#111111] rounded-lg">
-                <span className="text-yellow-400/70"><IconMail className="w-6 h-6" /></span>
+                <span className="text-yellow-400/70">
+                  <IconMail className="w-6 h-6" />
+                </span>
                 <div>
                   <div className="text-sm text-white font-medium">
                     Flooring Partnership Intro v2

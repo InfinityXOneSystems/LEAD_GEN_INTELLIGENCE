@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { IconTarget, IconFire, IconBolt, IconSnowflake, IconBarChart } from "@/components/Icons";
+import {
+  IconTarget,
+  IconFire,
+  IconBolt,
+  IconSnowflake,
+  IconBarChart,
+} from "@/components/Icons";
 
 interface Stats {
   totalLeads: number;
@@ -64,7 +70,13 @@ export default function StatsCards() {
             leads.reduce((sum, l) => sum + (l.lead_score || l.score || 0), 0) /
               totalLeads,
           );
-          setStats({ totalLeads, hotLeads, warmLeads, coldLeads, averageScore });
+          setStats({
+            totalLeads,
+            hotLeads,
+            warmLeads,
+            coldLeads,
+            averageScore,
+          });
         } else if (report) {
           setStats({
             totalLeads: report.total_leads || 0,
@@ -88,7 +100,10 @@ export default function StatsCards() {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
         {[...Array(5)].map((_, i) => (
-          <div key={i} className="glass-card gold-glow-card rounded-2xl p-4 animate-pulse">
+          <div
+            key={i}
+            className="glass-card gold-glow-card rounded-2xl p-4 animate-pulse"
+          >
             <div className="h-3 bg-yellow-400/10 rounded w-1/2 mb-3" />
             <div className="h-8 bg-yellow-400/10 rounded w-3/4" />
           </div>
@@ -168,13 +183,17 @@ export default function StatsCards() {
           </div>
 
           {/* Value */}
-          <div className={`text-3xl font-black ${card.valueColor} mb-2 leading-none`}>
+          <div
+            className={`text-3xl font-black ${card.valueColor} mb-2 leading-none`}
+          >
             {card.value}
           </div>
 
           {/* Change + sparkline */}
           <div className="flex items-end justify-between">
-            <span className={`text-xs font-semibold ${card.changePos ? "text-green-400" : "text-red-400"}`}>
+            <span
+              className={`text-xs font-semibold ${card.changePos ? "text-green-400" : "text-red-400"}`}
+            >
               {card.change}
             </span>
             <SparkBars color={card.sparkColor} />

@@ -1,7 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { IconPhone, IconMail, IconCheckCircle, IconStar, IconFire, IconBolt, IconSnowflake, IconDownload } from "@/components/Icons";
+import {
+  IconPhone,
+  IconMail,
+  IconCheckCircle,
+  IconStar,
+  IconFire,
+  IconBolt,
+  IconSnowflake,
+  IconDownload,
+} from "@/components/Icons";
 
 interface Lead {
   company?: string;
@@ -50,7 +59,9 @@ function TierBadge({ tier }: { tier: string }) {
       <IconSnowflake className="w-3 h-3" />
     );
   return (
-    <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold ${cls}`}>
+    <span
+      className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold ${cls}`}
+    >
       {icon} {tier}
     </span>
   );
@@ -58,12 +69,29 @@ function TierBadge({ tier }: { tier: string }) {
 
 function ScoreBadge({ score }: { score: number }) {
   const color =
-    score >= 75 ? "text-yellow-400" : score >= 50 ? "text-orange-400" : "text-blue-400";
-  return <span className={`text-lg font-black ${color} leading-none`}>{score}</span>;
+    score >= 75
+      ? "text-yellow-400"
+      : score >= 50
+        ? "text-orange-400"
+        : "text-blue-400";
+  return (
+    <span className={`text-lg font-black ${color} leading-none`}>{score}</span>
+  );
 }
 
 function exportCSV(leads: Lead[]) {
-  const headers = ["Company","City","State","Industry","Score","Tier","Phone","Email","Rating","Reviews"];
+  const headers = [
+    "Company",
+    "City",
+    "State",
+    "Industry",
+    "Score",
+    "Tier",
+    "Phone",
+    "Email",
+    "Rating",
+    "Reviews",
+  ];
   const rows = leads.map((l) => [
     l.company || l.company_name || "",
     l.city || "",
@@ -77,7 +105,11 @@ function exportCSV(leads: Lead[]) {
     l.reviews?.toString() || "",
   ]);
   const csv = [headers, ...rows]
-    .map((r) => r.map((v) => `"${v.replace(/"/g, '""').replace(/\r?\n/g, " ")}"`).join(","))
+    .map((r) =>
+      r
+        .map((v) => `"${v.replace(/"/g, '""').replace(/\r?\n/g, " ")}"`)
+        .join(","),
+    )
     .join("\n");
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
@@ -98,7 +130,9 @@ function MobileLeadCard({ lead, idx }: { lead: Lead; idx: number }) {
       {/* Header row */}
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-bold text-white leading-tight truncate">{company}</div>
+          <div className="text-sm font-bold text-white leading-tight truncate">
+            {company}
+          </div>
           <div className="text-xs text-gray-500 mt-0.5">
             {[lead.city, lead.state].filter(Boolean).join(", ") || "—"}
           </div>
@@ -112,12 +146,15 @@ function MobileLeadCard({ lead, idx }: { lead: Lead; idx: number }) {
       {/* Industry + rating */}
       <div className="flex items-center gap-3 mb-3 text-xs text-gray-500">
         {(lead.industry_detected || lead.industry) && (
-          <span className="truncate">{lead.industry_detected || lead.industry}</span>
+          <span className="truncate">
+            {lead.industry_detected || lead.industry}
+          </span>
         )}
         {lead.rating != null && (
           <span className="flex-shrink-0 flex items-center gap-1">
             <IconStar className="w-3 h-3 text-yellow-400" />
-            {lead.rating.toFixed(1)}{lead.reviews ? ` (${lead.reviews})` : ""}
+            {lead.rating.toFixed(1)}
+            {lead.reviews ? ` (${lead.reviews})` : ""}
           </span>
         )}
       </div>
@@ -200,14 +237,20 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
     }
     if (filters.city) {
       const ct = filters.city.toLowerCase();
-      filtered = filtered.filter((l) => (l.city || "").toLowerCase().includes(ct));
+      filtered = filtered.filter((l) =>
+        (l.city || "").toLowerCase().includes(ct),
+      );
     }
     if (filters.search) {
       const q = filters.search.toLowerCase();
       filtered = filtered.filter((l) => {
         const company = (l.company || l.company_name || "").toLowerCase();
         const city = (l.city || "").toLowerCase();
-        const industry = (l.industry_detected || l.industry || "").toLowerCase();
+        const industry = (
+          l.industry_detected ||
+          l.industry ||
+          ""
+        ).toLowerCase();
         return company.includes(q) || city.includes(q) || industry.includes(q);
       });
     }
@@ -245,7 +288,11 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
       {/* Header bar */}
       <div className="glass-card rounded-t-2xl px-4 py-3 border-b border-yellow-400/10 flex items-center justify-between">
         <span className="text-sm text-gray-400">
-          Showing <span className="text-white font-semibold">{displayLeads.length}</span> leads
+          Showing{" "}
+          <span className="text-white font-semibold">
+            {displayLeads.length}
+          </span>{" "}
+          leads
         </span>
         <button
           onClick={() => exportCSV(displayLeads)}
@@ -269,7 +316,15 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
           <table className="w-full">
             <thead className="bg-black/40 border-b border-yellow-400/10">
               <tr>
-                {["Company", "Location", "Industry", "Score", "Tier", "Contact", "Actions"].map((h) => (
+                {[
+                  "Company",
+                  "Location",
+                  "Industry",
+                  "Score",
+                  "Tier",
+                  "Contact",
+                  "Actions",
+                ].map((h) => (
                   <th
                     key={h}
                     className="px-5 py-3 text-left text-xs font-semibold text-yellow-400 uppercase tracking-wider"
@@ -281,7 +336,10 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
             </thead>
             <tbody className="divide-y divide-yellow-400/5">
               {paginatedLeads.map((lead, idx) => (
-                <tr key={idx} className="hover:bg-yellow-400/5 transition-colors group">
+                <tr
+                  key={idx}
+                  className="hover:bg-yellow-400/5 transition-colors group"
+                >
                   <td className="px-5 py-3">
                     <div className="text-sm font-medium text-white group-hover:text-yellow-400/90 transition-colors">
                       {lead.company || lead.company_name || "Unknown"}
@@ -295,7 +353,8 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
                     )}
                   </td>
                   <td className="px-5 py-3 text-sm text-gray-300 whitespace-nowrap">
-                    {lead.city || "—"}{lead.state ? `, ${lead.state}` : ""}
+                    {lead.city || "—"}
+                    {lead.state ? `, ${lead.state}` : ""}
                   </td>
                   <td className="px-5 py-3 text-sm text-gray-300">
                     {lead.industry_detected || lead.industry || "—"}
@@ -311,20 +370,27 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
                   <td className="px-5 py-3 text-xs text-gray-400 space-y-1">
                     {lead.phone && (
                       <div className="flex items-center gap-1">
-                        <IconPhone className="w-3 h-3 flex-shrink-0" /> {lead.phone}
+                        <IconPhone className="w-3 h-3 flex-shrink-0" />{" "}
+                        {lead.phone}
                       </div>
                     )}
                     {lead.email && (
                       <div className="flex items-center gap-1">
-                        <IconMail className="w-3 h-3 flex-shrink-0" /> {lead.email}
+                        <IconMail className="w-3 h-3 flex-shrink-0" />{" "}
+                        {lead.email}
                       </div>
                     )}
-                    {!lead.phone && !lead.email && <span className="text-gray-600">—</span>}
+                    {!lead.phone && !lead.email && (
+                      <span className="text-gray-600">—</span>
+                    )}
                   </td>
                   <td className="px-5 py-3 whitespace-nowrap">
                     <div className="flex gap-1.5">
                       {lead.phone && (
-                        <a href={`tel:${lead.phone}`} className="action-btn-gold inline-flex items-center gap-1">
+                        <a
+                          href={`tel:${lead.phone}`}
+                          className="action-btn-gold inline-flex items-center gap-1"
+                        >
                           <IconPhone className="w-3 h-3" /> Call
                         </a>
                       )}

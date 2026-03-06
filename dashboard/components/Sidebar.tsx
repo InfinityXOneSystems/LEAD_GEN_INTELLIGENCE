@@ -149,8 +149,18 @@ export default function Sidebar({
             className="md:hidden flex items-center justify-center w-7 h-7 rounded text-gray-500 hover:text-white hover:bg-[#2a2a2a] transition-colors"
             aria-label="Close menu"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -173,7 +183,9 @@ export default function Sidebar({
                   collapsed ? "justify-center" : "",
                 ].join(" ")}
               >
-                <span className={`flex-shrink-0 w-4 h-4 ${isActive ? "text-yellow-400" : "opacity-70"}`}>
+                <span
+                  className={`flex-shrink-0 w-4 h-4 ${isActive ? "text-yellow-400" : "opacity-70"}`}
+                >
                   {item.icon}
                 </span>
                 {!collapsed && <span className="truncate">{item.label}</span>}

@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { IconCpu, IconX, IconChevronLeft, IconArrowUp, IconActivity } from "@/components/Icons";
+import {
+  IconCpu,
+  IconX,
+  IconChevronLeft,
+  IconArrowUp,
+  IconActivity,
+} from "@/components/Icons";
 
 interface Message {
   id: string;
@@ -26,19 +32,35 @@ function getAIResponse(command: string): string {
     const query = cmd.replace("scrape", "").trim();
     return `**Scraper initiated** for query: "${query || cmd}"\n\nPipeline started:\n• Google Maps scraper — searching business listings\n• Yelp scraper — cross-referencing reviews\n• Directory scraper — checking contractor databases\n\nEstimated completion: 3-5 minutes\nExpected leads: 50-200 results\n\nRun ID: SCR-${Date.now().toString(36).toUpperCase()}`;
   }
-  if (cmd.includes("top leads") || cmd.includes("show leads") || cmd.includes("best leads")) {
+  if (
+    cmd.includes("top leads") ||
+    cmd.includes("show leads") ||
+    cmd.includes("best leads")
+  ) {
     return `**Top 5 Leads by Score:**\n\n1. Premium Epoxy Floors LLC — Score: 95 | Columbus, OH\n2. Elite Flooring Solutions — Score: 92 | Cleveland, OH\n3. ProCoat Industrial — Score: 88 | Cincinnati, OH\n4. Midwest Floor Pros — Score: 76 | Toledo, OH\n5. Great Lakes Flooring — Score: 74 | Akron, OH\n\nNavigate to **Leads** for full details and filtering.`;
   }
-  if (cmd.includes("outreach") || cmd.includes("campaign") || cmd.includes("email")) {
+  if (
+    cmd.includes("outreach") ||
+    cmd.includes("campaign") ||
+    cmd.includes("email")
+  ) {
     return `**Outreach Campaign Queued**\n\nConfiguration:\n• Target: HOT leads (score 75+)\n• Template: Flooring Partnership Intro v2\n• Schedule: Sending in 15 minutes\n• Follow-up: +3 days if no reply\n\nLeads queued: 23\nRate limit: 50 emails/day\n\nCampaign ID: CAMP-${Date.now().toString(36).toUpperCase()}\nGo to **Outreach** panel to monitor delivery.`;
   }
-  if (cmd.includes("export") || cmd.includes("csv") || cmd.includes("download")) {
+  if (
+    cmd.includes("export") ||
+    cmd.includes("csv") ||
+    cmd.includes("download")
+  ) {
     return `**Export initiated**\n\nGenerating CSV file...\n• All leads: included\n• Fields: company, phone, email, city, state, score, tier, industry\n• Format: UTF-8 CSV\n\nFile ready: leads_export_${new Date().toISOString().split("T")[0]}.csv\n\nNavigate to **Leads** and click Export for the actual download.`;
   }
   if (cmd.includes("pipeline") || cmd.includes("run all")) {
     return `**Full Pipeline Triggered**\n\nExecuting stages:\n\n1. Scrape — Starting scrapers...\n2. Validate — Queued\n3. Enrich — Queued\n4. Score — Queued\n5. Outreach — Queued\n\nWorkflow: PIPELINE-${Date.now().toString(36).toUpperCase()}\nETA: ~12 minutes for full cycle\n\nMonitor progress in **Workflows** — GitHub Actions.`;
   }
-  if (cmd.includes("status") || cmd.includes("health") || cmd.includes("check")) {
+  if (
+    cmd.includes("status") ||
+    cmd.includes("health") ||
+    cmd.includes("check")
+  ) {
     return `**System Status Report**\n\nGoogle Maps Scraper — Active (last run: 2h ago)\nYelp Scraper — Active (last run: 4h ago)\nBing Scraper — Idle (scheduled: +1h)\nValidation Engine — Running\nScoring Engine — Running\nOutreach Bot — Standby\n\nLeads processed today: 847\nEmails sent today: 23\nQueue depth: Normal`;
   }
   if (cmd.includes("help") || cmd === "?") {
@@ -61,7 +83,8 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
     {
       id: "welcome",
       role: "ai",
-      content: "**Welcome to XPS AI Command**\n\nI control the lead intelligence system. Try a command below or type your own.\n\nType **help** to see all available commands.",
+      content:
+        "**Welcome to XPS AI Command**\n\nI control the lead intelligence system. Try a command below or type your own.\n\nType **help** to see all available commands.",
       timestamp: new Date(),
     },
   ]);
@@ -122,7 +145,9 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
         <div key={i} className={line === "" ? "h-2" : ""}>
           {parts.map((part, j) =>
             j % 2 === 1 ? (
-              <strong key={j} className="font-semibold text-yellow-400">{part}</strong>
+              <strong key={j} className="font-semibold text-yellow-400">
+                {part}
+              </strong>
             ) : (
               <span key={j}>{part}</span>
             ),
@@ -173,7 +198,9 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
               <IconCpu className="w-4 h-4 text-yellow-400" />
             </div>
             <div>
-              <div className="text-sm font-bold text-white leading-tight">XPS AI Command</div>
+              <div className="text-sm font-bold text-white leading-tight">
+                XPS AI Command
+              </div>
               <div className="flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-400 live-dot" />
                 <span className="text-[10px] text-green-400">Online</span>
@@ -199,11 +226,15 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
                 ].join(" ")}
               >
                 {msg.role === "ai" ? (
-                  <div className="space-y-0.5">{renderMessageContent(msg.content)}</div>
+                  <div className="space-y-0.5">
+                    {renderMessageContent(msg.content)}
+                  </div>
                 ) : (
                   msg.content
                 )}
-                <div className={`text-[10px] mt-1.5 ${msg.role === "user" ? "text-yellow-900/70" : "text-gray-600"}`}>
+                <div
+                  className={`text-[10px] mt-1.5 ${msg.role === "user" ? "text-yellow-900/70" : "text-gray-600"}`}
+                >
                   {formatTime(msg.timestamp)}
                 </div>
               </div>
@@ -224,7 +255,9 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
         <div className="px-4 py-2 border-t border-yellow-400/10 flex-shrink-0">
           <div className="flex items-center gap-1 mb-1">
             <IconActivity className="w-3 h-3 text-gray-600" />
-            <span className="text-[10px] text-gray-600 font-medium uppercase tracking-wider">Quick Commands</span>
+            <span className="text-[10px] text-gray-600 font-medium uppercase tracking-wider">
+              Quick Commands
+            </span>
           </div>
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {QUICK_COMMANDS.map((cmd) => (
@@ -286,7 +319,9 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
                 <IconCpu className="w-4 h-4 text-yellow-400" />
               </div>
               <div>
-                <div className="text-sm font-bold text-white">XPS AI Command</div>
+                <div className="text-sm font-bold text-white">
+                  XPS AI Command
+                </div>
                 <div className="flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-400 live-dot" />
                   <span className="text-[10px] text-green-400">Online</span>
@@ -319,11 +354,15 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
                   ].join(" ")}
                 >
                   {msg.role === "ai" ? (
-                    <div className="space-y-0.5">{renderMessageContent(msg.content)}</div>
+                    <div className="space-y-0.5">
+                      {renderMessageContent(msg.content)}
+                    </div>
                   ) : (
                     msg.content
                   )}
-                  <div className={`text-[10px] mt-1.5 ${msg.role === "user" ? "text-yellow-900/70" : "text-gray-500"}`}>
+                  <div
+                    className={`text-[10px] mt-1.5 ${msg.role === "user" ? "text-yellow-900/70" : "text-gray-500"}`}
+                  >
                     {formatTime(msg.timestamp)}
                   </div>
                 </div>
@@ -382,4 +421,3 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
     </>
   );
 }
-

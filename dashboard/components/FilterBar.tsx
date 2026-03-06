@@ -1,7 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { IconSearch, IconMapPin, IconBuilding, IconX, IconFire, IconBolt, IconSnowflake, IconTarget } from "@/components/Icons";
+import {
+  IconSearch,
+  IconMapPin,
+  IconBuilding,
+  IconX,
+  IconFire,
+  IconBolt,
+  IconSnowflake,
+  IconTarget,
+} from "@/components/Icons";
 
 interface FilterBarProps {
   onFilterChange: (filters: {
@@ -13,11 +22,56 @@ interface FilterBarProps {
 }
 
 const US_STATES = [
-  "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA",
-  "HI","ID","IL","IN","IA","KS","KY","LA","ME","MD",
-  "MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
-  "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC",
-  "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY",
+  "AL",
+  "AK",
+  "AZ",
+  "AR",
+  "CA",
+  "CO",
+  "CT",
+  "DE",
+  "FL",
+  "GA",
+  "HI",
+  "ID",
+  "IL",
+  "IN",
+  "IA",
+  "KS",
+  "KY",
+  "LA",
+  "ME",
+  "MD",
+  "MA",
+  "MI",
+  "MN",
+  "MS",
+  "MO",
+  "MT",
+  "NE",
+  "NV",
+  "NH",
+  "NJ",
+  "NM",
+  "NY",
+  "NC",
+  "ND",
+  "OH",
+  "OK",
+  "OR",
+  "PA",
+  "RI",
+  "SC",
+  "SD",
+  "TN",
+  "TX",
+  "UT",
+  "VT",
+  "VA",
+  "WA",
+  "WV",
+  "WI",
+  "WY",
 ];
 
 export default function FilterBar({ onFilterChange }: FilterBarProps) {
@@ -50,10 +104,15 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
     { id: "ALL", label: "All", icon: <IconTarget className="w-3.5 h-3.5" /> },
     { id: "HOT", label: "HOT", icon: <IconFire className="w-3.5 h-3.5" /> },
     { id: "WARM", label: "WARM", icon: <IconBolt className="w-3.5 h-3.5" /> },
-    { id: "COLD", label: "COLD", icon: <IconSnowflake className="w-3.5 h-3.5" /> },
+    {
+      id: "COLD",
+      label: "COLD",
+      icon: <IconSnowflake className="w-3.5 h-3.5" />,
+    },
   ];
 
-  const hasActiveFilters = activeTier !== "ALL" || searchValue || selectedState || cityValue;
+  const hasActiveFilters =
+    activeTier !== "ALL" || searchValue || selectedState || cityValue;
 
   return (
     <div className="glass-card rounded-2xl p-4 mb-3 space-y-3">
@@ -114,7 +173,9 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
           >
             <option value="">All States</option>
             {US_STATES.map((s) => (
-              <option key={s} value={s}>{s}</option>
+              <option key={s} value={s}>
+                {s}
+              </option>
             ))}
           </select>
         </div>
@@ -139,7 +200,12 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
               setSearchValue("");
               setSelectedState("");
               setCityValue("");
-              onFilterChange({ tier: undefined, search: undefined, state: undefined, city: undefined });
+              onFilterChange({
+                tier: undefined,
+                search: undefined,
+                state: undefined,
+                city: undefined,
+              });
             }}
             className="flex items-center gap-1.5 px-3 py-2 text-xs text-gray-400 hover:text-yellow-400 border border-[#2a2a2a] hover:border-yellow-400/30 rounded-xl transition-all whitespace-nowrap"
           >

@@ -1,7 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { IconCheck, IconX, IconRefresh, IconMinus, IconClock, IconExternalLink, IconActivity } from "@/components/Icons";
+import {
+  IconCheck,
+  IconX,
+  IconRefresh,
+  IconMinus,
+  IconClock,
+  IconExternalLink,
+  IconActivity,
+} from "@/components/Icons";
 
 interface Workflow {
   id: string;
@@ -232,8 +240,18 @@ export default function WorkflowPanel() {
                     {stage}
                   </span>
                   {i < wf.stages.length - 1 && (
-                    <svg className="w-3 h-3 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <svg
+                      className="w-3 h-3 text-gray-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   )}
                 </span>

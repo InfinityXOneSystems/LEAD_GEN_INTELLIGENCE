@@ -33,10 +33,22 @@ const SECTION_LABELS: Record<SectionId, string> = {
 };
 
 const MOBILE_NAV: { id: SectionId; label: string; icon: React.ReactNode }[] = [
-  { id: "dashboard", label: "Home", icon: <IconDashboard className="w-5 h-5" /> },
+  {
+    id: "dashboard",
+    label: "Home",
+    icon: <IconDashboard className="w-5 h-5" />,
+  },
   { id: "leads", label: "Leads", icon: <IconUsers className="w-5 h-5" /> },
-  { id: "analytics", label: "Charts", icon: <IconBarChart className="w-5 h-5" /> },
-  { id: "workflows", label: "Workflows", icon: <IconSettings className="w-5 h-5" /> },
+  {
+    id: "analytics",
+    label: "Charts",
+    icon: <IconBarChart className="w-5 h-5" />,
+  },
+  {
+    id: "workflows",
+    label: "Workflows",
+    icon: <IconSettings className="w-5 h-5" />,
+  },
   { id: "ai-command", label: "AI", icon: <IconCpu className="w-5 h-5" /> },
 ];
 
@@ -95,7 +107,8 @@ export default function Home() {
 
           {/* Logo — mobile only */}
           <span className="md:hidden text-yellow-400 font-black text-base tracking-tight">
-            XPS<span className="text-white font-light ml-0.5 text-xs"> INTEL</span>
+            XPS
+            <span className="text-white font-light ml-0.5 text-xs"> INTEL</span>
           </span>
 
           <div className="flex-1 min-w-0 hidden md:block">
@@ -139,7 +152,12 @@ export default function Home() {
             </div>
           )}
 
-          {activeSection === "analytics" && <AnalyticsSection filters={filters} onFilterChange={handleFilterChange} />}
+          {activeSection === "analytics" && (
+            <AnalyticsSection
+              filters={filters}
+              onFilterChange={handleFilterChange}
+            />
+          )}
 
           {activeSection === "leads" && (
             <div className="fade-in space-y-3">
@@ -161,7 +179,9 @@ export default function Home() {
 
         {/* Footer — desktop only */}
         <footer className="hidden md:flex border-t border-[#2a2a2a] px-6 py-3 items-center justify-between">
-          <span className="text-xs text-gray-600">© 2026 XPS Lead Intelligence</span>
+          <span className="text-xs text-gray-600">
+            © 2026 XPS Lead Intelligence
+          </span>
           <div className="flex items-center gap-3 text-xs text-gray-600">
             <a
               href="https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE"
@@ -206,10 +226,14 @@ export default function Home() {
                     : "text-gray-500 hover:text-gray-300",
                 ].join(" ")}
               >
-                <span className={`${isActive ? "text-yellow-400" : "text-gray-500"}`}>
+                <span
+                  className={`${isActive ? "text-yellow-400" : "text-gray-500"}`}
+                >
                   {item.icon}
                 </span>
-                <span className={`text-[10px] font-medium leading-none ${isActive ? "text-yellow-400" : "text-gray-600"}`}>
+                <span
+                  className={`text-[10px] font-medium leading-none ${isActive ? "text-yellow-400" : "text-gray-600"}`}
+                >
                   {item.label}
                 </span>
                 {isActive && (
