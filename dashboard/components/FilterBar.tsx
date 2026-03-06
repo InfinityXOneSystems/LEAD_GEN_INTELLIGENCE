@@ -44,10 +44,10 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
                     ? t.id === "HOT"
                       ? "bg-red-900/40 text-red-400 border border-red-400/40"
                       : t.id === "WARM"
-                      ? "bg-orange-900/40 text-orange-400 border border-orange-400/40"
-                      : t.id === "COLD"
-                      ? "bg-blue-900/40 text-blue-400 border border-blue-400/40"
-                      : "bg-yellow-400/10 text-yellow-400 border border-yellow-400/40"
+                        ? "bg-orange-900/40 text-orange-400 border border-orange-400/40"
+                        : t.id === "COLD"
+                          ? "bg-blue-900/40 text-blue-400 border border-blue-400/40"
+                          : "bg-yellow-400/10 text-yellow-400 border border-yellow-400/40"
                     : "bg-[#1a1a1a] text-gray-400 border border-[#2a2a2a] hover:text-white hover:border-gray-600",
                 ].join(" ")}
               >

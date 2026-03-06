@@ -26,7 +26,13 @@ function SparkBars({ color }: { color: string }) {
   );
 }
 
-const EMPTY_STATS: Stats = { totalLeads: 0, hotLeads: 0, warmLeads: 0, coldLeads: 0, averageScore: 0 };
+const EMPTY_STATS: Stats = {
+  totalLeads: 0,
+  hotLeads: 0,
+  warmLeads: 0,
+  coldLeads: 0,
+  averageScore: 0,
+};
 
 export default function StatsCards() {
   const [stats, setStats] = useState<Stats | null>(null);
@@ -57,7 +63,13 @@ export default function StatsCards() {
             leads.reduce((sum, l) => sum + (l.lead_score || l.score || 0), 0) /
               totalLeads,
           );
-          setStats({ totalLeads, hotLeads, warmLeads, coldLeads, averageScore });
+          setStats({
+            totalLeads,
+            hotLeads,
+            warmLeads,
+            coldLeads,
+            averageScore,
+          });
         } else if (report) {
           setStats({
             totalLeads: report.total_leads || 0,
@@ -81,7 +93,10 @@ export default function StatsCards() {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
         {[...Array(5)].map((_, i) => (
-          <div key={i} className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 animate-pulse">
+          <div
+            key={i}
+            className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 animate-pulse"
+          >
             <div className="h-3 bg-[#2a2a2a] rounded w-1/2 mb-3" />
             <div className="h-8 bg-[#2a2a2a] rounded w-3/4" />
           </div>
@@ -152,13 +167,19 @@ export default function StatsCards() {
           </div>
           <div className="flex items-center gap-2 mb-2">
             <span className="text-sm">{card.icon}</span>
-            <span className="text-xs text-gray-500 font-medium">{card.label}</span>
+            <span className="text-xs text-gray-500 font-medium">
+              {card.label}
+            </span>
           </div>
-          <div className={`text-3xl font-black ${card.valueColor} mb-3 leading-none`}>
+          <div
+            className={`text-3xl font-black ${card.valueColor} mb-3 leading-none`}
+          >
             {card.value}
           </div>
           <div className="flex items-end justify-between">
-            <span className={`text-xs font-medium ${card.changePos ? "text-green-400" : "text-red-400"}`}>
+            <span
+              className={`text-xs font-medium ${card.changePos ? "text-green-400" : "text-red-400"}`}
+            >
               {card.change}
             </span>
             <SparkBars color={card.sparkColor} />

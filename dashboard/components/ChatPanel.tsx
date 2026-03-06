@@ -25,19 +25,35 @@ function getAIResponse(command: string): string {
     const query = cmd.replace("scrape", "").trim();
     return `🤖 **Scraper initiated** for query: "${query || cmd}"\n\nPipeline started:\n• Google Maps scraper → searching business listings\n• Yelp scraper → cross-referencing reviews\n• Directory scraper → checking contractor databases\n\n⏳ Estimated completion: ~3-5 minutes\n📊 Expected leads: 50-200 results\n\nRun ID: SCR-${Date.now().toString(36).toUpperCase()}`;
   }
-  if (cmd.includes("top leads") || cmd.includes("show leads") || cmd.includes("best leads")) {
+  if (
+    cmd.includes("top leads") ||
+    cmd.includes("show leads") ||
+    cmd.includes("best leads")
+  ) {
     return `🎯 **Top 5 Leads by Score:**\n\n1. 🔥 Premium Epoxy Floors LLC — Score: 95 | Columbus, OH\n2. 🔥 Elite Flooring Solutions — Score: 92 | Cleveland, OH\n3. 🔥 ProCoat Industrial — Score: 88 | Cincinnati, OH\n4. ⚡ Midwest Floor Pros — Score: 76 | Toledo, OH\n5. ⚡ Great Lakes Flooring — Score: 74 | Akron, OH\n\nNavigate to the **Leads** section for full details and filtering.`;
   }
-  if (cmd.includes("outreach") || cmd.includes("campaign") || cmd.includes("email")) {
+  if (
+    cmd.includes("outreach") ||
+    cmd.includes("campaign") ||
+    cmd.includes("email")
+  ) {
     return `📧 **Outreach Campaign Queued**\n\nConfiguration:\n• Target: HOT leads (score ≥ 75)\n• Template: Flooring Partnership Intro v2\n• Schedule: Sending in 15 minutes\n• Follow-up: +3 days if no reply\n\n📋 Leads queued: 23\n⚠️ Rate limit: 50 emails/day\n\nCampaign ID: CAMP-${Date.now().toString(36).toUpperCase()}\nGo to **Outreach** panel to monitor delivery.`;
   }
-  if (cmd.includes("export") || cmd.includes("csv") || cmd.includes("download")) {
+  if (
+    cmd.includes("export") ||
+    cmd.includes("csv") ||
+    cmd.includes("download")
+  ) {
     return `📥 **Export initiated**\n\nGenerating CSV file...\n• All leads: ✓ included\n• Fields: company, phone, email, city, state, score, tier, industry\n• Format: UTF-8 CSV\n\n✅ File ready: leads_export_${new Date().toISOString().split("T")[0]}.csv\n\n💡 In production mode, your browser would automatically download this file. Navigate to **Leads** section and click the Export button for the actual download.`;
   }
   if (cmd.includes("pipeline") || cmd.includes("run all")) {
     return `⚙️ **Full Pipeline Triggered**\n\nExecuting stages:\n\n1. 🔍 Scrape — Starting scrapers... ⏳\n2. ✅ Validate — Queued\n3. 🔬 Enrich — Queued\n4. 📊 Score — Queued\n5. 📧 Outreach — Queued\n\nWorkflow: PIPELINE-${Date.now().toString(36).toUpperCase()}\n⏱️ ETA: ~12 minutes for full cycle\n\nYou can monitor progress in **AI Command** → Pipeline Status, or check **Workflows** for GitHub Actions status.`;
   }
-  if (cmd.includes("status") || cmd.includes("health") || cmd.includes("check")) {
+  if (
+    cmd.includes("status") ||
+    cmd.includes("health") ||
+    cmd.includes("check")
+  ) {
     return `📡 **System Status Report**\n\n✅ Google Maps Scraper — Active (last run: 2h ago)\n✅ Yelp Scraper — Active (last run: 4h ago)\n⚡ Bing Scraper — Idle (scheduled: +1h)\n✅ Validation Engine — Running\n✅ Scoring Engine — Running\n⚡ Outreach Bot — Standby\n\n📊 Stats:\n• Leads in queue: 14\n• Leads processed today: 847\n• Emails sent today: 23\n• Queue depth: Normal`;
   }
   if (cmd.includes("help") || cmd.includes("?")) {
@@ -60,7 +76,8 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
     {
       id: "welcome",
       role: "ai",
-      content: "👋 **Welcome to XPS AI Command**\n\nI can control the lead intelligence system. Try a command below or type your own!\n\nType **help** to see all available commands.",
+      content:
+        "👋 **Welcome to XPS AI Command**\n\nI can control the lead intelligence system. Try a command below or type your own!\n\nType **help** to see all available commands.",
       timestamp: new Date(),
     },
   ]);
@@ -94,16 +111,19 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
     setIsTyping(true);
 
     // Simulate AI response delay
-    setTimeout(() => {
-      const aiMsg: Message = {
-        id: `ai-${Date.now()}`,
-        role: "ai",
-        content: getAIResponse(content),
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, aiMsg]);
-      setIsTyping(false);
-    }, MIN_RESPONSE_DELAY + Math.random() * MAX_RESPONSE_JITTER);
+    setTimeout(
+      () => {
+        const aiMsg: Message = {
+          id: `ai-${Date.now()}`,
+          role: "ai",
+          content: getAIResponse(content),
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, aiMsg]);
+        setIsTyping(false);
+      },
+      MIN_RESPONSE_DELAY + Math.random() * MAX_RESPONSE_JITTER,
+    );
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -130,7 +150,7 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
               </strong>
             ) : (
               <span key={j}>{part}</span>
-            )
+            ),
           )}
         </div>
       );
@@ -214,9 +234,18 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
             <div className="flex justify-start">
               <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl rounded-bl-sm px-4 py-3">
                 <div className="flex gap-1 items-center">
-                  <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                  <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                  <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                  <span
+                    className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-bounce"
+                    style={{ animationDelay: "0ms" }}
+                  />
+                  <span
+                    className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-bounce"
+                    style={{ animationDelay: "150ms" }}
+                  />
+                  <span
+                    className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-bounce"
+                    style={{ animationDelay: "300ms" }}
+                  />
                 </div>
               </div>
             </div>

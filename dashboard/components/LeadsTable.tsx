@@ -33,8 +33,8 @@ function TierBadge({ tier }: { tier: string }) {
     tier === "HOT"
       ? "status-hot"
       : tier === "WARM"
-      ? "status-warm"
-      : "status-cold";
+        ? "status-warm"
+        : "status-cold";
   const icon = tier === "HOT" ? "🔥" : tier === "WARM" ? "⚡" : "❄️";
   return (
     <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${cls}`}>
@@ -44,7 +44,18 @@ function TierBadge({ tier }: { tier: string }) {
 }
 
 function exportCSV(leads: Lead[]) {
-  const headers = ["Company", "City", "State", "Industry", "Score", "Tier", "Phone", "Email", "Rating", "Reviews"];
+  const headers = [
+    "Company",
+    "City",
+    "State",
+    "Industry",
+    "Score",
+    "Tier",
+    "Phone",
+    "Email",
+    "Rating",
+    "Reviews",
+  ];
   const rows = leads.map((l) => [
     l.company || l.company_name || "",
     l.city || "",
@@ -57,7 +68,13 @@ function exportCSV(leads: Lead[]) {
     l.rating?.toFixed(1) || "",
     l.reviews?.toString() || "",
   ]);
-  const csv = [headers, ...rows].map((r) => r.map((v) => `"${v.replace(/"/g, '""').replace(/\r?\n/g, " ")}"`).join(",")).join("\n");
+  const csv = [headers, ...rows]
+    .map((r) =>
+      r
+        .map((v) => `"${v.replace(/"/g, '""').replace(/\r?\n/g, " ")}"`)
+        .join(","),
+    )
+    .join("\n");
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -97,7 +114,11 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
       filtered = filtered.filter((l) => {
         const company = (l.company || l.company_name || "").toLowerCase();
         const city = (l.city || "").toLowerCase();
-        const industry = (l.industry_detected || l.industry || "").toLowerCase();
+        const industry = (
+          l.industry_detected ||
+          l.industry ||
+          ""
+        ).toLowerCase();
         return company.includes(q) || city.includes(q) || industry.includes(q);
       });
     }
@@ -134,14 +155,26 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
     <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl overflow-hidden">
       <div className="flex items-center justify-between px-5 py-3 border-b border-[#2a2a2a]">
         <span className="text-sm text-gray-400">
-          Showing <span className="text-white font-medium">{displayLeads.length}</span> leads
+          Showing{" "}
+          <span className="text-white font-medium">{displayLeads.length}</span>{" "}
+          leads
         </span>
         <button
           onClick={() => exportCSV(displayLeads)}
           className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg text-xs text-gray-400 hover:text-yellow-400 hover:border-yellow-400/30 transition-all"
         >
-          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          <svg
+            className="w-3 h-3"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
           </svg>
           Export CSV
         </button>
@@ -151,7 +184,14 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
         <table className="w-full">
           <thead className="bg-[#111111] border-b border-[#2a2a2a]">
             <tr>
-              {["Company", "Location", "Industry", "Score", "Tier", "Contact"].map((h) => (
+              {[
+                "Company",
+                "Location",
+                "Industry",
+                "Score",
+                "Tier",
+                "Contact",
+              ].map((h) => (
                 <th
                   key={h}
                   className="px-5 py-3 text-left text-xs font-semibold text-yellow-400 uppercase tracking-wider"
@@ -179,7 +219,8 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
                   )}
                 </td>
                 <td className="px-5 py-3 text-sm text-gray-300 whitespace-nowrap">
-                  {lead.city || "—"}{lead.state ? `, ${lead.state}` : ""}
+                  {lead.city || "—"}
+                  {lead.state ? `, ${lead.state}` : ""}
                 </td>
                 <td className="px-5 py-3 text-sm text-gray-300">
                   {lead.industry_detected || lead.industry || "—"}
@@ -193,9 +234,21 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
                   <TierBadge tier={getTier(lead)} />
                 </td>
                 <td className="px-5 py-3 text-xs text-gray-400 space-y-0.5">
-                  {lead.phone && <div className="flex items-center gap-1"><span>📞</span>{lead.phone}</div>}
-                  {lead.email && <div className="flex items-center gap-1"><span>✉️</span>{lead.email}</div>}
-                  {!lead.phone && !lead.email && <span className="text-gray-600">—</span>}
+                  {lead.phone && (
+                    <div className="flex items-center gap-1">
+                      <span>📞</span>
+                      {lead.phone}
+                    </div>
+                  )}
+                  {lead.email && (
+                    <div className="flex items-center gap-1">
+                      <span>✉️</span>
+                      {lead.email}
+                    </div>
+                  )}
+                  {!lead.phone && !lead.email && (
+                    <span className="text-gray-600">—</span>
+                  )}
                 </td>
               </tr>
             ))}
@@ -213,7 +266,8 @@ export default function LeadsTable({ filters = {} }: LeadsTableProps) {
             ← Previous
           </button>
           <span className="text-xs text-gray-500">
-            Page <span className="text-white">{page}</span> of <span className="text-white">{totalPages}</span>
+            Page <span className="text-white">{page}</span> of{" "}
+            <span className="text-white">{totalPages}</span>
           </span>
           <button
             onClick={() => setPage(Math.min(totalPages, page + 1))}

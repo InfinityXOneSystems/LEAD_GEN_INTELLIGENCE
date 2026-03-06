@@ -33,11 +33,36 @@ const CAMPAIGNS = [
 ];
 
 const RECENT_ACTIVITY = [
-  { time: "14:52", action: "Email opened", company: "Elite Flooring LLC", detail: "Subject: Partnership Opportunity" },
-  { time: "14:30", action: "Reply received", company: "ProCoat Industrial", detail: "Interested in demo call" },
-  { time: "13:15", action: "Email sent", company: "Midwest Floor Pros", detail: "Follow-up #2 delivered" },
-  { time: "11:42", action: "Email opened", company: "Great Lakes Flooring", detail: "First open, 3rd attempt" },
-  { time: "10:00", action: "Bounce", company: "Old Email Address Inc", detail: "Invalid recipient address" },
+  {
+    time: "14:52",
+    action: "Email opened",
+    company: "Elite Flooring LLC",
+    detail: "Subject: Partnership Opportunity",
+  },
+  {
+    time: "14:30",
+    action: "Reply received",
+    company: "ProCoat Industrial",
+    detail: "Interested in demo call",
+  },
+  {
+    time: "13:15",
+    action: "Email sent",
+    company: "Midwest Floor Pros",
+    detail: "Follow-up #2 delivered",
+  },
+  {
+    time: "11:42",
+    action: "Email opened",
+    company: "Great Lakes Flooring",
+    detail: "First open, 3rd attempt",
+  },
+  {
+    time: "10:00",
+    action: "Bounce",
+    company: "Old Email Address Inc",
+    detail: "Invalid recipient address",
+  },
 ];
 
 const TEMPLATE = `Subject: Partnership Opportunity — {{company_name}}
@@ -65,8 +90,10 @@ export default function OutreachPanel() {
   const totalSent = CAMPAIGNS.reduce((s, c) => s + c.sent, 0);
   const totalOpened = CAMPAIGNS.reduce((s, c) => s + c.opened, 0);
   const totalReplied = CAMPAIGNS.reduce((s, c) => s + c.replied, 0);
-  const openRate = totalSent > 0 ? Math.round((totalOpened / totalSent) * 100) : 0;
-  const replyRate = totalSent > 0 ? Math.round((totalReplied / totalSent) * 100) : 0;
+  const openRate =
+    totalSent > 0 ? Math.round((totalOpened / totalSent) * 100) : 0;
+  const replyRate =
+    totalSent > 0 ? Math.round((totalReplied / totalSent) * 100) : 0;
 
   const statusClass = (s: string) => {
     if (s === "Active") return "status-active";
@@ -90,11 +117,26 @@ export default function OutreachPanel() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
           { label: "Emails Sent", value: totalSent, color: "text-white" },
-          { label: "Open Rate", value: `${openRate}%`, color: "text-yellow-400" },
-          { label: "Reply Rate", value: `${replyRate}%`, color: "text-green-400" },
-          { label: "Campaigns", value: CAMPAIGNS.length, color: "text-blue-400" },
+          {
+            label: "Open Rate",
+            value: `${openRate}%`,
+            color: "text-yellow-400",
+          },
+          {
+            label: "Reply Rate",
+            value: `${replyRate}%`,
+            color: "text-green-400",
+          },
+          {
+            label: "Campaigns",
+            value: CAMPAIGNS.length,
+            color: "text-blue-400",
+          },
         ].map((s) => (
-          <div key={s.label} className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-4 card-hover text-center">
+          <div
+            key={s.label}
+            className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-4 card-hover text-center"
+          >
             <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
             <div className="text-xs text-gray-500 mt-1">{s.label}</div>
           </div>
@@ -108,26 +150,51 @@ export default function OutreachPanel() {
         </div>
         <div className="divide-y divide-[#1a1a1a]">
           {CAMPAIGNS.map((camp) => (
-            <div key={camp.id} className="px-5 py-4 hover:bg-[#111111] transition-colors">
+            <div
+              key={camp.id}
+              className="px-5 py-4 hover:bg-[#111111] transition-colors"
+            >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-medium text-white">{camp.name}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${statusClass(camp.status)}`}>
+                  <span className="text-sm font-medium text-white">
+                    {camp.name}
+                  </span>
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full ${statusClass(camp.status)}`}
+                  >
                     {camp.status}
                   </span>
                 </div>
                 <span className="text-xs text-gray-500">{camp.created}</span>
               </div>
               <div className="flex gap-6 text-xs text-gray-500">
-                <span>Sent: <span className="text-white">{camp.sent}</span></span>
-                <span>Opened: <span className="text-yellow-400">{camp.sent > 0 ? `${Math.round((camp.opened / camp.sent) * 100)}%` : "—"}</span></span>
-                <span>Replied: <span className="text-green-400">{camp.sent > 0 ? `${Math.round((camp.replied / camp.sent) * 100)}%` : "—"}</span></span>
+                <span>
+                  Sent: <span className="text-white">{camp.sent}</span>
+                </span>
+                <span>
+                  Opened:{" "}
+                  <span className="text-yellow-400">
+                    {camp.sent > 0
+                      ? `${Math.round((camp.opened / camp.sent) * 100)}%`
+                      : "—"}
+                  </span>
+                </span>
+                <span>
+                  Replied:{" "}
+                  <span className="text-green-400">
+                    {camp.sent > 0
+                      ? `${Math.round((camp.replied / camp.sent) * 100)}%`
+                      : "—"}
+                  </span>
+                </span>
               </div>
               {camp.sent > 0 && (
                 <div className="mt-2 w-full bg-[#2a2a2a] rounded-full h-1">
                   <div
                     className="bg-yellow-400 h-1 rounded-full"
-                    style={{ width: `${Math.round((camp.opened / camp.sent) * 100)}%` }}
+                    style={{
+                      width: `${Math.round((camp.opened / camp.sent) * 100)}%`,
+                    }}
                   />
                 </div>
               )}
@@ -140,16 +207,30 @@ export default function OutreachPanel() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Recent Activity */}
         <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5">
-          <h3 className="text-sm font-semibold text-white mb-4">Recent Activity</h3>
+          <h3 className="text-sm font-semibold text-white mb-4">
+            Recent Activity
+          </h3>
           <div className="space-y-2">
             {RECENT_ACTIVITY.map((a, i) => (
-              <div key={i} className="flex items-start gap-3 py-1.5 border-b border-[#1a1a1a] last:border-0">
-                <span className="text-xs text-gray-500 w-10 flex-shrink-0">{a.time}</span>
+              <div
+                key={i}
+                className="flex items-start gap-3 py-1.5 border-b border-[#1a1a1a] last:border-0"
+              >
+                <span className="text-xs text-gray-500 w-10 flex-shrink-0">
+                  {a.time}
+                </span>
                 <div>
-                  <span className={`text-xs font-medium ${
-                    a.action === "Reply received" ? "text-green-400" :
-                    a.action === "Bounce" ? "text-red-400" : "text-yellow-400"
-                  }`}>{a.action}</span>
+                  <span
+                    className={`text-xs font-medium ${
+                      a.action === "Reply received"
+                        ? "text-green-400"
+                        : a.action === "Bounce"
+                          ? "text-red-400"
+                          : "text-yellow-400"
+                    }`}
+                  >
+                    {a.action}
+                  </span>
                   <span className="text-xs text-white mx-1">·</span>
                   <span className="text-xs text-white">{a.company}</span>
                   <div className="text-xs text-gray-500">{a.detail}</div>
@@ -179,14 +260,28 @@ export default function OutreachPanel() {
               <div className="flex items-center gap-3 p-3 bg-[#111111] rounded-lg">
                 <span className="text-2xl">📧</span>
                 <div>
-                  <div className="text-sm text-white font-medium">Flooring Partnership Intro v2</div>
-                  <div className="text-xs text-gray-500">Template with dynamic variables</div>
+                  <div className="text-sm text-white font-medium">
+                    Flooring Partnership Intro v2
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    Template with dynamic variables
+                  </div>
                 </div>
               </div>
               <div className="text-xs text-gray-500 space-y-1">
-                <div>Variables: <span className="text-yellow-400">company_name, contact_name, city, rating, reviews</span></div>
-                <div>Personalization: <span className="text-green-400">High</span></div>
-                <div>Subject line A/B: <span className="text-blue-400">Enabled</span></div>
+                <div>
+                  Variables:{" "}
+                  <span className="text-yellow-400">
+                    company_name, contact_name, city, rating, reviews
+                  </span>
+                </div>
+                <div>
+                  Personalization: <span className="text-green-400">High</span>
+                </div>
+                <div>
+                  Subject line A/B:{" "}
+                  <span className="text-blue-400">Enabled</span>
+                </div>
               </div>
               <div className="flex gap-2">
                 <div className="flex-1 text-center py-2 bg-[#1a1a1a] rounded-lg text-xs text-gray-400">
@@ -206,12 +301,21 @@ export default function OutreachPanel() {
         <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
           <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-6 w-full max-w-md">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-white">Create New Campaign</h3>
-              <button onClick={() => setShowNewCampaign(false)} className="text-gray-500 hover:text-white">✕</button>
+              <h3 className="text-sm font-semibold text-white">
+                Create New Campaign
+              </h3>
+              <button
+                onClick={() => setShowNewCampaign(false)}
+                className="text-gray-500 hover:text-white"
+              >
+                ✕
+              </button>
             </div>
             <div className="space-y-3">
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">Campaign Name</label>
+                <label className="text-xs text-gray-500 mb-1 block">
+                  Campaign Name
+                </label>
                 <input
                   value={campaignName}
                   onChange={(e) => setCampaignName(e.target.value)}
@@ -220,7 +324,9 @@ export default function OutreachPanel() {
                 />
               </div>
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">Target Tier</label>
+                <label className="text-xs text-gray-500 mb-1 block">
+                  Target Tier
+                </label>
                 <select
                   value={targetTier}
                   onChange={(e) => setTargetTier(e.target.value)}

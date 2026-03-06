@@ -124,18 +124,34 @@ export default function AnalyticsSection() {
     <div className="space-y-6 fade-in">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-white">Analytics</h2>
-        <span className="text-sm text-gray-500">{leads.length} leads analyzed</span>
+        <span className="text-sm text-gray-500">
+          {leads.length} leads analyzed
+        </span>
       </div>
 
       {/* Row 1: Score Distribution + Tier Pie */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Score Distribution */}
         <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover">
-          <h3 className="text-sm font-semibold text-gray-300 mb-4">Lead Score Distribution</h3>
+          <h3 className="text-sm font-semibold text-gray-300 mb-4">
+            Lead Score Distribution
+          </h3>
           <ResponsiveContainer width="100%" height={220}>
-            <BarChart data={scoreBuckets} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
-              <XAxis dataKey="label" tick={{ fill: "#9CA3AF", fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: "#9CA3AF", fontSize: 11 }} axisLine={false} tickLine={false} />
+            <BarChart
+              data={scoreBuckets}
+              margin={{ top: 5, right: 10, left: -10, bottom: 5 }}
+            >
+              <XAxis
+                dataKey="label"
+                tick={{ fill: "#9CA3AF", fontSize: 11 }}
+                axisLine={false}
+                tickLine={false}
+              />
+              <YAxis
+                tick={{ fill: "#9CA3AF", fontSize: 11 }}
+                axisLine={false}
+                tickLine={false}
+              />
               <Tooltip
                 contentStyle={CustomTooltipStyle}
                 cursor={{ fill: "rgba(234,179,8,0.05)" }}
@@ -143,7 +159,18 @@ export default function AnalyticsSection() {
               />
               <Bar dataKey="count" fill={GOLD} radius={[4, 4, 0, 0]}>
                 {scoreBuckets.map((_, i) => (
-                  <Cell key={i} fill={i === 3 ? GOLD : i === 2 ? GOLD2 : i === 1 ? ORANGE : "#6B7280"} />
+                  <Cell
+                    key={i}
+                    fill={
+                      i === 3
+                        ? GOLD
+                        : i === 2
+                          ? GOLD2
+                          : i === 1
+                            ? ORANGE
+                            : "#6B7280"
+                    }
+                  />
                 ))}
               </Bar>
             </BarChart>
@@ -152,9 +179,13 @@ export default function AnalyticsSection() {
 
         {/* Tier Pie */}
         <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover">
-          <h3 className="text-sm font-semibold text-gray-300 mb-4">Lead Tier Breakdown</h3>
+          <h3 className="text-sm font-semibold text-gray-300 mb-4">
+            Lead Tier Breakdown
+          </h3>
           {tierData.every((d) => d.value === 0) ? (
-            <div className="flex items-center justify-center h-[220px] text-gray-500 text-sm">No data available</div>
+            <div className="flex items-center justify-center h-[220px] text-gray-500 text-sm">
+              No data available
+            </div>
           ) : (
             <ResponsiveContainer width="100%" height={220}>
               <PieChart>
@@ -166,16 +197,25 @@ export default function AnalyticsSection() {
                   outerRadius={85}
                   paddingAngle={3}
                   dataKey="value"
-                  label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
+                  label={({ name, percent }) =>
+                    `${name} ${((percent ?? 0) * 100).toFixed(0)}%`
+                  }
                   labelLine={false}
                 >
                   {tierData.map((entry, i) => (
                     <Cell key={i} fill={TIER_COLORS[entry.name] || "#6B7280"} />
                   ))}
                 </Pie>
-                <Tooltip contentStyle={CustomTooltipStyle} formatter={(v, name) => [Number(v), String(name)]} />
+                <Tooltip
+                  contentStyle={CustomTooltipStyle}
+                  formatter={(v, name) => [Number(v), String(name)]}
+                />
                 <Legend
-                  formatter={(value) => <span style={{ color: "#9CA3AF", fontSize: 11 }}>{value}</span>}
+                  formatter={(value) => (
+                    <span style={{ color: "#9CA3AF", fontSize: 11 }}>
+                      {value}
+                    </span>
+                  )}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -187,9 +227,13 @@ export default function AnalyticsSection() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Industry Horizontal Bar */}
         <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover">
-          <h3 className="text-sm font-semibold text-gray-300 mb-4">Top Industries</h3>
+          <h3 className="text-sm font-semibold text-gray-300 mb-4">
+            Top Industries
+          </h3>
           {industryData.length === 0 ? (
-            <div className="flex items-center justify-center h-[220px] text-gray-500 text-sm">No data available</div>
+            <div className="flex items-center justify-center h-[220px] text-gray-500 text-sm">
+              No data available
+            </div>
           ) : (
             <ResponsiveContainer width="100%" height={220}>
               <BarChart
@@ -197,7 +241,12 @@ export default function AnalyticsSection() {
                 data={industryData}
                 margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
               >
-                <XAxis type="number" tick={{ fill: "#9CA3AF", fontSize: 10 }} axisLine={false} tickLine={false} />
+                <XAxis
+                  type="number"
+                  tick={{ fill: "#9CA3AF", fontSize: 10 }}
+                  axisLine={false}
+                  tickLine={false}
+                />
                 <YAxis
                   type="category"
                   dataKey="name"
@@ -219,16 +268,55 @@ export default function AnalyticsSection() {
 
         {/* Score Trend Line */}
         <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover">
-          <h3 className="text-sm font-semibold text-gray-300 mb-4">Lead Scores Over Time (7d)</h3>
+          <h3 className="text-sm font-semibold text-gray-300 mb-4">
+            Lead Scores Over Time (7d)
+          </h3>
           <ResponsiveContainer width="100%" height={220}>
-            <LineChart data={TREND_DATA} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
-              <XAxis dataKey="date" tick={{ fill: "#9CA3AF", fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: "#9CA3AF", fontSize: 11 }} axisLine={false} tickLine={false} />
+            <LineChart
+              data={TREND_DATA}
+              margin={{ top: 5, right: 10, left: -10, bottom: 5 }}
+            >
+              <XAxis
+                dataKey="date"
+                tick={{ fill: "#9CA3AF", fontSize: 11 }}
+                axisLine={false}
+                tickLine={false}
+              />
+              <YAxis
+                tick={{ fill: "#9CA3AF", fontSize: 11 }}
+                axisLine={false}
+                tickLine={false}
+              />
               <Tooltip contentStyle={CustomTooltipStyle} />
-              <Legend formatter={(v) => <span style={{ color: "#9CA3AF", fontSize: 11 }}>{v}</span>} />
-              <Line type="monotone" dataKey="avg" stroke={GOLD} strokeWidth={2} dot={false} name="Avg Score" />
-              <Line type="monotone" dataKey="hot" stroke={RED} strokeWidth={2} dot={false} name="HOT Leads" />
-              <Line type="monotone" dataKey="warm" stroke={ORANGE} strokeWidth={2} dot={false} name="WARM Leads" />
+              <Legend
+                formatter={(v) => (
+                  <span style={{ color: "#9CA3AF", fontSize: 11 }}>{v}</span>
+                )}
+              />
+              <Line
+                type="monotone"
+                dataKey="avg"
+                stroke={GOLD}
+                strokeWidth={2}
+                dot={false}
+                name="Avg Score"
+              />
+              <Line
+                type="monotone"
+                dataKey="hot"
+                stroke={RED}
+                strokeWidth={2}
+                dot={false}
+                name="HOT Leads"
+              />
+              <Line
+                type="monotone"
+                dataKey="warm"
+                stroke={ORANGE}
+                strokeWidth={2}
+                dot={false}
+                name="WARM Leads"
+              />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -237,12 +325,31 @@ export default function AnalyticsSection() {
       {/* Summary Stats Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: "Total Analyzed", value: leads.length, color: "text-yellow-400" },
-          { label: "HOT Leads", value: tierCounts.HOT || 0, color: "text-red-400" },
-          { label: "WARM Leads", value: tierCounts.WARM || 0, color: "text-orange-400" },
-          { label: "COLD Leads", value: tierCounts.COLD || 0, color: "text-blue-400" },
+          {
+            label: "Total Analyzed",
+            value: leads.length,
+            color: "text-yellow-400",
+          },
+          {
+            label: "HOT Leads",
+            value: tierCounts.HOT || 0,
+            color: "text-red-400",
+          },
+          {
+            label: "WARM Leads",
+            value: tierCounts.WARM || 0,
+            color: "text-orange-400",
+          },
+          {
+            label: "COLD Leads",
+            value: tierCounts.COLD || 0,
+            color: "text-blue-400",
+          },
         ].map((s) => (
-          <div key={s.label} className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-4 card-hover text-center">
+          <div
+            key={s.label}
+            className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-4 card-hover text-center"
+          >
             <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
             <div className="text-xs text-gray-500 mt-1">{s.label}</div>
           </div>

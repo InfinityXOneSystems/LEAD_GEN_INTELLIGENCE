@@ -29,9 +29,14 @@ export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
-  const [filters, setFilters] = useState<{ tier?: string; search?: string }>({});
+  const [filters, setFilters] = useState<{ tier?: string; search?: string }>(
+    {},
+  );
 
-  const handleFilterChange = (newFilters: { tier?: string; search?: string }) => {
+  const handleFilterChange = (newFilters: {
+    tier?: string;
+    search?: string;
+  }) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
   };
 
@@ -54,7 +59,9 @@ export default function Home() {
       />
 
       {/* Main area */}
-      <div className={`flex-1 flex flex-col min-h-screen ${contentMargin} content-transition`}>
+      <div
+        className={`flex-1 flex flex-col min-h-screen ${contentMargin} content-transition`}
+      >
         {/* Top header */}
         <header className="sticky top-0 z-20 bg-black/95 backdrop-blur border-b border-[#2a2a2a] h-14 flex items-center px-4 gap-3">
           {/* Mobile hamburger */}
@@ -62,8 +69,18 @@ export default function Home() {
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="md:hidden flex items-center justify-center w-8 h-8 rounded text-gray-400 hover:text-white hover:bg-[#1a1a1a] transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
 
@@ -105,7 +122,9 @@ export default function Home() {
             <div className="fade-in space-y-2">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold text-white">All Leads</h2>
-                <span className="text-sm text-gray-500">Manage & filter your lead database</span>
+                <span className="text-sm text-gray-500">
+                  Manage & filter your lead database
+                </span>
               </div>
               <FilterBar onFilterChange={handleFilterChange} />
               <LeadsTable filters={filters} />
@@ -121,7 +140,9 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="border-t border-[#2a2a2a] px-6 py-3 flex items-center justify-between">
-          <span className="text-xs text-gray-600">© 2026 XPS Lead Intelligence</span>
+          <span className="text-xs text-gray-600">
+            © 2026 XPS Lead Intelligence
+          </span>
           <div className="flex items-center gap-3 text-xs text-gray-600">
             <a
               href="https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE"

@@ -14,7 +14,9 @@ function Toggle({ checked, onChange, label, description }: ToggleProps) {
     <div className="flex items-center justify-between py-2">
       <div>
         <div className="text-sm text-white">{label}</div>
-        {description && <div className="text-xs text-gray-500">{description}</div>}
+        {description && (
+          <div className="text-xs text-gray-500">{description}</div>
+        )}
       </div>
       <button
         onClick={onChange}
@@ -32,7 +34,15 @@ function Toggle({ checked, onChange, label, description }: ToggleProps) {
   );
 }
 
-function SectionCard({ title, icon, children }: { title: string; icon: string; children: React.ReactNode }) {
+function SectionCard({
+  title,
+  icon,
+  children,
+}: {
+  title: string;
+  icon: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover">
       <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#1a1a1a]">
@@ -52,7 +62,9 @@ export default function IntegrationsPanel() {
   const [apiKey, setApiKey] = useState("");
   const [showApiKey, setShowApiKey] = useState(false);
   const [selectedModel, setSelectedModel] = useState("gpt-4o");
-  const [testStatus, setTestStatus] = useState<"idle" | "testing" | "success" | "error">("idle");
+  const [testStatus, setTestStatus] = useState<
+    "idle" | "testing" | "success" | "error"
+  >("idle");
 
   const handleTestConnection = () => {
     if (!apiKey) return;
@@ -66,7 +78,9 @@ export default function IntegrationsPanel() {
     <div className="space-y-6 fade-in">
       <div>
         <h2 className="text-xl font-bold text-white">Integrations</h2>
-        <p className="text-sm text-gray-500 mt-1">Connect external services to enhance the platform</p>
+        <p className="text-sm text-gray-500 mt-1">
+          Connect external services to enhance the platform
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -76,7 +90,9 @@ export default function IntegrationsPanel() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm text-white">Status</div>
-                <div className={`text-xs ${gmailConnected ? "text-green-400" : "text-gray-500"}`}>
+                <div
+                  className={`text-xs ${gmailConnected ? "text-green-400" : "text-gray-500"}`}
+                >
                   {gmailConnected ? "✓ Connected" : "Not connected"}
                 </div>
               </div>
@@ -107,9 +123,16 @@ export default function IntegrationsPanel() {
             </div>
             {gmailConnected && (
               <div className="bg-[#111111] rounded-lg p-3 text-xs space-y-1">
-                <div className="text-gray-500">Last sync: <span className="text-white">5 minutes ago</span></div>
-                <div className="text-gray-500">Emails processed: <span className="text-yellow-400">1,234</span></div>
-                <div className="text-gray-500">Leads found: <span className="text-green-400">47</span></div>
+                <div className="text-gray-500">
+                  Last sync: <span className="text-white">5 minutes ago</span>
+                </div>
+                <div className="text-gray-500">
+                  Emails processed:{" "}
+                  <span className="text-yellow-400">1,234</span>
+                </div>
+                <div className="text-gray-500">
+                  Leads found: <span className="text-green-400">47</span>
+                </div>
               </div>
             )}
           </div>
@@ -123,7 +146,9 @@ export default function IntegrationsPanel() {
                 <div className="text-sm text-white">Status</div>
                 <div className="text-xs text-green-400">✓ Connected</div>
               </div>
-              <span className="text-xs px-2 py-0.5 status-active rounded-full">Active</span>
+              <span className="text-xs px-2 py-0.5 status-active rounded-full">
+                Active
+              </span>
             </div>
             <div className="bg-[#111111] rounded-lg p-3 text-xs space-y-1.5">
               <div className="text-gray-500">Repository</div>
@@ -157,7 +182,9 @@ export default function IntegrationsPanel() {
                 description="Log pipeline failures as GitHub issues"
               />
             </div>
-            <div className="text-xs text-gray-500">Last sync: <span className="text-white">2 minutes ago</span></div>
+            <div className="text-xs text-gray-500">
+              Last sync: <span className="text-white">2 minutes ago</span>
+            </div>
           </div>
         </SectionCard>
 
@@ -165,7 +192,9 @@ export default function IntegrationsPanel() {
         <SectionCard title="GPT Actions" icon="🤖">
           <div className="space-y-3">
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">OpenAI API Key</label>
+              <label className="text-xs text-gray-500 mb-1 block">
+                OpenAI API Key
+              </label>
               <div className="flex gap-2">
                 <input
                   type={showApiKey ? "text" : "password"}
@@ -202,8 +231,12 @@ export default function IntegrationsPanel() {
               >
                 {testStatus === "testing" ? "Testing..." : "Test Connection"}
               </button>
-              {testStatus === "success" && <span className="text-green-400 text-xs">✓ Connected</span>}
-              {testStatus === "error" && <span className="text-red-400 text-xs">✕ Failed</span>}
+              {testStatus === "success" && (
+                <span className="text-green-400 text-xs">✓ Connected</span>
+              )}
+              {testStatus === "error" && (
+                <span className="text-red-400 text-xs">✕ Failed</span>
+              )}
             </div>
             <div className="bg-[#111111] rounded-lg p-3 text-xs space-y-1 text-gray-500">
               <div className="text-gray-400 font-medium mb-1.5">Use Cases:</div>
@@ -220,17 +253,31 @@ export default function IntegrationsPanel() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm text-white">Copilot Status</div>
-                <div className="text-xs text-green-400">✓ Active in workspace</div>
+                <div className="text-xs text-green-400">
+                  ✓ Active in workspace
+                </div>
               </div>
-              <span className="text-xs px-2 py-0.5 status-active rounded-full">Enabled</span>
+              <span className="text-xs px-2 py-0.5 status-active rounded-full">
+                Enabled
+              </span>
             </div>
             <div className="bg-[#111111] rounded-lg p-3 text-xs space-y-1.5">
-              <div className="text-gray-400 font-medium mb-1">Available Commands:</div>
+              <div className="text-gray-400 font-medium mb-1">
+                Available Commands:
+              </div>
               <div className="space-y-1 text-gray-300">
-                <div className="font-mono text-[10px] bg-[#0a0a0a] px-2 py-1 rounded">/scrape [query] [location]</div>
-                <div className="font-mono text-[10px] bg-[#0a0a0a] px-2 py-1 rounded">/score --all-leads</div>
-                <div className="font-mono text-[10px] bg-[#0a0a0a] px-2 py-1 rounded">/outreach --tier HOT</div>
-                <div className="font-mono text-[10px] bg-[#0a0a0a] px-2 py-1 rounded">/pipeline --run-all</div>
+                <div className="font-mono text-[10px] bg-[#0a0a0a] px-2 py-1 rounded">
+                  /scrape [query] [location]
+                </div>
+                <div className="font-mono text-[10px] bg-[#0a0a0a] px-2 py-1 rounded">
+                  /score --all-leads
+                </div>
+                <div className="font-mono text-[10px] bg-[#0a0a0a] px-2 py-1 rounded">
+                  /outreach --tier HOT
+                </div>
+                <div className="font-mono text-[10px] bg-[#0a0a0a] px-2 py-1 rounded">
+                  /pipeline --run-all
+                </div>
               </div>
             </div>
             <a
@@ -239,7 +286,9 @@ export default function IntegrationsPanel() {
               rel="noopener noreferrer"
               className="flex items-center justify-between p-3 bg-[#111111] rounded-lg text-xs hover:bg-[#1a1a1a] transition-colors group"
             >
-              <span className="text-gray-400 group-hover:text-white">GitHub Mobile App</span>
+              <span className="text-gray-400 group-hover:text-white">
+                GitHub Mobile App
+              </span>
               <span className="text-yellow-400">Open ↗</span>
             </a>
             <div className="space-y-0.5">
@@ -249,7 +298,10 @@ export default function IntegrationsPanel() {
                 { label: "Workspace agent", ok: true },
                 { label: "GitHub Actions integration", ok: true },
               ].map((item) => (
-                <div key={item.label} className="flex items-center gap-2 text-xs py-0.5">
+                <div
+                  key={item.label}
+                  className="flex items-center gap-2 text-xs py-0.5"
+                >
                   <span className={item.ok ? "text-green-400" : "text-red-400"}>
                     {item.ok ? "✓" : "✕"}
                   </span>
