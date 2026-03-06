@@ -10,12 +10,35 @@ interface Stats {
   averageScore: number;
 }
 
+const SPARK_BARS = [3, 6, 4, 8, 5, 9, 7, 10, 8, 12];
+
+function SparkBars({ color }: { color: string }) {
+  return (
+    <div className="flex items-end gap-0.5 h-6">
+      {SPARK_BARS.map((h, i) => (
+        <div
+          key={i}
+          className={`w-1 rounded-sm opacity-60 ${color}`}
+          style={{ height: `${(h / 12) * 100}%` }}
+        />
+      ))}
+    </div>
+  );
+}
+
+const EMPTY_STATS: Stats = {
+  totalLeads: 0,
+  hotLeads: 0,
+  warmLeads: 0,
+  coldLeads: 0,
+  averageScore: 0,
+};
+
 export default function StatsCards() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // In a static export, we'll fetch from the JSON files directly
     Promise.all([
       fetch("/data/scored_leads.json").catch(() => ({ json: () => [] })),
       fetch("/data/scoring_report.json").catch(() => ({ json: () => null })),
@@ -40,7 +63,6 @@ export default function StatsCards() {
             leads.reduce((sum, l) => sum + (l.lead_score || l.score || 0), 0) /
               totalLeads,
           );
-
           setStats({
             totalLeads,
             hotLeads,
@@ -57,95 +79,111 @@ export default function StatsCards() {
             averageScore: report.average_score || 0,
           });
         } else {
-          setStats({
-            totalLeads: 0,
-            hotLeads: 0,
-            warmLeads: 0,
-            coldLeads: 0,
-            averageScore: 0,
-          });
+          setStats(EMPTY_STATS);
         }
         setLoading(false);
       })
-      .catch((err) => {
-        console.error("Error fetching stats:", err);
-        setStats({
-          totalLeads: 0,
-          hotLeads: 0,
-          warmLeads: 0,
-          coldLeads: 0,
-          averageScore: 0,
-        });
+      .catch(() => {
+        setStats(EMPTY_STATS);
         setLoading(false);
       });
   }, []);
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {[...Array(4)].map((_, i) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+        {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow-sm animate-pulse"
+            className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 animate-pulse"
           >
-            <div className="h-4 bg-zinc-200 dark:bg-zinc-700 rounded w-1/2 mb-2"></div>
-            <div className="h-8 bg-zinc-200 dark:bg-zinc-700 rounded w-3/4"></div>
+            <div className="h-3 bg-[#2a2a2a] rounded w-1/2 mb-3" />
+            <div className="h-8 bg-[#2a2a2a] rounded w-3/4" />
           </div>
         ))}
       </div>
     );
   }
 
-  if (!stats) {
-    return null;
-  }
+  if (!stats) return null;
 
   const cards = [
     {
       label: "Total Leads",
       value: stats.totalLeads.toLocaleString(),
-      bgColor: "bg-blue-50 dark:bg-blue-950",
-      textColor: "text-blue-900 dark:text-blue-100",
-      accentColor: "text-blue-600 dark:text-blue-400",
+      icon: "🎯",
+      valueColor: "text-yellow-400",
+      sparkColor: "bg-yellow-400",
+      change: "+12%",
+      changePos: true,
     },
     {
       label: "HOT Leads",
       value: stats.hotLeads.toLocaleString(),
-      bgColor: "bg-red-50 dark:bg-red-950",
-      textColor: "text-red-900 dark:text-red-100",
-      accentColor: "text-red-600 dark:text-red-400",
+      icon: "🔥",
+      valueColor: "text-red-400",
+      sparkColor: "bg-red-400",
+      change: "+8%",
+      changePos: true,
     },
     {
       label: "WARM Leads",
       value: stats.warmLeads.toLocaleString(),
-      bgColor: "bg-amber-50 dark:bg-amber-950",
-      textColor: "text-amber-900 dark:text-amber-100",
-      accentColor: "text-amber-600 dark:text-amber-400",
+      icon: "⚡",
+      valueColor: "text-orange-400",
+      sparkColor: "bg-orange-400",
+      change: "+5%",
+      changePos: true,
     },
     {
-      label: "Average Score",
+      label: "COLD Leads",
+      value: stats.coldLeads.toLocaleString(),
+      icon: "❄️",
+      valueColor: "text-blue-400",
+      sparkColor: "bg-blue-400",
+      change: "-2%",
+      changePos: false,
+    },
+    {
+      label: "Avg Score",
       value: stats.averageScore.toString(),
-      bgColor: "bg-emerald-50 dark:bg-emerald-950",
-      textColor: "text-emerald-900 dark:text-emerald-100",
-      accentColor: "text-emerald-600 dark:text-emerald-400",
+      icon: "📊",
+      valueColor: "text-green-400",
+      sparkColor: "bg-green-400",
+      change: "+3pts",
+      changePos: true,
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
       {cards.map((card, i) => (
         <div
           key={i}
-          className={`${card.bgColor} rounded-lg p-6 shadow-sm border border-zinc-200 dark:border-zinc-800`}
+          className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover relative overflow-hidden"
         >
-          <p
-            className={`text-sm font-medium ${card.textColor} opacity-80 mb-1`}
+          <div className="absolute top-3 right-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 live-dot block" />
+          </div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-sm">{card.icon}</span>
+            <span className="text-xs text-gray-500 font-medium">
+              {card.label}
+            </span>
+          </div>
+          <div
+            className={`text-3xl font-black ${card.valueColor} mb-3 leading-none`}
           >
-            {card.label}
-          </p>
-          <p className={`text-3xl font-bold ${card.accentColor}`}>
             {card.value}
-          </p>
+          </div>
+          <div className="flex items-end justify-between">
+            <span
+              className={`text-xs font-medium ${card.changePos ? "text-green-400" : "text-red-400"}`}
+            >
+              {card.change}
+            </span>
+            <SparkBars color={card.sparkColor} />
+          </div>
         </div>
       ))}
     </div>
