@@ -27,10 +27,10 @@ const crawler = new PlaywrightCrawler({
     leads.forEach((l) => {
       let score = scoreLead(l);
 
-      db.run("INSERT INTO leads(company,score) VALUES (?,?)", [
+      db.prepare("INSERT INTO leads(company,score) VALUES (?,?)").run(
         l.company,
         score,
-      ]);
+      );
     });
   },
 });
