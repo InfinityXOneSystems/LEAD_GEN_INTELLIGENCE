@@ -1,11 +1,11 @@
 {
   "summary": {
-    "total": 2288,
-    "valid": 2288,
+    "total": 2264,
+    "valid": 2264,
     "invalid": 0,
-    "unique": 2287,
+    "unique": 2263,
     "duplicates": 1,
-    "generated_at": "2026-03-06T18:34:12.230Z"
+    "generated_at": "2026-03-06T20:25:00.760Z"
   },
   "invalid_count": 0,
   "duplicate_count": 1,
@@ -25,7 +25,7 @@
         "rating": 5,
         "reviews": 0,
         "source": "google_maps",
-        "scrapedAt": "2026-03-06T18:32:00.748Z",
+        "scrapedAt": "2026-03-06T20:22:46.701Z",
         "_validation": {
           "valid": true,
           "errors": [],
