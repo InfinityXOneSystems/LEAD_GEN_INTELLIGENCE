@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { IconTarget, IconFire, IconBolt, IconSnowflake, IconBarChart } from "@/components/Icons";
 
 interface Stats {
   totalLeads: number;
@@ -63,13 +64,7 @@ export default function StatsCards() {
             leads.reduce((sum, l) => sum + (l.lead_score || l.score || 0), 0) /
               totalLeads,
           );
-          setStats({
-            totalLeads,
-            hotLeads,
-            warmLeads,
-            coldLeads,
-            averageScore,
-          });
+          setStats({ totalLeads, hotLeads, warmLeads, coldLeads, averageScore });
         } else if (report) {
           setStats({
             totalLeads: report.total_leads || 0,
@@ -93,10 +88,7 @@ export default function StatsCards() {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
         {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            className="glass-card gold-glow-card rounded-2xl p-4 animate-pulse"
-          >
+          <div key={i} className="glass-card gold-glow-card rounded-2xl p-4 animate-pulse">
             <div className="h-3 bg-yellow-400/10 rounded w-1/2 mb-3" />
             <div className="h-8 bg-yellow-400/10 rounded w-3/4" />
           </div>
@@ -111,7 +103,7 @@ export default function StatsCards() {
     {
       label: "Total Leads",
       value: stats.totalLeads.toLocaleString(),
-      icon: "🎯",
+      icon: <IconTarget className="w-4 h-4" />,
       valueColor: "text-yellow-400",
       sparkColor: "bg-yellow-400",
       change: "+12%",
@@ -120,7 +112,7 @@ export default function StatsCards() {
     {
       label: "HOT Leads",
       value: stats.hotLeads.toLocaleString(),
-      icon: "🔥",
+      icon: <IconFire className="w-4 h-4" />,
       valueColor: "text-red-400",
       sparkColor: "bg-red-400",
       change: "+8%",
@@ -129,7 +121,7 @@ export default function StatsCards() {
     {
       label: "WARM Leads",
       value: stats.warmLeads.toLocaleString(),
-      icon: "⚡",
+      icon: <IconBolt className="w-4 h-4" />,
       valueColor: "text-orange-400",
       sparkColor: "bg-orange-400",
       change: "+5%",
@@ -138,7 +130,7 @@ export default function StatsCards() {
     {
       label: "COLD Leads",
       value: stats.coldLeads.toLocaleString(),
-      icon: "❄️",
+      icon: <IconSnowflake className="w-4 h-4" />,
       valueColor: "text-blue-400",
       sparkColor: "bg-blue-400",
       change: "-2%",
@@ -147,7 +139,7 @@ export default function StatsCards() {
     {
       label: "Avg Score",
       value: stats.averageScore.toString(),
-      icon: "📊",
+      icon: <IconBarChart className="w-4 h-4" />,
       valueColor: "text-green-400",
       sparkColor: "bg-green-400",
       change: "+3pts",
@@ -169,7 +161,7 @@ export default function StatsCards() {
 
           {/* Icon + label */}
           <div className="flex items-center gap-1.5 mb-2">
-            <span className="text-base">{card.icon}</span>
+            <span className="text-gray-500">{card.icon}</span>
             <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider leading-none">
               {card.label}
             </span>

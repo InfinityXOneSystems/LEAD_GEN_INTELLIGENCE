@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { IconSearch, IconMapPin, IconBuilding, IconX, IconFire, IconBolt, IconSnowflake, IconTarget } from "@/components/Icons";
 
 interface FilterBarProps {
   onFilterChange: (filters: {
@@ -46,11 +47,13 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
   };
 
   const tiers = [
-    { id: "ALL", label: "All", icon: "🎯" },
-    { id: "HOT", label: "HOT", icon: "🔥" },
-    { id: "WARM", label: "WARM", icon: "⚡" },
-    { id: "COLD", label: "COLD", icon: "❄️" },
+    { id: "ALL", label: "All", icon: <IconTarget className="w-3.5 h-3.5" /> },
+    { id: "HOT", label: "HOT", icon: <IconFire className="w-3.5 h-3.5" /> },
+    { id: "WARM", label: "WARM", icon: <IconBolt className="w-3.5 h-3.5" /> },
+    { id: "COLD", label: "COLD", icon: <IconSnowflake className="w-3.5 h-3.5" /> },
   ];
+
+  const hasActiveFilters = activeTier !== "ALL" || searchValue || selectedState || cityValue;
 
   return (
     <div className="glass-card rounded-2xl p-4 mb-3 space-y-3">
@@ -65,7 +68,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
                 key={t.id}
                 onClick={() => handleTierChange(t.id)}
                 className={[
-                  "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all",
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all",
                   isActive
                     ? t.id === "HOT"
                       ? "bg-red-900/40 text-red-400 border border-red-400/50"
@@ -77,7 +80,8 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
                     : "bg-[#1a1a1a] text-gray-400 border border-[#2a2a2a] hover:text-white hover:border-gray-600",
                 ].join(" ")}
               >
-                {t.icon} {t.label}
+                {t.icon}
+                {t.label}
               </button>
             );
           })}
@@ -86,14 +90,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
         {/* Search */}
         <div className="flex-1 w-full sm:w-auto">
           <div className="relative">
-            <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+            <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
             <input
               type="text"
               value={searchValue}
@@ -108,13 +105,14 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
       {/* Row 2: State + City */}
       <div className="flex flex-col sm:flex-row gap-2">
         {/* State dropdown */}
-        <div className="flex-1">
+        <div className="flex-1 relative">
+          <IconMapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none" />
           <select
             value={selectedState}
             onChange={handleStateChange}
-            className="w-full px-3 py-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl text-sm text-white focus:border-yellow-400/50 transition-colors appearance-none cursor-pointer"
+            className="w-full pl-9 pr-4 py-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl text-sm text-white focus:border-yellow-400/50 transition-colors appearance-none cursor-pointer"
           >
-            <option value="">🗺️ All States</option>
+            <option value="">All States</option>
             {US_STATES.map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
@@ -122,21 +120,19 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
         </div>
 
         {/* City input */}
-        <div className="flex-1">
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm">🏙️</span>
-            <input
-              type="text"
-              value={cityValue}
-              placeholder="Filter by city…"
-              onChange={handleCityChange}
-              className="w-full pl-9 pr-4 py-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl text-sm text-white placeholder-gray-600 focus:border-yellow-400/50 transition-colors"
-            />
-          </div>
+        <div className="flex-1 relative">
+          <IconBuilding className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+          <input
+            type="text"
+            value={cityValue}
+            placeholder="Filter by city…"
+            onChange={handleCityChange}
+            className="w-full pl-9 pr-4 py-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl text-sm text-white placeholder-gray-600 focus:border-yellow-400/50 transition-colors"
+          />
         </div>
 
         {/* Clear filters */}
-        {(activeTier !== "ALL" || searchValue || selectedState || cityValue) && (
+        {hasActiveFilters && (
           <button
             onClick={() => {
               setActiveTier("ALL");
@@ -145,9 +141,10 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
               setCityValue("");
               onFilterChange({ tier: undefined, search: undefined, state: undefined, city: undefined });
             }}
-            className="px-3 py-2 text-xs text-gray-400 hover:text-yellow-400 border border-[#2a2a2a] hover:border-yellow-400/30 rounded-xl transition-all whitespace-nowrap"
+            className="flex items-center gap-1.5 px-3 py-2 text-xs text-gray-400 hover:text-yellow-400 border border-[#2a2a2a] hover:border-yellow-400/30 rounded-xl transition-all whitespace-nowrap"
           >
-            ✕ Clear
+            <IconX className="w-3.5 h-3.5" />
+            Clear
           </button>
         )}
       </div>

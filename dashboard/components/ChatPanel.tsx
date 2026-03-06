@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { IconCpu, IconX, IconChevronLeft, IconArrowUp, IconActivity } from "@/components/Icons";
 
 interface Message {
   id: string;
@@ -23,28 +24,28 @@ function getAIResponse(command: string): string {
 
   if (cmd.includes("scrape") || cmd.includes("contractor")) {
     const query = cmd.replace("scrape", "").trim();
-    return `🤖 **Scraper initiated** for query: "${query || cmd}"\n\nPipeline started:\n• Google Maps scraper → searching business listings\n• Yelp scraper → cross-referencing reviews\n• Directory scraper → checking contractor databases\n\n⏳ Estimated completion: ~3-5 minutes\n📊 Expected leads: 50-200 results\n\nRun ID: SCR-${Date.now().toString(36).toUpperCase()}`;
+    return `**Scraper initiated** for query: "${query || cmd}"\n\nPipeline started:\n• Google Maps scraper — searching business listings\n• Yelp scraper — cross-referencing reviews\n• Directory scraper — checking contractor databases\n\nEstimated completion: 3-5 minutes\nExpected leads: 50-200 results\n\nRun ID: SCR-${Date.now().toString(36).toUpperCase()}`;
   }
   if (cmd.includes("top leads") || cmd.includes("show leads") || cmd.includes("best leads")) {
-    return `🎯 **Top 5 Leads by Score:**\n\n1. 🔥 Premium Epoxy Floors LLC — Score: 95 | Columbus, OH\n2. 🔥 Elite Flooring Solutions — Score: 92 | Cleveland, OH\n3. 🔥 ProCoat Industrial — Score: 88 | Cincinnati, OH\n4. ⚡ Midwest Floor Pros — Score: 76 | Toledo, OH\n5. ⚡ Great Lakes Flooring — Score: 74 | Akron, OH\n\nNavigate to the **Leads** section for full details and filtering.`;
+    return `**Top 5 Leads by Score:**\n\n1. Premium Epoxy Floors LLC — Score: 95 | Columbus, OH\n2. Elite Flooring Solutions — Score: 92 | Cleveland, OH\n3. ProCoat Industrial — Score: 88 | Cincinnati, OH\n4. Midwest Floor Pros — Score: 76 | Toledo, OH\n5. Great Lakes Flooring — Score: 74 | Akron, OH\n\nNavigate to **Leads** for full details and filtering.`;
   }
   if (cmd.includes("outreach") || cmd.includes("campaign") || cmd.includes("email")) {
-    return `📧 **Outreach Campaign Queued**\n\nConfiguration:\n• Target: HOT leads (score ≥ 75)\n• Template: Flooring Partnership Intro v2\n• Schedule: Sending in 15 minutes\n• Follow-up: +3 days if no reply\n\n📋 Leads queued: 23\n⚠️ Rate limit: 50 emails/day\n\nCampaign ID: CAMP-${Date.now().toString(36).toUpperCase()}\nGo to **Outreach** panel to monitor delivery.`;
+    return `**Outreach Campaign Queued**\n\nConfiguration:\n• Target: HOT leads (score 75+)\n• Template: Flooring Partnership Intro v2\n• Schedule: Sending in 15 minutes\n• Follow-up: +3 days if no reply\n\nLeads queued: 23\nRate limit: 50 emails/day\n\nCampaign ID: CAMP-${Date.now().toString(36).toUpperCase()}\nGo to **Outreach** panel to monitor delivery.`;
   }
   if (cmd.includes("export") || cmd.includes("csv") || cmd.includes("download")) {
-    return `📥 **Export initiated**\n\nGenerating CSV file...\n• All leads: ✓ included\n• Fields: company, phone, email, city, state, score, tier, industry\n• Format: UTF-8 CSV\n\n✅ File ready: leads_export_${new Date().toISOString().split("T")[0]}.csv\n\n💡 Navigate to **Leads** section and click Export for the actual download.`;
+    return `**Export initiated**\n\nGenerating CSV file...\n• All leads: included\n• Fields: company, phone, email, city, state, score, tier, industry\n• Format: UTF-8 CSV\n\nFile ready: leads_export_${new Date().toISOString().split("T")[0]}.csv\n\nNavigate to **Leads** and click Export for the actual download.`;
   }
   if (cmd.includes("pipeline") || cmd.includes("run all")) {
-    return `⚙️ **Full Pipeline Triggered**\n\nExecuting stages:\n\n1. 🔍 Scrape — Starting scrapers... ⏳\n2. ✅ Validate — Queued\n3. 🔬 Enrich — Queued\n4. 📊 Score — Queued\n5. 📧 Outreach — Queued\n\nWorkflow: PIPELINE-${Date.now().toString(36).toUpperCase()}\n⏱️ ETA: ~12 minutes for full cycle\n\nMonitor progress in **Workflows** → GitHub Actions.`;
+    return `**Full Pipeline Triggered**\n\nExecuting stages:\n\n1. Scrape — Starting scrapers...\n2. Validate — Queued\n3. Enrich — Queued\n4. Score — Queued\n5. Outreach — Queued\n\nWorkflow: PIPELINE-${Date.now().toString(36).toUpperCase()}\nETA: ~12 minutes for full cycle\n\nMonitor progress in **Workflows** — GitHub Actions.`;
   }
   if (cmd.includes("status") || cmd.includes("health") || cmd.includes("check")) {
-    return `📡 **System Status Report**\n\n✅ Google Maps Scraper — Active (last run: 2h ago)\n✅ Yelp Scraper — Active (last run: 4h ago)\n⚡ Bing Scraper — Idle (scheduled: +1h)\n✅ Validation Engine — Running\n✅ Scoring Engine — Running\n⚡ Outreach Bot — Standby\n\n📊 Stats:\n• Leads processed today: 847\n• Emails sent today: 23\n• Queue depth: Normal`;
+    return `**System Status Report**\n\nGoogle Maps Scraper — Active (last run: 2h ago)\nYelp Scraper — Active (last run: 4h ago)\nBing Scraper — Idle (scheduled: +1h)\nValidation Engine — Running\nScoring Engine — Running\nOutreach Bot — Standby\n\nLeads processed today: 847\nEmails sent today: 23\nQueue depth: Normal`;
   }
   if (cmd.includes("help") || cmd === "?") {
-    return `🧠 **XPS AI Command Interface**\n\nAvailable commands:\n\n• **scrape [query] [location]** — Run scrapers\n• **show top leads** — View highest scored leads\n• **run outreach campaign** — Start email outreach\n• **export leads CSV** — Download leads data\n• **run pipeline** — Execute full pipeline\n• **check scraper status** — System health report\n\nYou can type natural language — I'll understand your intent!`;
+    return `**XPS AI Command Interface**\n\nAvailable commands:\n\n• **scrape [query] [location]** — Run scrapers\n• **show top leads** — View highest scored leads\n• **run outreach campaign** — Start email outreach\n• **export leads CSV** — Download leads data\n• **run pipeline** — Execute full pipeline\n• **check scraper status** — System health report\n\nYou can type natural language — I'll understand your intent.`;
   }
 
-  return `🧠 **Processing:** "${command}"\n\nI understood your request. In full deployment, this command would be processed by the AI orchestration engine.\n\n💡 Try a quick command below or type **help** to see all available commands.`;
+  return `**Processing:** "${command}"\n\nI understood your request. In full deployment, this command would be processed by the AI orchestration engine.\n\nType **help** to see all available commands.`;
 }
 
 const MIN_RESPONSE_DELAY = 700;
@@ -60,7 +61,7 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
     {
       id: "welcome",
       role: "ai",
-      content: "👋 **Welcome to XPS AI Command**\n\nI control the lead intelligence system. Try a command below or type your own!\n\nType **help** to see all available commands.",
+      content: "**Welcome to XPS AI Command**\n\nI control the lead intelligence system. Try a command below or type your own.\n\nType **help** to see all available commands.",
       timestamp: new Date(),
     },
   ]);
@@ -70,14 +71,12 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 300);
-    }
+    if (isOpen) setTimeout(() => inputRef.current?.focus(), 300);
   }, [isOpen]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+  }, [messages]);
 
   const sendMessage = (content: string) => {
     if (!content.trim()) return;
@@ -123,9 +122,7 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
         <div key={i} className={line === "" ? "h-2" : ""}>
           {parts.map((part, j) =>
             j % 2 === 1 ? (
-              <strong key={j} className="font-semibold text-yellow-400">
-                {part}
-              </strong>
+              <strong key={j} className="font-semibold text-yellow-400">{part}</strong>
             ) : (
               <span key={j}>{part}</span>
             ),
@@ -135,31 +132,45 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
     });
   };
 
+  const AiAvatar = () => (
+    <div className="w-6 h-6 rounded-full bg-yellow-400/15 border border-yellow-400/25 flex items-center justify-center flex-shrink-0">
+      <IconCpu className="w-3 h-3 text-yellow-400" />
+    </div>
+  );
+
+  const TypingDots = () => (
+    <div className="flex gap-1 items-center h-4">
+      {[0, 150, 300].map((delay) => (
+        <span
+          key={delay}
+          className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"
+          style={{ animationDelay: `${delay}ms` }}
+        />
+      ))}
+    </div>
+  );
+
   if (!isOpen) return null;
 
   return (
     <>
       {/* Mobile: full-screen overlay */}
       <div
-        className={[
-          "fixed inset-0 z-50 flex flex-col",
-          "md:hidden",
-          "bg-black chat-mobile-enter",
-        ].join(" ")}
+        className="fixed inset-0 z-50 flex flex-col md:hidden bg-black chat-mobile-enter"
         style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       >
         {/* Mobile Header */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-yellow-400/15 bg-black/95 backdrop-blur-xl flex-shrink-0">
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-white hover:bg-[#1a1a1a] transition-colors text-lg"
-            aria-label="Close chat"
+            className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-white hover:bg-[#1a1a1a] transition-colors"
+            aria-label="Back"
           >
-            ←
+            <IconChevronLeft className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2 flex-1">
-            <div className="w-8 h-8 rounded-full bg-yellow-400/15 border border-yellow-400/30 flex items-center justify-center text-base">
-              🧠
+            <div className="w-8 h-8 rounded-full bg-yellow-400/15 border border-yellow-400/30 flex items-center justify-center">
+              <IconCpu className="w-4 h-4 text-yellow-400" />
             </div>
             <div>
               <div className="text-sm font-bold text-white leading-tight">XPS AI Command</div>
@@ -178,11 +189,7 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
               key={msg.id}
               className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} items-end gap-2`}
             >
-              {msg.role === "ai" && (
-                <div className="w-6 h-6 rounded-full bg-yellow-400/15 border border-yellow-400/25 flex items-center justify-center text-xs flex-shrink-0 mb-1">
-                  🧠
-                </div>
-              )}
+              {msg.role === "ai" && <AiAvatar />}
               <div
                 className={[
                   "max-w-[82%] rounded-2xl px-4 py-3 text-sm leading-relaxed",
@@ -202,30 +209,23 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
               </div>
             </div>
           ))}
-
           {isTyping && (
             <div className="flex justify-start items-end gap-2">
-              <div className="w-6 h-6 rounded-full bg-yellow-400/15 border border-yellow-400/25 flex items-center justify-center text-xs">
-                🧠
-              </div>
+              <AiAvatar />
               <div className="bg-[#141414] border border-yellow-400/10 rounded-2xl rounded-bl-sm px-4 py-3">
-                <div className="flex gap-1 items-center h-4">
-                  {[0, 150, 300].map((delay) => (
-                    <span
-                      key={delay}
-                      className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"
-                      style={{ animationDelay: `${delay}ms` }}
-                    />
-                  ))}
-                </div>
+                <TypingDots />
               </div>
             </div>
           )}
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Quick Commands — horizontal scroll */}
+        {/* Quick Commands */}
         <div className="px-4 py-2 border-t border-yellow-400/10 flex-shrink-0">
+          <div className="flex items-center gap-1 mb-1">
+            <IconActivity className="w-3 h-3 text-gray-600" />
+            <span className="text-[10px] text-gray-600 font-medium uppercase tracking-wider">Quick Commands</span>
+          </div>
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {QUICK_COMMANDS.map((cmd) => (
               <button
@@ -239,7 +239,7 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
           </div>
         </div>
 
-        {/* Input bar — fixed at bottom */}
+        {/* Input bar */}
         <div className="px-4 py-3 border-t border-yellow-400/15 bg-black/95 backdrop-blur-xl flex-shrink-0">
           <div className="flex items-center gap-2 bg-[#141414] border border-yellow-400/20 rounded-2xl px-4 py-2.5 focus-within:border-yellow-400/50 transition-colors">
             <input
@@ -254,16 +254,16 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
             <button
               onClick={() => sendMessage(inputValue)}
               disabled={!inputValue.trim() || isTyping}
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0 active:scale-95"
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-yellow-400 hover:bg-yellow-500 text-black transition-all disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0 active:scale-95"
               aria-label="Send"
             >
-              ↑
+              <IconArrowUp className="w-4 h-4" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Desktop: slide-in panel (bottom-right) */}
+      {/* Desktop: slide-in panel */}
       <div className="hidden md:flex fixed inset-0 z-50 items-end justify-end pointer-events-none">
         <div
           className="absolute inset-0 bg-black/40 pointer-events-auto"
@@ -282,8 +282,8 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-yellow-400/15 flex-shrink-0">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-yellow-400/15 border border-yellow-400/30 flex items-center justify-center text-base">
-                🧠
+              <div className="w-8 h-8 rounded-full bg-yellow-400/15 border border-yellow-400/30 flex items-center justify-center">
+                <IconCpu className="w-4 h-4 text-yellow-400" />
               </div>
               <div>
                 <div className="text-sm font-bold text-white">XPS AI Command</div>
@@ -295,10 +295,10 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
             </div>
             <button
               onClick={onClose}
-              className="w-7 h-7 flex items-center justify-center rounded-full text-gray-500 hover:text-white hover:bg-[#2a2a2a] transition-colors text-sm"
+              className="w-7 h-7 flex items-center justify-center rounded-full text-gray-500 hover:text-white hover:bg-[#2a2a2a] transition-colors"
               aria-label="Close"
             >
-              ✕
+              <IconX className="w-4 h-4" />
             </button>
           </div>
 
@@ -309,11 +309,7 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
                 key={msg.id}
                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} items-end gap-2`}
               >
-                {msg.role === "ai" && (
-                  <div className="w-6 h-6 rounded-full bg-yellow-400/15 border border-yellow-400/25 flex items-center justify-center text-xs flex-shrink-0 mb-1">
-                    🧠
-                  </div>
-                )}
+                {msg.role === "ai" && <AiAvatar />}
                 <div
                   className={[
                     "max-w-[85%] rounded-2xl px-3 py-2.5 text-sm leading-relaxed",
@@ -335,19 +331,9 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
             ))}
             {isTyping && (
               <div className="flex justify-start items-end gap-2">
-                <div className="w-6 h-6 rounded-full bg-yellow-400/15 border border-yellow-400/25 flex items-center justify-center text-xs">
-                  🧠
-                </div>
+                <AiAvatar />
                 <div className="bg-[#1a1a1a] border border-yellow-400/10 rounded-2xl rounded-bl-sm px-4 py-3">
-                  <div className="flex gap-1 items-center h-4">
-                    {[0, 150, 300].map((delay) => (
-                      <span
-                        key={delay}
-                        className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-bounce"
-                        style={{ animationDelay: `${delay}ms` }}
-                      />
-                    ))}
-                  </div>
+                  <TypingDots />
                 </div>
               </div>
             )}
@@ -384,10 +370,10 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
               <button
                 onClick={() => sendMessage(inputValue)}
                 disabled={!inputValue.trim() || isTyping}
-                className="w-7 h-7 flex items-center justify-center rounded-lg bg-yellow-400 hover:bg-yellow-500 text-black text-sm font-bold transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
+                className="w-7 h-7 flex items-center justify-center rounded-lg bg-yellow-400 hover:bg-yellow-500 text-black transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
                 aria-label="Send"
               >
-                ↑
+                <IconArrowUp className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
@@ -396,3 +382,4 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
     </>
   );
 }
+

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { IconCheck, IconX, IconRefresh, IconMinus, IconClock, IconExternalLink, IconActivity } from "@/components/Icons";
 
 interface Workflow {
   id: string;
@@ -156,11 +157,11 @@ const statusColor = (s: string) => {
   return "text-gray-500 bg-gray-500/10 border border-gray-500/30";
 };
 
-const statusIcon = (s: string) => {
-  if (s === "success") return "✓";
-  if (s === "failure") return "✕";
-  if (s === "running") return "⟳";
-  return "–";
+const statusIcon = (s: string): React.ReactNode => {
+  if (s === "success") return <IconCheck className="w-3 h-3" />;
+  if (s === "failure") return <IconX className="w-3 h-3" />;
+  if (s === "running") return <IconRefresh className="w-3 h-3 animate-spin" />;
+  return <IconMinus className="w-3 h-3" />;
 };
 
 export default function WorkflowPanel() {
@@ -231,7 +232,9 @@ export default function WorkflowPanel() {
                     {stage}
                   </span>
                   {i < wf.stages.length - 1 && (
-                    <span className="text-gray-600 text-xs">→</span>
+                    <svg className="w-3 h-3 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
                   )}
                 </span>
               ))}
@@ -239,7 +242,9 @@ export default function WorkflowPanel() {
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 text-xs text-gray-500">
-                <span>📅 {wf.schedule}</span>
+                <span className="flex items-center gap-1">
+                  <IconClock className="w-3 h-3" /> {wf.schedule}
+                </span>
                 <span className="font-mono text-[10px] text-gray-600">
                   {wf.file}
                 </span>
@@ -260,9 +265,9 @@ export default function WorkflowPanel() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="text-xs px-2 py-1 bg-yellow-400/10 border border-yellow-400/30 rounded text-yellow-400 hover:bg-yellow-400/20 transition-all"
+                  className="flex items-center gap-1 text-xs px-2 py-1 bg-yellow-400/10 border border-yellow-400/30 rounded text-yellow-400 hover:bg-yellow-400/20 transition-all"
                 >
-                  Trigger ↗
+                  Trigger <IconExternalLink className="w-3 h-3" />
                 </a>
               </div>
             </div>
@@ -285,9 +290,9 @@ export default function WorkflowPanel() {
               </div>
               <button
                 onClick={() => setShowYaml(false)}
-                className="text-gray-500 hover:text-white transition-colors"
+                className="w-7 h-7 flex items-center justify-center rounded-full text-gray-500 hover:text-white hover:bg-[#2a2a2a] transition-colors"
               >
-                ✕
+                <IconX className="w-4 h-4" />
               </button>
             </div>
             <div className="flex-1 overflow-auto p-5">
@@ -300,9 +305,9 @@ export default function WorkflowPanel() {
                 href={`https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/blob/main/.github/workflows/${selectedWorkflow.file}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-yellow-400 hover:text-yellow-300"
+                className="flex items-center gap-1 text-xs text-yellow-400 hover:text-yellow-300"
               >
-                View on GitHub ↗
+                View on GitHub <IconExternalLink className="w-3 h-3" />
               </a>
             </div>
           </div>

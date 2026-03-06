@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { IconMail, IconX } from "@/components/Icons";
 
 const CAMPAIGNS = [
   {
@@ -258,7 +259,7 @@ export default function OutreachPanel() {
           ) : (
             <div className="space-y-3">
               <div className="flex items-center gap-3 p-3 bg-[#111111] rounded-lg">
-                <span className="text-2xl">📧</span>
+                <span className="text-yellow-400/70"><IconMail className="w-6 h-6" /></span>
                 <div>
                   <div className="text-sm text-white font-medium">
                     Flooring Partnership Intro v2
@@ -306,9 +307,9 @@ export default function OutreachPanel() {
               </h3>
               <button
                 onClick={() => setShowNewCampaign(false)}
-                className="text-gray-500 hover:text-white"
+                className="w-7 h-7 flex items-center justify-center rounded-full text-gray-500 hover:text-white hover:bg-[#2a2a2a] transition-colors"
               >
-                ✕
+                <IconX className="w-4 h-4" />
               </button>
             </div>
             <div className="space-y-3">

@@ -12,6 +12,14 @@ import OutreachPanel from "@/components/OutreachPanel";
 import WorkflowPanel from "@/components/WorkflowPanel";
 import IntegrationsPanel from "@/components/IntegrationsPanel";
 import AICommandPanel from "@/components/AICommandPanel";
+import {
+  IconDashboard,
+  IconBarChart,
+  IconUsers,
+  IconSettings,
+  IconCpu,
+  IconMenu,
+} from "@/components/Icons";
 
 const SECTION_LABELS: Record<SectionId, string> = {
   dashboard: "Dashboard",
@@ -24,12 +32,12 @@ const SECTION_LABELS: Record<SectionId, string> = {
   "ai-command": "AI Orchestration",
 };
 
-const MOBILE_NAV = [
-  { id: "dashboard" as SectionId, label: "Home", icon: "📊" },
-  { id: "leads" as SectionId, label: "Leads", icon: "🎯" },
-  { id: "analytics" as SectionId, label: "Charts", icon: "📈" },
-  { id: "workflows" as SectionId, label: "Workflows", icon: "⚙️" },
-  { id: "ai-command" as SectionId, label: "AI", icon: "🧠" },
+const MOBILE_NAV: { id: SectionId; label: string; icon: React.ReactNode }[] = [
+  { id: "dashboard", label: "Home", icon: <IconDashboard className="w-5 h-5" /> },
+  { id: "leads", label: "Leads", icon: <IconUsers className="w-5 h-5" /> },
+  { id: "analytics", label: "Charts", icon: <IconBarChart className="w-5 h-5" /> },
+  { id: "workflows", label: "Workflows", icon: <IconSettings className="w-5 h-5" /> },
+  { id: "ai-command", label: "AI", icon: <IconCpu className="w-5 h-5" /> },
 ];
 
 export default function Home() {
@@ -82,9 +90,7 @@ export default function Home() {
             className="md:hidden flex items-center justify-center w-8 h-8 rounded text-gray-400 hover:text-yellow-400 hover:bg-yellow-400/10 transition-colors"
             aria-label="Open menu"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            <IconMenu className="w-5 h-5" />
           </button>
 
           {/* Logo — mobile only */}
@@ -109,17 +115,17 @@ export default function Home() {
             onClick={() => setChatOpen(true)}
             className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-yellow-400/10 border border-yellow-400/30 rounded-lg text-xs text-yellow-400 hover:bg-yellow-400/20 transition-all"
           >
-            <span>🧠</span>
+            <IconCpu className="w-3.5 h-3.5" />
             <span>AI Command</span>
           </button>
 
           {/* Chat button — mobile header shortcut */}
           <button
             onClick={() => setChatOpen(true)}
-            className="md:hidden flex items-center justify-center w-8 h-8 rounded-full bg-yellow-400/10 border border-yellow-400/25 text-yellow-400 text-base transition-all hover:bg-yellow-400/20"
+            className="md:hidden flex items-center justify-center w-8 h-8 rounded-full bg-yellow-400/10 border border-yellow-400/25 text-yellow-400 transition-all hover:bg-yellow-400/20"
             aria-label="AI Command"
           >
-            🧠
+            <IconCpu className="w-4 h-4" />
           </button>
         </header>
 
@@ -174,10 +180,10 @@ export default function Home() {
       {!chatOpen && (
         <button
           onClick={() => setChatOpen(true)}
-          className="hidden md:flex fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-yellow-400 hover:bg-yellow-500 text-black text-xl items-center justify-center shadow-lg shadow-yellow-400/20 transition-all hover:scale-110 gold-pulse"
+          className="hidden md:flex fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-yellow-400 hover:bg-yellow-500 text-black items-center justify-center shadow-lg shadow-yellow-400/20 transition-all hover:scale-110 gold-pulse"
           aria-label="Open AI Command Chat"
         >
-          💬
+          <IconCpu className="w-5 h-5" />
         </button>
       )}
 
@@ -200,10 +206,10 @@ export default function Home() {
                     : "text-gray-500 hover:text-gray-300",
                 ].join(" ")}
               >
-                <span className="text-lg leading-none">{item.icon}</span>
-                <span
-                  className={`text-[10px] font-medium leading-none ${isActive ? "text-yellow-400" : "text-gray-600"}`}
-                >
+                <span className={`${isActive ? "text-yellow-400" : "text-gray-500"}`}>
+                  {item.icon}
+                </span>
+                <span className={`text-[10px] font-medium leading-none ${isActive ? "text-yellow-400" : "text-gray-600"}`}>
                   {item.label}
                 </span>
                 {isActive && (
