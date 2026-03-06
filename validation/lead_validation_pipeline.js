@@ -1,16 +1,20 @@
-const { validateLead } = require('../validators/lead_validator');
-const { dedupe } = require('./dedupe');
-const fs   = require('fs');
-const path = require('path');
+const { validateLead } = require("../validators/lead_validator");
+const { dedupe } = require("./dedupe");
+const fs = require("fs");
+const path = require("path");
 
-const ROOT       = path.resolve(__dirname, '..');
-const LEADS_DIR  = path.join(ROOT, 'data', 'leads');
+const ROOT = path.resolve(__dirname, "..");
+const LEADS_DIR = path.join(ROOT, "data", "leads");
 
 /**
  * Quality gate thresholds.  Override via environment variables.
  */
-const INVALID_RATE_THRESHOLD  = parseFloat(process.env.VALIDATION_MAX_INVALID_RATE  || '0.5');
-const DUPLICATE_RATE_THRESHOLD = parseFloat(process.env.VALIDATION_MAX_DUPLICATE_RATE || '0.5');
+const INVALID_RATE_THRESHOLD = parseFloat(
+  process.env.VALIDATION_MAX_INVALID_RATE || "0.5",
+);
+const DUPLICATE_RATE_THRESHOLD = parseFloat(
+  process.env.VALIDATION_MAX_DUPLICATE_RATE || "0.5",
+);
 
 /**
  * Runs the full lead validation pipeline:
@@ -34,11 +38,11 @@ const DUPLICATE_RATE_THRESHOLD = parseFloat(process.env.VALIDATION_MAX_DUPLICATE
 function runValidationPipeline(leads, opts = {}) {
   const { writeReports = true, enforceGates = false } = opts;
 
-  const valid   = [];
+  const valid = [];
   const invalid = [];
 
   for (const lead of leads) {
-    const result   = validateLead(lead);
+    const result = validateLead(lead);
     const annotated = Object.assign({}, lead, { _validation: result });
     if (result.valid) {
       valid.push(annotated);
@@ -50,10 +54,10 @@ function runValidationPipeline(leads, opts = {}) {
   const { unique, duplicates } = dedupe(valid);
 
   const summary = {
-    total:      leads.length,
-    valid:      valid.length,
-    invalid:    invalid.length,
-    unique:     unique.length,
+    total: leads.length,
+    valid: valid.length,
+    invalid: invalid.length,
+    unique: unique.length,
     duplicates: duplicates.length,
     generated_at: new Date().toISOString(),
   };
@@ -63,50 +67,54 @@ function runValidationPipeline(leads, opts = {}) {
   // ── Write report files ──────────────────────────────────────────────────
   if (writeReports) {
     try {
-      if (!fs.existsSync(LEADS_DIR)) fs.mkdirSync(LEADS_DIR, { recursive: true });
+      if (!fs.existsSync(LEADS_DIR))
+        fs.mkdirSync(LEADS_DIR, { recursive: true });
 
       const report = {
         summary,
-        invalid_count:   invalid.length,
+        invalid_count: invalid.length,
         duplicate_count: duplicates.length,
         samples: {
-          invalid:    invalid.slice(0, 10),
+          invalid: invalid.slice(0, 10),
           duplicates: duplicates.slice(0, 10),
         },
       };
 
       fs.writeFileSync(
-        path.join(LEADS_DIR, 'validation_report.json'),
-        JSON.stringify(report, null, 2)
+        path.join(LEADS_DIR, "validation_report.json"),
+        JSON.stringify(report, null, 2),
       );
       fs.writeFileSync(
-        path.join(LEADS_DIR, 'duplicates.json'),
-        JSON.stringify(duplicates, null, 2)
+        path.join(LEADS_DIR, "duplicates.json"),
+        JSON.stringify(duplicates, null, 2),
       );
       fs.writeFileSync(
-        path.join(LEADS_DIR, 'invalid_leads.json'),
-        JSON.stringify(invalid, null, 2)
+        path.join(LEADS_DIR, "invalid_leads.json"),
+        JSON.stringify(invalid, null, 2),
       );
     } catch (err) {
-      console.error('[LeadValidation] Could not write report files:', err.message);
+      console.error(
+        "[LeadValidation] Could not write report files:",
+        err.message,
+      );
     }
   }
 
   // ── Quality gates ────────────────────────────────────────────────────────
   if (enforceGates && leads.length > 0) {
-    const invalidRate    = invalid.length    / leads.length;
-    const duplicateRate  = duplicates.length / leads.length;
+    const invalidRate = invalid.length / leads.length;
+    const duplicateRate = duplicates.length / leads.length;
 
     if (invalidRate > INVALID_RATE_THRESHOLD) {
       throw new Error(
         `[LeadValidation] Quality gate failed: invalid rate ${(invalidRate * 100).toFixed(1)}% ` +
-        `exceeds threshold ${(INVALID_RATE_THRESHOLD * 100).toFixed(1)}%`
+          `exceeds threshold ${(INVALID_RATE_THRESHOLD * 100).toFixed(1)}%`,
       );
     }
     if (duplicateRate > DUPLICATE_RATE_THRESHOLD) {
       throw new Error(
         `[LeadValidation] Quality gate failed: duplicate rate ${(duplicateRate * 100).toFixed(1)}% ` +
-        `exceeds threshold ${(DUPLICATE_RATE_THRESHOLD * 100).toFixed(1)}%`
+          `exceeds threshold ${(DUPLICATE_RATE_THRESHOLD * 100).toFixed(1)}%`,
       );
     }
   }

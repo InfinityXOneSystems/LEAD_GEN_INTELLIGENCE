@@ -332,7 +332,9 @@
                   "type": "object",
                   "properties": {
                     "success": { "type": "boolean" },
-                    "summary": { "$ref": "#/components/schemas/ValidationSummary" }
+                    "summary": {
+                      "$ref": "#/components/schemas/ValidationSummary"
+                    }
                   }
                 }
               }
@@ -395,7 +397,10 @@
                   "properties": {
                     "success": { "type": "boolean" },
                     "configured": { "type": "boolean" },
-                    "missing": { "type": "array", "items": { "type": "string" } }
+                    "missing": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
                   }
                 }
               }
@@ -416,7 +421,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "title": { "type": "string", "description": "Spreadsheet title (optional)" }
+                  "title": {
+                    "type": "string",
+                    "description": "Spreadsheet title (optional)"
+                  }
                 }
               }
             }
@@ -438,7 +446,14 @@
               }
             }
           },
-          "500": { "description": "Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+          "500": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
         }
       }
     },
@@ -478,7 +493,14 @@
               }
             }
           },
-          "500": { "description": "Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+          "500": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
         }
       }
     },
@@ -488,8 +510,20 @@
         "summary": "List Gmail messages",
         "description": "Lists recent Gmail messages, optionally filtered by a search query.",
         "parameters": [
-          { "name": "q", "in": "query", "description": "Gmail search query", "required": false, "schema": { "type": "string" } },
-          { "name": "limit", "in": "query", "description": "Maximum number of messages", "required": false, "schema": { "type": "integer" } }
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Gmail search query",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of messages",
+            "required": false,
+            "schema": { "type": "integer" }
+          }
         ],
         "responses": {
           "200": {
@@ -500,7 +534,10 @@
                   "type": "object",
                   "properties": {
                     "success": { "type": "boolean" },
-                    "messages": { "type": "array", "items": { "type": "object" } },
+                    "messages": {
+                      "type": "array",
+                      "items": { "type": "object" }
+                    },
                     "count": { "type": "integer" }
                   }
                 }
@@ -523,9 +560,18 @@
                 "type": "object",
                 "required": ["name", "filePath"],
                 "properties": {
-                  "name": { "type": "string", "description": "File name in Drive" },
-                  "filePath": { "type": "string", "description": "Server-side file path (relative to repo root)" },
-                  "folderId": { "type": "string", "description": "Target Google Drive folder ID (optional)" }
+                  "name": {
+                    "type": "string",
+                    "description": "File name in Drive"
+                  },
+                  "filePath": {
+                    "type": "string",
+                    "description": "Server-side file path (relative to repo root)"
+                  },
+                  "folderId": {
+                    "type": "string",
+                    "description": "Target Google Drive folder ID (optional)"
+                  }
                 }
               }
             }
@@ -547,7 +593,14 @@
               }
             }
           },
-          "500": { "description": "Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+          "500": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
         }
       }
     }

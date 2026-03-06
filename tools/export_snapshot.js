@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * export_snapshot.js — Postgres → JSON snapshot exporter
@@ -22,17 +22,17 @@
  *   EXPORT_LIMIT  — max leads to export (default: 1000)
  */
 
-require('dotenv').config();
+require("dotenv").config();
 
-const fs   = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const ROOT           = path.resolve(__dirname, '..');
-const LEADS_JSON     = path.join(ROOT, 'data', 'leads', 'leads.json');
-const DATA_DIR       = path.join(ROOT, 'data', 'leads');
-const DASH_DATA_DIR  = path.join(ROOT, 'dashboard', 'public', 'data');
+const ROOT = path.resolve(__dirname, "..");
+const LEADS_JSON = path.join(ROOT, "data", "leads", "leads.json");
+const DATA_DIR = path.join(ROOT, "data", "leads");
+const DASH_DATA_DIR = path.join(ROOT, "dashboard", "public", "data");
 
-const EXPORT_LIMIT = parseInt(process.env.EXPORT_LIMIT || '1000', 10);
+const EXPORT_LIMIT = parseInt(process.env.EXPORT_LIMIT || "1000", 10);
 
 // ── helpers ─────────────────────────────────────────────────────────────────
 
@@ -58,20 +58,20 @@ function buildReport(leads) {
     const score = lead.lead_score || lead.score || 0;
     totalScore += score;
 
-    const tier = score >= 70 ? 'HOT' : score >= 40 ? 'WARM' : 'COLD';
+    const tier = score >= 70 ? "HOT" : score >= 40 ? "WARM" : "COLD";
     tiers[tier] = (tiers[tier] || 0) + 1;
 
-    const ind = lead.industry || lead.category || 'unknown';
+    const ind = lead.industry || lead.category || "unknown";
     industries[ind] = (industries[ind] || 0) + 1;
   }
 
   return {
-    generated_at:   new Date().toISOString(),
-    total_leads:    leads.length,
-    average_score:  leads.length ? Math.round(totalScore / leads.length) : 0,
+    generated_at: new Date().toISOString(),
+    total_leads: leads.length,
+    average_score: leads.length ? Math.round(totalScore / leads.length) : 0,
     tiers,
     industries,
-    top_leads:      leads.slice(0, 10),
+    top_leads: leads.slice(0, 10),
   };
 }
 
@@ -86,20 +86,20 @@ function normalizeScore(row) {
 function normaliseRow(row) {
   const score = normalizeScore(row);
   return {
-    id:           row.id,
-    company:      row.company_name || row.company || '',
-    company_name: row.company_name || row.company || '',
-    phone:        row.phone        || '',
-    email:        row.email        || '',
-    website:      row.website      || '',
-    city:         row.city         || '',
-    state:        row.state        || '',
-    industry:     row.industry     || row.category || '',
-    rating:       row.rating       != null ? Number(row.rating)  : null,
-    reviews:      row.reviews      != null ? Number(row.reviews) : null,
-    lead_score:   score,
+    id: row.id,
+    company: row.company_name || row.company || "",
+    company_name: row.company_name || row.company || "",
+    phone: row.phone || "",
+    email: row.email || "",
+    website: row.website || "",
+    city: row.city || "",
+    state: row.state || "",
+    industry: row.industry || row.category || "",
+    rating: row.rating != null ? Number(row.rating) : null,
+    reviews: row.reviews != null ? Number(row.reviews) : null,
+    lead_score: score,
     score,
-    source:       row.source       || '',
+    source: row.source || "",
     date_scraped: row.date_scraped || row.scraped_at || null,
   };
 }
@@ -107,21 +107,26 @@ function normaliseRow(row) {
 // ── DB export ────────────────────────────────────────────────────────────────
 
 async function exportFromDb() {
-  const { query, initSchema } = require('../db/db');
+  const { query, initSchema } = require("../db/db");
 
   try {
     await initSchema();
   } catch (err) {
-    console.warn('[export_snapshot] Could not init schema (continuing):', err.message);
+    console.warn(
+      "[export_snapshot] Could not init schema (continuing):",
+      err.message,
+    );
   }
 
   const result = await query(
-    'SELECT * FROM leads ORDER BY lead_score DESC NULLS LAST LIMIT $1',
-    [EXPORT_LIMIT]
+    "SELECT * FROM leads ORDER BY lead_score DESC NULLS LAST LIMIT $1",
+    [EXPORT_LIMIT],
   );
 
   const leads = result.rows.map(normaliseRow);
-  console.log(`[export_snapshot] Fetched ${leads.length} leads from PostgreSQL.`);
+  console.log(
+    `[export_snapshot] Fetched ${leads.length} leads from PostgreSQL.`,
+  );
   return leads;
 }
 
@@ -129,11 +134,13 @@ async function exportFromDb() {
 
 async function exportFromJson() {
   if (!fs.existsSync(LEADS_JSON)) {
-    console.warn('[export_snapshot] No leads.json found — exporting empty set.');
+    console.warn(
+      "[export_snapshot] No leads.json found — exporting empty set.",
+    );
     return [];
   }
   try {
-    const raw  = fs.readFileSync(LEADS_JSON, 'utf8');
+    const raw = fs.readFileSync(LEADS_JSON, "utf8");
     const leads = JSON.parse(raw);
     if (!Array.isArray(leads)) return [];
 
@@ -142,10 +149,12 @@ async function exportFromJson() {
       .sort((a, b) => b.lead_score - a.lead_score)
       .slice(0, EXPORT_LIMIT);
 
-    console.log(`[export_snapshot] Loaded ${normalised.length} leads from JSON fallback.`);
+    console.log(
+      `[export_snapshot] Loaded ${normalised.length} leads from JSON fallback.`,
+    );
     return normalised;
   } catch (err) {
-    console.error('[export_snapshot] Failed to parse leads.json:', err.message);
+    console.error("[export_snapshot] Failed to parse leads.json:", err.message);
     return [];
   }
 }
@@ -153,13 +162,13 @@ async function exportFromJson() {
 // ── main ─────────────────────────────────────────────────────────────────────
 
 async function run() {
-  console.log('[export_snapshot] Starting snapshot export...');
+  console.log("[export_snapshot] Starting snapshot export...");
 
   let leads;
 
   const useDb = !!(
     process.env.DATABASE_HOST ||
-    process.env.DATABASE_URL  ||
+    process.env.DATABASE_URL ||
     process.env.DATABASE_NAME
   );
 
@@ -167,30 +176,39 @@ async function run() {
     try {
       leads = await exportFromDb();
     } catch (err) {
-      console.error('[export_snapshot] DB export failed, falling back to JSON:', err.message);
+      console.error(
+        "[export_snapshot] DB export failed, falling back to JSON:",
+        err.message,
+      );
       leads = await exportFromJson();
     }
   } else {
-    console.log('[export_snapshot] No DATABASE_HOST set — using JSON fallback.');
+    console.log(
+      "[export_snapshot] No DATABASE_HOST set — using JSON fallback.",
+    );
     leads = await exportFromJson();
   }
 
   const report = buildReport(leads);
 
-  writeBoth('scored_leads.json',  leads);
-  writeBoth('scoring_report.json', report);
+  writeBoth("scored_leads.json", leads);
+  writeBoth("scoring_report.json", report);
 
   console.log(`[export_snapshot] Done. ${leads.length} leads exported.`);
-  console.log(`[export_snapshot] Tiers: HOT=${report.tiers.HOT} WARM=${report.tiers.WARM} COLD=${report.tiers.COLD}`);
+  console.log(
+    `[export_snapshot] Tiers: HOT=${report.tiers.HOT} WARM=${report.tiers.WARM} COLD=${report.tiers.COLD}`,
+  );
 
   return { leads, report };
 }
 
 if (require.main === module) {
-  run().then(() => process.exit(0)).catch((err) => {
-    console.error('[export_snapshot] Fatal error:', err);
-    process.exit(1);
-  });
+  run()
+    .then(() => process.exit(0))
+    .catch((err) => {
+      console.error("[export_snapshot] Fatal error:", err);
+      process.exit(1);
+    });
 }
 
 module.exports = { run };

@@ -68,7 +68,9 @@ export default function IntegrationsPanel() {
   const [driveConnected, setDriveConnected] = useState(false);
   const [sheetsAutoExport, setSheetsAutoExport] = useState(false);
   const [driveAutoBackup, setDriveAutoBackup] = useState(false);
-  const [sheetsExportStatus, setSheetsExportStatus] = useState<"idle" | "running" | "done">("idle");
+  const [sheetsExportStatus, setSheetsExportStatus] = useState<
+    "idle" | "running" | "done"
+  >("idle");
 
   const handleTestConnection = () => {
     if (!apiKey) return;
@@ -327,7 +329,9 @@ export default function IntegrationsPanel() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm text-white">Connection Status</div>
-                <div className={`text-xs ${driveConnected ? "text-green-400" : "text-gray-500"}`}>
+                <div
+                  className={`text-xs ${driveConnected ? "text-green-400" : "text-gray-500"}`}
+                >
                   {driveConnected ? "✓ Connected" : "Not connected"}
                 </div>
               </div>
@@ -346,9 +350,17 @@ export default function IntegrationsPanel() {
               <div className="text-gray-400 font-medium mb-1">Services:</div>
               {[
                 { icon: "📬", name: "Gmail", desc: "Outreach email sending" },
-                { icon: "📊", name: "Sheets", desc: "Lead export to spreadsheet" },
+                {
+                  icon: "📊",
+                  name: "Sheets",
+                  desc: "Lead export to spreadsheet",
+                },
                 { icon: "💾", name: "Drive", desc: "Report backup & storage" },
-                { icon: "📅", name: "Calendar", desc: "Schedule scraping events" },
+                {
+                  icon: "📅",
+                  name: "Calendar",
+                  desc: "Schedule scraping events",
+                },
               ].map((svc) => (
                 <div key={svc.name} className="flex items-center gap-2">
                   <span>{svc.icon}</span>
@@ -358,10 +370,27 @@ export default function IntegrationsPanel() {
               ))}
             </div>
             <div className="text-xs text-gray-500 bg-[#111111] rounded-lg p-3">
-              <div className="text-gray-400 font-medium mb-1">Setup Required:</div>
-              <div>Set <span className="font-mono text-yellow-400">GOOGLE_CLIENT_ID</span></div>
-              <div>Set <span className="font-mono text-yellow-400">GOOGLE_CLIENT_SECRET</span></div>
-              <div>Set <span className="font-mono text-yellow-400">GOOGLE_REFRESH_TOKEN</span></div>
+              <div className="text-gray-400 font-medium mb-1">
+                Setup Required:
+              </div>
+              <div>
+                Set{" "}
+                <span className="font-mono text-yellow-400">
+                  GOOGLE_CLIENT_ID
+                </span>
+              </div>
+              <div>
+                Set{" "}
+                <span className="font-mono text-yellow-400">
+                  GOOGLE_CLIENT_SECRET
+                </span>
+              </div>
+              <div>
+                Set{" "}
+                <span className="font-mono text-yellow-400">
+                  GOOGLE_REFRESH_TOKEN
+                </span>
+              </div>
             </div>
           </div>
         </SectionCard>
@@ -370,7 +399,8 @@ export default function IntegrationsPanel() {
         <SectionCard title="Google Sheets Export" icon="📊">
           <div className="space-y-3">
             <div className="text-xs text-gray-500">
-              Export leads directly to a Google Sheets spreadsheet for analysis and sharing.
+              Export leads directly to a Google Sheets spreadsheet for analysis
+              and sharing.
             </div>
             <Toggle
               checked={sheetsAutoExport}
@@ -392,8 +422,8 @@ export default function IntegrationsPanel() {
               {sheetsExportStatus === "running"
                 ? "Exporting..."
                 : sheetsExportStatus === "done"
-                ? "✓ Exported to Sheets"
-                : "Export Leads to Google Sheets"}
+                  ? "✓ Exported to Sheets"
+                  : "Export Leads to Google Sheets"}
             </button>
             {sheetsExportStatus === "done" && (
               <div className="text-xs text-green-400 text-center">
@@ -401,7 +431,9 @@ export default function IntegrationsPanel() {
               </div>
             )}
             <div className="bg-[#111111] rounded-lg p-3 text-xs text-gray-500 space-y-1">
-              <div>• Exports all fields: company, phone, email, city, score, tier</div>
+              <div>
+                • Exports all fields: company, phone, email, city, score, tier
+              </div>
               <div>• Creates new sheet per export with date stamp</div>
               <div>• Supports append mode for incremental updates</div>
             </div>
@@ -412,24 +444,43 @@ export default function IntegrationsPanel() {
         <SectionCard title="Copilot Mobile + GPT Actions" icon="📱">
           <div className="space-y-3">
             <div className="text-xs text-gray-500">
-              Control the platform from Copilot Mobile or any Custom GPT via the Actions API.
+              Control the platform from Copilot Mobile or any Custom GPT via the
+              Actions API.
             </div>
             <div className="bg-[#111111] rounded-lg p-3 text-xs space-y-2">
-              <div className="text-gray-400 font-medium mb-1">API Endpoints:</div>
+              <div className="text-gray-400 font-medium mb-1">
+                API Endpoints:
+              </div>
               {[
-                { method: "GET",  path: "/status",              desc: "System health" },
-                { method: "GET",  path: "/leads",               desc: "List leads" },
-                { method: "POST", path: "/scrape",              desc: "Trigger scraper" },
-                { method: "POST", path: "/pipeline/run",        desc: "Run full pipeline" },
-                { method: "POST", path: "/validate",            desc: "Validate leads" },
-                { method: "GET",  path: "/export",              desc: "Export snapshot" },
-                { method: "POST", path: "/workspace/sheets/export", desc: "Export to Sheets" },
+                { method: "GET", path: "/status", desc: "System health" },
+                { method: "GET", path: "/leads", desc: "List leads" },
+                { method: "POST", path: "/scrape", desc: "Trigger scraper" },
+                {
+                  method: "POST",
+                  path: "/pipeline/run",
+                  desc: "Run full pipeline",
+                },
+                { method: "POST", path: "/validate", desc: "Validate leads" },
+                { method: "GET", path: "/export", desc: "Export snapshot" },
+                {
+                  method: "POST",
+                  path: "/workspace/sheets/export",
+                  desc: "Export to Sheets",
+                },
               ].map((ep) => (
                 <div key={ep.path} className="flex items-center gap-2">
-                  <span className={`font-mono text-[9px] px-1 py-0.5 rounded ${
-                    ep.method === "GET" ? "bg-blue-400/20 text-blue-400" : "bg-yellow-400/20 text-yellow-400"
-                  }`}>{ep.method}</span>
-                  <span className="font-mono text-[10px] text-gray-300">{ep.path}</span>
+                  <span
+                    className={`font-mono text-[9px] px-1 py-0.5 rounded ${
+                      ep.method === "GET"
+                        ? "bg-blue-400/20 text-blue-400"
+                        : "bg-yellow-400/20 text-yellow-400"
+                    }`}
+                  >
+                    {ep.method}
+                  </span>
+                  <span className="font-mono text-[10px] text-gray-300">
+                    {ep.path}
+                  </span>
                   <span className="text-gray-500 text-[10px]">— {ep.desc}</span>
                 </div>
               ))}
@@ -440,11 +491,15 @@ export default function IntegrationsPanel() {
               rel="noopener noreferrer"
               className="flex items-center justify-between p-2 bg-[#111111] rounded-lg text-xs hover:bg-[#1a1a1a] transition-colors"
             >
-              <span className="text-gray-400">OpenAPI Spec (for Custom GPT)</span>
+              <span className="text-gray-400">
+                OpenAPI Spec (for Custom GPT)
+              </span>
               <span className="text-yellow-400">Download ↗</span>
             </a>
             <div className="text-xs text-gray-500 bg-[#111111] rounded-lg p-3">
-              <div className="text-gray-400 font-medium mb-1">Copilot Mobile cURL Example:</div>
+              <div className="text-gray-400 font-medium mb-1">
+                Copilot Mobile cURL Example:
+              </div>
               <div className="font-mono text-[10px] text-gray-300 break-all">
                 curl -X POST http://localhost:3100/pipeline/run
               </div>
