@@ -58,7 +58,7 @@ export default function Sidebar({
   const handleNavClick = (section: SectionId) => {
     onSectionChange(section);
     // Close mobile overlay when selecting
-    if (window.innerWidth < 768 && isOpen) onToggle();
+    if (typeof window !== "undefined" && window.innerWidth < 768 && isOpen) onToggle();
   };
 
   return (
