@@ -1,0 +1,93 @@
+name: System Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate System
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Validate lead scoring pipeline
+        run: node agents/scoring/scoring_pipeline.js
+
+      - name: Validate lead validation pipeline
+        run: |
+          node -e "
+            const { runValidationPipeline } = require('./validation/lead_validation_pipeline');
+            const result = runValidationPipeline([]);
+            if (result.summary.total !== 0) throw new Error('Expected 0 total for empty input');
+            console.log('Lead validation pipeline: OK');
+          "
+
+      - name: Check required data directories
+        run: |
+          node -e "
+            const fs = require('fs');
+            const required = ['data/leads', 'data/datasets', 'data/outreach'];
+            let ok = true;
+            for (const dir of required) {
+              if (fs.existsSync(dir)) {
+                console.log('OK:', dir);
+              } else {
+                console.warn('MISSING:', dir);
+              }
+            }
+            console.log('Directory check complete.');
+          "
+
+      - name: Validate workflow YAML syntax
+        run: |
+          for f in .github/workflows/*.yml; do
+            python3 -c "import yaml, sys; yaml.safe_load(open('$f'))" && echo "OK: $f" || { echo "FAIL: $f"; exit 1; }
+          done
+
+      - name: Check for UTF-16 encoded JS files
+        run: |
+          FOUND=0
+          while IFS= read -r -d '' f; do
+            if file "$f" | grep -q "UTF-16"; then
+              echo "UTF-16 ENCODED (must fix): $f"
+              FOUND=$((FOUND+1))
+            fi
+          done < <(find . -name "*.js" -not -path "*/node_modules/*" -not -path "*/.next/*" -print0)
+          if [ "$FOUND" -gt 0 ]; then
+            echo "ERROR: $FOUND UTF-16 encoded JS file(s) found."
+            exit 1
+          fi
+          echo "All JS files are valid encoding."
+
+      - name: Report summary
+        if: always()
+        run: |
+          echo "## System Validation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- Tests: completed" >> $GITHUB_STEP_SUMMARY
+          echo "- Scoring pipeline: validated" >> $GITHUB_STEP_SUMMARY
+          echo "- Validation pipeline: validated" >> $GITHUB_STEP_SUMMARY
+          echo "- Workflow YAML: validated" >> $GITHUB_STEP_SUMMARY

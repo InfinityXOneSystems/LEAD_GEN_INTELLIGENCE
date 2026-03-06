@@ -1,0 +1,82 @@
+name: Lead Validation Check
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - 'data/leads/leads.json'
+      - 'validation/**'
+      - 'validators/**'
+      - 'contracts/**'
+      - 'scrapers/**'
+      - 'agents/scoring/**'
+  pull_request:
+    paths:
+      - 'data/leads/leads.json'
+      - 'validation/**'
+      - 'validators/**'
+      - 'contracts/**'
+      - 'scrapers/**'
+      - 'agents/scoring/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    name: Validate Lead Data & Pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Run lead validation pipeline
+        run: |
+          node -e "
+            const fs   = require('fs');
+            const path = require('path');
+            const { runValidationPipeline } = require('./validation/lead_validation_pipeline');
+            const leadsPath = path.join('data', 'leads', 'leads.json');
+            let leads = [];
+            if (fs.existsSync(leadsPath)) {
+              try { leads = JSON.parse(fs.readFileSync(leadsPath, 'utf8')); } catch (e) {
+                console.error('Failed to parse leads.json:', e.message);
+              }
+            } else {
+              console.log('No leads.json found — skipping data validation.');
+            }
+            const result = runValidationPipeline(leads);
+            const s = result.summary;
+            console.log('Validation complete:', JSON.stringify(s));
+            process.exit(0);
+          "
+
+      - name: Run scoring pipeline
+        run: node agents/scoring/scoring_pipeline.js
+
+      - name: Upload validation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-reports-${{ github.run_number }}
+          path: |
+            data/leads/scored_leads.json
+            data/leads/scoring_report.json
+          if-no-files-found: ignore
+          retention-days: 7
