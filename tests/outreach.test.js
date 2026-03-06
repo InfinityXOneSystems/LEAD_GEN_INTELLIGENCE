@@ -113,9 +113,9 @@ test("getEligibleLeads - includes leads with empty Status", () => {
   assert.ok(eligible.every((l) => l.Status === "" || l.Status === "new"));
 });
 
-test("getEligibleLeads - excludes leads without email", () => {
-  // Note: getEligibleLeads filters by Status only; email filtering happens
-  // downstream in the outreach runner. Both entries have eligible Status ("").
+test("getEligibleLeads - filters by status only, does not filter by email", () => {
+  // getEligibleLeads only checks Status; email filtering happens in the outreach runner.
+  // Both leads below have eligible Status ("") so both are returned.
   const leads = [
     { Email: "", Status: "" },
     { Email: "a@b.com", Status: "" },

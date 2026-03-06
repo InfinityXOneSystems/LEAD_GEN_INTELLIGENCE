@@ -1019,6 +1019,13 @@ function startClock() {
  * Tries to fetch scored_leads.json from multiple paths in priority order.
  * Falls back to SAMPLE_LEADS if all fetches fail (works offline / demo mode).
  */
+function renderDashboard() {
+  applyFilters();
+  renderStats();
+  renderTable();
+  buildCharts();
+}
+
 function loadLiveLeads() {
   const PATHS = [
     "./data/scored_leads.json",          // pages/data/ (after pipeline runs)
@@ -1029,10 +1036,7 @@ function loadLiveLeads() {
     if (index >= PATHS.length) {
       // All paths failed — stay with SAMPLE_LEADS
       console.info("[dashboard] No live data found. Using sample leads.");
-      applyFilters();
-      renderStats();
-      renderTable();
-      buildCharts();
+      renderDashboard();
       return;
     }
     fetch(PATHS[index])
@@ -1045,10 +1049,7 @@ function loadLiveLeads() {
           state.leads = data;
           state.filtered = [...data];
           console.info(`[dashboard] Loaded ${data.length} live leads from ${PATHS[index]}`);
-          applyFilters();
-          renderStats();
-          renderTable();
-          buildCharts();
+          renderDashboard();
         } else {
           tryNext(index + 1);
         }
