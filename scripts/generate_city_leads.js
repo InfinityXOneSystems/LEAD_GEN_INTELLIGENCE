@@ -567,7 +567,9 @@ function run() {
   console.log("  • Columbus, OH");
 
   const existing = loadExisting();
-  console.log(`[generate_city_leads] Existing leads loaded: ${existing.length}`);
+  console.log(
+    `[generate_city_leads] Existing leads loaded: ${existing.length}`,
+  );
 
   // Remove any previous stub/empty entries for these cities before re-inserting.
   // Stub entries are identified by a missing phone field: the scraper stub in
