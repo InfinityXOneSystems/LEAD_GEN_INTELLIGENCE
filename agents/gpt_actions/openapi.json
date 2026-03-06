@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "XPS Lead Intelligence GPT Actions API",
-    "description": "Exposes the Lead Gen Intelligence platform to a Custom GPT. Allows the GPT to retrieve leads, score prospects, trigger scraping, manage outreach templates, and monitor system status.",
-    "version": "1.0.0"
+    "description": "Exposes the Lead Gen Intelligence platform to a Custom GPT / Copilot Mobile. Allows the GPT to retrieve leads, score prospects, trigger scraping, run the full pipeline, manage outreach templates, run validation, and monitor system status.",
+    "version": "2.0.0"
   },
   "servers": [
     {
@@ -285,6 +285,324 @@
           }
         }
       }
+    },
+    "/pipeline/run": {
+      "post": {
+        "operationId": "runPipeline",
+        "summary": "Run the scoring + export pipeline",
+        "description": "Executes the scoring pipeline followed by the JSON snapshot export. Use this to trigger a full data refresh from Copilot Mobile or a Custom GPT.",
+        "responses": {
+          "200": {
+            "description": "Pipeline completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "scoring_output": { "type": "string" },
+                    "export_output": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Pipeline error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/validate": {
+      "post": {
+        "operationId": "validateLeads",
+        "summary": "Run the lead validation pipeline",
+        "description": "Validates all stored leads and writes validation_report.json, duplicates.json, and invalid_leads.json to data/leads/.",
+        "responses": {
+          "200": {
+            "description": "Validation summary",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "summary": {
+                      "$ref": "#/components/schemas/ValidationSummary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/export": {
+      "get": {
+        "operationId": "exportSnapshot",
+        "summary": "Export JSON snapshot for the dashboard",
+        "description": "Reads leads from PostgreSQL (or falls back to JSON) and writes dashboard-ready scored_leads.json and scoring_report.json files.",
+        "responses": {
+          "200": {
+            "description": "Export output",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "output": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Export error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workspace/status": {
+      "get": {
+        "operationId": "getWorkspaceStatus",
+        "summary": "Check Google Workspace configuration",
+        "description": "Returns whether Google Workspace (Gmail, Sheets, Drive, Calendar) credentials are configured.",
+        "responses": {
+          "200": {
+            "description": "Workspace configuration status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "configured": { "type": "boolean" },
+                    "missing": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workspace/sheets/export": {
+      "post": {
+        "operationId": "exportLeadsToSheets",
+        "summary": "Export leads to Google Sheets",
+        "description": "Creates a new Google Sheets spreadsheet populated with all stored leads.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Spreadsheet title (optional)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Spreadsheet created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "spreadsheetId": { "type": "string" },
+                    "url": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workspace/gmail/send": {
+      "post": {
+        "operationId": "gmailSendEmail",
+        "summary": "Send an email via Gmail",
+        "description": "Sends an email using the configured Gmail account (requires Google OAuth credentials).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["to", "subject", "body"],
+                "properties": {
+                  "to": { "type": "string", "format": "email" },
+                  "subject": { "type": "string" },
+                  "body": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "message_id": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workspace/gmail/messages": {
+      "get": {
+        "operationId": "gmailListMessages",
+        "summary": "List Gmail messages",
+        "description": "Lists recent Gmail messages, optionally filtered by a search query.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Gmail search query",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of messages",
+            "required": false,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Messages list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "messages": {
+                      "type": "array",
+                      "items": { "type": "object" }
+                    },
+                    "count": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workspace/drive/upload": {
+      "post": {
+        "operationId": "driveUploadFile",
+        "summary": "Upload a file to Google Drive",
+        "description": "Uploads a local file from the server to Google Drive.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "filePath"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "File name in Drive"
+                  },
+                  "filePath": {
+                    "type": "string",
+                    "description": "Server-side file path (relative to repo root)"
+                  },
+                  "folderId": {
+                    "type": "string",
+                    "description": "Target Google Drive folder ID (optional)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File uploaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "fileId": { "type": "string" },
+                    "webViewLink": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -370,6 +688,17 @@
         "type": "object",
         "properties": {
           "error": { "type": "string" }
+        }
+      },
+      "ValidationSummary": {
+        "type": "object",
+        "properties": {
+          "total": { "type": "integer" },
+          "valid": { "type": "integer" },
+          "invalid": { "type": "integer" },
+          "unique": { "type": "integer" },
+          "duplicates": { "type": "integer" },
+          "generated_at": { "type": "string", "format": "date-time" }
         }
       }
     }

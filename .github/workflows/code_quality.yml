@@ -44,11 +44,20 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Verify validation pipeline
+      - name: Verify export_snapshot loads without errors
+        run: |
+          node -e "
+            // Smoke-test: module must load cleanly without a live DB.
+            const mod = require('./tools/export_snapshot');
+            if (typeof mod.run !== 'function') throw new Error('export_snapshot.run not exported');
+            console.log('export_snapshot module OK');
+          "
+
+      - name: Verify validation pipeline exports
         run: |
           node -e "
             const { runValidationPipeline } = require('./validation/lead_validation_pipeline');
-            const result = runValidationPipeline([]);
+            const result = runValidationPipeline([], { writeReports: false });
             if (result.summary.total !== 0) throw new Error('Expected 0 total');
             console.log('validation pipeline module OK');
           "
@@ -67,6 +76,7 @@ jobs:
             exit 1
           fi
           echo "Encoding check passed."
+
 
   lint-dashboard:
     name: Dashboard Lint (Next.js)

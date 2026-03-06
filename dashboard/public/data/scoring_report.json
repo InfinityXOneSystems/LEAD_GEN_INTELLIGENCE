@@ -1,16 +1,31 @@
 {
-  "generated_at": "2026-03-05T23:00:00.000Z",
-  "total_leads": 5,
-  "average_score": 72,
+  "generated_at": "2026-03-06T02:49:27.307Z",
+  "total_leads": 1,
+  "average_score": 0,
   "tiers": {
-    "HOT": 3,
-    "WARM": 1,
+    "HOT": 0,
+    "WARM": 0,
     "COLD": 1
   },
   "industries": {
-    "Epoxy": 2,
-    "Concrete": 1,
-    "SurfacePrep": 1,
-    "Industrial": 1
-  }
+    "unknown": 1
+  },
+  "top_leads": [
+    {
+      "company": "Acme Epoxy",
+      "company_name": "Acme Epoxy",
+      "phone": "",
+      "email": "",
+      "website": "",
+      "city": "Columbus",
+      "state": "",
+      "industry": "",
+      "rating": null,
+      "reviews": null,
+      "lead_score": 0,
+      "score": 0,
+      "source": "",
+      "date_scraped": null
+    }
+  ]
 }

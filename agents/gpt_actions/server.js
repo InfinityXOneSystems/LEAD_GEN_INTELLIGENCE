@@ -4,6 +4,9 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const { execFile } = require("child_process");
+const { promisify } = require("util");
+
+const execFileAsync = promisify(execFile);
 
 const app = express();
 app.use(express.json());
@@ -30,6 +33,9 @@ function createRateLimiter({ windowMs = 60_000, max = 30 } = {}) {
 }
 
 const apiLimiter = createRateLimiter({ windowMs: 60_000, max: 30 });
+
+// ── stricter limiter for high-cost system commands ──────────────────────────
+const cmdLimiter = createRateLimiter({ windowMs: 60_000, max: 5 });
 
 const ROOT = path.resolve(__dirname, "..", "..");
 const LEADS_FILE = path.join(ROOT, "data", "leads", "leads.json");
@@ -161,16 +167,16 @@ app.get("/tasks", apiLimiter, (req, res) => {
 });
 
 /** POST /scrape – trigger the lead scraper */
-app.post("/scrape", apiLimiter, (_req, res) => {
+app.post("/scrape", apiLimiter, cmdLimiter, async (_req, res) => {
   const scraperPath = path.join(ROOT, "scrapers", "google_maps_scraper.js");
-  execFile("node", [scraperPath], (err, stdout, stderr) => {
-    if (err) {
-      return res
-        .status(500)
-        .json({ success: false, error: err.message, stderr });
-    }
+  try {
+    const { stdout } = await execFileAsync("node", [scraperPath]);
     res.json({ success: true, output: stdout });
-  });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, error: err.message, stderr: err.stderr || "" });
+  }
 });
 
 /** GET /outreach/templates – list outreach templates */
@@ -243,6 +249,164 @@ app.post("/outreach/send", (req, res) => {
 app.get("/openapi.json", (_req, res) => {
   res.sendFile(path.join(__dirname, "openapi.json"));
 });
+
+// ── pipeline / validation / export command endpoints ────────────────────────
+
+/** POST /pipeline/run – run the scoring + export pipeline */
+app.post("/pipeline/run", apiLimiter, cmdLimiter, async (_req, res) => {
+  const pipelineScript = path.join(
+    ROOT,
+    "agents",
+    "scoring",
+    "scoring_pipeline.js",
+  );
+  const exportScript = path.join(ROOT, "tools", "export_snapshot.js");
+  try {
+    const { stdout: stdout1 } = await execFileAsync("node", [pipelineScript]);
+    const { stdout: stdout2 } = await execFileAsync("node", [exportScript]);
+    res.json({
+      success: true,
+      scoring_output: stdout1,
+      export_output: stdout2,
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, error: err.message, stderr: err.stderr || "" });
+  }
+});
+
+/** POST /validate – run the lead validation pipeline */
+app.post("/validate", apiLimiter, (_req, res) => {
+  try {
+    const {
+      runValidationPipeline,
+    } = require("../../validation/lead_validation_pipeline");
+    const leads = readLeads();
+    const result = runValidationPipeline(leads, {
+      writeReports: true,
+      enforceGates: false,
+    });
+    res.json({ success: true, summary: result.summary });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+/** GET /export – export JSON snapshot */
+app.get("/export", apiLimiter, cmdLimiter, async (_req, res) => {
+  const exportScript = path.join(ROOT, "tools", "export_snapshot.js");
+  try {
+    const { stdout } = await execFileAsync("node", [exportScript]);
+    res.json({ success: true, output: stdout });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, error: err.message, stderr: err.stderr || "" });
+  }
+});
+
+// ── Google Workspace endpoints ───────────────────────────────────────────────
+
+/** GET /workspace/status – check if Google Workspace is configured */
+app.get("/workspace/status", apiLimiter, (_req, res) => {
+  try {
+    const {
+      checkWorkspaceConfig,
+    } = require("../../integrations/google_workspace");
+    const config = checkWorkspaceConfig();
+    res.json({ success: true, ...config });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+/** POST /workspace/sheets/export – export leads to a new Google Sheet */
+app.post("/workspace/sheets/export", apiLimiter, async (req, res) => {
+  try {
+    const {
+      sheetsExportLeads,
+    } = require("../../integrations/google_workspace");
+    const leads = readLeads();
+    if (leads.length === 0) {
+      return res
+        .status(400)
+        .json({ success: false, error: "No leads to export" });
+    }
+    const result = await sheetsExportLeads({
+      title: req.body.title || "XPS Lead Export",
+      leads,
+    });
+    res.json({ success: true, ...result });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+/** POST /workspace/gmail/send – send an email via Gmail */
+app.post("/workspace/gmail/send", apiLimiter, async (req, res) => {
+  const { to, subject, body: emailBody } = req.body || {};
+  if (!to || !subject || !emailBody) {
+    return res
+      .status(400)
+      .json({ error: "to, subject, and body are required" });
+  }
+  try {
+    const { gmailSendEmail } = require("../../integrations/google_workspace");
+    const result = await gmailSendEmail({ to, subject, body: emailBody });
+    res.json({ success: true, message_id: result.id });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+/** GET /workspace/gmail/messages – list recent Gmail messages */
+app.get("/workspace/gmail/messages", apiLimiter, async (req, res) => {
+  try {
+    const {
+      gmailListMessages,
+    } = require("../../integrations/google_workspace");
+    const messages = await gmailListMessages({
+      query: req.query.q || "",
+      maxResults: parseInt(req.query.limit, 10) || 20,
+    });
+    res.json({ success: true, messages, count: messages.length });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+/** POST /workspace/drive/upload – upload a file to Google Drive */
+app.post(
+  "/workspace/drive/upload",
+  apiLimiter,
+  cmdLimiter,
+  async (req, res) => {
+    const { name, filePath, folderId } = req.body || {};
+    if (!name || !filePath) {
+      return res.status(400).json({ error: "name and filePath are required" });
+    }
+    const absPath = path.isAbsolute(filePath)
+      ? filePath
+      : path.join(ROOT, filePath);
+    if (!fs.existsSync(absPath)) {
+      return res.status(404).json({ error: `File not found: ${filePath}` });
+    }
+    try {
+      const {
+        driveUploadFile,
+      } = require("../../integrations/google_workspace");
+      const result = await driveUploadFile({
+        name,
+        filePath: absPath,
+        folderId,
+      });
+      res.json({ success: true, ...result });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  },
+);
 
 // ── start ───────────────────────────────────────────────────────────────────
 
