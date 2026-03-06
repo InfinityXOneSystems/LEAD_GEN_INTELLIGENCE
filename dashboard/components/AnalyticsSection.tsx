@@ -15,6 +15,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import FilterBar from "@/components/FilterBar";
 
 interface Lead {
   lead_score?: number;
@@ -24,6 +25,16 @@ interface Lead {
   industry?: string;
   city?: string;
   state?: string;
+}
+
+interface AnalyticsSectionProps {
+  filters?: { tier?: string; search?: string; state?: string; city?: string };
+  onFilterChange?: (f: {
+    tier?: string;
+    search?: string;
+    state?: string;
+    city?: string;
+  }) => void;
 }
 
 const GOLD = "#EAB308";
@@ -39,7 +50,6 @@ const TIER_COLORS: Record<string, string> = {
   COLD: BLUE,
 };
 
-// Mock trend data for scores over time
 const TREND_DATA = [
   { date: "Mon", avg: 52, hot: 12, warm: 18 },
   { date: "Tue", avg: 58, hot: 15, warm: 22 },
@@ -52,28 +62,48 @@ const TREND_DATA = [
 
 const CustomTooltipStyle = {
   backgroundColor: "#111111",
-  border: "1px solid #2a2a2a",
-  borderRadius: "8px",
+  border: "1px solid rgba(234,179,8,0.15)",
+  borderRadius: "10px",
   color: "#ffffff",
   fontSize: "12px",
   padding: "8px 12px",
 };
 
-export default function AnalyticsSection() {
-  const [leads, setLeads] = useState<Lead[]>([]);
+export default function AnalyticsSection({
+  filters,
+  onFilterChange,
+}: AnalyticsSectionProps) {
+  const [allLeads, setAllLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("/data/scored_leads.json")
       .then((r) => r.json())
       .then((data) => {
-        if (Array.isArray(data)) setLeads(data);
+        if (Array.isArray(data)) setAllLeads(data);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, []);
 
-  // Score distribution buckets
+  // Apply filters to leads for analytics
+  const leads = allLeads.filter((l) => {
+    if (filters?.tier && filters.tier !== "ALL") {
+      const s = l.lead_score || l.score || 0;
+      const tier = l.tier || (s >= 75 ? "HOT" : s >= 50 ? "WARM" : "COLD");
+      if (tier !== filters.tier) return false;
+    }
+    if (filters?.state) {
+      if ((l.state || "").toLowerCase() !== filters.state.toLowerCase())
+        return false;
+    }
+    if (filters?.city) {
+      if (!(l.city || "").toLowerCase().includes(filters.city.toLowerCase()))
+        return false;
+    }
+    return true;
+  });
+
   const scoreBuckets = [
     { range: "0-25", count: 0, label: "0–25" },
     { range: "25-50", count: 0, label: "25–50" },
@@ -88,7 +118,6 @@ export default function AnalyticsSection() {
     else scoreBuckets[3].count++;
   });
 
-  // Tier breakdown
   const tierCounts: Record<string, number> = { HOT: 0, WARM: 0, COLD: 0 };
   leads.forEach((l) => {
     const s = l.lead_score || l.score || 0;
@@ -100,7 +129,6 @@ export default function AnalyticsSection() {
     value,
   }));
 
-  // Top industries
   const industryCounts: Record<string, number> = {};
   leads.forEach((l) => {
     const ind = l.industry_detected || l.industry || "Unknown";
@@ -121,7 +149,7 @@ export default function AnalyticsSection() {
   }
 
   return (
-    <div className="space-y-6 fade-in">
+    <div className="space-y-4 fade-in">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-white">Analytics</h2>
         <span className="text-sm text-gray-500">
@@ -129,10 +157,12 @@ export default function AnalyticsSection() {
         </span>
       </div>
 
+      {/* Filters */}
+      {onFilterChange && <FilterBar onFilterChange={onFilterChange} />}
+
       {/* Row 1: Score Distribution + Tier Pie */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Score Distribution */}
-        <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover">
+        <div className="glass-card gold-glow-card rounded-2xl p-5">
           <h3 className="text-sm font-semibold text-gray-300 mb-4">
             Lead Score Distribution
           </h3>
@@ -177,8 +207,7 @@ export default function AnalyticsSection() {
           </ResponsiveContainer>
         </div>
 
-        {/* Tier Pie */}
-        <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover">
+        <div className="glass-card gold-glow-card rounded-2xl p-5">
           <h3 className="text-sm font-semibold text-gray-300 mb-4">
             Lead Tier Breakdown
           </h3>
@@ -225,8 +254,7 @@ export default function AnalyticsSection() {
 
       {/* Row 2: Industry Bar + Score Trend */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Industry Horizontal Bar */}
-        <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover">
+        <div className="glass-card gold-glow-card rounded-2xl p-5">
           <h3 className="text-sm font-semibold text-gray-300 mb-4">
             Top Industries
           </h3>
@@ -266,8 +294,7 @@ export default function AnalyticsSection() {
           )}
         </div>
 
-        {/* Score Trend Line */}
-        <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover">
+        <div className="glass-card gold-glow-card rounded-2xl p-5">
           <h3 className="text-sm font-semibold text-gray-300 mb-4">
             Lead Scores Over Time (7d)
           </h3>
@@ -323,7 +350,7 @@ export default function AnalyticsSection() {
       </div>
 
       {/* Summary Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
           {
             label: "Total Analyzed",
@@ -348,9 +375,9 @@ export default function AnalyticsSection() {
         ].map((s) => (
           <div
             key={s.label}
-            className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-4 card-hover text-center"
+            className="glass-card gold-glow-card rounded-2xl p-4 text-center"
           >
-            <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
+            <div className={`text-2xl font-black ${s.color}`}>{s.value}</div>
             <div className="text-xs text-gray-500 mt-1">{s.label}</div>
           </div>
         ))}

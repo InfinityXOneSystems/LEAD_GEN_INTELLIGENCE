@@ -1,6 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import {
+  IconMail,
+  IconGitHub,
+  IconCpu,
+  IconStar,
+  IconSettings,
+  IconGlobe,
+  IconBarChart,
+  IconFolder,
+  IconClock,
+} from "@/components/Icons";
 
 interface ToggleProps {
   checked: boolean;
@@ -40,13 +51,13 @@ function SectionCard({
   children,
 }: {
   title: string;
-  icon: string;
+  icon: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl p-5 card-hover">
-      <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#1a1a1a]">
-        <span className="text-xl">{icon}</span>
+    <div className="glass-card gold-glow-card rounded-2xl p-5">
+      <div className="flex items-center gap-2 mb-4 pb-3 border-b border-yellow-400/10">
+        <span className="text-yellow-400/70">{icon}</span>
         <h3 className="text-sm font-semibold text-white">{title}</h3>
       </div>
       {children}
@@ -96,7 +107,7 @@ export default function IntegrationsPanel() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Gmail */}
-        <SectionCard title="Gmail Sync" icon="📬">
+        <SectionCard title="Gmail Sync" icon={<IconMail className="w-5 h-5" />}>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
@@ -150,7 +161,10 @@ export default function IntegrationsPanel() {
         </SectionCard>
 
         {/* GitHub */}
-        <SectionCard title="GitHub Connector" icon="🐙">
+        <SectionCard
+          title="GitHub Connector"
+          icon={<IconGitHub className="w-5 h-5" />}
+        >
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
@@ -200,7 +214,7 @@ export default function IntegrationsPanel() {
         </SectionCard>
 
         {/* GPT Actions */}
-        <SectionCard title="GPT Actions" icon="🤖">
+        <SectionCard title="GPT Actions" icon={<IconCpu className="w-5 h-5" />}>
           <div className="space-y-3">
             <div>
               <label className="text-xs text-gray-500 mb-1 block">
@@ -218,7 +232,41 @@ export default function IntegrationsPanel() {
                   onClick={() => setShowApiKey(!showApiKey)}
                   className="px-2 py-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg text-gray-500 hover:text-white transition-colors text-xs"
                 >
-                  {showApiKey ? "🙈" : "👁️"}
+                  {showApiKey ? (
+                    <svg
+                      className="w-3.5 h-3.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-3.5 h-3.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                  )}
                 </button>
               </div>
             </div>
@@ -259,7 +307,10 @@ export default function IntegrationsPanel() {
         </SectionCard>
 
         {/* Copilot */}
-        <SectionCard title="GitHub Copilot" icon="✨">
+        <SectionCard
+          title="GitHub Copilot"
+          icon={<IconStar className="w-5 h-5" />}
+        >
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
@@ -324,7 +375,10 @@ export default function IntegrationsPanel() {
         </SectionCard>
 
         {/* Google Workspace */}
-        <SectionCard title="Google Workspace" icon="🔵">
+        <SectionCard
+          title="Google Workspace"
+          icon={<IconGlobe className="w-5 h-5" />}
+        >
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
@@ -349,21 +403,29 @@ export default function IntegrationsPanel() {
             <div className="bg-[#111111] rounded-lg p-3 text-xs space-y-1.5">
               <div className="text-gray-400 font-medium mb-1">Services:</div>
               {[
-                { icon: "📬", name: "Gmail", desc: "Outreach email sending" },
                 {
-                  icon: "📊",
+                  icon: <IconMail className="w-3.5 h-3.5" />,
+                  name: "Gmail",
+                  desc: "Outreach email sending",
+                },
+                {
+                  icon: <IconBarChart className="w-3.5 h-3.5" />,
                   name: "Sheets",
                   desc: "Lead export to spreadsheet",
                 },
-                { icon: "💾", name: "Drive", desc: "Report backup & storage" },
                 {
-                  icon: "📅",
+                  icon: <IconFolder className="w-3.5 h-3.5" />,
+                  name: "Drive",
+                  desc: "Report backup & storage",
+                },
+                {
+                  icon: <IconClock className="w-3.5 h-3.5" />,
                   name: "Calendar",
                   desc: "Schedule scraping events",
                 },
               ].map((svc) => (
                 <div key={svc.name} className="flex items-center gap-2">
-                  <span>{svc.icon}</span>
+                  <span className="text-yellow-400/70">{svc.icon}</span>
                   <span className="text-white">{svc.name}</span>
                   <span className="text-gray-500">— {svc.desc}</span>
                 </div>
@@ -396,7 +458,10 @@ export default function IntegrationsPanel() {
         </SectionCard>
 
         {/* Google Sheets Export */}
-        <SectionCard title="Google Sheets Export" icon="📊">
+        <SectionCard
+          title="Google Sheets Export"
+          icon={<IconBarChart className="w-5 h-5" />}
+        >
           <div className="space-y-3">
             <div className="text-xs text-gray-500">
               Export leads directly to a Google Sheets spreadsheet for analysis
@@ -441,7 +506,10 @@ export default function IntegrationsPanel() {
         </SectionCard>
 
         {/* GPT Actions / Copilot Mobile */}
-        <SectionCard title="Copilot Mobile + GPT Actions" icon="📱">
+        <SectionCard
+          title="Copilot Mobile + GPT Actions"
+          icon={<IconSettings className="w-5 h-5" />}
+        >
           <div className="space-y-3">
             <div className="text-xs text-gray-500">
               Control the platform from Copilot Mobile or any Custom GPT via the
