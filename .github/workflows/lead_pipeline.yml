@@ -5,8 +5,8 @@ name: Lead Generation Pipeline — Full Autonomous Run
 
 on:
   schedule:
-    # Runs at 00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC daily
-    - cron: '0 */4 * * *'
+    # Runs every 2 hours UTC
+    - cron: '0 */2 * * *'
   workflow_dispatch:
     inputs:
       batch_size:
@@ -211,11 +211,14 @@ jobs:
             }
           " || true
 
+      - name: Export city CSVs and Markdown summaries
+        run: node tools/city_export.js || true
+
       - name: Commit scored leads
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/leads/scored_leads.json data/leads/scoring_report.json pages/data/ dashboard/public/data/ 2>/dev/null || true
+          git add data/leads/scored_leads.json data/leads/scoring_report.json pages/data/ dashboard/public/data/ data/exports/ 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No scoring changes to commit."
           else

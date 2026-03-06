@@ -1,58 +1,129 @@
-const fs = require('fs');
-const path = require('path');
-const csvWriter = require('csv-writer').createObjectCsvWriter;
+"use strict";
 
-// Define cities and their corresponding CSV paths
-const cities = {
-    'Columbus, OH': 'data/exports/leads_columbus_oh_2026-03-06.csv',
-    'Tempe, AZ': 'data/exports/leads_tempe_az_2026-03-06.csv',
-    'Rockford, IL': 'data/exports/leads_rockford_il_2026-03-06.csv'
-};
+const fs = require("fs");
+const path = require("path");
 
-// Check for required data files
-const leadsFile = path.resolve(__dirname, '..', 'data', 'leads', 'leads.json');
-const scoredLeadsFile = path.resolve(__dirname, '..', 'data', 'leads', 'scored_leads.json');
+// Target cities for export: [city name, state abbreviation]
+const TARGET_CITIES = [
+  { city: "Columbus", state: "OH" },
+  { city: "Tempe", state: "AZ" },
+  { city: "Rockford", state: "IL" },
+];
+
+// Prefer scored leads; fall back to raw leads.
+const leadsFile = path.resolve(
+  __dirname,
+  "..",
+  "data",
+  "leads",
+  "scored_leads.json",
+);
+const fallbackFile = path.resolve(
+  __dirname,
+  "..",
+  "data",
+  "leads",
+  "leads.json",
+);
 
 let leads = [];
-
 try {
-    leads = require(leadsFile);
+  leads = JSON.parse(fs.readFileSync(leadsFile, "utf8"));
 } catch {
-    try {
-        leads = require(scoredLeadsFile);
-    } catch (error) {
-        console.error("No leads file found.");
-        process.exit(1);
-    }
+  try {
+    leads = JSON.parse(fs.readFileSync(fallbackFile, "utf8"));
+  } catch {
+    console.warn("[city_export] No leads file found — writing empty exports.");
+  }
 }
 
-// Create exports directory if it doesn't exist
-const exportDir = path.resolve(__dirname, '..', 'data', 'exports');
-if (!fs.existsSync(exportDir)){ 
-    fs.mkdirSync(exportDir, { recursive: true });
+// Create exports directory.
+const exportDir = path.resolve(__dirname, "..", "data", "exports");
+fs.mkdirSync(exportDir, { recursive: true });
+
+const CSV_HEADERS = [
+  "company",
+  "phone",
+  "email",
+  "website",
+  "address",
+  "city",
+  "state",
+  "rating",
+  "reviews",
+  "lead_score",
+  "tier",
+];
+
+function escapeCsvField(val) {
+  if (val === null || val === undefined) return "";
+  const str = String(val);
+  if (str.includes(",") || str.includes('"') || str.includes("\n")) {
+    return '"' + str.replace(/"/g, '""') + '"';
+  }
+  return str;
 }
 
-// Filter leads and write CSVs
-Object.keys(cities).forEach(city => {
-    const filteredLeads = leads.filter(lead => lead.city === city);
-    
-    // Write CSV
-    const csvPath = cities[city];
-    const csvWriterInstance = csvWriter({
-        path: csvPath,
-        header: [
-            { id: 'name', title: 'Name' },
-            { id: 'email', title: 'Email' },
-            // Add other headers as needed
-        ]
-    });
+function buildCsvRow(lead) {
+  return CSV_HEADERS.map((h) => escapeCsvField(lead[h] ?? "")).join(",");
+}
 
-    csvWriterInstance.writeRecords(filteredLeads).then(() => {
-        console.log(`Exported leads for ${city} to ${csvPath}`);
-    });
+const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
-    // Create Markdown summary
-    const markdownPath = path.join(exportDir, `summary_${city.split(',')[0].toLowerCase()}.md`);
-    const summaryContent = `# Summary for ${city}\n\nTotal leads: ${filteredLeads.length}\n\n`;
-    fs.writeFileSync(markdownPath, summaryContent);
-});
+for (const { city, state } of TARGET_CITIES) {
+  // Match on city name (case-insensitive) and state abbreviation.
+  const filtered = leads.filter((l) => {
+    const lCity = (l.city || "").trim();
+    const lState = (l.state || "").trim().toUpperCase();
+    return (
+      lCity.toLowerCase() === city.toLowerCase() &&
+      lState === state.toUpperCase()
+    );
+  });
+
+  const slug = `${city.toLowerCase().replace(/\s+/g, "_")}_${state.toLowerCase()}`;
+
+  // Write CSV
+  const csvPath = path.join(exportDir, `leads_${slug}_${date}.csv`);
+  const csvContent =
+    [CSV_HEADERS.join(","), ...filtered.map(buildCsvRow)].join("\n") + "\n";
+  fs.writeFileSync(csvPath, csvContent, "utf8");
+
+  // Write Markdown summary
+  const mdPath = path.join(exportDir, `summary_${slug}.md`);
+  const hotCount = filtered.filter((l) => l.tier === "HOT").length;
+  const warmCount = filtered.filter((l) => l.tier === "WARM").length;
+  const coldCount = filtered.filter((l) => l.tier === "COLD").length;
+  const mdContent = [
+    `# Lead Export — ${city}, ${state}`,
+    "",
+    `> Generated: ${date}`,
+    "",
+    `**Total leads:** ${filtered.length}`,
+    "",
+    `| Tier | Count |`,
+    `|------|-------|`,
+    `| HOT  | ${hotCount}  |`,
+    `| WARM | ${warmCount} |`,
+    `| COLD | ${coldCount} |`,
+    "",
+    filtered.length > 0
+      ? `## Top Leads\n\n| Company | Phone | Website | Score |\n|---------|-------|---------|-------|\n` +
+        filtered
+          .sort((a, b) => (b.lead_score || 0) - (a.lead_score || 0))
+          .slice(0, 20)
+          .map(
+            (l) =>
+              `| ${escapeCsvField(l.company)} | ${l.phone || ""} | ${l.website || ""} | ${l.lead_score || 0} |`,
+          )
+          .join("\n")
+      : "_No leads found for this city yet._",
+    "",
+  ].join("\n");
+
+  fs.writeFileSync(mdPath, mdContent, "utf8");
+
+  console.log(
+    `[city_export] ${city}, ${state}: ${filtered.length} leads → ${csvPath}`,
+  );
+}
