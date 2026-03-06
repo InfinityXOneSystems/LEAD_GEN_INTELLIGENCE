@@ -1,8 +1,16 @@
-# Environment variables — never commit real credentials
-.env
-
 # Node dependencies
 node_modules/
+npm-debug.log*
+
+# Environment variables — never commit real credentials
+.env
+.env.local
+
+# Runtime-generated lead data
+data/outreach/outreach_log.json
+data/leads/scored_leads.json
+data/leads/scoring_report.json
+data/leads/leads.json
 
 # Build / cache artifacts
 dist/

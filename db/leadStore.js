@@ -28,8 +28,8 @@ async function upsertLead(lead) {
     phone        = null,
     email        = null,
     website      = null,
-    city         = null,
-    state        = null,
+    city         = '',
+    state        = '',
     industry     = null,
     rating       = null,
     reviews      = null,
@@ -64,11 +64,21 @@ async function upsertLead(lead) {
 
 /**
  * Bulk-upsert an array of leads.
+ * Processes leads in batches of BATCH_SIZE to avoid overwhelming the DB connection pool.
  * @param {Object[]} leads
  * @returns {Promise<Object[]>} array of inserted/updated rows
  */
 async function upsertLeads(leads) {
-  return Promise.all(leads.map(upsertLead));
+  const BATCH_SIZE = 100;
+  const results = [];
+
+  for (let i = 0; i < leads.length; i += BATCH_SIZE) {
+    const batch = leads.slice(i, i + BATCH_SIZE);
+    const batchResults = await Promise.all(batch.map(upsertLead));
+    results.push(...batchResults);
+  }
+
+  return results;
 }
 
 /**

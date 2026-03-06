@@ -1,42 +1,155 @@
 'use strict';
 
-require('dotenv').config();
+const { chromium } = require('playwright');
 
-const fs         = require('fs');
-const path       = require('path');
-const leadStore  = require('../db/leadStore');
-const { initSchema } = require('../db/db');
+const SCROLL_PAUSE_MS = 1200;
+const RESULT_LOAD_MS = 1800;
+const MAX_RESULTS_PER_QUERY = 20;
+const MAX_SCROLL_ITERATIONS = 5;
+const NAVIGATION_TIMEOUT_MS = 30000;
 
-console.log('Lead scraper starting');
+/**
+ * Scrape Google Maps for contractor leads matching a keyword in a given city/state.
+ *
+ * @param {string} keyword  - Search keyword, e.g. "epoxy flooring contractor"
+ * @param {string} city     - City name, e.g. "Columbus"
+ * @param {string} state    - State abbreviation, e.g. "OH"
+ * @returns {Promise<Array>} Array of lead objects
+ */
+async function scrapeGoogleMaps(keyword, city, state) {
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({
+    userAgent:
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' +
+      'AppleWebKit/537.36 (KHTML, like Gecko) ' +
+      'Chrome/120.0.0.0 Safari/537.36',
+    viewport: { width: 1280, height: 900 },
+  });
+  const page = await context.newPage();
+  const leads = [];
 
-// Example lead payload — replace with real crawlee/Playwright scraping logic.
-const scrapedLeads = [
-  {
-    company_name: 'example contractor',
-    city:         'Columbus',
-    state:        'OH',
-    source:       'google_maps',
-  },
-];
+  try {
+    const query = encodeURIComponent(`${keyword} ${city} ${state}`);
+    const url = `https://www.google.com/maps/search/${query}`;
 
-async function run() {
-  // Ensure DB tables exist before writing.
-  await initSchema();
+    console.log(`[google_maps] Searching: ${keyword} | ${city}, ${state}`);
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: NAVIGATION_TIMEOUT_MS });
 
-  const saved = await leadStore.upsertLeads(scrapedLeads);
-  console.log(`Lead data written to database: ${saved.length} record(s).`);
+    // Accept cookie consent if present
+    const consentBtn = page.locator('button[aria-label="Accept all"]');
+    if (await consentBtn.count() > 0) {
+      await consentBtn.first().click();
+      await page.waitForTimeout(800);
+    }
 
-  // Also write a local JSON snapshot for backward compatibility.
-  const snapshotDir = path.join(__dirname, '..', 'data', 'leads');
-  fs.mkdirSync(snapshotDir, { recursive: true });
-  fs.writeFileSync(
-    path.join(snapshotDir, 'leads.json'),
-    JSON.stringify(saved, null, 2)
-  );
-  console.log('Local JSON snapshot written to data/leads/leads.json');
+    // Wait for the results feed
+    const feedSelector = '[role="feed"]';
+    try {
+      await page.waitForSelector(feedSelector, { timeout: 15000 });
+    } catch (_) {
+      console.warn(`[google_maps] No results feed found for: ${keyword} in ${city}, ${state}`);
+      return leads;
+    }
+
+    // Scroll to load up to MAX_RESULTS_PER_QUERY results
+    let prevCount = 0;
+    for (let i = 0; i < MAX_SCROLL_ITERATIONS; i++) {
+      await page.evaluate((sel) => {
+        const feed = document.querySelector(sel);
+        if (feed) feed.scrollBy(0, feed.scrollHeight);
+      }, feedSelector);
+      await page.waitForTimeout(SCROLL_PAUSE_MS);
+
+      const currentCount = await page.locator(`${feedSelector} a[href*="/maps/place/"]`).count();
+      if (currentCount >= MAX_RESULTS_PER_QUERY || currentCount === prevCount) break;
+      prevCount = currentCount;
+    }
+
+    // Collect unique result links
+    const resultLinks = await page
+      .locator(`${feedSelector} a[href*="/maps/place/"]`)
+      .evaluateAll((els) =>
+        [...new Set(els.map((el) => el.href))].slice(0, MAX_RESULTS_PER_QUERY)
+      );
+
+    console.log(`[google_maps] Found ${resultLinks.length} results`);
+
+    for (const link of resultLinks) {
+      try {
+        await page.goto(link, { waitUntil: 'domcontentloaded', timeout: NAVIGATION_TIMEOUT_MS });
+        await page.waitForTimeout(RESULT_LOAD_MS);
+
+        const lead = await page.evaluate(() => {
+          const text = (sel) => document.querySelector(sel)?.textContent?.trim() || '';
+          const attr = (sel, a) => document.querySelector(sel)?.getAttribute(a) || '';
+
+          const company =
+            text('h1.DUwDvf') ||
+            text('h1') ||
+            '';
+
+          const phoneEl = document.querySelector(
+            'button[data-tooltip="Copy phone number"] .Io6YTe, [data-item-id*="phone"] .Io6YTe'
+          );
+          const phone = phoneEl?.textContent?.trim() || '';
+
+          const websiteEl = document.querySelector(
+            'a[data-tooltip="Open website"], a[data-item-id*="authority"]'
+          );
+          const website = websiteEl?.href || '';
+
+          const addressEl = document.querySelector(
+            'button[data-tooltip="Copy address"] .Io6YTe, [data-item-id*="address"] .Io6YTe'
+          );
+          const address = addressEl?.textContent?.trim() || '';
+
+          const ratingLabel = attr('.ceNzKf', 'aria-label');
+          const ratingMatch = ratingLabel.match(/([\d.]+)\s*star/i);
+          const rating = ratingMatch ? parseFloat(ratingMatch[1]) : 0;
+
+          const reviewsText =
+            text('.jANrlb .fontBodySmall') ||
+            text('[aria-label*="review"]') ||
+            '';
+          const reviewsMatch = reviewsText.replace(/,/g, '').match(/(\d+)/);
+          const reviews = reviewsMatch ? parseInt(reviewsMatch[1], 10) : 0;
+
+          const category =
+            text('[jsaction*="category"] button') ||
+            text('.DkEaL') ||
+            '';
+
+          return { company, phone, website, address, rating, reviews, category };
+        });
+
+        if (lead.company) {
+          leads.push({
+            company: lead.company,
+            phone: lead.phone,
+            website: lead.website,
+            address: lead.address,
+            city,
+            state,
+            rating: lead.rating,
+            reviews: lead.reviews,
+            category: lead.category,
+            keyword,
+            source: 'google_maps',
+            scraped_at: new Date().toISOString(),
+          });
+        }
+      } catch (err) {
+        console.warn(`[google_maps] Failed to scrape result: ${err.message}`);
+      }
+    }
+  } catch (err) {
+    console.error(`[google_maps] Fatal error for "${keyword}" in ${city}, ${state}: ${err.message}`);
+  } finally {
+    await browser.close();
+  }
+
+  console.log(`[google_maps] Collected ${leads.length} leads for "${keyword}" in ${city}, ${state}`);
+  return leads;
 }
 
-run().catch((err) => {
-  console.error('Scraper error:', err.message);
-  process.exit(1);
-});
+module.exports = { scrapeGoogleMaps };

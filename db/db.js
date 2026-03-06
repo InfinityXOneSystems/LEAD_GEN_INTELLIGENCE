@@ -8,7 +8,12 @@ const pool = new Pool({
   database: process.env.DATABASE_NAME     || 'lead_intelligence',
   user:     process.env.DATABASE_USER     || 'lead_admin',
   password: process.env.DATABASE_PASSWORD || '',
-  ssl:      process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : false,
+  ssl:      process.env.DATABASE_SSL === 'true'
+            ? {
+              // Verify TLS certificates by default; allow explicit opt-out for development.
+              rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED === 'false' ? false : true,
+            }
+            : false,
 });
 
 pool.on('error', (err) => {
