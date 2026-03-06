@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-06
 
-**Total leads:** 240
+**Total leads:** 303
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
-| COLD | 0 |
+| HOT  | 9  |
+| WARM | 62 |
+| COLD | 232 |
 
 ## Top Leads
 
@@ -31,6 +31,6 @@
 | "Showroom Floors Ltd, Epoxy Floors, Columbus, Oh" |  |  | 55 |
 | Epoxy and Polished Floors of Columbus |  |  | 55 |
 | Ideal Garage Floor Coatings |  |  | 55 |
-| Epoxy Flooring Masters |  |  | 55 |
-| AR Epoxy Flooring |  |  | 55 |
-| MACH ONE Epoxy Floors of Columbus West |  |  | 55 |
+| Global Epoxy LLC |  |  | 55 |
+| Wyckoff Epoxy Flooring |  |  | 55 |
+| Infinite Designs Epoxy Solutions of North Columbus |  |  | 55 |

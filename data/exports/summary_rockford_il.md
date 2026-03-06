@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-06
 
-**Total leads:** 188
+**Total leads:** 263
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
-| COLD | 0 |
+| HOT  | 4  |
+| WARM | 57 |
+| COLD | 202 |
 
 ## Top Leads
 
@@ -24,13 +24,13 @@
 | Stateline Concrete Specialists | (815) 555-0707 | https://statelineconcrete.com | 65 |
 | Midwest Surface Solutions | (815) 555-0404 | https://midwestsurface.com | 62 |
 | Northern IL Floor Prep & Grind | (815) 555-1010 | https://nilfloorprep.com | 62 |
+| Rockford Liquidation Warehouse |  |  | 60 |
+| Lowe's Regional Distribution Center |  |  | 60 |
+| Lowe's Distribution Center |  |  | 60 |
+| Parkside Warehouse Inc |  |  | 57 |
+| PCI warehouse |  |  | 57 |
 | SBRI Epoxy |  |  | 55 |
 | Diedrich Epoxy Flooring |  |  | 55 |
 | Perry's Decorative Concrete and Painting |  |  | 55 |
 | Epoxy Worx - Concrete Coatings |  |  | 55 |
 | Deluxe Epoxy Flooring |  |  | 55 |
-| Miller’s Epoxy Solutions |  |  | 55 |
-| Precision Epoxy |  |  | 55 |
-| ECM Epoxy Flooring |  |  | 55 |
-| Chi Resin Custom Coatings |  |  | 55 |
-| Naperville Painting and Epoxy Flooring |  |  | 55 |

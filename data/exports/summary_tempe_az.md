@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-06
 
-**Total leads:** 241
+**Total leads:** 271
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
-| COLD | 0 |
+| HOT  | 9  |
+| WARM | 57 |
+| COLD | 205 |
 
 ## Top Leads
 
@@ -24,13 +24,13 @@
 | Southwest Concrete & Polish | (480) 555-1202 | https://swconcrete.com | 75 |
 | Sun Devil Industrial Floors | (480) 555-1808 | https://sundevilfloors.com | 75 |
 | Tempe Flake & Chip Floor Systems | (480) 555-2010 | https://tempeflakefloors.com | 67 |
-| Clean Air Epoxy |  |  | 55 |
+| Two Brothers Epoxy Flooring |  |  | 55 |
 | Superior Epoxy Floors |  |  | 55 |
 | Quality Epoxy |  |  | 55 |
-| Marvelous Epoxy Flooring |  |  | 55 |
-| Two Brothers Epoxy Flooring |  |  | 55 |
-| Elite Epoxy |  |  | 55 |
-| Brilliant Epoxy Flooring Inc |  |  | 55 |
-| Easy Epoxy |  |  | 55 |
-| State 48 Epoxy |  |  | 55 |
 | Arizona Valley Epoxy |  |  | 55 |
+| Clean Air Epoxy |  |  | 55 |
+| State 48 Epoxy |  |  | 55 |
+| Marvelous Epoxy Flooring |  |  | 55 |
+| Sun Valley Epoxy - Residential Epoxy Flooring |  |  | 55 |
+| Brilliant Epoxy Flooring Inc |  |  | 55 |
+| MR Epoxy |  |  | 55 |
