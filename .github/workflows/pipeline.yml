@@ -2,9 +2,9 @@ name: Lead Intelligence Pipeline
 
 on:
   schedule:
-    # Run every 4 hours (GitHub Actions supports as frequent as every 5 min;
-    # 4h is a practical cadence that respects rate limits and runner minutes)
-    - cron: '0 */4 * * *'
+    # Run every 2 hours (GitHub Actions supports as frequent as every 5 min;
+    # 2h cadence balances freshness with rate limits and runner minutes)
+    - cron: '0 */2 * * *'
   workflow_dispatch:
     inputs:
       max_keywords:
@@ -120,6 +120,10 @@ jobs:
           DATABASE_SSL:      ${{ secrets.DATABASE_SSL || 'false' }}
         run: node tools/export_snapshot.js
 
+      # ── Step 4b: City-specific CSV/Markdown exports ───────────────────────
+      - name: Export city CSVs and Markdown summaries
+        run: node tools/city_export.js
+
       # ── Step 5: Commit data outputs ───────────────────────────────────────
       - name: Commit pipeline outputs
         run: |
@@ -133,6 +137,7 @@ jobs:
             data/leads/duplicates.json \
             data/leads/invalid_leads.json \
             data/scraper_progress.json \
+            data/exports/ \
             dashboard/public/data/scored_leads.json \
             dashboard/public/data/scoring_report.json \
             2>/dev/null || true

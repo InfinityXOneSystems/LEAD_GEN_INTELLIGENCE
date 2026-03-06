@@ -2,8 +2,8 @@ name: Nationwide Lead Scraper
 
 on:
   schedule:
-    # Run every 4 hours – each run processes one batch of cities.
-    - cron: '0 */4 * * *'
+    # Run every 2 hours – each run processes one batch of cities.
+    - cron: '0 */2 * * *'
   workflow_dispatch:
     inputs:
       batch_size:
@@ -50,11 +50,25 @@ jobs:
       - name: Run nationwide scraper
         env:
           SCRAPER_BATCH_SIZE:    ${{ github.event.inputs.batch_size    || '10' }}
-          SCRAPER_CONCURRENCY:   '3'
-          SCRAPER_RATE_LIMIT_MS: '2000'
+          SCRAPER_CONCURRENCY:   '1'
+          SCRAPER_RATE_LIMIT_MS: '3000'
           SCRAPER_STATE:         ${{ github.event.inputs.state_filter  || '' }}
           SCRAPER_RESET:         ${{ github.event.inputs.reset_progress || '0' }}
-        run: node scrapers/google_maps_scraper.js
+        run: |
+          node -e "
+            require('dotenv').config();
+            const { runEngine } = require('./scrapers/engine');
+            const batchSize = parseInt(process.env.SCRAPER_BATCH_SIZE || '10', 10);
+            runEngine({
+              sources: ['bing_maps'],
+              maxKeywords: 3,
+              maxLocations: batchSize,
+              concurrency: parseInt(process.env.SCRAPER_CONCURRENCY || '1', 10),
+              delayBetweenBatchesMs: parseInt(process.env.SCRAPER_RATE_LIMIT_MS || '3000', 10)
+            })
+              .then(leads => { console.log('[scraper] Collected leads:', leads.length); process.exit(0); })
+              .catch(err  => { console.error('[scraper] Error:', err.message); process.exit(0); });
+          "
 
       - name: Commit scraped leads
         run: |

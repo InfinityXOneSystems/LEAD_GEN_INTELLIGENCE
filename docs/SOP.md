@@ -74,10 +74,15 @@ node agents/orchestrator/orchestrator.js
 
 ### 2.3 Scheduled Runs
 
-The pipeline runs automatically via GitHub Actions:
-- **Lead scraper**: configurable (see `.github/workflows/lead_scraper.yml`)
+The pipeline runs automatically via GitHub Actions every **2 hours**:
+- **Lead scraper** (`lead_scraper.yml`): every 2 hours, `cron: '0 */2 * * *'`
+- **Full pipeline** (`pipeline.yml` / `lead_pipeline.yml`): every 2 hours, `cron: '0 */2 * * *'`
 - **National discovery**: daily (see `.github/workflows/national_discovery.yml`)
 - **Docs reflection**: daily + on push (see `.github/workflows/docs_reflection.yml`)
+
+All three pipeline workflows also support **manual trigger via `workflow_dispatch`** — navigate to
+**GitHub → Actions → [workflow name] → Run workflow** and click **Run workflow** to start
+an immediate run with optional parameters.
 
 ---
 
@@ -87,11 +92,31 @@ The pipeline runs automatically via GitHub Actions:
 
 1. Edit `data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/keywords.csv` to add new keywords
 2. Edit `data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/locations.csv` to add new locations
+   - Currently tracked cities include: **Columbus, OH**; **Tempe, AZ**; **Rockford, IL** (and many more)
 3. Trigger the scraper pipeline (Section 2.1)
 
 ### 3.2 Manually
 
 Add records to `data/leads/scored_leads.json` following the schema in `contracts/lead_schema.json`.
+
+---
+
+## 3.5 City-Specific CSV/Markdown Exports
+
+After each pipeline run, city-specific exports are automatically generated into `data/exports/`.
+
+Supported cities: **Columbus, OH** · **Tempe, AZ** · **Rockford, IL**
+
+| File pattern | Description |
+|---|---|
+| `data/exports/leads_<city>_<state>_<date>.csv` | All leads for that city on that run date |
+| `data/exports/summary_<city>_<state>.md` | Markdown summary with tier breakdown and top leads |
+
+To run exports manually:
+
+```bash
+node tools/city_export.js
+```
 
 ---
 
