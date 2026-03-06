@@ -73,6 +73,7 @@ jobs:
             echo "Pages data already in sync."
           else
             git commit -m "sync: propagate lead data to pages/data/ [repo-sync $(date -u +%Y-%m-%dT%H:%MZ)]"
+            git pull --rebase origin main || true
             git push
           fi
 

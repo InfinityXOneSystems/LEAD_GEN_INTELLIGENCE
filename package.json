@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node --test tests/**/*.test.js",
+    "test": "node --test tests/*.test.js",
     "score": "node agents/scoring/scoring_pipeline.js",
     "export": "node tools/export_snapshot.js",
     "pipeline": "npm run score && npm run export",
