@@ -351,12 +351,15 @@ function computeStats(leads) {
   const total = leads.length;
   const withEmail = leads.filter((l) => l.email).length;
   const withPhone = leads.filter((l) => l.phone).length;
-  const highScore = leads.filter((l) => l.score >= 70).length;
+  const hot = leads.filter((l) => l.score >= 75).length;
+  const warm = leads.filter((l) => l.score >= 50 && l.score < 75).length;
+  const cold = leads.filter((l) => l.score < 50).length;
+  const highScore = total ? Math.max(...leads.map((l) => l.score)) : 0;
   const converted = leads.filter((l) => l.status === "converted").length;
   const avgScore = total
     ? Math.round(leads.reduce((a, l) => a + l.score, 0) / total)
     : 0;
-  return { total, withEmail, withPhone, highScore, converted, avgScore };
+  return { total, withEmail, withPhone, hot, warm, cold, highScore, converted, avgScore };
 }
 
 /* ─── Filtering & sorting ────────────────────────────────── */
@@ -517,9 +520,85 @@ function renderStats() {
   const s = computeStats(state.leads);
   const el = (id) => document.getElementById(id);
   if (el("stat-total")) el("stat-total").textContent = s.total;
+  if (el("stat-hot")) el("stat-hot").textContent = s.hot;
+  if (el("stat-warm")) el("stat-warm").textContent = s.warm;
+  if (el("stat-cold")) el("stat-cold").textContent = s.cold;
   if (el("stat-highscore")) el("stat-highscore").textContent = s.highScore;
   if (el("stat-converted")) el("stat-converted").textContent = s.converted;
   if (el("stat-avgscore")) el("stat-avgscore").textContent = s.avgScore;
+
+  // Tier counts in analytics tab
+  if (el("tier-hot-count")) el("tier-hot-count").textContent = s.hot;
+  if (el("tier-warm-count")) el("tier-warm-count").textContent = s.warm;
+  if (el("tier-cold-count")) el("tier-cold-count").textContent = s.cold;
+
+  // Pipeline analytics bars
+  const statusCounts = {
+    new: state.leads.filter((l) => l.status === "new").length,
+    contacted: state.leads.filter((l) => l.status === "contacted").length,
+    qualified: state.leads.filter((l) => l.status === "qualified").length,
+    converted: s.converted,
+  };
+  const maxCount = Math.max(1, ...Object.values(statusCounts));
+  for (const [status, count] of Object.entries(statusCounts)) {
+    const barEl = el("pipeline-" + status);
+    const countEl = el("pipeline-" + status + "-count");
+    if (barEl) barEl.style.width = Math.round((count / maxCount) * 100) + "%";
+    if (countEl) countEl.textContent = count;
+  }
+
+  // Top leads preview on overview tab
+  renderTopLeadsPreview();
+
+  // Cities analytics
+  renderCitiesAnalytics();
+}
+
+function renderTopLeadsPreview() {
+  const container = document.getElementById("topLeadsPreview");
+  if (!container) return;
+  const hotLeads = state.leads.filter((l) => l.score >= 75).slice(0, 5);
+  if (!hotLeads.length) {
+    container.innerHTML = '<p class="empty-hint">No HOT leads yet. Run the scraper to discover new leads.</p>';
+    return;
+  }
+  container.innerHTML = hotLeads.map((l) => `
+    <div class="top-lead-row">
+      <div class="top-lead-info">
+        <span class="top-lead-company">${escapeHtml(l.company)}</span>
+        <span class="top-lead-location">${escapeHtml(l.city || "")}${l.state ? ", " + escapeHtml(l.state) : ""}</span>
+      </div>
+      <div class="top-lead-meta">
+        <span class="industry-pill">${escapeHtml(l.industry || "")}</span>
+        <span class="score-badge" style="background:${scoreColor(l.score)}">${l.score}</span>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderCitiesAnalytics() {
+  const container = document.getElementById("citiesAnalytics");
+  if (!container) return;
+  const cityMap = {};
+  state.leads.forEach((l) => {
+    if (l.city) {
+      const key = l.city + (l.state ? ", " + l.state : "");
+      cityMap[key] = (cityMap[key] || 0) + 1;
+    }
+  });
+  const sorted = Object.entries(cityMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  if (!sorted.length) {
+    container.innerHTML = '<p class="empty-hint">No city data available yet.</p>';
+    return;
+  }
+  const max = sorted[0][1];
+  container.innerHTML = sorted.map(([city, count]) => `
+    <div class="city-row">
+      <span class="city-name">${escapeHtml(city)}</span>
+      <div class="city-bar-wrap"><div class="city-bar" style="width:${Math.round((count/max)*100)}%"></div></div>
+      <span class="city-count">${count}</span>
+    </div>
+  `).join("");
 }
 
 /* ─── Charts ─────────────────────────────────────────────── */
@@ -903,10 +982,10 @@ function bindEvents() {
 function bootTerminal() {
   const lines = [
     ["# XPS Lead Intelligence System v1.0", "comment"],
-    ["# Phase 6 — Dashboard UI Active", "comment"],
+    ["# Phase 7 — Autonomous Orchestration Active", "comment"],
     ["", "output"],
     ["Initializing lead database…", "info"],
-    [`Loaded ${SAMPLE_LEADS.length} leads`, "success"],
+    [`Loaded ${state.leads.length} leads`, "success"],
     ["", "output"],
     ['Type "help" to see available commands.', "output"],
   ];
@@ -935,8 +1014,54 @@ function startClock() {
   setInterval(update, 1000);
 }
 
+/* ─── Live data loader ────────────────────────────────────── */
+/**
+ * Tries to fetch scored_leads.json from multiple paths in priority order.
+ * Falls back to SAMPLE_LEADS if all fetches fail (works offline / demo mode).
+ */
+function loadLiveLeads() {
+  const PATHS = [
+    "./data/scored_leads.json",          // pages/data/ (after pipeline runs)
+    "../data/leads/scored_leads.json",   // dev: root data/leads/
+  ];
+
+  function tryNext(index) {
+    if (index >= PATHS.length) {
+      // All paths failed — stay with SAMPLE_LEADS
+      console.info("[dashboard] No live data found. Using sample leads.");
+      applyFilters();
+      renderStats();
+      renderTable();
+      buildCharts();
+      return;
+    }
+    fetch(PATHS[index])
+      .then((r) => {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          state.leads = data;
+          state.filtered = [...data];
+          console.info(`[dashboard] Loaded ${data.length} live leads from ${PATHS[index]}`);
+          applyFilters();
+          renderStats();
+          renderTable();
+          buildCharts();
+        } else {
+          tryNext(index + 1);
+        }
+      })
+      .catch(() => tryNext(index + 1));
+  }
+
+  tryNext(0);
+}
+
 /* ─── Boot ───────────────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
+  // Initial render with sample data while live data loads
   applyFilters();
   renderStats();
   renderTable();
@@ -944,4 +1069,6 @@ document.addEventListener("DOMContentLoaded", () => {
   bindEvents();
   bootTerminal();
   startClock();
+  // Attempt to load live scored leads asynchronously
+  loadLiveLeads();
 });

@@ -3,6 +3,8 @@
 > **Autonomous B2B lead generation for the flooring and construction industry.**  
 > Discover · Validate · Enrich · Score · Outreach · Dashboard — fully automated.
 
+[![Lead Pipeline](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/lead_pipeline.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/lead_pipeline.yml)
+[![Repo Guardian](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/repo_guardian.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/repo_guardian.yml)
 [![Docs Reflection](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/docs_reflection.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/docs_reflection.yml)
 [![System Validation](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/system_validation.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/system_validation.yml)
 
@@ -17,10 +19,15 @@ The **XPS Lead Intelligence Platform** is an open-source, autonomous lead genera
 - 📊 **Enriches** records with emails, LinkedIn profiles, and additional contacts
 - 🏆 **Scores** leads 0–100 using a proprietary quality model
 - 📧 **Automates outreach** with personalized email sequences
-- 📱 **Displays** leads in a real-time PWA dashboard
+- 📱 **Displays** leads in a real-time PWA dashboard with dark/light mode
 - 🤖 **Operates autonomously** via GitHub Actions — no human required
+- 🛡️ **Self-heals** via the Repo Guardian — auto-detects and fixes system issues
 
-**Phase 6 is complete.** The dashboard, scoring engine, and outreach automation are fully operational.
+**Phase 7 is active.** The full autonomous pipeline, dashboard, scoring engine, outreach automation, and Repo Guardian are all operational.
+
+### Live Dashboard
+
+🌐 **[https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/](https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/)**
 
 ---
 
@@ -74,21 +81,32 @@ node tools/docs/evolve_docs.js
 
 ## Operations
 
-### Scheduled Pipeline
+### Autonomous Pipeline
 
-The lead pipeline runs automatically via GitHub Actions:
+The lead pipeline runs automatically every 4 hours via GitHub Actions:
 
 | Workflow | Schedule | Purpose |
 |---|---|---|
-| Lead Scraper | Configurable | Scrape + validate + score leads |
-| National Discovery | Daily | Nationwide contractor discovery |
-| System Validation | Push / PR | Health checks |
-| **Docs Reflection** | **Daily + Push** | **Update living docs, self-review, create issues** |
+| **Lead Pipeline** | Every 4 hours | Full: Scrape → Validate → Score → Outreach → Docs |
+| **Repo Guardian** | Every 6 hours | Health monitor + auto-fix + issue creation |
+| System Validation | Push / PR / 12h | Unit tests + encoding checks |
+| Docs Reflection | Daily + Push | Update living docs, self-review |
+| Deploy Dashboard | Push to main | Build + deploy Next.js to GitHub Pages |
 
 **Trigger manually:**
 1. Go to [Actions tab](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions)
-2. Select the workflow
+2. Select a workflow
 3. Click **Run workflow**
+
+### Repo Guardian
+
+The **Repo Guardian** (`repo_guardian.yml`) autonomously:
+- Runs health checks every 6 hours
+- Auto-fixes UTF-16 encoded files
+- Ensures required directories exist
+- Re-generates missing scored leads
+- Creates GitHub Issues when tests fail
+- Refreshes living docs when all checks pass
 
 ### Required GitHub Secrets
 
@@ -96,10 +114,22 @@ The lead pipeline runs automatically via GitHub Actions:
 |---|---|
 | `DATABASE_URL` | PostgreSQL connection string |
 | `SMTP_HOST` | Email server (outreach) |
+| `SMTP_PORT` | Email server port |
 | `SMTP_USER` | Email username |
 | `SMTP_PASS` | Email password |
+| `OUTREACH_FROM_EMAIL` | Sender email address |
 
 `GITHUB_TOKEN` is auto-provided by GitHub Actions.
+
+### Runbooks
+
+See **[docs/RUNBOOKS.md](docs/RUNBOOKS.md)** for step-by-step operational procedures including:
+- System bootstrap
+- Manual pipeline runs
+- Dashboard deployment
+- Database setup
+- Troubleshooting guide
+- Emergency rollback
 
 ---
 
@@ -112,12 +142,14 @@ The lead pipeline runs automatically via GitHub Actions:
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Technical architecture and deployment |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Development phases and milestones |
 | [docs/SOP.md](docs/SOP.md) | Standard operating procedures |
-| [docs/OPERATIONS.md](docs/OPERATIONS.md) | Runbooks and incident response |
+| [docs/OPERATIONS.md](docs/OPERATIONS.md) | Operations guide |
+| [docs/RUNBOOKS.md](docs/RUNBOOKS.md) | Step-by-step operational runbooks |
 | [docs/SECURITY.md](docs/SECURITY.md) | Security policy and threat model |
 | [docs/DATA_GOVERNANCE.md](docs/DATA_GOVERNANCE.md) | Data sources, compliance, retention |
 | [docs/GLOSSARY.md](docs/GLOSSARY.md) | Key terms and definitions |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Architecture decision log (ADR-lite) |
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | Release history |
+| [IMPLEMENTATION_CHECKLIST.md](IMPLEMENTATION_CHECKLIST.md) | Vision vs. implementation tracker |
 
 ### Auto-Generated Living Docs
 

@@ -150,6 +150,7 @@ function runOutreach() {
 
 module.exports = {
   runOutreach,
+  runOutreachCampaign: runOutreach, // alias for pipeline compatibility
   parseCsv,
   renderTemplate,
   selectTemplate,
