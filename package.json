@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node --test tests/**/*.test.js",
-    "score": "node agents/scoring/scoring_pipeline.js"
+    "score": "node agents/scoring/scoring_pipeline.js",
+    "gpt-actions": "node agents/gpt_actions/server.js"
   },
   "repository": {
     "type": "git",
