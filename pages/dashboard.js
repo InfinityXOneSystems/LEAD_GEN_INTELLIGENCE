@@ -359,7 +359,17 @@ function computeStats(leads) {
   const avgScore = total
     ? Math.round(leads.reduce((a, l) => a + l.score, 0) / total)
     : 0;
-  return { total, withEmail, withPhone, hot, warm, cold, highScore, converted, avgScore };
+  return {
+    total,
+    withEmail,
+    withPhone,
+    hot,
+    warm,
+    cold,
+    highScore,
+    converted,
+    avgScore,
+  };
 }
 
 /* ─── Filtering & sorting ────────────────────────────────── */
@@ -559,10 +569,13 @@ function renderTopLeadsPreview() {
   if (!container) return;
   const hotLeads = state.leads.filter((l) => l.score >= 75).slice(0, 5);
   if (!hotLeads.length) {
-    container.innerHTML = '<p class="empty-hint">No HOT leads yet. Run the scraper to discover new leads.</p>';
+    container.innerHTML =
+      '<p class="empty-hint">No HOT leads yet. Run the scraper to discover new leads.</p>';
     return;
   }
-  container.innerHTML = hotLeads.map((l) => `
+  container.innerHTML = hotLeads
+    .map(
+      (l) => `
     <div class="top-lead-row">
       <div class="top-lead-info">
         <span class="top-lead-company">${escapeHtml(l.company)}</span>
@@ -573,7 +586,9 @@ function renderTopLeadsPreview() {
         <span class="score-badge" style="background:${scoreColor(l.score)}">${l.score}</span>
       </div>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 }
 
 function renderCitiesAnalytics() {
@@ -586,19 +601,26 @@ function renderCitiesAnalytics() {
       cityMap[key] = (cityMap[key] || 0) + 1;
     }
   });
-  const sorted = Object.entries(cityMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  const sorted = Object.entries(cityMap)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10);
   if (!sorted.length) {
-    container.innerHTML = '<p class="empty-hint">No city data available yet.</p>';
+    container.innerHTML =
+      '<p class="empty-hint">No city data available yet.</p>';
     return;
   }
   const max = sorted[0][1];
-  container.innerHTML = sorted.map(([city, count]) => `
+  container.innerHTML = sorted
+    .map(
+      ([city, count]) => `
     <div class="city-row">
       <span class="city-name">${escapeHtml(city)}</span>
-      <div class="city-bar-wrap"><div class="city-bar" style="width:${Math.round((count/max)*100)}%"></div></div>
+      <div class="city-bar-wrap"><div class="city-bar" style="width:${Math.round((count / max) * 100)}%"></div></div>
       <span class="city-count">${count}</span>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 }
 
 /* ─── Charts ─────────────────────────────────────────────── */
@@ -1028,8 +1050,8 @@ function renderDashboard() {
 
 function loadLiveLeads() {
   const PATHS = [
-    "./data/scored_leads.json",          // pages/data/ (after pipeline runs)
-    "../data/leads/scored_leads.json",   // dev: root data/leads/
+    "./data/scored_leads.json", // pages/data/ (after pipeline runs)
+    "../data/leads/scored_leads.json", // dev: root data/leads/
   ];
 
   function tryNext(index) {
@@ -1048,7 +1070,9 @@ function loadLiveLeads() {
         if (Array.isArray(data) && data.length > 0) {
           state.leads = data;
           state.filtered = [...data];
-          console.info(`[dashboard] Loaded ${data.length} live leads from ${PATHS[index]}`);
+          console.info(
+            `[dashboard] Loaded ${data.length} live leads from ${PATHS[index]}`,
+          );
           renderDashboard();
         } else {
           tryNext(index + 1);

@@ -60,8 +60,15 @@ test("parseCsv - returns empty array for header-only file", () => {
 
 // ─── renderTemplate ───────────────────────────────────────────────────────────
 test("renderTemplate - replaces {{name}} with Contact_Name", () => {
-  const lead = { Contact_Name: "Mark", Company_Name: "ProEpoxy", City: "Columbus" };
-  const result = renderTemplate("Hello {{name}}, your company {{company}} in {{city}}.", lead);
+  const lead = {
+    Contact_Name: "Mark",
+    Company_Name: "ProEpoxy",
+    City: "Columbus",
+  };
+  const result = renderTemplate(
+    "Hello {{name}}, your company {{company}} in {{city}}.",
+    lead,
+  );
   assert.equal(result, "Hello Mark, your company ProEpoxy in Columbus.");
 });
 
@@ -94,9 +101,7 @@ test("selectTemplate - returns template with Template_ID '1' first", () => {
 });
 
 test("selectTemplate - falls back to first template when no Template_ID 1", () => {
-  const templates = [
-    { Template_ID: "3", Subject: "Late follow-up" },
-  ];
+  const templates = [{ Template_ID: "3", Subject: "Late follow-up" }];
   const selected = selectTemplate(templates, {});
   assert.equal(selected.Template_ID, "3");
 });
@@ -121,7 +126,11 @@ test("getEligibleLeads - filters by status only, does not filter by email", () =
     { Email: "a@b.com", Status: "" },
   ];
   const eligible = getEligibleLeads(leads);
-  assert.equal(eligible.length, 2, "Both leads pass status filter regardless of email");
+  assert.equal(
+    eligible.length,
+    2,
+    "Both leads pass status filter regardless of email",
+  );
 });
 
 test("getEligibleLeads - returns empty array when no eligible leads", () => {
