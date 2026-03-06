@@ -139,7 +139,8 @@ async function exportFromDb() {
 async function exportFromJson() {
   // Prefer pre-scored output; fall back to raw leads.json.
   const sourcePath = fs.existsSync(SCORED_JSON) ? SCORED_JSON : LEADS_JSON;
-  const sourceLabel = sourcePath === SCORED_JSON ? "scored_leads.json" : "leads.json";
+  const sourceLabel =
+    sourcePath === SCORED_JSON ? "scored_leads.json" : "leads.json";
 
   if (!fs.existsSync(sourcePath)) {
     console.warn(
@@ -162,7 +163,10 @@ async function exportFromJson() {
     );
     return normalised;
   } catch (err) {
-    console.error(`[export_snapshot] Failed to parse ${sourceLabel}:`, err.message);
+    console.error(
+      `[export_snapshot] Failed to parse ${sourceLabel}:`,
+      err.message,
+    );
     return [];
   }
 }

@@ -217,9 +217,10 @@ async function scrapeGoogleMaps(keyword, city, state) {
     // If Google changes this selector, results will be empty (graceful degradation).
     const rawLeads = await page.evaluate(
       ({ max, keyword: kw }) => {
-        const cards = Array.from(
-          document.querySelectorAll("div.Nv2PK"),
-        ).slice(0, max);
+        const cards = Array.from(document.querySelectorAll("div.Nv2PK")).slice(
+          0,
+          max,
+        );
 
         return cards
           .map((card) => {
@@ -240,9 +241,7 @@ async function scrapeGoogleMaps(keyword, city, state) {
 
             // Rating
             const ratingEl = card.querySelector(".MW4etd");
-            const rating = ratingEl
-              ? parseFloat(ratingEl.textContent) || 0
-              : 0;
+            const rating = ratingEl ? parseFloat(ratingEl.textContent) || 0 : 0;
 
             // Review count (usually displayed as "(123)")
             const reviewsEl = card.querySelector(".UY7F9");
@@ -256,9 +255,7 @@ async function scrapeGoogleMaps(keyword, city, state) {
             const phone = phoneEl ? phoneEl.textContent.trim() : "";
 
             // Website
-            const websiteEl = card.querySelector(
-              'a[data-item-id="authority"]',
-            );
+            const websiteEl = card.querySelector('a[data-item-id="authority"]');
             const website = websiteEl ? websiteEl.href : "";
 
             // Address – find first span containing a digit
@@ -271,7 +268,15 @@ async function scrapeGoogleMaps(keyword, city, state) {
                 .filter(Boolean)
                 .find((t) => /\d/.test(t)) || "";
 
-            return { company, rating, reviews, phone, website, address, keyword: kw };
+            return {
+              company,
+              rating,
+              reviews,
+              phone,
+              website,
+              address,
+              keyword: kw,
+            };
           })
           .filter(Boolean);
       },
