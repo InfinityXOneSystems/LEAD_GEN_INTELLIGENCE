@@ -34,6 +34,9 @@ function createRateLimiter({ windowMs = 60_000, max = 30 } = {}) {
 
 const apiLimiter = createRateLimiter({ windowMs: 60_000, max: 30 });
 
+// ── stricter limiter for high-cost system commands ──────────────────────────
+const cmdLimiter = createRateLimiter({ windowMs: 60_000, max: 5 });
+
 const ROOT = path.resolve(__dirname, "..", "..");
 const LEADS_FILE = path.join(ROOT, "data", "leads", "leads.json");
 const TODO_FILE = path.join(ROOT, "todo", "todo.csv");
@@ -164,7 +167,7 @@ app.get("/tasks", apiLimiter, (req, res) => {
 });
 
 /** POST /scrape – trigger the lead scraper */
-app.post('/scrape', apiLimiter, async (_req, res) => {
+app.post('/scrape', apiLimiter, cmdLimiter, async (_req, res) => {
   const scraperPath = path.join(ROOT, 'scrapers', 'google_maps_scraper.js');
   try {
     const { stdout } = await execFileAsync('node', [scraperPath]);
@@ -248,7 +251,7 @@ app.get("/openapi.json", (_req, res) => {
 // ── pipeline / validation / export command endpoints ────────────────────────
 
 /** POST /pipeline/run – run the scoring + export pipeline */
-app.post('/pipeline/run', apiLimiter, async (_req, res) => {
+app.post('/pipeline/run', apiLimiter, cmdLimiter, async (_req, res) => {
   const pipelineScript = path.join(ROOT, 'agents', 'scoring', 'scoring_pipeline.js');
   const exportScript   = path.join(ROOT, 'tools', 'export_snapshot.js');
   try {
@@ -273,7 +276,7 @@ app.post('/validate', apiLimiter, (_req, res) => {
 });
 
 /** GET /export – export JSON snapshot */
-app.get('/export', apiLimiter, async (_req, res) => {
+app.get('/export', apiLimiter, cmdLimiter, async (_req, res) => {
   const exportScript = path.join(ROOT, 'tools', 'export_snapshot.js');
   try {
     const { stdout } = await execFileAsync('node', [exportScript]);
@@ -341,7 +344,7 @@ app.get('/workspace/gmail/messages', apiLimiter, async (req, res) => {
 });
 
 /** POST /workspace/drive/upload – upload a file to Google Drive */
-app.post('/workspace/drive/upload', apiLimiter, async (req, res) => {
+app.post('/workspace/drive/upload', apiLimiter, cmdLimiter, async (req, res) => {
   const { name, filePath, folderId } = req.body || {};
   if (!name || !filePath) {
     return res.status(400).json({ error: 'name and filePath are required' });
