@@ -1,11 +1,14 @@
-const cron = require('node-cron');
-const fs = require('fs');
-const path = require('path');
-const { parseCsv, renderTemplate } = require('./outreach_engine');
-const { logOutreach, getLogByLeadId, getAllLog } = require('./outreach_log');
+const cron = require("node-cron");
+const fs = require("fs");
+const path = require("path");
+const { parseCsv, renderTemplate } = require("./outreach_engine");
+const { logOutreach, getLogByLeadId, getAllLog } = require("./outreach_log");
 
-const LEADS_FILE = path.join(__dirname, '../data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/contractor_database.csv');
-const TEMPLATES_FILE = path.join(__dirname, 'templates/outreach_templates.csv');
+const LEADS_FILE = path.join(
+  __dirname,
+  "../data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/contractor_database.csv",
+);
+const TEMPLATES_FILE = path.join(__dirname, "templates/outreach_templates.csv");
 
 // Number of days to wait before sending a follow-up
 const FOLLOW_UP_DAYS = 3;
@@ -31,24 +34,31 @@ function sendFollowUp(to, subject, body) {
 // Select follow-up template: use template 2 for first follow-up, template 3 for second
 function selectFollowUpTemplate(templates, followUpCount) {
   const templateId = String(followUpCount + 2); // follow-up #1 → template 2, #2 → template 3
-  return templates.find(t => t.Template_ID === templateId) || templates[templates.length - 1];
+  return (
+    templates.find((t) => t.Template_ID === templateId) ||
+    templates[templates.length - 1]
+  );
 }
 
 // Find leads that were initially contacted but need a follow-up
 function getFollowUpCandidates(leads, allLog) {
-  return leads.filter(lead => {
+  return leads.filter((lead) => {
     if (!lead.Email) return false;
 
-    const leadLog = allLog.filter(e => String(e.lead_id) === String(lead.ID));
-    const initialOutreach = leadLog.filter(e => e.type === 'initial_outreach' && e.result === 'sent');
+    const leadLog = allLog.filter((e) => String(e.lead_id) === String(lead.ID));
+    const initialOutreach = leadLog.filter(
+      (e) => e.type === "initial_outreach" && e.result === "sent",
+    );
     if (initialOutreach.length === 0) return false;
 
-    const followUps = leadLog.filter(e => e.type === 'follow_up' && e.result === 'sent');
+    const followUps = leadLog.filter(
+      (e) => e.type === "follow_up" && e.result === "sent",
+    );
     if (followUps.length >= MAX_FOLLOW_UPS) return false;
 
     // Use the most recent contact timestamp
     const allContacts = [...initialOutreach, ...followUps].sort(
-      (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+      (a, b) => new Date(b.timestamp) - new Date(a.timestamp),
     );
     const lastContact = allContacts[0];
     return daysBetween(lastContact.timestamp) >= FOLLOW_UP_DAYS;
@@ -56,10 +66,12 @@ function getFollowUpCandidates(leads, allLog) {
 }
 
 function runFollowUps() {
-  console.log('[FollowUpScheduler] Checking for follow-up candidates...');
+  console.log("[FollowUpScheduler] Checking for follow-up candidates...");
 
   if (!fs.existsSync(LEADS_FILE) || !fs.existsSync(TEMPLATES_FILE)) {
-    console.log('[FollowUpScheduler] Leads or templates file not found. Skipping.');
+    console.log(
+      "[FollowUpScheduler] Leads or templates file not found. Skipping.",
+    );
     return { sent: 0 };
   }
 
@@ -71,12 +83,16 @@ function runFollowUps() {
   const allLog = getAllLog();
 
   const candidates = getFollowUpCandidates(leads, allLog);
-  console.log(`[FollowUpScheduler] ${candidates.length} lead(s) due for follow-up.`);
+  console.log(
+    `[FollowUpScheduler] ${candidates.length} lead(s) due for follow-up.`,
+  );
 
   let sent = 0;
-  candidates.forEach(lead => {
-    const leadLog = allLog.filter(e => String(e.lead_id) === String(lead.ID));
-    const followUps = leadLog.filter(e => e.type === 'follow_up' && e.result === 'sent');
+  candidates.forEach((lead) => {
+    const leadLog = allLog.filter((e) => String(e.lead_id) === String(lead.ID));
+    const followUps = leadLog.filter(
+      (e) => e.type === "follow_up" && e.result === "sent",
+    );
     const followUpNumber = followUps.length + 1;
 
     const template = selectFollowUpTemplate(templates, followUps.length);
@@ -85,15 +101,15 @@ function runFollowUps() {
     const result = sendFollowUp(lead.Email, subject, body);
 
     logOutreach({
-      type: 'follow_up',
+      type: "follow_up",
       lead_id: lead.ID,
       company: lead.Company_Name,
       email: lead.Email,
       template_id: template.Template_ID,
       follow_up_number: followUpNumber,
       subject: subject,
-      result: result.success ? 'sent' : 'failed',
-      simulated: result.simulated || false
+      result: result.success ? "sent" : "failed",
+      simulated: result.simulated || false,
     });
 
     sent++;
@@ -105,9 +121,11 @@ function runFollowUps() {
 
 // Schedule: run follow-up check every day at 9:00 AM
 function startScheduler() {
-  console.log('[FollowUpScheduler] Scheduler started. Follow-ups will run daily at 9:00 AM.');
-  cron.schedule('0 9 * * *', () => {
-    console.log('[FollowUpScheduler] Running scheduled follow-up check...');
+  console.log(
+    "[FollowUpScheduler] Scheduler started. Follow-ups will run daily at 9:00 AM.",
+  );
+  cron.schedule("0 9 * * *", () => {
+    console.log("[FollowUpScheduler] Running scheduled follow-up check...");
     runFollowUps();
   });
 }

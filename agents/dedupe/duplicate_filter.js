@@ -1,15 +1,13 @@
-﻿const fs=require("fs")
+﻿const fs = require("fs");
 
-let seen=new Set()
+let seen = new Set();
 
-function isDuplicate(name){
+function isDuplicate(name) {
+  if (seen.has(name)) return true;
 
-if(seen.has(name)) return true
+  seen.add(name);
 
-seen.add(name)
-
-return false
-
+  return false;
 }
 
-module.exports=isDuplicate
+module.exports = isDuplicate;

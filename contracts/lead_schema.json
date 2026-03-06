@@ -1,12 +1,12 @@
 {
- "Lead": {
-  "company":"string",
-  "phone":"string",
-  "website":"string",
-  "rating":"number",
-  "reviews":"number",
-  "address":"string",
-  "email":"string",
-  "score":"number"
- }
+  "Lead": {
+    "company": "string",
+    "phone": "string",
+    "website": "string",
+    "rating": "number",
+    "reviews": "number",
+    "address": "string",
+    "email": "string",
+    "score": "number"
+  }
 }

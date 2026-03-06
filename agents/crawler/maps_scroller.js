@@ -1,30 +1,26 @@
-async function scrollResults(page){
+async function scrollResults(page) {
+  const panel = 'div[role="feed"]';
 
-const panel='div[role="feed"]'
+  await page.waitForSelector(panel);
 
-await page.waitForSelector(panel)
+  let lastHeight = 0;
 
-let lastHeight=0
+  while (true) {
+    await page.evaluate(() => {
+      const el = document.querySelector('div[role="feed"]');
+      el.scrollBy(0, 1000);
+    });
 
-while(true){
+    await page.waitForTimeout(2000);
 
-await page.evaluate(()=>{
-const el=document.querySelector('div[role="feed"]')
-el.scrollBy(0,1000)
-})
+    let height = await page.evaluate(() => {
+      return document.querySelector('div[role="feed"]').scrollHeight;
+    });
 
-await page.waitForTimeout(2000)
+    if (height == lastHeight) break;
 
-let height=await page.evaluate(()=>{
-return document.querySelector('div[role="feed"]').scrollHeight
-})
-
-if(height==lastHeight) break
-
-lastHeight=height
-
+    lastHeight = height;
+  }
 }
 
-}
-
-module.exports=scrollResults
+module.exports = scrollResults;

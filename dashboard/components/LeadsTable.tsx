@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export default function LeadsTable({ filters }: any) {
   const [allLeads, setAllLeads] = useState<any[]>([]);
@@ -10,16 +10,16 @@ export default function LeadsTable({ filters }: any) {
   const leadsPerPage = 50;
 
   useEffect(() => {
-    fetch('/data/scored_leads.json')
-      .then(res => res.json())
-      .then(data => {
+    fetch("/data/scored_leads.json")
+      .then((res) => res.json())
+      .then((data) => {
         if (Array.isArray(data)) {
           setAllLeads(data);
         }
         setLoading(false);
       })
-      .catch(err => {
-        console.error('Error:', err);
+      .catch((err) => {
+        console.error("Error:", err);
         setAllLeads([]);
         setLoading(false);
       });
@@ -28,10 +28,11 @@ export default function LeadsTable({ filters }: any) {
   useEffect(() => {
     let filtered = [...allLeads];
 
-    if (filters.tier && filters.tier !== 'ALL') {
+    if (filters.tier && filters.tier !== "ALL") {
       filtered = filtered.filter((lead: any) => {
         const score = lead.lead_score || lead.score || 0;
-        const tier = lead.tier || (score >= 75 ? 'HOT' : score >= 50 ? 'WARM' : 'COLD');
+        const tier =
+          lead.tier || (score >= 75 ? "HOT" : score >= 50 ? "WARM" : "COLD");
         return tier === filters.tier;
       });
     }
@@ -39,10 +40,18 @@ export default function LeadsTable({ filters }: any) {
     if (filters.search) {
       const searchLower = filters.search.toLowerCase();
       filtered = filtered.filter((lead: any) => {
-        const company = (lead.company || lead.company_name || '').toLowerCase();
-        const city = (lead.city || '').toLowerCase();
-        const industry = (lead.industry || lead.industry_detected || '').toLowerCase();
-        return company.includes(searchLower) || city.includes(searchLower) || industry.includes(searchLower);
+        const company = (lead.company || lead.company_name || "").toLowerCase();
+        const city = (lead.city || "").toLowerCase();
+        const industry = (
+          lead.industry ||
+          lead.industry_detected ||
+          ""
+        ).toLowerCase();
+        return (
+          company.includes(searchLower) ||
+          city.includes(searchLower) ||
+          industry.includes(searchLower)
+        );
       });
     }
 
@@ -58,7 +67,9 @@ export default function LeadsTable({ filters }: any) {
     return (
       <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800 overflow-hidden p-8 text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-600 dark:border-yellow-500 mx-auto"></div>
-        <p className="mt-4 text-zinc-600 dark:text-zinc-400">Loading leads...</p>
+        <p className="mt-4 text-zinc-600 dark:text-zinc-400">
+          Loading leads...
+        </p>
       </div>
     );
   }
@@ -68,8 +79,8 @@ export default function LeadsTable({ filters }: any) {
       <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800 p-8 text-center">
         <p className="text-zinc-600 dark:text-zinc-400">
           {allLeads.length === 0
-            ? 'No leads data available. Run the scoring pipeline to generate leads.'
-            : 'No leads found matching your filters.'}
+            ? "No leads data available. Run the scoring pipeline to generate leads."
+            : "No leads found matching your filters."}
         </p>
       </div>
     );
@@ -81,19 +92,32 @@ export default function LeadsTable({ filters }: any) {
         <table className="w-full">
           <thead className="bg-zinc-50 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Company</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Location</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Industry</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Score</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Contact</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                Company
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                Location
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                Industry
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                Score
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                Contact
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
             {paginatedLeads.map((lead: any, idx: number) => (
-              <tr key={idx} className="hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+              <tr
+                key={idx}
+                className="hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+              >
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
-                    {lead.company || lead.company_name || 'Unknown'}
+                    {lead.company || lead.company_name || "Unknown"}
                   </div>
                   {lead.rating && (
                     <div className="text-sm text-zinc-500 dark:text-zinc-400">
@@ -102,10 +126,10 @@ export default function LeadsTable({ filters }: any) {
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900 dark:text-zinc-100">
-                  {lead.city || 'Unknown'}, {lead.state}
+                  {lead.city || "Unknown"}, {lead.state}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900 dark:text-zinc-100">
-                  {lead.industry_detected || lead.industry || 'Unknown'}
+                  {lead.industry_detected || lead.industry || "Unknown"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-semibold text-yellow-600 dark:text-yellow-500">

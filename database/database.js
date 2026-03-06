@@ -1,10 +1,9 @@
-﻿const sqlite3 = require("sqlite3").verbose()
+﻿const sqlite3 = require("sqlite3").verbose();
 
-const db = new sqlite3.Database("./database/leads.db")
+const db = new sqlite3.Database("./database/leads.db");
 
 db.serialize(() => {
-
-db.run(`
+  db.run(`
 CREATE TABLE IF NOT EXISTS leads (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 company TEXT,
@@ -18,8 +17,7 @@ state TEXT,
 email TEXT,
 score INTEGER
 )
-`)
+`);
+});
 
-})
-
-module.exports = db
+module.exports = db;

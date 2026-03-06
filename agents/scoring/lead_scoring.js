@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * Lead Scoring Engine - Phase 4
@@ -20,41 +20,82 @@
 // ---------------------------------------------------------------------------
 const INDUSTRY_KEYWORDS = {
   Epoxy: [
-    'epoxy', 'resin', 'polyaspartic', 'polyurea', 'flake floor',
-    'metallic epoxy', 'garage floor coating'
+    "epoxy",
+    "resin",
+    "polyaspartic",
+    "polyurea",
+    "flake floor",
+    "metallic epoxy",
+    "garage floor coating",
   ],
   Concrete: [
-    'concrete polishing', 'concrete grinding', 'concrete resurfacing',
-    'concrete repair', 'concrete sealing', 'decorative concrete',
-    'concrete staining', 'concrete finishing', 'shot blasting',
-    'floor grinding', 'polished concrete'
+    "concrete polishing",
+    "concrete grinding",
+    "concrete resurfacing",
+    "concrete repair",
+    "concrete sealing",
+    "decorative concrete",
+    "concrete staining",
+    "concrete finishing",
+    "shot blasting",
+    "floor grinding",
+    "polished concrete",
   ],
   SurfacePrep: [
-    'surface prep', 'shot blasting', 'floor grinding', 'floor preparation',
-    'abrasive blasting', 'scarifying'
+    "surface prep",
+    "shot blasting",
+    "floor grinding",
+    "floor preparation",
+    "abrasive blasting",
+    "scarifying",
   ],
   Automotive: [
-    'auto repair', 'car dealership', 'auto body', 'truck repair',
-    'fleet maintenance', 'automotive', 'mechanic', 'garage'
+    "auto repair",
+    "car dealership",
+    "auto body",
+    "truck repair",
+    "fleet maintenance",
+    "automotive",
+    "mechanic",
+    "garage",
   ],
   Industrial: [
-    'manufacturing', 'warehouse', 'distribution center',
-    'industrial maintenance', 'industrial flooring', 'factory', 'plant'
-  ]
+    "manufacturing",
+    "warehouse",
+    "distribution center",
+    "industrial maintenance",
+    "industrial flooring",
+    "factory",
+    "plant",
+  ],
 };
 
 // ---------------------------------------------------------------------------
 // Priority markets: cities near XPS Xpress locations
 // ---------------------------------------------------------------------------
 const PRIMARY_MARKETS = [
-  'columbus', 'tempe', 'phoenix', 'mesa', 'chandler', 'scottsdale',
-  'west chicago', 'chicago', 'rockford', 'oklahoma city'
+  "columbus",
+  "tempe",
+  "phoenix",
+  "mesa",
+  "chandler",
+  "scottsdale",
+  "west chicago",
+  "chicago",
+  "rockford",
+  "oklahoma city",
 ];
 
 const SECONDARY_MARKETS = [
-  'cleveland', 'cincinnati', 'dayton', 'akron',
-  'peoria', 'springfield', 'naperville',
-  'tucson', 'aurora'
+  "cleveland",
+  "cincinnati",
+  "dayton",
+  "akron",
+  "peoria",
+  "springfield",
+  "naperville",
+  "tucson",
+  "aurora",
 ];
 
 // ---------------------------------------------------------------------------
@@ -99,11 +140,14 @@ function scoreBusinessQuality(lead) {
  */
 function detectIndustry(lead) {
   const text = [
-    lead.company, lead.company_name, lead.industry,
-    lead.services, lead.notes
+    lead.company,
+    lead.company_name,
+    lead.industry,
+    lead.services,
+    lead.notes,
   ]
     .filter(Boolean)
-    .join(' ')
+    .join(" ")
     .toLowerCase();
 
   const INDUSTRY_PRIORITY = {
@@ -111,14 +155,14 @@ function detectIndustry(lead) {
     Concrete: 20,
     SurfacePrep: 18,
     Industrial: 15,
-    Automotive: 15
+    Automotive: 15,
   };
 
   let bestIndustry = null;
   let bestScore = 0;
 
   for (const [industry, keywords] of Object.entries(INDUSTRY_KEYWORDS)) {
-    const matched = keywords.some(kw => text.includes(kw.toLowerCase()));
+    const matched = keywords.some((kw) => text.includes(kw.toLowerCase()));
     if (matched) {
       const pts = INDUSTRY_PRIORITY[industry] || 5;
       if (pts > bestScore) {
@@ -140,17 +184,19 @@ function detectIndustry(lead) {
     }
   }
 
-  return { industry: bestIndustry || 'Unknown', points: bestScore };
+  return { industry: bestIndustry || "Unknown", points: bestScore };
 }
 
 /**
  * Score geographic priority (0-10 pts)
  */
 function scoreGeography(lead) {
-  const city = (lead.city || '').toLowerCase().trim();
+  const city = (lead.city || "").toLowerCase().trim();
   if (!city) return 0;
-  if (PRIMARY_MARKETS.some(m => city.includes(m) || m.includes(city))) return 10;
-  if (SECONDARY_MARKETS.some(m => city.includes(m) || m.includes(city))) return 5;
+  if (PRIMARY_MARKETS.some((m) => city.includes(m) || m.includes(city)))
+    return 10;
+  if (SECONDARY_MARKETS.some((m) => city.includes(m) || m.includes(city)))
+    return 5;
   return 0;
 }
 
@@ -158,9 +204,9 @@ function scoreGeography(lead) {
  * Determine tier label from a numeric score.
  */
 function getTier(score) {
-  if (score >= 75) return 'HOT';
-  if (score >= 50) return 'WARM';
-  return 'COLD';
+  if (score >= 75) return "HOT";
+  if (score >= 50) return "WARM";
+  return "COLD";
 }
 
 // ---------------------------------------------------------------------------
@@ -177,7 +223,8 @@ function getTier(score) {
 function scoreLead(lead) {
   const completeness = scoreContactCompleteness(lead);
   const quality = scoreBusinessQuality(lead);
-  const { industry: detectedIndustry, points: relevance } = detectIndustry(lead);
+  const { industry: detectedIndustry, points: relevance } =
+    detectIndustry(lead);
   const geography = scoreGeography(lead);
 
   const total = completeness + quality + relevance + geography;
@@ -192,8 +239,8 @@ function scoreLead(lead) {
       contact_completeness: completeness,
       business_quality: quality,
       industry_relevance: relevance,
-      geographic_priority: geography
-    }
+      geographic_priority: geography,
+    },
   };
 }
 
@@ -218,7 +265,7 @@ function scoreLeads(leads) {
  */
 function segmentByIndustry(scoredLeads) {
   return scoredLeads.reduce((acc, lead) => {
-    const key = lead.industry_detected || lead.industry || 'Unknown';
+    const key = lead.industry_detected || lead.industry || "Unknown";
     if (!acc[key]) acc[key] = [];
     acc[key].push(lead);
     return acc;
@@ -237,7 +284,7 @@ function segmentByTier(scoredLeads) {
       acc[lead.tier].push(lead);
       return acc;
     },
-    { HOT: [], WARM: [], COLD: [] }
+    { HOT: [], WARM: [], COLD: [] },
   );
 }
 
@@ -254,7 +301,8 @@ function generateReport(scoredLeads) {
   const avgScore =
     scoredLeads.length > 0
       ? Math.round(
-          scoredLeads.reduce((s, l) => s + l.lead_score, 0) / scoredLeads.length
+          scoredLeads.reduce((s, l) => s + l.lead_score, 0) /
+            scoredLeads.length,
         )
       : 0;
 
@@ -265,18 +313,18 @@ function generateReport(scoredLeads) {
     tiers: {
       HOT: tiers.HOT.length,
       WARM: tiers.WARM.length,
-      COLD: tiers.COLD.length
+      COLD: tiers.COLD.length,
     },
     industries: Object.fromEntries(
-      Object.entries(industries).map(([k, v]) => [k, v.length])
+      Object.entries(industries).map(([k, v]) => [k, v.length]),
     ),
-    top_leads: scoredLeads.slice(0, 10).map(l => ({
+    top_leads: scoredLeads.slice(0, 10).map((l) => ({
       company: l.company || l.company_name,
       city: l.city,
       lead_score: l.lead_score,
       tier: l.tier,
-      industry: l.industry_detected || l.industry
-    }))
+      industry: l.industry_detected || l.industry,
+    })),
   };
 }
 
@@ -291,5 +339,5 @@ module.exports = {
   scoreBusinessQuality,
   detectIndustry,
   scoreGeography,
-  getTier
+  getTier,
 };

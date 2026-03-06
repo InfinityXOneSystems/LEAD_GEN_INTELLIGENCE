@@ -1,60 +1,48 @@
-﻿const {PlaywrightCrawler} = require('crawlee')
-const db=require('../../database/database')
-const scoreLead=require('../../agents/scoring/score_engine')
+﻿const { PlaywrightCrawler } = require("crawlee");
+const db = require("../../database/database");
+const scoreLead = require("../../agents/scoring/score_engine");
 
 const crawler = new PlaywrightCrawler({
+  async requestHandler({ page, request }) {
+    const query = request.url;
 
-async requestHandler({ page, request }) {
+    console.log("Scraping:", query);
 
-const query=request.url
+    await page.goto(query);
 
-console.log("Scraping:",query)
+    await page.waitForTimeout(5000);
 
-await page.goto(query)
+    const leads = await page.evaluate(() => {
+      let data = [];
 
-await page.waitForTimeout(5000)
+      document.querySelectorAll("div.Nv2PK").forEach((card) => {
+        let name = card.innerText;
 
-const leads=await page.evaluate(()=>{
+        data.push({ company: name });
+      });
 
-let data=[]
+      return data;
+    });
 
-document.querySelectorAll('div.Nv2PK').forEach(card=>{
+    leads.forEach((l) => {
+      let score = scoreLead(l);
 
-let name=card.innerText
+      db.run("INSERT INTO leads(company,score) VALUES (?,?)", [
+        l.company,
+        score,
+      ]);
+    });
+  },
+});
 
-data.push({company:name})
+async function run() {
+  const queries = require("../../data/national/search_queries.json");
 
-})
+  const urls = queries.map(
+    (q) => "https://www.google.com/maps/search/" + encodeURIComponent(q),
+  );
 
-return data
-
-})
-
-leads.forEach(l=>{
-
-let score=scoreLead(l)
-
-db.run(
-"INSERT INTO leads(company,score) VALUES (?,?)",
-[l.company,score]
-)
-
-})
-
+  await crawler.run(urls);
 }
 
-})
-
-async function run(){
-
-const queries=require('../../data/national/search_queries.json')
-
-const urls=queries.map(q=>
-"https://www.google.com/maps/search/"+encodeURIComponent(q)
-)
-
-await crawler.run(urls)
-
-}
-
-run()
+run();

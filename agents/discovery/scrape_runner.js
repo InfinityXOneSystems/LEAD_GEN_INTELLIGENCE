@@ -1,9 +1,7 @@
-﻿const scraper=require('../scrapers/maps/google_maps_scraper')
+﻿const scraper = require("../scrapers/maps/google_maps_scraper");
 
-function start(){
-
-console.log("Lead discovery started")
-
+function start() {
+  console.log("Lead discovery started");
 }
 
-start()
+start();

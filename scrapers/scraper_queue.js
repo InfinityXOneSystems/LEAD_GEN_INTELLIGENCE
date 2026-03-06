@@ -1,17 +1,17 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 const LOCATIONS_FILE = path.join(
   __dirname,
-  '../data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/locations.csv'
+  "../data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/locations.csv",
 );
 const KEYWORDS_FILE = path.join(
   __dirname,
-  '../data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/keywords.csv'
+  "../data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/keywords.csv",
 );
-const PROGRESS_FILE = path.join(__dirname, '../data/scraper_progress.json');
+const PROGRESS_FILE = path.join(__dirname, "../data/scraper_progress.json");
 
 // Parse a CSV string into an array of objects.
 // Handles RFC 4180 quoted fields (fields containing commas or newlines
@@ -19,10 +19,10 @@ const PROGRESS_FILE = path.join(__dirname, '../data/scraper_progress.json');
 function parseCsv(content) {
   const lines = content.trim().split(/\r?\n/);
   const headers = splitCsvLine(lines[0]);
-  return lines.slice(1).map(line => {
+  return lines.slice(1).map((line) => {
     const values = splitCsvLine(line);
     return headers.reduce((obj, h, i) => {
-      obj[h] = values[i] !== undefined ? values[i] : '';
+      obj[h] = values[i] !== undefined ? values[i] : "";
       return obj;
     }, {});
   });
@@ -31,7 +31,7 @@ function parseCsv(content) {
 // Split a single CSV line respecting double-quoted fields.
 function splitCsvLine(line) {
   const fields = [];
-  let current = '';
+  let current = "";
   let inQuotes = false;
   for (let i = 0; i < line.length; i++) {
     const ch = line[i];
@@ -48,9 +48,9 @@ function splitCsvLine(line) {
       }
     } else if (ch === '"') {
       inQuotes = true;
-    } else if (ch === ',') {
+    } else if (ch === ",") {
       fields.push(current.trim());
-      current = '';
+      current = "";
     } else {
       current += ch;
     }
@@ -61,24 +61,27 @@ function splitCsvLine(line) {
 
 // Load all locations from CSV.
 function loadLocations() {
-  const content = fs.readFileSync(LOCATIONS_FILE, 'utf8');
+  const content = fs.readFileSync(LOCATIONS_FILE, "utf8");
   return parseCsv(content);
 }
 
 // Load all search keywords from CSV.
 function loadKeywords() {
-  const content = fs.readFileSync(KEYWORDS_FILE, 'utf8');
+  const content = fs.readFileSync(KEYWORDS_FILE, "utf8");
   return parseCsv(content);
 }
 
 // Load scraping progress (which location IDs have been completed).
 function loadProgress() {
   try {
-    const raw = fs.readFileSync(PROGRESS_FILE, 'utf8');
+    const raw = fs.readFileSync(PROGRESS_FILE, "utf8");
     return JSON.parse(raw);
   } catch (err) {
-    if (err.code !== 'ENOENT') {
-      console.warn('[scraper_queue] Warning: could not read progress file:', err.message);
+    if (err.code !== "ENOENT") {
+      console.warn(
+        "[scraper_queue] Warning: could not read progress file:",
+        err.message,
+      );
     }
     return { completedIds: [], updatedAt: null };
   }
@@ -102,9 +105,9 @@ function getNextBatch(batchSize, stateFilter) {
   const progress = loadProgress();
   const completed = new Set(progress.completedIds || []);
 
-  let pending = locations.filter(loc => !completed.has(loc.ID));
+  let pending = locations.filter((loc) => !completed.has(loc.ID));
   if (stateFilter) {
-    pending = pending.filter(loc => loc.State === stateFilter);
+    pending = pending.filter((loc) => loc.State === stateFilter);
   }
   return pending.slice(0, batchSize);
 }
@@ -114,7 +117,7 @@ function getPendingByState() {
   const locations = loadLocations();
   const progress = loadProgress();
   const completed = new Set(progress.completedIds || []);
-  const pending = locations.filter(loc => !completed.has(loc.ID));
+  const pending = locations.filter((loc) => !completed.has(loc.ID));
 
   return pending.reduce((acc, loc) => {
     if (!acc[loc.State]) acc[loc.State] = [];
@@ -135,7 +138,9 @@ function markComplete(locationId) {
 // Reset progress so all locations are scraped again on the next run.
 function resetProgress() {
   saveProgress({ completedIds: [] });
-  console.log('[scraper_queue] Progress reset. All locations will be re-scraped.');
+  console.log(
+    "[scraper_queue] Progress reset. All locations will be re-scraped.",
+  );
 }
 
 // Build the full list of (location × keyword) search tasks for a given

@@ -1,14 +1,14 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const LOG_FILE = path.join(__dirname, '../data/outreach/outreach_log.json');
+const LOG_FILE = path.join(__dirname, "../data/outreach/outreach_log.json");
 
 function loadLog() {
   if (!fs.existsSync(LOG_FILE)) {
     return [];
   }
   try {
-    return JSON.parse(fs.readFileSync(LOG_FILE, 'utf8'));
+    return JSON.parse(fs.readFileSync(LOG_FILE, "utf8"));
   } catch (e) {
     return [];
   }
@@ -26,14 +26,16 @@ function logOutreach(entry) {
   const entries = loadLog();
   entries.push({
     timestamp: new Date().toISOString(),
-    ...entry
+    ...entry,
   });
   saveLog(entries);
-  console.log(`[OutreachLog] ${entry.type} logged for lead ${entry.lead_id} (${entry.company})`);
+  console.log(
+    `[OutreachLog] ${entry.type} logged for lead ${entry.lead_id} (${entry.company})`,
+  );
 }
 
 function getLogByLeadId(leadId) {
-  return loadLog().filter(e => String(e.lead_id) === String(leadId));
+  return loadLog().filter((e) => String(e.lead_id) === String(leadId));
 }
 
 function getAllLog() {

@@ -6,7 +6,7 @@ const MIN_PHONE_DIGITS = 7;
  * @returns {string}
  */
 function normalizeCompany(name) {
-  return (name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  return (name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
 /**
@@ -15,7 +15,7 @@ function normalizeCompany(name) {
  * @returns {string}
  */
 function normalizePhone(phone) {
-  return (phone || '').replace(/\D/g, '');
+  return (phone || "").replace(/\D/g, "");
 }
 
 /**
@@ -32,9 +32,12 @@ function dedupe(leads) {
   const duplicates = [];
 
   for (const lead of leads) {
-    const companyKey = normalizeCompany(lead.company) + '|' + (lead.city || '').toLowerCase().trim();
+    const companyKey =
+      normalizeCompany(lead.company) +
+      "|" +
+      (lead.city || "").toLowerCase().trim();
     const phoneKey = normalizePhone(lead.phone);
-    const emailKey = (lead.email || '').toLowerCase().trim();
+    const emailKey = (lead.email || "").toLowerCase().trim();
 
     const isDupe =
       seenCompanyCity.has(companyKey) ||
