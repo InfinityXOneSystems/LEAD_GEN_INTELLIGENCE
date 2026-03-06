@@ -2,12 +2,25 @@
 
 > Generated: 2026-03-06
 
-**Total leads:** 0
+**Total leads:** 10
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
+| HOT  | 9  |
+| WARM | 1 |
 | COLD | 0 |
 
-_No leads found for this city yet._
+## Top Leads
+
+| Company | Phone | Website | Score |
+|---------|-------|---------|-------|
+| Desert Epoxy Solutions | (480) 555-1101 | https://desertepoxy.com | 95 |
+| Valley Metallic Epoxy Specialists | (480) 555-1505 | https://valleymetallic.com | 95 |
+| Tempe Garage Coatings | (480) 555-1303 | https://tempegaragecoatings.com | 90 |
+| AZ Polyurea Floor Coatings | (480) 555-1606 | https://azpolyurea.com | 90 |
+| Maricopa Decorative Concrete | (480) 555-1909 | https://maricopadecorative.com | 90 |
+| Sonoran Surface Prep Inc. | (480) 555-1404 | https://sonoransurface.com | 88 |
+| Cactus Concrete Resurfacing | (480) 555-1707 | https://cactusconcrete.com | 85 |
+| Southwest Concrete & Polish | (480) 555-1202 | https://swconcrete.com | 75 |
+| Sun Devil Industrial Floors | (480) 555-1808 | https://sundevilfloors.com | 75 |
+| Tempe Flake & Chip Floor Systems | (480) 555-2010 | https://tempeflakefloors.com | 67 |
