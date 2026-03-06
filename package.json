@@ -6,6 +6,8 @@
   "scripts": {
     "test": "node --test tests/**/*.test.js",
     "score": "node agents/scoring/scoring_pipeline.js",
+    "export": "node tools/export_snapshot.js",
+    "pipeline": "npm run score && npm run export",
     "gpt-actions": "node agents/gpt_actions/server.js",
     "docs": "node tools/docs/evolve_docs.js",
     "docs:issues": "node tools/docs/create_issues.js"

@@ -4,6 +4,9 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const { execFile } = require('child_process');
+const { promisify } = require('util');
+
+const execFileAsync = promisify(execFile);
 
 const app = express();
 app.use(express.json());
@@ -144,14 +147,14 @@ app.get('/tasks', apiLimiter, (req, res) => {
 });
 
 /** POST /scrape – trigger the lead scraper */
-app.post('/scrape', apiLimiter, (_req, res) => {
+app.post('/scrape', apiLimiter, async (_req, res) => {
   const scraperPath = path.join(ROOT, 'scrapers', 'google_maps_scraper.js');
-  execFile('node', [scraperPath], (err, stdout, stderr) => {
-    if (err) {
-      return res.status(500).json({ success: false, error: err.message, stderr });
-    }
+  try {
+    const { stdout } = await execFileAsync('node', [scraperPath]);
     res.json({ success: true, output: stdout });
-  });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message, stderr: err.stderr || '' });
+  }
 });
 
 /** GET /outreach/templates – list outreach templates */
@@ -217,6 +220,44 @@ app.post('/outreach/send', (req, res) => {
 
 app.get('/openapi.json', (_req, res) => {
   res.sendFile(path.join(__dirname, 'openapi.json'));
+});
+
+// ── pipeline / validation / export command endpoints ────────────────────────
+
+/** POST /pipeline/run – run the scoring + export pipeline */
+app.post('/pipeline/run', apiLimiter, async (_req, res) => {
+  const pipelineScript = path.join(ROOT, 'agents', 'scoring', 'scoring_pipeline.js');
+  const exportScript   = path.join(ROOT, 'tools', 'export_snapshot.js');
+  try {
+    const { stdout: stdout1 } = await execFileAsync('node', [pipelineScript]);
+    const { stdout: stdout2 } = await execFileAsync('node', [exportScript]);
+    res.json({ success: true, scoring_output: stdout1, export_output: stdout2 });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message, stderr: err.stderr || '' });
+  }
+});
+
+/** POST /validate – run the lead validation pipeline */
+app.post('/validate', apiLimiter, (_req, res) => {
+  try {
+    const { runValidationPipeline } = require('../../validation/lead_validation_pipeline');
+    const leads = readLeads();
+    const result = runValidationPipeline(leads, { writeReports: true, enforceGates: false });
+    res.json({ success: true, summary: result.summary });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+/** GET /export – export JSON snapshot */
+app.get('/export', apiLimiter, async (_req, res) => {
+  const exportScript = path.join(ROOT, 'tools', 'export_snapshot.js');
+  try {
+    const { stdout } = await execFileAsync('node', [exportScript]);
+    res.json({ success: true, output: stdout });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message, stderr: err.stderr || '' });
+  }
 });
 
 // ── start ───────────────────────────────────────────────────────────────────

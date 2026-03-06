@@ -5,6 +5,8 @@
 
 [![Docs Reflection](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/docs_reflection.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/docs_reflection.yml)
 [![System Validation](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/system_validation.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/system_validation.yml)
+[![Lead Pipeline](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/pipeline.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/pipeline.yml)
+[![Code Quality](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/code_quality.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/code_quality.yml)
 
 ---
 
@@ -28,8 +30,8 @@ The **XPS Lead Intelligence Platform** is an open-source, autonomous lead genera
 
 ### Prerequisites
 
-- Node.js 18+
-- PostgreSQL (optional; SQLite fallback available)
+- Node.js 20+
+- PostgreSQL 14+ (optional; falls back to JSON-only mode)
 - Git
 
 ### 1. Clone and Install
@@ -44,17 +46,32 @@ npm install
 
 ```bash
 cp .env.example .env
-# Edit .env with your database and SMTP credentials
+# Edit .env with your DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD, etc.
 ```
 
-### 3. Run Lead Scoring
+### 3. Initialize Database (optional but recommended)
+
+```bash
+node -e "require('./db/db').initSchema().then(() => { console.log('Schema ready'); process.exit(0); })"
+```
+
+### 4. Run Lead Scoring
 
 ```bash
 npm run score
 # Outputs: data/leads/scored_leads.json, data/leads/scoring_report.json
 ```
 
-### 4. Start the Dashboard
+### 5. Export Dashboard Snapshots
+
+```bash
+npm run export
+# Reads from PostgreSQL (or falls back to JSON) and writes:
+#   dashboard/public/data/scored_leads.json
+#   dashboard/public/data/scoring_report.json
+```
+
+### 6. Start the Dashboard
 
 ```bash
 cd dashboard
@@ -63,10 +80,18 @@ npm run dev
 # Open http://localhost:3000
 ```
 
-### 5. Update Living Docs
+### 7. Start GPT Actions API (Copilot Mobile / Custom GPT)
 
 ```bash
-node tools/docs/evolve_docs.js
+npm run gpt-actions
+# Server on http://localhost:3100
+# OpenAPI spec: http://localhost:3100/openapi.json
+```
+
+### 8. Update Living Docs
+
+```bash
+npm run docs
 # Updates docs/REPO_MAP.md, docs/TODO.md, docs/STATUS.md, docs/SELF_REVIEW.md
 ```
 
@@ -76,28 +101,34 @@ node tools/docs/evolve_docs.js
 
 ### Scheduled Pipeline
 
-The lead pipeline runs automatically via GitHub Actions:
+The lead pipeline runs automatically via GitHub Actions every 4 hours:
 
 | Workflow | Schedule | Purpose |
 |---|---|---|
-| Lead Scraper | Configurable | Scrape + validate + score leads |
-| National Discovery | Daily | Nationwide contractor discovery |
-| System Validation | Push / PR | Health checks |
+| **Lead Intelligence Pipeline** | **Every 4h + dispatch** | **Full pipeline: scrape → validate → score → export** |
+| Lead Validation | Push / PR | Validate lead data + post PR comments |
+| Code Quality | Push / PR | Tests, lint, workflow YAML checks |
+| PR Agent | Pull request | Policy check + safe auto-fix (trusted branches) |
 | **Docs Reflection** | **Daily + Push** | **Update living docs, self-review, create issues** |
+| National Discovery | Configurable | Nationwide contractor discovery |
+| System Validation | Push / PR | Health checks |
 
-**Trigger manually:**
+**Trigger pipeline manually:**
 1. Go to [Actions tab](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions)
-2. Select the workflow
+2. Select **Lead Intelligence Pipeline**
 3. Click **Run workflow**
+
+See [docs/RUNBOOK.md](docs/RUNBOOK.md) for the complete operations guide.
 
 ### Required GitHub Secrets
 
 | Secret | Purpose |
 |---|---|
-| `DATABASE_URL` | PostgreSQL connection string |
-| `SMTP_HOST` | Email server (outreach) |
-| `SMTP_USER` | Email username |
-| `SMTP_PASS` | Email password |
+| `DATABASE_HOST` | PostgreSQL host |
+| `DATABASE_NAME` | PostgreSQL database name |
+| `DATABASE_USER` | PostgreSQL user |
+| `DATABASE_PASSWORD` | PostgreSQL password |
+| `DATABASE_SSL` | `true` if SSL required |
 
 `GITHUB_TOKEN` is auto-provided by GitHub Actions.
 
@@ -107,6 +138,7 @@ The lead pipeline runs automatically via GitHub Actions:
 
 | Document | Description |
 |---|---|
+| [docs/RUNBOOK.md](docs/RUNBOOK.md) | **Complete operations runbook** (start here) |
 | [docs/VISION.md](docs/VISION.md) | Product vision, mission, and principles |
 | [docs/BLUEPRINT.md](docs/BLUEPRINT.md) | System blueprint: components and data flow |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Technical architecture and deployment |
