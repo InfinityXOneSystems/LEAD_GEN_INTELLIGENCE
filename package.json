@@ -24,10 +24,12 @@
     "cheerio": "^1.2.0",
     "crawlee": "^3.16.0",
     "csv-writer": "^1.6.0",
+    "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "node-cron": "^4.2.1",
     "nodemailer": "^8.0.1",
     "openai": "^6.26.0",
+    "pg": "^8.20.0",
     "playwright": "^1.58.2",
     "simple-git": "^3.32.3",
     "sqlite3": "^5.1.7"
