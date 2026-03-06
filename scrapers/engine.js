@@ -1,9 +1,13 @@
 'use strict';
 
+require('dotenv').config();
+
 const fs = require('fs');
 const path = require('path');
 const { scrapeGoogleMaps } = require('./google_maps_scraper');
 const { scrapeBingMaps } = require('./bing_maps_scraper');
+const { upsertLeads } = require('../db/leadStore');
+const { initSchema } = require('../db/db');
 
 const KEYWORDS_CSV = path.join(__dirname, '../data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/keywords.csv');
 const LOCATIONS_CSV = path.join(__dirname, '../data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/locations.csv');
@@ -179,9 +183,29 @@ async function runEngine(config = {}) {
     }
   }
 
-  // Deduplicate and save
+  // Deduplicate and save to JSON snapshot
   allLeads = dedupeLeads(allLeads);
   saveLeads(allLeads);
+
+  // Persist to PostgreSQL
+  try {
+    await initSchema();
+    const dbLeads = allLeads.map((lead) => ({
+      company_name: lead.company || '',
+      phone:        lead.phone   || null,
+      website:      lead.website || null,
+      city:         lead.city    || '',
+      state:        lead.state   || '',
+      industry:     lead.category || null,
+      rating:       lead.rating  || null,
+      reviews:      lead.reviews || null,
+      source:       lead.source  || null,
+    }));
+    await upsertLeads(dbLeads);
+    console.log(`[engine] Persisted ${dbLeads.length} leads to PostgreSQL.`);
+  } catch (err) {
+    console.error(`[engine] Database persistence failed (leads still saved to JSON): ${err.message}`);
+  }
 
   console.log(`[engine] Done. Total unique leads saved: ${allLeads.length}`);
   return allLeads;

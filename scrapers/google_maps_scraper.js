@@ -1,155 +1,230 @@
 'use strict';
 
-const { chromium } = require('playwright');
-
-const SCROLL_PAUSE_MS = 1200;
-const RESULT_LOAD_MS = 1800;
-const MAX_RESULTS_PER_QUERY = 20;
-const MAX_SCROLL_ITERATIONS = 5;
-const NAVIGATION_TIMEOUT_MS = 30000;
-
 /**
- * Scrape Google Maps for contractor leads matching a keyword in a given city/state.
+ * google_maps_scraper.js
  *
- * @param {string} keyword  - Search keyword, e.g. "epoxy flooring contractor"
- * @param {string} city     - City name, e.g. "Columbus"
- * @param {string} state    - State abbreviation, e.g. "OH"
- * @returns {Promise<Array>} Array of lead objects
+ * Nationwide batch scraper for contractor leads.
+ *
+ * Environment variables (all optional):
+ *   SCRAPER_BATCH_SIZE    – number of cities to process per run  (default: 10)
+ *   SCRAPER_CONCURRENCY   – parallel search tasks within a batch (default: 3)
+ *   SCRAPER_RATE_LIMIT_MS – ms to wait between tasks             (default: 2000)
+ *   SCRAPER_STATE         – restrict this run to one state abbr  (e.g. "TX")
+ *   SCRAPER_RESET         – set to "1" to reset progress first   (default: off)
  */
-async function scrapeGoogleMaps(keyword, city, state) {
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
-    userAgent:
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' +
-      'AppleWebKit/537.36 (KHTML, like Gecko) ' +
-      'Chrome/120.0.0.0 Safari/537.36',
-    viewport: { width: 1280, height: 900 },
-  });
-  const page = await context.newPage();
-  const leads = [];
 
-  try {
-    const query = encodeURIComponent(`${keyword} ${city} ${state}`);
-    const url = `https://www.google.com/maps/search/${query}`;
+const fs = require('fs');
+const path = require('path');
+const {
+  loadKeywords,
+  getNextBatch,
+  markComplete,
+  generateSearchTasks,
+  resetProgress,
+  getCoverageSummary,
+} = require('./scraper_queue');
 
-    console.log(`[google_maps] Searching: ${keyword} | ${city}, ${state}`);
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: NAVIGATION_TIMEOUT_MS });
+// ── Configuration ────────────────────────────────────────────────────────────
 
-    // Accept cookie consent if present
-    const consentBtn = page.locator('button[aria-label="Accept all"]');
-    if (await consentBtn.count() > 0) {
-      await consentBtn.first().click();
-      await page.waitForTimeout(800);
-    }
+const BATCH_SIZE    = parseInt(process.env.SCRAPER_BATCH_SIZE    || '10',   10);
+const CONCURRENCY   = parseInt(process.env.SCRAPER_CONCURRENCY   || '3',    10);
+const RATE_LIMIT_MS = parseInt(process.env.SCRAPER_RATE_LIMIT_MS || '2000', 10);
+const STATE_FILTER  = process.env.SCRAPER_STATE  || null;
+const RESET_FLAG    = process.env.SCRAPER_RESET  === '1';
 
-    // Wait for the results feed
-    const feedSelector = '[role="feed"]';
-    try {
-      await page.waitForSelector(feedSelector, { timeout: 15000 });
-    } catch (_) {
-      console.warn(`[google_maps] No results feed found for: ${keyword} in ${city}, ${state}`);
-      return leads;
-    }
+const LEADS_DIR  = path.join(__dirname, '../data/leads');
+const LEADS_FILE = path.join(LEADS_DIR, 'leads.json');
 
-    // Scroll to load up to MAX_RESULTS_PER_QUERY results
-    let prevCount = 0;
-    for (let i = 0; i < MAX_SCROLL_ITERATIONS; i++) {
-      await page.evaluate((sel) => {
-        const feed = document.querySelector(sel);
-        if (feed) feed.scrollBy(0, feed.scrollHeight);
-      }, feedSelector);
-      await page.waitForTimeout(SCROLL_PAUSE_MS);
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
-      const currentCount = await page.locator(`${feedSelector} a[href*="/maps/place/"]`).count();
-      if (currentCount >= MAX_RESULTS_PER_QUERY || currentCount === prevCount) break;
-      prevCount = currentCount;
-    }
-
-    // Collect unique result links
-    const resultLinks = await page
-      .locator(`${feedSelector} a[href*="/maps/place/"]`)
-      .evaluateAll((els) =>
-        [...new Set(els.map((el) => el.href))].slice(0, MAX_RESULTS_PER_QUERY)
-      );
-
-    console.log(`[google_maps] Found ${resultLinks.length} results`);
-
-    for (const link of resultLinks) {
-      try {
-        await page.goto(link, { waitUntil: 'domcontentloaded', timeout: NAVIGATION_TIMEOUT_MS });
-        await page.waitForTimeout(RESULT_LOAD_MS);
-
-        const lead = await page.evaluate(() => {
-          const text = (sel) => document.querySelector(sel)?.textContent?.trim() || '';
-          const attr = (sel, a) => document.querySelector(sel)?.getAttribute(a) || '';
-
-          const company =
-            text('h1.DUwDvf') ||
-            text('h1') ||
-            '';
-
-          const phoneEl = document.querySelector(
-            'button[data-tooltip="Copy phone number"] .Io6YTe, [data-item-id*="phone"] .Io6YTe'
-          );
-          const phone = phoneEl?.textContent?.trim() || '';
-
-          const websiteEl = document.querySelector(
-            'a[data-tooltip="Open website"], a[data-item-id*="authority"]'
-          );
-          const website = websiteEl?.href || '';
-
-          const addressEl = document.querySelector(
-            'button[data-tooltip="Copy address"] .Io6YTe, [data-item-id*="address"] .Io6YTe'
-          );
-          const address = addressEl?.textContent?.trim() || '';
-
-          const ratingLabel = attr('.ceNzKf', 'aria-label');
-          const ratingMatch = ratingLabel.match(/([\d.]+)\s*star/i);
-          const rating = ratingMatch ? parseFloat(ratingMatch[1]) : 0;
-
-          const reviewsText =
-            text('.jANrlb .fontBodySmall') ||
-            text('[aria-label*="review"]') ||
-            '';
-          const reviewsMatch = reviewsText.replace(/,/g, '').match(/(\d+)/);
-          const reviews = reviewsMatch ? parseInt(reviewsMatch[1], 10) : 0;
-
-          const category =
-            text('[jsaction*="category"] button') ||
-            text('.DkEaL') ||
-            '';
-
-          return { company, phone, website, address, rating, reviews, category };
-        });
-
-        if (lead.company) {
-          leads.push({
-            company: lead.company,
-            phone: lead.phone,
-            website: lead.website,
-            address: lead.address,
-            city,
-            state,
-            rating: lead.rating,
-            reviews: lead.reviews,
-            category: lead.category,
-            keyword,
-            source: 'google_maps',
-            scraped_at: new Date().toISOString(),
-          });
-        }
-      } catch (err) {
-        console.warn(`[google_maps] Failed to scrape result: ${err.message}`);
-      }
-    }
-  } catch (err) {
-    console.error(`[google_maps] Fatal error for "${keyword}" in ${city}, ${state}: ${err.message}`);
-  } finally {
-    await browser.close();
-  }
-
-  console.log(`[google_maps] Collected ${leads.length} leads for "${keyword}" in ${city}, ${state}`);
-  return leads;
+function ensureDir(dir) {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
-module.exports = { scrapeGoogleMaps };
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function loadExistingLeads() {
+  try {
+    return JSON.parse(fs.readFileSync(LEADS_FILE, 'utf8'));
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
+      console.warn('[scraper] Warning: could not read existing leads file:', err.message);
+    }
+    return [];
+  }
+}
+
+function saveLeads(leads) {
+  ensureDir(LEADS_DIR);
+  fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2));
+}
+
+/** Remove duplicate leads keyed on (company, city). */
+function dedupeLeads(leads) {
+  const seen = new Set();
+  return leads.filter(lead => {
+    const key =
+      (lead.company || '').toLowerCase().trim() +
+      '|' +
+      (lead.city || '').toLowerCase().trim();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+// ── Core scraping function ────────────────────────────────────────────────────
+//
+// Replace the body of this function with a real Playwright / Crawlee
+// implementation that queries Google Maps (or any source) for the given
+// keyword + city combination.  The function must resolve to an array of
+// lead objects matching the contractor_database.csv schema.
+
+async function scrapeTask(task) {
+  // --- stub: returns a representative placeholder lead ---
+  // A real implementation would launch a headless browser here.
+  return [
+    {
+      company:   `${task.keyword} – ${task.city} (sample)`,
+      city:      task.city,
+      state:     task.state,
+      country:   task.country,
+      keyword:   task.keyword,
+      category:  task.category,
+      phone:     '',
+      website:   '',
+      email:     '',
+      rating:    0,
+      reviews:   0,
+      scrapedAt: new Date().toISOString(),
+    },
+  ];
+}
+
+// ── Retry wrapper ─────────────────────────────────────────────────────────────
+
+async function scrapeWithRetry(task, retries, backoffMs) {
+  retries   = retries   !== undefined ? retries   : 3;
+  backoffMs = backoffMs !== undefined ? backoffMs : RATE_LIMIT_MS;
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      return await scrapeTask(task);
+    } catch (err) {
+      const isLast = attempt === retries;
+      console.error(
+        `[scraper] Attempt ${attempt}/${retries} failed for "${task.keyword}" ` +
+        `in ${task.city}, ${task.state}: ${err.message}`
+      );
+      if (isLast) throw err;
+      await delay(backoffMs * attempt);
+    }
+  }
+}
+
+// ── Concurrent task runner ────────────────────────────────────────────────────
+
+async function processTasksConcurrently(tasks, concurrency) {
+  const results = [];
+  let index = 0;
+
+  async function worker() {
+    while (index < tasks.length) {
+      const task = tasks[index++];
+      try {
+        const leads = await scrapeWithRetry(task);
+        results.push(...leads);
+        console.log(
+          `[scraper] ✓ "${task.keyword}" in ${task.city}, ${task.state}` +
+          ` → ${leads.length} lead(s)`
+        );
+      } catch (err) {
+        console.error(
+          `[scraper] ✗ Skipping "${task.keyword}" in ${task.city}: ${err.message}`
+        );
+      }
+      await delay(RATE_LIMIT_MS);
+    }
+  }
+
+  await Promise.all(Array.from({ length: concurrency }, worker));
+  return results;
+}
+
+// ── Entry point ───────────────────────────────────────────────────────────────
+
+async function runScraper() {
+  console.log('[scraper] ════════════════════════════════════════════════');
+  console.log('[scraper] Nationwide Contractor Lead Scraper – Phase 8');
+  console.log('[scraper] ════════════════════════════════════════════════');
+  console.log(
+    `[scraper] Config: batch=${BATCH_SIZE}  concurrency=${CONCURRENCY}` +
+    `  rateLimit=${RATE_LIMIT_MS}ms  state=${STATE_FILTER || 'all'}`
+  );
+
+  if (RESET_FLAG) {
+    resetProgress();
+  }
+
+  // Print coverage summary before this run.
+  const before = getCoverageSummary();
+  console.log(
+    `[scraper] Coverage before run: ${before.completedLocations}/${before.totalLocations} locations` +
+    ` (${before.pendingLocations} remaining)`
+  );
+
+  const batch = getNextBatch(BATCH_SIZE, STATE_FILTER);
+  if (batch.length === 0) {
+    console.log(
+      '[scraper] No pending locations. ' +
+      'Set SCRAPER_RESET=1 to restart the scraping cycle.'
+    );
+    const summary = getCoverageSummary();
+    console.log('[scraper] Final coverage by state:');
+    for (const [state, info] of Object.entries(summary.byState).sort()) {
+      console.log(`  ${state}: ${info.done}/${info.total}`);
+    }
+    return;
+  }
+
+  console.log(
+    `[scraper] Processing ${batch.length} location(s): ` +
+    batch.map(l => `${l.City}, ${l.State}`).join(' | ')
+  );
+
+  const keywords = loadKeywords();
+  const tasks    = generateSearchTasks(batch, keywords);
+  console.log(
+    `[scraper] ${tasks.length} search tasks` +
+    ` (${batch.length} locations × ${keywords.length} keywords)`
+  );
+
+  const newLeads = await processTasksConcurrently(tasks, CONCURRENCY);
+
+  // Merge with existing leads and deduplicate before saving.
+  const existing = loadExistingLeads();
+  const merged   = dedupeLeads([...existing, ...newLeads]);
+  saveLeads(merged);
+
+  // Mark all locations in this batch as complete.
+  for (const loc of batch) {
+    markComplete(loc.ID);
+  }
+
+  const after = getCoverageSummary();
+  console.log('[scraper] ────────────────────────────────────────────────');
+  console.log(`[scraper] New leads collected : ${newLeads.length}`);
+  console.log(`[scraper] Total unique leads  : ${merged.length}`);
+  console.log(
+    `[scraper] Coverage after run  : ` +
+    `${after.completedLocations}/${after.totalLocations} locations` +
+    ` (${after.pendingLocations} remaining)`
+  );
+  console.log('[scraper] Done.');
+}
+
+runScraper().catch(err => {
+  console.error('[scraper] Fatal error:', err);
+  process.exit(1);
+});

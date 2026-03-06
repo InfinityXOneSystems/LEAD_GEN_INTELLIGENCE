@@ -1,0 +1,355 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "XPS Lead Intelligence GPT Actions API",
+    "description": "Exposes the Lead Gen Intelligence platform to a Custom GPT. Allows the GPT to retrieve leads, score prospects, trigger scraping, manage outreach templates, and monitor system status.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3100",
+      "description": "Local dev server – replace with your production URL when deployed"
+    }
+  ],
+  "paths": {
+    "/status": {
+      "get": {
+        "operationId": "getStatus",
+        "summary": "Get system status",
+        "description": "Returns overall system health including the current lead count and number of pending tasks.",
+        "responses": {
+          "200": {
+            "description": "System status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/leads": {
+      "get": {
+        "operationId": "getLeads",
+        "summary": "List stored leads",
+        "description": "Returns all leads currently stored in the system.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of leads to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of leads",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadsResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "upsertLead",
+        "summary": "Add or update a lead",
+        "description": "Adds a new lead or updates an existing one matched by company + city.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lead"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lead saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "lead_count": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required field",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/score": {
+      "post": {
+        "operationId": "scoreLead",
+        "summary": "Score a lead",
+        "description": "Accepts a lead object and returns a numeric priority score (0–50).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lead"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Score result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "score": { "type": "integer", "minimum": 0, "maximum": 50 },
+                    "lead": { "$ref": "#/components/schemas/Lead" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "get": {
+        "operationId": "getTasks",
+        "summary": "List roadmap tasks",
+        "description": "Returns all tasks from the project todo list.",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter tasks by status (e.g. pending, complete)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["pending", "complete"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TasksResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scrape": {
+      "post": {
+        "operationId": "triggerScrape",
+        "summary": "Trigger the lead scraper",
+        "description": "Runs the Google Maps scraper and stores new leads to disk.",
+        "responses": {
+          "200": {
+            "description": "Scraper output",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "output": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Scraper error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/outreach/templates": {
+      "get": {
+        "operationId": "getOutreachTemplates",
+        "summary": "List outreach templates",
+        "description": "Returns all available email outreach templates.",
+        "responses": {
+          "200": {
+            "description": "Templates list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "templates": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/OutreachTemplate" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/outreach/send": {
+      "post": {
+        "operationId": "sendOutreach",
+        "summary": "Record an outreach action",
+        "description": "Records that a specific outreach template was sent to a lead.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["lead", "template_id"],
+                "properties": {
+                  "lead": { "$ref": "#/components/schemas/Lead" },
+                  "template_id": {
+                    "type": "string",
+                    "description": "ID of the outreach template to use"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Outreach recorded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "outreach": {
+                      "type": "object",
+                      "properties": {
+                        "template_id": { "type": "string" },
+                        "sent_at": { "type": "string", "format": "date-time" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required fields",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Lead": {
+        "type": "object",
+        "required": ["company"],
+        "properties": {
+          "company": { "type": "string", "description": "Company name" },
+          "city": { "type": "string", "description": "City" },
+          "state": { "type": "string", "description": "State abbreviation" },
+          "phone": { "type": "string", "description": "Phone number" },
+          "email": { "type": "string", "format": "email", "description": "Email address" },
+          "website": { "type": "string", "format": "uri", "description": "Website URL" },
+          "rating": { "type": "number", "minimum": 0, "maximum": 5, "description": "Google rating" },
+          "reviews": { "type": "integer", "minimum": 0, "description": "Number of reviews" }
+        }
+      },
+      "StatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "lead_count": { "type": "integer" },
+          "pending_tasks": { "type": "integer" },
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      },
+      "LeadsResponse": {
+        "type": "object",
+        "properties": {
+          "leads": { "type": "array", "items": { "$ref": "#/components/schemas/Lead" } },
+          "count": { "type": "integer" }
+        }
+      },
+      "TasksResponse": {
+        "type": "object",
+        "properties": {
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ID": { "type": "string" },
+                "TASK": { "type": "string" },
+                "PHASE": { "type": "string" },
+                "STATUS": { "type": "string" },
+                "PRIORITY": { "type": "string" }
+              }
+            }
+          },
+          "count": { "type": "integer" }
+        }
+      },
+      "OutreachTemplate": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "subject": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" }
+        }
+      }
+    }
+  }
+}

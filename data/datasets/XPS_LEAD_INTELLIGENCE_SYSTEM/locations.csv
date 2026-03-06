@@ -1,4 +1,4 @@
-﻿ID,City,State,Country
+ID,City,State,Country
 1,Chicago,IL,USA
 2,Rockford,IL,USA
 3,Peoria,IL,USA
@@ -14,3 +14,144 @@
 13,Chandler,AZ,USA
 14,Scottsdale,AZ,USA
 15,Tucson,AZ,USA
+16,Birmingham,AL,USA
+17,Huntsville,AL,USA
+18,Mobile,AL,USA
+19,Anchorage,AK,USA
+20,Fairbanks,AK,USA
+21,Little Rock,AR,USA
+22,Fort Smith,AR,USA
+23,Fayetteville,AR,USA
+24,Los Angeles,CA,USA
+25,San Diego,CA,USA
+26,San Jose,CA,USA
+27,San Francisco,CA,USA
+28,Fresno,CA,USA
+29,Denver,CO,USA
+30,Colorado Springs,CO,USA
+31,Aurora,CO,USA
+32,Bridgeport,CT,USA
+33,New Haven,CT,USA
+34,Hartford,CT,USA
+35,Wilmington,DE,USA
+36,Dover,DE,USA
+37,Jacksonville,FL,USA
+38,Miami,FL,USA
+39,Tampa,FL,USA
+40,Orlando,FL,USA
+41,Atlanta,GA,USA
+42,Augusta,GA,USA
+43,Savannah,GA,USA
+44,Honolulu,HI,USA
+45,Pearl City,HI,USA
+46,Boise,ID,USA
+47,Meridian,ID,USA
+48,Nampa,ID,USA
+49,Indianapolis,IN,USA
+50,Fort Wayne,IN,USA
+51,Evansville,IN,USA
+52,Des Moines,IA,USA
+53,Cedar Rapids,IA,USA
+54,Davenport,IA,USA
+55,Wichita,KS,USA
+56,Overland Park,KS,USA
+57,Kansas City,KS,USA
+58,Louisville,KY,USA
+59,Lexington,KY,USA
+60,Bowling Green,KY,USA
+61,New Orleans,LA,USA
+62,Baton Rouge,LA,USA
+63,Shreveport,LA,USA
+64,Portland,ME,USA
+65,Lewiston,ME,USA
+66,Baltimore,MD,USA
+67,Frederick,MD,USA
+68,Rockville,MD,USA
+69,Boston,MA,USA
+70,Worcester,MA,USA
+71,Springfield,MA,USA
+72,Detroit,MI,USA
+73,Grand Rapids,MI,USA
+74,Warren,MI,USA
+75,Minneapolis,MN,USA
+76,Saint Paul,MN,USA
+77,Rochester,MN,USA
+78,Jackson,MS,USA
+79,Gulfport,MS,USA
+80,Southaven,MS,USA
+81,Kansas City,MO,USA
+82,Saint Louis,MO,USA
+83,Springfield,MO,USA
+84,Billings,MT,USA
+85,Missoula,MT,USA
+86,Great Falls,MT,USA
+87,Omaha,NE,USA
+88,Lincoln,NE,USA
+89,Bellevue,NE,USA
+90,Las Vegas,NV,USA
+91,Henderson,NV,USA
+92,Reno,NV,USA
+93,Manchester,NH,USA
+94,Nashua,NH,USA
+95,Concord,NH,USA
+96,Newark,NJ,USA
+97,Jersey City,NJ,USA
+98,Paterson,NJ,USA
+99,Albuquerque,NM,USA
+100,Las Cruces,NM,USA
+101,Rio Rancho,NM,USA
+102,New York City,NY,USA
+103,Buffalo,NY,USA
+104,Rochester,NY,USA
+105,Charlotte,NC,USA
+106,Raleigh,NC,USA
+107,Greensboro,NC,USA
+108,Fargo,ND,USA
+109,Bismarck,ND,USA
+110,Grand Forks,ND,USA
+111,Oklahoma City,OK,USA
+112,Tulsa,OK,USA
+113,Norman,OK,USA
+114,Portland,OR,USA
+115,Salem,OR,USA
+116,Eugene,OR,USA
+117,Philadelphia,PA,USA
+118,Pittsburgh,PA,USA
+119,Allentown,PA,USA
+120,Providence,RI,USA
+121,Cranston,RI,USA
+122,Warwick,RI,USA
+123,Columbia,SC,USA
+124,Charleston,SC,USA
+125,North Charleston,SC,USA
+126,Sioux Falls,SD,USA
+127,Rapid City,SD,USA
+128,Aberdeen,SD,USA
+129,Nashville,TN,USA
+130,Memphis,TN,USA
+131,Knoxville,TN,USA
+132,Houston,TX,USA
+133,San Antonio,TX,USA
+134,Dallas,TX,USA
+135,Austin,TX,USA
+136,Fort Worth,TX,USA
+137,Salt Lake City,UT,USA
+138,West Valley City,UT,USA
+139,Provo,UT,USA
+140,Burlington,VT,USA
+141,South Burlington,VT,USA
+142,Virginia Beach,VA,USA
+143,Norfolk,VA,USA
+144,Chesapeake,VA,USA
+145,Seattle,WA,USA
+146,Spokane,WA,USA
+147,Tacoma,WA,USA
+148,Charleston,WV,USA
+149,Huntington,WV,USA
+150,Morgantown,WV,USA
+151,Milwaukee,WI,USA
+152,Madison,WI,USA
+153,Green Bay,WI,USA
+154,Cheyenne,WY,USA
+155,Casper,WY,USA
+156,Laramie,WY,USA

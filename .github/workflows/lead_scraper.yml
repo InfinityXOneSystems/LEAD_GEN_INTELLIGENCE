@@ -1,24 +1,63 @@
-name: Lead Scraper
+name: Nationwide Lead Scraper
 
 on:
   schedule:
+    # Run every 4 hours – each run processes one batch of cities.
     - cron: '0 */4 * * *'
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: 'Number of cities to process in this run'
+        required: false
+        default: '10'
+      state_filter:
+        description: 'Restrict run to a single US state (e.g. TX). Leave blank for all.'
+        required: false
+        default: ''
+      reset_progress:
+        description: 'Reset scraping progress before running (1 = yes)'
+        required: false
+        default: '0'
+
+# Prevent concurrent runs so progress tracking stays consistent.
+concurrency:
+  group: lead-scraper
+  cancel-in-progress: false
 
 jobs:
-
   scrape:
-
     runs-on: self-hosted
+    timeout-minutes: 30
 
     steps:
-
       - uses: actions/checkout@v4
 
-      - name: install dependencies
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
         run: npm install
 
-      - name: run scraper
+      - name: Run nationwide scraper
+        env:
+          SCRAPER_BATCH_SIZE:    ${{ github.event.inputs.batch_size    || '10' }}
+          SCRAPER_CONCURRENCY:   '3'
+          SCRAPER_RATE_LIMIT_MS: '2000'
+          SCRAPER_STATE:         ${{ github.event.inputs.state_filter  || '' }}
+          SCRAPER_RESET:         ${{ github.event.inputs.reset_progress || '0' }}
         run: node scrapers/google_maps_scraper.js
 
-      - name: run lead scoring pipeline
-        run: npm run score
+      - name: Commit scraped leads
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/leads/leads.json data/scraper_progress.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No new leads or progress changes to commit."
+          else
+            git commit -m "chore: update scraped leads [skip ci]"
+            git push
+          fi

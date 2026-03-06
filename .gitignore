@@ -1,10 +1,26 @@
+# Node dependencies
 node_modules/
+package-lock.json
 npm-debug.log*
+
+# Environment variables — never commit real credentials
 .env
 .env.local
-data/outreach/outreach_log.json
 
-# Runtime-generated lead data (produced by scoring_pipeline.js)
+# OS artifacts
+.DS_Store
+*.log
+
+# Runtime-generated lead data
+data/outreach/outreach_log.json
 data/leads/scored_leads.json
 data/leads/scoring_report.json
 data/leads/leads.json
+
+# Build / cache artifacts
+dist/
+build/
+.cache/
+.next/
+storage/
+crawlee_storage/
