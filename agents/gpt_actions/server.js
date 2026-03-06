@@ -8,6 +8,29 @@ const { execFile } = require('child_process');
 const app = express();
 app.use(express.json());
 
+// ── simple rate limiter ────────────────────────────────────────────────────
+// Allow at most `max` requests per `windowMs` per IP for sensitive routes.
+function createRateLimiter({ windowMs = 60_000, max = 30 } = {}) {
+  const store = new Map();
+  return (req, res, next) => {
+    const key = req.ip || 'unknown';
+    const now = Date.now();
+    const entry = store.get(key) || { count: 0, resetAt: now + windowMs };
+    if (now > entry.resetAt) {
+      entry.count = 0;
+      entry.resetAt = now + windowMs;
+    }
+    entry.count += 1;
+    store.set(key, entry);
+    if (entry.count > max) {
+      return res.status(429).json({ error: 'Too Many Requests' });
+    }
+    next();
+  };
+}
+
+const apiLimiter = createRateLimiter({ windowMs: 60_000, max: 30 });
+
 const ROOT = path.resolve(__dirname, '..', '..');
 const LEADS_FILE = path.join(ROOT, 'data', 'leads', 'leads.json');
 const TODO_FILE = path.join(ROOT, 'todo', 'todo.csv');
@@ -112,7 +135,7 @@ app.post('/score', (req, res) => {
 });
 
 /** GET /tasks – return todo tasks (optional ?status=pending|complete) */
-app.get('/tasks', (req, res) => {
+app.get('/tasks', apiLimiter, (req, res) => {
   let tasks = parseTasks();
   if (req.query.status) {
     tasks = tasks.filter(t => t.STATUS === req.query.status);
@@ -121,7 +144,7 @@ app.get('/tasks', (req, res) => {
 });
 
 /** POST /scrape – trigger the lead scraper */
-app.post('/scrape', (_req, res) => {
+app.post('/scrape', apiLimiter, (_req, res) => {
   const scraperPath = path.join(ROOT, 'scrapers', 'google_maps_scraper.js');
   execFile('node', [scraperPath], (err, stdout, stderr) => {
     if (err) {
@@ -132,7 +155,7 @@ app.post('/scrape', (_req, res) => {
 });
 
 /** GET /outreach/templates – list outreach templates */
-app.get('/outreach/templates', (_req, res) => {
+app.get('/outreach/templates', apiLimiter, (_req, res) => {
   if (!fs.existsSync(TEMPLATES_FILE)) {
     return res.json({ templates: [] });
   }
@@ -203,6 +226,9 @@ const PORT = process.env.GPT_ACTIONS_PORT || 3100;
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`GPT Actions server running on port ${PORT}`);
+  }).on('error', (err) => {
+    console.error(`Failed to start GPT Actions server: ${err.message}`);
+    process.exit(1);
   });
 }
 
