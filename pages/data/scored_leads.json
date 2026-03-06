@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "company": "Acme Epoxy",
+    "company_name": "Acme Epoxy",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "city": "Columbus",
+    "state": "",
+    "industry": "",
+    "rating": null,
+    "reviews": null,
+    "lead_score": 0,
+    "score": 0,
+    "source": "",
+    "date_scraped": null
+  }
+]
