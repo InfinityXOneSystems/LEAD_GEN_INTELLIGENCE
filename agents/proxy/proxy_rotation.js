@@ -25,7 +25,7 @@ class ProxyRotationSystem {
   markFailed(proxy) {
     const count = (this.failures.get(proxy) || 0) + 1;
     this.failures.set(proxy, count);
-    if (count > this.MAX_FAILURES) {
+    if (count >= this.MAX_FAILURES) {
       console.warn(`[ProxyRotation] Removing proxy ${proxy} after ${count} failures`);
       this.proxies = this.proxies.filter((p) => p !== proxy);
       this.failures.delete(proxy);
@@ -35,7 +35,7 @@ class ProxyRotationSystem {
 
   getHealthy() {
     return this.proxies.filter(
-      (p) => (this.failures.get(p) || 0) <= this.MAX_FAILURES
+      (p) => (this.failures.get(p) || 0) < this.MAX_FAILURES
     );
   }
 

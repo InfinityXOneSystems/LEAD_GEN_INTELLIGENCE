@@ -37,11 +37,11 @@ class SystemLogger {
       ...meta,
     };
 
-    // JSON-lines to file
+    // Fallback to console.error on file write failures (disk full, permissions, etc.)
     try {
       getLogStream().write(JSON.stringify(entry) + '\n');
     } catch (err) {
-      // Fallback: silently ignore file write failures to avoid cascading errors
+      console.error(`[SystemLogger] Failed to write to log file: ${err.message}`);
     }
 
     // Colorized console output

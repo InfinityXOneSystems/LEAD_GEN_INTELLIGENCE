@@ -100,11 +100,12 @@ class CompanyEnrichmentEngine {
   }
 
   async enrichBatch(leads) {
-    const results = [];
-    for (const lead of leads) {
-      results.push(await this.enrichLead(lead));
-    }
-    return results;
+    const AsyncScrapingEngine = require('../scraping/async_scraping_engine');
+    const tasks = leads.map((lead) => () => this.enrichLead(lead));
+    const results = await AsyncScrapingEngine.runBatch(tasks, 5);
+    return results.map((r, i) =>
+      r.status === 'fulfilled' ? r.value : { ...leads[i], enrichmentError: r.reason?.message }
+    );
   }
 }
 
