@@ -1,14 +1,14 @@
 # Lead Export — Rockford, IL
 
-> Generated: 2026-03-06
+> Generated: 2026-03-07
 
-**Total leads:** 258
+**Total leads:** 178
 
 | Tier | Count |
 |------|-------|
-| HOT  | 4  |
-| WARM | 43 |
-| COLD | 211 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -27,10 +27,10 @@
 | SBRI Epoxy |  |  | 55 |
 | Diedrich Epoxy Flooring |  |  | 55 |
 | Perry's Decorative Concrete and Painting |  |  | 55 |
+| Precision Epoxy |  |  | 55 |
 | Epoxy Worx - Concrete Coatings |  |  | 55 |
 | Deluxe Epoxy Flooring |  |  | 55 |
 | Naperville Painting and Epoxy Flooring |  |  | 55 |
-| Epoxy & Sealing Systems |  |  | 55 |
+| Chi Resin Custom Coatings |  |  | 55 |
+| Epoxy Champions |  |  | 55 |
 | James Concrete Polishing |  |  | 55 |
-| Lifestyle-Garage Concrete Floor Coatings |  |  | 50 |
-| Superior Epoxy |  |  | 50 |
