@@ -61,12 +61,9 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      - name: Bootstrap seed leads for target cities (Rockford IL / Columbus OH / Tempe AZ)
-        run: node scripts/generate_city_leads.js
-
       - name: Run Google Maps scraper for target cities
         env:
-          SCRAPER_CITIES: 'Rockford:IL,Columbus:OH,Tempe:AZ'
+          SCRAPER_CITIES: 'Rockville:IL,Columbus:OH,Tempe:AZ'
           SCRAPER_CONCURRENCY: '2'
           SCRAPER_RATE_LIMIT_MS: '2000'
         run: node scrapers/google_maps_scraper.js
@@ -195,6 +192,9 @@ jobs:
 
       - name: Run scoring pipeline
         run: node agents/scoring/scoring_pipeline.js
+
+      - name: Normalize scored leads (canonical field names)
+        run: node scripts/normalize_leads.js
 
       - name: Copy scored leads to pages/data for GitHub Pages
         run: |
