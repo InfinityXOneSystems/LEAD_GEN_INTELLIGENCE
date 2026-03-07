@@ -1,0 +1,92 @@
+[
+  {
+    "status": "degraded",
+    "checks": [
+      {
+        "name": "fs:leads.json",
+        "ok": true,
+        "critical": true,
+        "message": "2483 records, 872750 bytes",
+        "records": 2483,
+        "sizeBytes": 872750
+      },
+      {
+        "name": "fs:scored_leads.json",
+        "ok": true,
+        "critical": false,
+        "message": "2483 records, 1573423 bytes",
+        "records": 2483,
+        "sizeBytes": 1573423
+      },
+      {
+        "name": "fs:scoring_report.json",
+        "ok": true,
+        "critical": false,
+        "message": "6 records, 1903 bytes",
+        "records": 6,
+        "sizeBytes": 1903
+      },
+      {
+        "name": "dep:express",
+        "ok": true,
+        "critical": false,
+        "message": "available"
+      },
+      {
+        "name": "dep:axios",
+        "ok": true,
+        "critical": false,
+        "message": "available"
+      },
+      {
+        "name": "dep:node-cron",
+        "ok": true,
+        "critical": false,
+        "message": "available"
+      },
+      {
+        "name": "dep:express-rate-limit",
+        "ok": true,
+        "critical": false,
+        "message": "available"
+      },
+      {
+        "name": "dep:dotenv",
+        "ok": true,
+        "critical": false,
+        "message": "available"
+      },
+      {
+        "name": "freshness:leads",
+        "ok": true,
+        "critical": false,
+        "message": "Last updated 0.4h ago (scored_leads.json)",
+        "ageHours": 0.4,
+        "stale": false
+      },
+      {
+        "name": "api:gpt_actions_server",
+        "ok": false,
+        "critical": false,
+        "message": "HTTP unreachable"
+      },
+      {
+        "name": "api:api_gateway",
+        "ok": false,
+        "critical": false,
+        "message": "HTTP unreachable"
+      }
+    ],
+    "timestamp": "2026-03-07T18:06:39.622Z",
+    "issues": [
+      "api:gpt_actions_server: HTTP unreachable",
+      "api:api_gateway: HTTP unreachable"
+    ],
+    "summary": {
+      "total": 11,
+      "passed": 9,
+      "failed": 2,
+      "critical": 0
+    }
+  }
+]
