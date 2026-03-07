@@ -2,7 +2,7 @@
 
 > Generated: 2026-03-07
 
-**Total leads:** 244
+**Total leads:** 242
 
 | Tier | Count |
 |------|-------|
@@ -30,7 +30,7 @@
 | Quality Epoxy |  |  | 55 |
 | Epoxy Flooring Phoenix |  |  | 55 |
 | Ultimate Concrete Coatings & Epoxy Flooring |  |  | 55 |
-| Epoxy Strong Phoenix |  |  | 55 |
 | Marvelous Epoxy Flooring |  |  | 55 |
+| Epoxy Strong Phoenix |  |  | 55 |
 | Brilliant Epoxy Flooring Inc |  |  | 55 |
-| Garage Floor Coating Direct |  |  | 55 |
+| Easy Epoxy |  |  | 55 |

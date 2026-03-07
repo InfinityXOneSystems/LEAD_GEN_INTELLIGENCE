@@ -2,7 +2,7 @@
 
 > Generated: 2026-03-07
 
-**Total leads:** 166
+**Total leads:** 196
 
 | Tier | Count |
 |------|-------|
@@ -28,9 +28,9 @@
 | Diedrich Epoxy Flooring |  |  | 55 |
 | Perry's Decorative Concrete and Painting |  |  | 55 |
 | Epoxy Worx - Concrete Coatings |  |  | 55 |
+| L2 Epoxy Coatings LLC |  |  | 55 |
+| Garage Floor Coating of Central Illinois |  |  | 55 |
 | Deluxe Epoxy Flooring |  |  | 55 |
 | James Concrete Polishing |  |  | 55 |
-| Lifestyle-Garage Concrete Floor Coatings |  |  | 50 |
-| Superior Epoxy |  |  | 50 |
-| Andys Automotive Repair |  |  | 50 |
-| Bove's Auto Repair |  |  | 50 |
+| Cox Decorative Concrete Inc |  |  | 55 |
+| Wozniak Concrete Finishing |  |  | 55 |
