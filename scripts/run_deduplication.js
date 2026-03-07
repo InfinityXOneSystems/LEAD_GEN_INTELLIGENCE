@@ -23,7 +23,9 @@
 
 const fs = require("fs");
 const path = require("path");
-const { DeduplicationEngine } = require("../agents/dedupe/deduplication_engine");
+const {
+  DeduplicationEngine,
+} = require("../agents/dedupe/deduplication_engine");
 
 const ROOT = path.resolve(__dirname, "..");
 const LEADS_DIR = path.join(ROOT, "leads");
@@ -68,9 +70,7 @@ function main() {
 
   const engine = new DeduplicationEngine({
     fuzzyMatch: process.env.DEDUP_FUZZY !== "0",
-    fuzzyThreshold: parseFloat(
-      process.env.DEDUP_FUZZY_THRESHOLD || "0.85",
-    ),
+    fuzzyThreshold: parseFloat(process.env.DEDUP_FUZZY_THRESHOLD || "0.85"),
     mergeLeads: process.env.DEDUP_MERGE !== "0",
   });
 

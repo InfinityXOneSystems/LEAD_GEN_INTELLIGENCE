@@ -8,7 +8,9 @@ const { scrapeGoogleMaps } = require("./google_maps_scraper");
 const { scrapeBingMaps } = require("./bing_maps_scraper");
 const { upsertLeads } = require("../db/leadStore");
 const { initSchema } = require("../db/db");
-const { DeduplicationEngine } = require("../agents/dedupe/deduplication_engine");
+const {
+  DeduplicationEngine,
+} = require("../agents/dedupe/deduplication_engine");
 
 const KEYWORDS_CSV = path.join(
   __dirname,

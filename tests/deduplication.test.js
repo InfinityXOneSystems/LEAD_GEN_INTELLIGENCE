@@ -53,7 +53,10 @@ test("normalizeWebsite - strips http:// and www.", () => {
 });
 
 test("normalizeWebsite - strips trailing slash", () => {
-  assert.equal(normalizeWebsite("https://example.com/path/"), "example.com/path");
+  assert.equal(
+    normalizeWebsite("https://example.com/path/"),
+    "example.com/path",
+  );
 });
 
 test("normalizeWebsite - handles empty string", () => {
@@ -89,7 +92,12 @@ test("jaroWinkler - empty strings", () => {
 
 test("mergeLeads - fills missing string fields from duplicate", () => {
   const canonical = { company: "Alpha", city: "Columbus" };
-  const dup = { company: "Alpha", city: "Columbus", phone: "6145550001", email: "a@a.com" };
+  const dup = {
+    company: "Alpha",
+    city: "Columbus",
+    phone: "6145550001",
+    email: "a@a.com",
+  };
   const merged = mergeLeads(canonical, dup);
   assert.equal(merged.phone, "6145550001");
   assert.equal(merged.email, "a@a.com");
@@ -97,7 +105,11 @@ test("mergeLeads - fills missing string fields from duplicate", () => {
 });
 
 test("mergeLeads - keeps canonical string fields when both present", () => {
-  const canonical = { company: "Alpha Flooring", city: "Columbus", phone: "111" };
+  const canonical = {
+    company: "Alpha Flooring",
+    city: "Columbus",
+    phone: "111",
+  };
   const dup = { company: "Alpha", city: "Columbus", phone: "222" };
   const merged = mergeLeads(canonical, dup);
   assert.equal(merged.phone, "111");
@@ -201,7 +213,11 @@ test("DeduplicationEngine - website duplicate detected (with and without www)", 
   const engine = new DeduplicationEngine();
   const leads = [
     { company: "Alpha", city: "Columbus", website: "https://www.alpha.com" },
-    { company: "Alpha Flooring", city: "Columbus", website: "http://alpha.com/" },
+    {
+      company: "Alpha Flooring",
+      city: "Columbus",
+      website: "http://alpha.com/",
+    },
   ];
   const { unique, duplicates } = engine.run(leads);
   assert.equal(unique.length, 1);
@@ -341,11 +357,11 @@ test("DeduplicationEngine - stats breakdown tracks each match type", () => {
   const engine = new DeduplicationEngine({ fuzzyMatch: false });
   const leads = [
     { company: "A", city: "X" },
-    { company: "A", city: "X" },                              // exactCompanyCity
+    { company: "A", city: "X" }, // exactCompanyCity
     { company: "B", city: "X", phone: "6145550001" },
-    { company: "C", city: "X", phone: "6145550001" },          // phone
+    { company: "C", city: "X", phone: "6145550001" }, // phone
     { company: "D", city: "X", email: "e@e.com" },
-    { company: "E", city: "X", email: "e@e.com" },             // email
+    { company: "E", city: "X", email: "e@e.com" }, // email
     { company: "F", city: "X", website: "https://f.com" },
     { company: "G", city: "X", website: "http://www.f.com/" }, // website
   ];

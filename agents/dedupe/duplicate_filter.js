@@ -34,4 +34,3 @@ function reset() {
 
 module.exports = isDuplicate;
 module.exports.reset = reset;
-

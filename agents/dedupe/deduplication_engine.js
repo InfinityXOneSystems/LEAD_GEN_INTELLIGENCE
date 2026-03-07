@@ -252,7 +252,8 @@ class DeduplicationEngine {
       // 1. Exact company + city
       if (seenCompanyCity.has(companyCityKey)) {
         const idx = seenCompanyCity.get(companyCityKey);
-        if (this.options.mergeLeads) unique[idx] = mergeLeads(unique[idx], lead);
+        if (this.options.mergeLeads)
+          unique[idx] = mergeLeads(unique[idx], lead);
         duplicates.push(lead);
         exactMatches++;
         continue;
@@ -265,7 +266,8 @@ class DeduplicationEngine {
         seenPhone.has(phoneKey)
       ) {
         const idx = seenPhone.get(phoneKey);
-        if (this.options.mergeLeads) unique[idx] = mergeLeads(unique[idx], lead);
+        if (this.options.mergeLeads)
+          unique[idx] = mergeLeads(unique[idx], lead);
         duplicates.push(lead);
         phoneMatches++;
         continue;
@@ -278,7 +280,8 @@ class DeduplicationEngine {
         seenEmail.has(emailKey)
       ) {
         const idx = seenEmail.get(emailKey);
-        if (this.options.mergeLeads) unique[idx] = mergeLeads(unique[idx], lead);
+        if (this.options.mergeLeads)
+          unique[idx] = mergeLeads(unique[idx], lead);
         duplicates.push(lead);
         emailMatches++;
         continue;
@@ -291,7 +294,8 @@ class DeduplicationEngine {
         seenWebsite.has(websiteKey)
       ) {
         const idx = seenWebsite.get(websiteKey);
-        if (this.options.mergeLeads) unique[idx] = mergeLeads(unique[idx], lead);
+        if (this.options.mergeLeads)
+          unique[idx] = mergeLeads(unique[idx], lead);
         duplicates.push(lead);
         websiteMatches++;
         continue;
