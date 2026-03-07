@@ -7,7 +7,7 @@
 [![Repo Guardian](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/repo_guardian.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/repo_guardian.yml)
 [![Docs Reflection](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/docs_reflection.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/docs_reflection.yml)
 [![System Validation](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/system_validation.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/system_validation.yml)
-[![Lead Pipeline](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/pipeline.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/pipeline.yml)
+[![Full Autonomous Pipeline](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/pipeline.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/pipeline.yml)
 [![Code Quality](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/code_quality.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/code_quality.yml)
 
 ---
@@ -66,7 +66,8 @@ node -e "require('./db/db').initSchema().then(() => { console.log('Schema ready'
 
 ```bash
 npm run score
-# Outputs: data/leads/scored_leads.json, data/leads/scoring_report.json
+# Outputs: leads/scored_leads.json, leads/scoring_report.json
+#          (also copies to data/leads/ for backward compatibility)
 ```
 
 ### 5. Export Dashboard Snapshots
@@ -74,6 +75,7 @@ npm run score
 ```bash
 npm run export
 # Reads from PostgreSQL (or falls back to JSON) and writes:
+#   leads/scored_leads.json             (primary)
 #   dashboard/public/data/scored_leads.json
 #   dashboard/public/data/scoring_report.json
 ```
@@ -227,13 +229,21 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for full details.
 
 ```
 LEAD_GEN_INTELLIGENCE/
+├── leads/           — 📁 PRIMARY LEADS FOLDER (all lead data files live here)
+│   ├── leads.json          — raw scraped leads
+│   ├── scored_leads.json   — scored & ranked leads
+│   ├── scoring_report.json — scoring summary & tier breakdown
+│   ├── validated_leads.json
+│   ├── validation_report.json
+│   ├── duplicates.json
+│   └── invalid_leads.json
 ├── agents/          — Pipeline agents (orchestrator, scoring, email, etc.)
 ├── scrapers/        — Web scrapers (Google Maps, Bing, etc.)
 ├── outreach/        — Email outreach automation
 ├── db/              — PostgreSQL database layer
 ├── dashboard/       — Next.js PWA dashboard
 ├── pages/           — Static HTML dashboard (GitHub Pages)
-├── data/            — Pipeline outputs (leads, outreach logs)
+├── data/            — Pipeline outputs (exports, datasets; leads/ is primary)
 ├── docs/            — Documentation suite
 ├── tools/docs/      — evolve_docs.js + create_issues.js
 ├── tests/           — Unit tests

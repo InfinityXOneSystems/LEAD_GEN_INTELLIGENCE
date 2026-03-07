@@ -6,13 +6,15 @@
  *
  * Reads scored leads from PostgreSQL and writes dashboard-ready JSON files:
  *
+ *   leads/scored_leads.json                (primary — dedicated leads folder)
+ *   leads/scoring_report.json
  *   dashboard/public/data/scored_leads.json
  *   dashboard/public/data/scoring_report.json
- *   data/leads/scored_leads.json          (for static pages)
+ *   data/leads/scored_leads.json           (backward-compatible copy)
  *   data/leads/scoring_report.json
  *
- * Falls back to data/leads/leads.json (JSON snapshot) when DATABASE_URL /
- * DATABASE_HOST is not configured, so the pipeline can run without a live DB.
+ * Falls back to leads/leads.json or data/leads/leads.json (JSON snapshot)
+ * when DATABASE_URL / DATABASE_HOST is not configured.
  *
  * Usage:
  *   node tools/export_snapshot.js
@@ -28,9 +30,19 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
-const LEADS_JSON = path.join(ROOT, "data", "leads", "leads.json");
-const SCORED_JSON = path.join(ROOT, "data", "leads", "scored_leads.json");
+// Primary leads directory (dedicated leads/ folder at repo root)
+const LEADS_DIR_PRIMARY = path.join(ROOT, "leads");
+// Backward-compatible legacy directory
 const DATA_DIR = path.join(ROOT, "data", "leads");
+
+// Resolve lead source files (prefer primary leads/ folder)
+const LEADS_JSON = fs.existsSync(path.join(LEADS_DIR_PRIMARY, "leads.json"))
+  ? path.join(LEADS_DIR_PRIMARY, "leads.json")
+  : path.join(DATA_DIR, "leads.json");
+const SCORED_JSON = fs.existsSync(path.join(LEADS_DIR_PRIMARY, "scored_leads.json"))
+  ? path.join(LEADS_DIR_PRIMARY, "scored_leads.json")
+  : path.join(DATA_DIR, "scored_leads.json");
+
 const DASH_DATA_DIR = path.join(ROOT, "dashboard", "public", "data");
 const PAGES_DATA_DIR = path.join(ROOT, "pages", "data");
 
@@ -44,8 +56,13 @@ function ensureDir(dir) {
 
 function writeBoth(filename, data) {
   const json = JSON.stringify(data, null, 2);
+  // Write to primary leads/ folder
+  ensureDir(LEADS_DIR_PRIMARY);
+  fs.writeFileSync(path.join(LEADS_DIR_PRIMARY, filename), json);
+  // Write to legacy data/leads/ folder
   ensureDir(DATA_DIR);
   fs.writeFileSync(path.join(DATA_DIR, filename), json);
+  // Write to dashboard and pages data directories
   ensureDir(DASH_DATA_DIR);
   fs.writeFileSync(path.join(DASH_DATA_DIR, filename), json);
   ensureDir(PAGES_DATA_DIR);

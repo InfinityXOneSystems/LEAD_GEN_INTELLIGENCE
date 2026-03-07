@@ -10,21 +10,18 @@ const TARGET_CITIES = [
   { city: "Rockford", state: "IL" },
 ];
 
+const ROOT = path.resolve(__dirname, "..");
+
+// Prefer primary leads/ folder, fall back to data/leads/
+function resolveLeadFile(filename) {
+  const primary = path.join(ROOT, "leads", filename);
+  const legacy = path.join(ROOT, "data", "leads", filename);
+  return fs.existsSync(primary) ? primary : legacy;
+}
+
 // Prefer scored leads; fall back to raw leads.
-const leadsFile = path.resolve(
-  __dirname,
-  "..",
-  "data",
-  "leads",
-  "scored_leads.json",
-);
-const fallbackFile = path.resolve(
-  __dirname,
-  "..",
-  "data",
-  "leads",
-  "leads.json",
-);
+const leadsFile = resolveLeadFile("scored_leads.json");
+const fallbackFile = resolveLeadFile("leads.json");
 
 let leads = [];
 try {

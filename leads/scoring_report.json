@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-03-07T04:47:32.281Z",
+  "total_leads": 2258,
+  "average_score": 33,
+  "tiers": {
+    "HOT": 22,
+    "WARM": 150,
+    "COLD": 2086
+  },
+  "industries": {
+    "Epoxy": 523,
+    "Concrete": 498,
+    "Automotive": 346,
+    "SurfacePrep": 4,
+    "Unknown": 603,
+    "Industrial": 284
+  },
+  "top_leads": [
+    {
+      "company": "Desert Epoxy Solutions",
+      "city": "Tempe",
+      "lead_score": 95,
+      "tier": "HOT",
+      "industry": "Epoxy"
+    },
+    {
+      "company": "Valley Metallic Epoxy Specialists",
+      "city": "Tempe",
+      "lead_score": 95,
+      "tier": "HOT",
+      "industry": "Epoxy"
+    },
+    {
+      "company": "Columbus Epoxy Flooring Co.",
+      "city": "Columbus",
+      "lead_score": 95,
+      "tier": "HOT",
+      "industry": "Epoxy"
+    },
+    {
+      "company": "Rockford Epoxy Pros",
+      "city": "Rockford",
+      "lead_score": 90,
+      "tier": "HOT",
+      "industry": "Epoxy"
+    },
+    {
+      "company": "Illini Polyaspartic Floors",
+      "city": "Rockford",
+      "lead_score": 90,
+      "tier": "HOT",
+      "industry": "Epoxy"
+    },
+    {
+      "company": "Rockford Decorative Concrete Co.",
+      "city": "Rockford",
+      "lead_score": 90,
+      "tier": "HOT",
+      "industry": "Concrete"
+    },
+    {
+      "company": "Tempe Garage Coatings",
+      "city": "Tempe",
+      "lead_score": 90,
+      "tier": "HOT",
+      "industry": "Automotive"
+    },
+    {
+      "company": "AZ Polyurea Floor Coatings",
+      "city": "Tempe",
+      "lead_score": 90,
+      "tier": "HOT",
+      "industry": "Epoxy"
+    },
+    {
+      "company": "Maricopa Decorative Concrete",
+      "city": "Tempe",
+      "lead_score": 90,
+      "tier": "HOT",
+      "industry": "Concrete"
+    },
+    {
+      "company": "Ohio Garage Transformations",
+      "city": "Columbus",
+      "lead_score": 90,
+      "tier": "HOT",
+      "industry": "Automotive"
+    }
+  ]
+}
