@@ -17,7 +17,12 @@
     "sandbox": "docker compose -f sandbox/docker-compose.yml up -d",
     "sandbox:stop": "docker compose -f sandbox/docker-compose.yml down",
     "docs": "node tools/docs/evolve_docs.js",
-    "docs:issues": "node tools/docs/create_issues.js"
+    "docs:issues": "node tools/docs/create_issues.js",
+    "gateway": "node api/gateway.js",
+    "monitor": "node agents/monitor/full_system_monitor.js",
+    "scheduler": "node scripts/scraper_scheduler.js",
+    "dedup": "node agents/dedupe/duplicate_filter.js",
+    "test:integration": "node --test tests/integration/full_system_integration.test.js"
   },
   "repository": {
     "type": "git",
