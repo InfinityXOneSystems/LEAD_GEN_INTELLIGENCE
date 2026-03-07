@@ -607,7 +607,9 @@ function run() {
     (l) => l.city === "Columbus" && l.state === "OH",
   );
 
-  console.log(`[generate_city_leads] Leads written to ${LEADS_FILE} (and ${LEADS_FILE_LEGACY})`);
+  console.log(
+    `[generate_city_leads] Leads written to ${LEADS_FILE} (and ${LEADS_FILE_LEGACY})`,
+  );
   console.log(`  Rockford, IL : ${rockford.length} leads`);
   console.log(`  Tempe, AZ    : ${tempe.length} leads`);
   console.log(`  Columbus, OH : ${columbus.length} leads`);

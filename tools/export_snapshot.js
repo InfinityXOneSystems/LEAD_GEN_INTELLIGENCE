@@ -39,7 +39,9 @@ const DATA_DIR = path.join(ROOT, "data", "leads");
 const LEADS_JSON = fs.existsSync(path.join(LEADS_DIR_PRIMARY, "leads.json"))
   ? path.join(LEADS_DIR_PRIMARY, "leads.json")
   : path.join(DATA_DIR, "leads.json");
-const SCORED_JSON = fs.existsSync(path.join(LEADS_DIR_PRIMARY, "scored_leads.json"))
+const SCORED_JSON = fs.existsSync(
+  path.join(LEADS_DIR_PRIMARY, "scored_leads.json"),
+)
   ? path.join(LEADS_DIR_PRIMARY, "scored_leads.json")
   : path.join(DATA_DIR, "scored_leads.json");
 

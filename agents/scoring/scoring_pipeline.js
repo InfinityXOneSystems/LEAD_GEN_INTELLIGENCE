@@ -27,10 +27,9 @@ const LEADS_DIR_PRIMARY = path.join(ROOT, "leads");
 // Backward-compatible data/leads directory
 const LEADS_DIR_LEGACY = path.join(ROOT, "data", "leads");
 
-const LEADS_PATH =
-  fs.existsSync(path.join(LEADS_DIR_PRIMARY, "leads.json"))
-    ? path.join(LEADS_DIR_PRIMARY, "leads.json")
-    : path.join(LEADS_DIR_LEGACY, "leads.json");
+const LEADS_PATH = fs.existsSync(path.join(LEADS_DIR_PRIMARY, "leads.json"))
+  ? path.join(LEADS_DIR_PRIMARY, "leads.json")
+  : path.join(LEADS_DIR_LEGACY, "leads.json");
 
 const SCORED_PATH = path.join(LEADS_DIR_PRIMARY, "scored_leads.json");
 const REPORT_PATH = path.join(LEADS_DIR_PRIMARY, "scoring_report.json");

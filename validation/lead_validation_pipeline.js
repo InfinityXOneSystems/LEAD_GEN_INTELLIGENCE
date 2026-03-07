@@ -89,7 +89,10 @@ function runValidationPipeline(leads, opts = {}) {
         },
       };
 
-      writeToLeadsDirs("validation_report.json", JSON.stringify(report, null, 2));
+      writeToLeadsDirs(
+        "validation_report.json",
+        JSON.stringify(report, null, 2),
+      );
       writeToLeadsDirs("duplicates.json", JSON.stringify(duplicates, null, 2));
       writeToLeadsDirs("invalid_leads.json", JSON.stringify(invalid, null, 2));
     } catch (err) {
