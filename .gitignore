@@ -27,3 +27,20 @@ build/
 .next/
 storage/
 crawlee_storage/
+
+# Generated runtime data (not source files)
+data/ai/chat_sessions.json
+data/ai/memory.json
+data/calls/call_history.json
+data/invoices/invoice_*.html
+data/invoices/.invoice_counter
+data/monitor/health_reports.json
+data/monitor/scraper_stats.json
+data/outreach/email_tracking.json
+data/outreach/follow_up_schedule.json
+data/proposals/proposal_*.html
+data/sales/assignments.json
+data/sales/deals.json
+data/sales/pipeline.json
+data/sales/reminders.json
+data/logs/

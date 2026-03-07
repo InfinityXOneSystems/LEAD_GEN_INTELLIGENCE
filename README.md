@@ -3,13 +3,13 @@
 > **Autonomous B2B lead generation for the flooring and construction industry.**  
 > Discover · Validate · Enrich · Score · Outreach · Dashboard — fully automated.
 
-[![Lead Pipeline](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/lead_pipeline.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/lead_pipeline.yml)
-[![Repo Guardian](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/repo_guardian.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/repo_guardian.yml)
-[![Docs Reflection](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/docs_reflection.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/docs_reflection.yml)
-[![System Validation](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/system_validation.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/system_validation.yml)
-[![Full Autonomous Pipeline](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/pipeline.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/pipeline.yml)
-[![Code Quality](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/code_quality.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/code_quality.yml)
-[![Repo Sync](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/repo_sync.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/repo_sync.yml)
+[![Lead Pipeline](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/lead_pipeline.yml/badge.svg)](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/lead_pipeline.yml)
+[![Repo Guardian](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/repo_guardian.yml/badge.svg)](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/repo_guardian.yml)
+[![Docs Reflection](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/docs_reflection.yml/badge.svg)](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/docs_reflection.yml)
+[![System Validation](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/system_validation.yml/badge.svg)](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/system_validation.yml)
+[![Full Autonomous Pipeline](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/pipeline.yml/badge.svg)](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/pipeline.yml)
+[![Code Quality](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/code_quality.yml/badge.svg)](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/code_quality.yml)
+[![Repo Sync](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/repo_sync.yml/badge.svg)](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/repo_sync.yml)
 
 ---
 
@@ -30,9 +30,9 @@ The **XPS Lead Intelligence Platform** is an open-source, autonomous lead genera
 
 ### Live Dashboard & Leads
 
-🌐 **[Live Dashboard](https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/)** — Full analytics and control panel
+🌐 **[Live Dashboard](https://infinityxonesystems.github.io/XPS_INTELLIGENCE_SYSTEM/)** — Full analytics and control panel
 
-📋 **[View Leads](https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/pages/leads.html)** — Browse, filter, paginate and export all contractor leads via Gmail
+📋 **[View Leads](https://infinityxonesystems.github.io/XPS_INTELLIGENCE_SYSTEM/pages/leads.html)** — Browse, filter, paginate and export all contractor leads via Gmail
 
 ---
 
@@ -47,8 +47,8 @@ The **XPS Lead Intelligence Platform** is an open-source, autonomous lead genera
 ### 1. Clone and Install
 
 ```bash
-git clone https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE.git
-cd LEAD_GEN_INTELLIGENCE
+git clone https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM.git
+cd XPS_INTELLIGENCE_SYSTEM
 npm install
 ```
 
@@ -127,7 +127,7 @@ The lead pipeline runs automatically via GitHub Actions every 4 hours:
 | System Validation | Push / PR | Health checks |
 
 **Trigger pipeline manually:**
-1. Go to [Actions tab](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions)
+1. Go to [Actions tab](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions)
 2. Select **Lead Intelligence Pipeline**
 3. Click **Run workflow**
 
@@ -231,7 +231,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for full details.
 ## Project Structure
 
 ```
-LEAD_GEN_INTELLIGENCE/
+XPS_INTELLIGENCE_SYSTEM/
 ├── leads/           — 📁 PRIMARY LEADS FOLDER (all lead data files live here)
 │   ├── leads.json          — raw scraped leads
 │   ├── scored_leads.json   — scored & ranked leads
@@ -275,6 +275,6 @@ ISC License — see [LICENSE](LICENSE) for details.
 
 ## Links
 
-- **Dashboard (Live):** [https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/](https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/)
-- **GitHub:** [https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE)
-- **Issues:** [https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/issues](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/issues)
+- **Dashboard (Live):** [https://infinityxonesystems.github.io/XPS_INTELLIGENCE_SYSTEM/](https://infinityxonesystems.github.io/XPS_INTELLIGENCE_SYSTEM/)
+- **GitHub:** [https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM)
+- **Issues:** [https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/issues](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/issues)

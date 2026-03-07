@@ -17,20 +17,25 @@
     "sandbox": "docker compose -f sandbox/docker-compose.yml up -d",
     "sandbox:stop": "docker compose -f sandbox/docker-compose.yml down",
     "docs": "node tools/docs/evolve_docs.js",
-    "docs:issues": "node tools/docs/create_issues.js"
+    "docs:issues": "node tools/docs/create_issues.js",
+    "gateway": "node api/gateway.js",
+    "monitor": "node agents/monitor/full_system_monitor.js",
+    "scheduler": "node scripts/scraper_scheduler.js",
+    "dedup": "node agents/dedupe/duplicate_filter.js",
+    "test:integration": "node --test tests/integration/full_system_integration.test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE.git"
+    "url": "git+https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/issues"
+    "url": "https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/issues"
   },
-  "homepage": "https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE#readme",
+  "homepage": "https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM#readme",
   "dependencies": {
     "axios": "^1.13.6",
     "better-sqlite3": "^12.6.2",

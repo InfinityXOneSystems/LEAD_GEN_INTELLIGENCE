@@ -11,6 +11,9 @@ import {
   IconLink,
   IconCpu,
   IconGitHub,
+  IconTarget,
+  IconMapPin,
+  IconTrendingUp,
 } from "@/components/Icons";
 
 export type SectionId =
@@ -21,7 +24,11 @@ export type SectionId =
   | "outreach"
   | "workflows"
   | "integrations"
-  | "ai-command";
+  | "ai-command"
+  | "sales-pipeline"
+  | "territory"
+  | "revenue"
+  | "sales-leader";
 
 interface NavItem {
   id: SectionId;
@@ -38,6 +45,23 @@ const NAV_ITEMS: NavItem[] = [
   { id: "workflows", label: "Workflows", icon: <IconSettings /> },
   { id: "integrations", label: "Integrations", icon: <IconLink /> },
   { id: "ai-command", label: "AI Command", icon: <IconCpu /> },
+  { id: "sales-pipeline", label: "Sales Pipeline", icon: <IconTarget /> },
+  { id: "territory", label: "Territory Map", icon: <IconMapPin /> },
+  { id: "revenue", label: "Revenue", icon: <IconTrendingUp /> },
+  {
+    id: "sales-leader",
+    label: "Sales Leader",
+    icon: (
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.75}
+          d="M17 20h5v-2a4 4 0 00-5.356-3.779M9 20H4v-2a4 4 0 015.356-3.779M15 7a4 4 0 11-8 0 4 4 0 018 0zm6 4a3 3 0 11-6 0 3 3 0 016 0zm-18 0a3 3 0 116 0 3 3 0 01-6 0z"
+        />
+      </svg>
+    ),
+  },
 ];
 
 interface SidebarProps {
@@ -197,7 +221,7 @@ export default function Sidebar({
         {/* Bottom section */}
         <div className="border-t border-[#2a2a2a] px-2 py-3 flex-shrink-0">
           <a
-            href="https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE"
+            href="https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM"
             target="_blank"
             rel="noopener noreferrer"
             className={[

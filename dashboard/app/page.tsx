@@ -12,6 +12,10 @@ import OutreachPanel from "@/components/OutreachPanel";
 import WorkflowPanel from "@/components/WorkflowPanel";
 import IntegrationsPanel from "@/components/IntegrationsPanel";
 import AICommandPanel from "@/components/AICommandPanel";
+import SalesPipelinePanel from "@/components/SalesPipelinePanel";
+import TerritoryMapPanel from "@/components/TerritoryMapPanel";
+import RevenuePanel from "@/components/RevenuePanel";
+import SalesLeaderPanel from "@/components/SalesLeaderPanel";
 import {
   IconDashboard,
   IconBarChart,
@@ -30,6 +34,10 @@ const SECTION_LABELS: Record<SectionId, string> = {
   workflows: "Workflows",
   integrations: "Integrations",
   "ai-command": "AI Orchestration",
+  "sales-pipeline": "Sales Pipeline",
+  territory: "Territory Map",
+  revenue: "Revenue Forecast",
+  "sales-leader": "Sales Leader",
 };
 
 const MOBILE_NAV: { id: SectionId; label: string; icon: React.ReactNode }[] = [
@@ -175,6 +183,10 @@ export default function Home() {
           {activeSection === "workflows" && <WorkflowPanel />}
           {activeSection === "integrations" && <IntegrationsPanel />}
           {activeSection === "ai-command" && <AICommandPanel />}
+          {activeSection === "sales-pipeline" && <SalesPipelinePanel />}
+          {activeSection === "territory" && <TerritoryMapPanel />}
+          {activeSection === "revenue" && <RevenuePanel />}
+          {activeSection === "sales-leader" && <SalesLeaderPanel />}
         </main>
 
         {/* Footer — desktop only */}
@@ -184,7 +196,7 @@ export default function Home() {
           </span>
           <div className="flex items-center gap-3 text-xs text-gray-600">
             <a
-              href="https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE"
+              href="https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-yellow-400 transition-colors"
