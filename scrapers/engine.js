@@ -8,6 +8,7 @@ const { scrapeGoogleMaps } = require("./google_maps_scraper");
 const { scrapeBingMaps } = require("./bing_maps_scraper");
 const { upsertLeads } = require("../db/leadStore");
 const { initSchema } = require("../db/db");
+const { DeduplicationEngine } = require("../agents/dedupe/deduplication_engine");
 
 const KEYWORDS_CSV = path.join(
   __dirname,
@@ -91,16 +92,13 @@ function loadExistingLeads() {
 }
 
 /**
- * Deduplicate leads by company name + city combination.
+ * Deduplicate leads using the full DeduplicationEngine (company+city, phone,
+ * email, website, and fuzzy name matching).
  */
 function dedupeLeads(leads) {
-  const seen = {};
-  return leads.filter((lead) => {
-    const key = (lead.company + "|" + lead.city).toLowerCase();
-    if (seen[key]) return false;
-    seen[key] = true;
-    return true;
-  });
+  const engine = new DeduplicationEngine({ mergeLeads: true });
+  const { unique } = engine.run(leads);
+  return unique;
 }
 
 /**

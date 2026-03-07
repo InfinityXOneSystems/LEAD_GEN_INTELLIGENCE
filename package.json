@@ -8,6 +8,7 @@
     "score": "node agents/scoring/scoring_pipeline.js",
     "export": "node tools/export_snapshot.js",
     "pipeline": "npm run score && npm run export",
+    "dedup": "node scripts/run_deduplication.js",
     "generate-city-leads": "node scripts/generate_city_leads.js",
     "city-pipeline": "node scripts/generate_city_leads.js && npm run score && node tools/city_export.js",
     "gpt-actions": "node agents/gpt_actions/server.js",
@@ -21,7 +22,6 @@
     "gateway": "node api/gateway.js",
     "monitor": "node agents/monitor/full_system_monitor.js",
     "scheduler": "node scripts/scraper_scheduler.js",
-    "dedup": "node agents/dedupe/duplicate_filter.js",
     "test:integration": "node --test tests/integration/full_system_integration.test.js"
   },
   "repository": {
