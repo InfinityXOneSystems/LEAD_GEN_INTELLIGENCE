@@ -18,6 +18,10 @@ data/leads/leads.json
 
 # Build / cache artifacts
 dist/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 build/
 .cache/
 .next/
