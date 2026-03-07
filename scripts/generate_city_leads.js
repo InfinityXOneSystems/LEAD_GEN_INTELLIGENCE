@@ -4,7 +4,7 @@
  * generate_city_leads.js
  *
  * Generates enriched contractor leads for the three target cities:
- *   • Rockford, IL
+ *   • Rockville, IL
  *   • Tempe, AZ
  *   • Columbus, OH
  *
@@ -80,14 +80,14 @@ function ts(offsetSeconds) {
  *   keyword, category, rating, reviews, source, scrapedAt
  */
 const LEADS = [
-  // ── Rockford, IL ──────────────────────────────────────────────────────────
+  // ── Rockville, IL ──────────────────────────────────────────────────────────
   {
-    company: "Rockford Epoxy Pros",
+    company: "Rockville Epoxy Pros",
     phone: "(815) 555-0101",
-    email: "info@rockfordepoxypros.com",
-    website: "https://rockfordepoxypros.com",
-    address: "412 N Main St, Rockford, IL 61101",
-    city: "Rockford",
+    email: "info@rockvilleepoxypros.com",
+    website: "https://rockvilleepoxypros.com",
+    address: "412 N Main St, Rockville, IL 61101",
+    city: "Rockville",
     state: "IL",
     country: "USA",
     keyword: "epoxy flooring contractor",
@@ -102,8 +102,8 @@ const LEADS = [
     phone: "(815) 555-0202",
     email: "hello@prairiestatecoating.com",
     website: "https://prairiestatecoating.com",
-    address: "829 E State St, Rockford, IL 61104",
-    city: "Rockford",
+    address: "829 E State St, Rockville, IL 61104",
+    city: "Rockville",
     state: "IL",
     country: "USA",
     keyword: "concrete polishing contractor",
@@ -118,8 +118,8 @@ const LEADS = [
     phone: "(815) 555-0303",
     email: "contact@rocktownfloors.com",
     website: "https://rocktownfloors.com",
-    address: "1540 Charles St, Rockford, IL 61104",
-    city: "Rockford",
+    address: "1540 Charles St, Rockville, IL 61104",
+    city: "Rockville",
     state: "IL",
     country: "USA",
     keyword: "garage epoxy installer",
@@ -134,8 +134,8 @@ const LEADS = [
     phone: "(815) 555-0404",
     email: "sales@midwestsurface.com",
     website: "https://midwestsurface.com",
-    address: "2003 11th St, Rockford, IL 61109",
-    city: "Rockford",
+    address: "2003 11th St, Rockville, IL 61109",
+    city: "Rockville",
     state: "IL",
     country: "USA",
     keyword: "surface preparation contractor",
@@ -150,8 +150,8 @@ const LEADS = [
     phone: "(815) 555-0505",
     email: "quote@illinifloors.com",
     website: "https://illinifloors.com",
-    address: "705 Ridge Ave, Rockford, IL 61102",
-    city: "Rockford",
+    address: "705 Ridge Ave, Rockville, IL 61102",
+    city: "Rockville",
     state: "IL",
     country: "USA",
     keyword: "polyaspartic flooring",
@@ -166,8 +166,8 @@ const LEADS = [
     phone: "(815) 555-0606",
     email: "info@rockriverflooring.com",
     website: "https://rockriverflooring.com",
-    address: "3310 Auburn St, Rockford, IL 61101",
-    city: "Rockford",
+    address: "3310 Auburn St, Rockville, IL 61101",
+    city: "Rockville",
     state: "IL",
     country: "USA",
     keyword: "commercial epoxy flooring",
@@ -182,8 +182,8 @@ const LEADS = [
     phone: "(815) 555-0707",
     email: "service@statelineconcrete.com",
     website: "https://statelineconcrete.com",
-    address: "4120 Brendenwood Rd, Rockford, IL 61107",
-    city: "Rockford",
+    address: "4120 Brendenwood Rd, Rockville, IL 61107",
+    city: "Rockville",
     state: "IL",
     country: "USA",
     keyword: "concrete resurfacing contractor",
@@ -198,8 +198,8 @@ const LEADS = [
     phone: "(815) 555-0808",
     email: "bids@forestcitycoatings.com",
     website: "https://forestcitycoatings.com",
-    address: "600 Seventh St, Rockford, IL 61104",
-    city: "Rockford",
+    address: "600 Seventh St, Rockville, IL 61104",
+    city: "Rockville",
     state: "IL",
     country: "USA",
     keyword: "industrial epoxy flooring",
@@ -210,12 +210,12 @@ const LEADS = [
     scrapedAt: ts(210),
   },
   {
-    company: "Rockford Decorative Concrete Co.",
+    company: "Rockville Decorative Concrete Co.",
     phone: "(815) 555-0909",
-    email: "info@rockforddecorative.com",
-    website: "https://rockforddecorative.com",
-    address: "1200 Kishwaukee St, Rockford, IL 61104",
-    city: "Rockford",
+    email: "info@rockvilledecorative.com",
+    website: "https://rockvilledecorative.com",
+    address: "1200 Kishwaukee St, Rockville, IL 61104",
+    city: "Rockville",
     state: "IL",
     country: "USA",
     keyword: "decorative concrete contractor",
@@ -230,8 +230,8 @@ const LEADS = [
     phone: "(815) 555-1010",
     email: "estimate@nilfloorprep.com",
     website: "https://nilfloorprep.com",
-    address: "2788 McFarland Rd, Rockford, IL 61107",
-    city: "Rockford",
+    address: "2788 McFarland Rd, Rockville, IL 61107",
+    city: "Rockville",
     state: "IL",
     country: "USA",
     keyword: "concrete grinding contractor",
@@ -571,7 +571,7 @@ const LEADS = [
 
 function run() {
   console.log("[generate_city_leads] Generating leads for target cities:");
-  console.log("  • Rockford, IL");
+  console.log("  • Rockville, IL");
   console.log("  • Tempe, AZ");
   console.log("  • Columbus, OH");
 
@@ -588,7 +588,7 @@ function run() {
     const city = (l.city || "").toLowerCase().trim();
     const state = (l.state || "").toUpperCase().trim();
     const isTarget =
-      (city === "rockford" && state === "IL") ||
+      (city === "rockville" && state === "IL") ||
       (city === "tempe" && state === "AZ") ||
       (city === "columbus" && state === "OH");
     // Drop stub sample entries (phone === "") so enriched records replace them.
@@ -599,8 +599,8 @@ function run() {
   const merged = dedup([...otherCities, ...LEADS]);
   saveLeads(merged);
 
-  const rockford = merged.filter(
-    (l) => l.city === "Rockford" && l.state === "IL",
+  const rockville = merged.filter(
+    (l) => l.city === "Rockville" && l.state === "IL",
   );
   const tempe = merged.filter((l) => l.city === "Tempe" && l.state === "AZ");
   const columbus = merged.filter(
