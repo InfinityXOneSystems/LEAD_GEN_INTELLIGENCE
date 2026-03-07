@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-07
 
-**Total leads:** 242
+**Total leads:** 351
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
-| COLD | 0 |
+| HOT  | 9  |
+| WARM | 67 |
+| COLD | 275 |
 
 ## Top Leads
 
@@ -32,5 +32,5 @@
 | Epoxy and Polished Floors of Columbus |  |  | 55 |
 | Global Epoxy LLC |  |  | 55 |
 | Ideal Garage Floor Coatings |  |  | 55 |
-| Ohio Garage Epoxy |  |  | 55 |
-| Epoxy Flooring Masters |  |  | 55 |
+| Infinite Designs Epoxy Solutions of North Columbus |  |  | 55 |
+| J&G Epoxy Coatings |  |  | 55 |
