@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-07
 
-**Total leads:** 234
+**Total leads:** 321
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
-| COLD | 0 |
+| HOT  | 9  |
+| WARM | 58 |
+| COLD | 254 |
 
 ## Top Leads
 
@@ -25,12 +25,12 @@
 | Metro Metallic Floors Columbus | (614) 555-2909 | https://metrometallicfloors.com | 75 |
 | Capital City Floor Coatings | (614) 555-2505 | https://capitalfloorcoatings.com | 70 |
 | Columbus Epoxy Flooring |  |  | 55 |
-| Columbus Epoxy Floors |  |  | 55 |
 | Columbus Garage Floor Coating |  |  | 55 |
+| Columbus Epoxy Floors |  |  | 55 |
 | "Showroom Floors Ltd, Epoxy Floors, Columbus, Oh" |  |  | 55 |
 | Epoxy Flooring Columbus |  |  | 55 |
 | Epoxy and Polished Floors of Columbus |  |  | 55 |
-| Ideal Garage Floor Coatings |  |  | 55 |
 | Global Epoxy LLC |  |  | 55 |
-| Spaulding's Epoxy Floor Coating |  |  | 55 |
-| Infinite Designs Epoxy Solutions of North Columbus |  |  | 55 |
+| Ideal Garage Floor Coatings |  |  | 55 |
+| Garage Floor Coating - The Great Lakes |  |  | 55 |
+| Wyckoff Epoxy Flooring |  |  | 55 |
