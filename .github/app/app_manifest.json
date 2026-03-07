@@ -6,9 +6,7 @@
     "active": true
   },
   "redirect_url": "https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE",
-  "callback_urls": [
-    "https://YOUR_SERVER/auth/github/callback"
-  ],
+  "callback_urls": ["https://YOUR_SERVER/auth/github/callback"],
   "setup_url": "https://YOUR_SERVER/setup",
   "description": "Infinity Orchestrator — autonomous GitHub-native intelligence platform. Manages lead scraping, validation, scoring, outreach, and pipeline orchestration via GitHub events.",
   "public": true,
