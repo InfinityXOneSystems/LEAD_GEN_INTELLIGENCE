@@ -1,0 +1,16 @@
+{
+  "followUps": {
+    "c0c539ea-aab4-41e4-b132-cd0a0b2c1c00": {
+      "id": "c0c539ea-aab4-41e4-b132-cd0a0b2c1c00",
+      "leadId": "test-001",
+      "leadEmail": "test@example.com",
+      "leadName": "TestCo Flooring",
+      "campaignId": "campaign-1",
+      "dueDate": "2026-03-07",
+      "dayOffset": 0,
+      "status": "sent",
+      "createdAt": "2026-03-07T17:53:58.572Z",
+      "sentAt": "2026-03-07T17:53:58.572Z"
+    }
+  }
+}

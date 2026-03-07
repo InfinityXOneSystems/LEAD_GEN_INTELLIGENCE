@@ -1,0 +1,31 @@
+{
+  "stages": {
+    "prospect": [],
+    "qualified": [
+      {
+        "leadId": "test-001",
+        "movedAt": "2026-03-07T17:54:15.213Z"
+      }
+    ],
+    "proposal": [],
+    "negotiation": [],
+    "closed_won": [],
+    "closed_lost": []
+  },
+  "moves": [
+    {
+      "id": "da374a63-3f47-40ad-ace3-a636b9560865",
+      "leadId": "test-001",
+      "fromStage": null,
+      "toStage": "prospect",
+      "timestamp": "2026-03-07T17:54:15.213Z"
+    },
+    {
+      "id": "4cfe31d6-969c-42aa-b3bc-987a6c048284",
+      "leadId": "test-001",
+      "fromStage": "prospect",
+      "toStage": "qualified",
+      "timestamp": "2026-03-07T17:54:15.213Z"
+    }
+  ]
+}

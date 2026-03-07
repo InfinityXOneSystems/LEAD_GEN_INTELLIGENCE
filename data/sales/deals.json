@@ -1,0 +1,23 @@
+{
+  "deals": {
+    "ddb8a3d2-e33d-4003-8538-654f7ade6138": {
+      "id": "ddb8a3d2-e33d-4003-8538-654f7ade6138",
+      "leadId": "test-001",
+      "estimatedValue": 5000,
+      "stage": "negotiation",
+      "history": [
+        {
+          "stage": "proposal",
+          "timestamp": "2026-03-07T17:54:15.212Z"
+        },
+        {
+          "stage": "negotiation",
+          "timestamp": "2026-03-07T17:54:15.212Z"
+        }
+      ],
+      "createdAt": "2026-03-07T17:54:15.212Z",
+      "updatedAt": "2026-03-07T17:54:15.212Z",
+      "closedAt": null
+    }
+  }
+}

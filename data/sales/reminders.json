@@ -1,0 +1,15 @@
+{
+  "reminders": {
+    "b4cf7a4d-74d4-4aff-a056-bd9d71108c0a": {
+      "id": "b4cf7a4d-74d4-4aff-a056-bd9d71108c0a",
+      "leadId": "test-001",
+      "repId": "rep1",
+      "dueDate": "2026-03-07",
+      "note": "Call back",
+      "status": "pending",
+      "createdAt": "2026-03-07T17:54:15.214Z",
+      "completedAt": null,
+      "snoozedUntil": "2026-03-09"
+    }
+  }
+}
