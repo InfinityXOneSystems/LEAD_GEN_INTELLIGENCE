@@ -9,6 +9,7 @@
 [![System Validation](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/system_validation.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/system_validation.yml)
 [![Full Autonomous Pipeline](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/pipeline.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/pipeline.yml)
 [![Code Quality](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/code_quality.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/code_quality.yml)
+[![Repo Sync](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/repo_sync.yml/badge.svg)](https://github.com/InfinityXOneSystems/LEAD_GEN_INTELLIGENCE/actions/workflows/repo_sync.yml)
 
 ---
 
@@ -27,9 +28,11 @@ The **XPS Lead Intelligence Platform** is an open-source, autonomous lead genera
 
 **Phase 7 is active.** The full autonomous pipeline, dashboard, scoring engine, outreach automation, and Repo Guardian are all operational.
 
-### Live Dashboard
+### Live Dashboard & Leads
 
-🌐 **[https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/](https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/)**
+🌐 **[Live Dashboard](https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/)** — Full analytics and control panel
+
+📋 **[View Leads](https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/pages/leads.html)** — Browse, filter, paginate and export all contractor leads via Gmail
 
 ---
 
