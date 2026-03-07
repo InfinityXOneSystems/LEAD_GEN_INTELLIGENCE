@@ -70,8 +70,57 @@ function getAIResponse(command: string): string {
   return `**Processing:** "${command}"\n\nI understood your request. In full deployment, this command would be processed by the AI orchestration engine.\n\nType **help** to see all available commands.`;
 }
 
-const MIN_RESPONSE_DELAY = 700;
-const MAX_RESPONSE_JITTER = 500;
+const AGENT_URL =
+  (typeof process !== "undefined" && process.env?.NEXT_PUBLIC_AGENT_URL) ||
+  "http://localhost:8000";
+
+async function callAgentAPI(command: string): Promise<string> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 60_000);
+  try {
+    const res = await fetch(`${AGENT_URL}/agent/run`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ command }),
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+    if (!res.ok) {
+      return getAIResponse(command); // fallback
+    }
+    const data = await res.json();
+    const summary = data.summary || "";
+    const leadsCount = data.leads_count ?? 0;
+    const intent = data.intent || "unknown";
+    const hotLeads = (data.leads || []).filter(
+      (l: Record<string, unknown>) => (l.lead_score as number) >= 35,
+    );
+
+    if (intent === "scrape") {
+      return (
+        `**Scraper Complete**\n\n` +
+        `${summary}\n\n` +
+        (hotLeads.length > 0
+          ? `**Top Results:**\n` +
+            hotLeads
+              .slice(0, 5)
+              .map(
+                (l: Record<string, unknown>, i: number) =>
+                  `${i + 1}. ${l.company_name || "Unknown"} — Score: ${l.lead_score ?? 0} | ${l.city || ""}`,
+              )
+              .join("\n")
+          : `${leadsCount} leads scored and stored.`)
+      );
+    }
+    return `**Done:** ${summary}` || getAIResponse(command);
+  } catch {
+    clearTimeout(timer);
+    return getAIResponse(command); // network error fallback
+  }
+}
+
+const MIN_RESPONSE_DELAY = 300;
+const MAX_RESPONSE_JITTER = 200;
 
 interface ChatPanelProps {
   isOpen: boolean;
@@ -101,7 +150,7 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const sendMessage = (content: string) => {
+  const sendMessage = async (content: string) => {
     if (!content.trim()) return;
     const userMsg: Message = {
       id: `user-${Date.now()}`,
@@ -112,19 +161,15 @@ export default function ChatPanel({ isOpen, onClose }: ChatPanelProps) {
     setMessages((prev) => [...prev, userMsg]);
     setInputValue("");
     setIsTyping(true);
-    setTimeout(
-      () => {
-        const aiMsg: Message = {
-          id: `ai-${Date.now()}`,
-          role: "ai",
-          content: getAIResponse(content),
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, aiMsg]);
-        setIsTyping(false);
-      },
-      MIN_RESPONSE_DELAY + Math.random() * MAX_RESPONSE_JITTER,
-    );
+    const response = await callAgentAPI(content);
+    const aiMsg: Message = {
+      id: `ai-${Date.now()}`,
+      role: "ai",
+      content: response,
+      timestamp: new Date(),
+    };
+    setMessages((prev) => [...prev, aiMsg]);
+    setIsTyping(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
