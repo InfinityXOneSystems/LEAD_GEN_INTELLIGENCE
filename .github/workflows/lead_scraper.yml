@@ -79,6 +79,6 @@ jobs:
             echo "No new leads or progress changes to commit."
           else
             git commit -m "chore: update scraped leads [skip ci]"
-            git pull --rebase origin main || true
+            git pull --rebase --autostash origin main || true
             git push
           fi

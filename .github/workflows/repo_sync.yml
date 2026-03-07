@@ -73,7 +73,7 @@ jobs:
             echo "Pages data already in sync."
           else
             git commit -m "sync: propagate lead data to pages/data/ [repo-sync $(date -u +%Y-%m-%dT%H:%MZ)]"
-            git pull --rebase origin main || true
+            git pull --rebase --autostash origin main || true
             git push
           fi
 
@@ -169,6 +169,7 @@ jobs:
             echo "No encoding fixes needed."
           else
             git commit -m "fix: convert UTF-16 JS files to UTF-8 [repo-sync]"
+            git pull --rebase --autostash origin main || true
             git push
           fi
         env:
@@ -193,3 +194,10 @@ jobs:
           else
             echo "✅ Repository is healthy and in sync"
           fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Repo Sync Report" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | Result |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Sync Pages Data | ${{ needs.sync-pages-data.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Validate Health | ${{ needs.validate-health.result }} |" >> $GITHUB_STEP_SUMMARY

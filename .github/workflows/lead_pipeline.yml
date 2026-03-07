@@ -89,7 +89,7 @@ jobs:
             echo "No new leads to commit."
           else
             git commit -m "data: scrape batch — $(date -u '+%Y-%m-%d %H:%M') UTC [skip ci]"
-            git pull --rebase origin main || true
+            git pull --rebase --autostash origin main || true
             git push
           fi
 
@@ -115,7 +115,7 @@ jobs:
         run: npm ci
 
       - name: Pull latest data (in case scrape committed)
-        run: git pull --rebase origin main || true
+        run: git pull --rebase --autostash origin main || true
 
       - name: Run validation pipeline
         run: |
@@ -145,7 +145,7 @@ jobs:
             echo "No validation changes to commit."
           else
             git commit -m "data: validate leads [skip ci]"
-            git pull --rebase origin main || true
+            git pull --rebase --autostash origin main || true
             git push
           fi
 
@@ -171,7 +171,7 @@ jobs:
         run: npm ci
 
       - name: Pull latest data
-        run: git pull --rebase origin main || true
+        run: git pull --rebase --autostash origin main || true
 
       - name: Merge validated leads into leads.json
         run: |
@@ -229,7 +229,7 @@ jobs:
             echo "No scoring changes to commit."
           else
             git commit -m "data: score leads — $(date -u '+%Y-%m-%d %H:%M') UTC [skip ci]"
-            git pull --rebase origin main || true
+            git pull --rebase --autostash origin main || true
             git push
           fi
 
@@ -258,7 +258,7 @@ jobs:
         run: npm ci
 
       - name: Pull latest data
-        run: git pull --rebase origin main || true
+        run: git pull --rebase --autostash origin main || true
 
       - name: Run outreach engine (dry-run in CI)
         env:
@@ -285,7 +285,7 @@ jobs:
             echo "No outreach changes to commit."
           else
             git commit -m "data: outreach log update [skip ci]"
-            git pull --rebase origin main || true
+            git pull --rebase --autostash origin main || true
             git push
           fi
 
@@ -313,7 +313,7 @@ jobs:
         run: npm ci
 
       - name: Pull latest data
-        run: git pull --rebase origin main || true
+        run: git pull --rebase --autostash origin main || true
 
       - name: Regenerate living docs
         run: node tools/docs/evolve_docs.js
@@ -327,7 +327,7 @@ jobs:
             echo "Docs already current."
           else
             git commit -m "docs: auto-update pipeline docs [skip ci]"
-            git pull --rebase origin main || true
+            git pull --rebase --autostash origin main || true
             git push
           fi
 

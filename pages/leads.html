@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="XPS Lead Intelligence — Browse and export contractor leads for flooring & construction." />
+  <meta name="theme-color" content="#EAB308" />
+  <title>Leads Viewer — XPS Lead Intelligence</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <style>
+    /* ── Leads Viewer Specific Styles ── */
+    .leads-page {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+    }
+
+    /* Top bar */
+    .lv-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-1);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 20px;
+      height: 60px;
+    }
+    .lv-topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lv-brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lv-brand-sub {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .lv-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color var(--transition);
+    }
+    .lv-back-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Theme toggle */
+    .lv-theme-btn {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: border-color var(--transition);
+    }
+    .lv-theme-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Export button */
+    .lv-export-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: #000;
+      border: none;
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--transition), transform 0.1s;
+    }
+    .lv-export-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .lv-export-btn:active { transform: translateY(0); }
+
+    /* Stats bar */
+    .lv-stats {
+      background: var(--bg-1);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .lv-stat {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .lv-stat strong { color: var(--gold); font-weight: 700; }
+
+    /* Controls bar */
+    .lv-controls {
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .lv-search {
+      flex: 1;
+      min-width: 200px;
+      max-width: 360px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .lv-search:focus { border-color: var(--gold); }
+    .lv-search::placeholder { color: var(--text-faint); }
+
+    .lv-filter-select {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      cursor: pointer;
+      outline: none;
+    }
+    .lv-filter-select:focus { border-color: var(--gold); }
+
+    .lv-per-page {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      cursor: pointer;
+      outline: none;
+    }
+    .lv-per-page:focus { border-color: var(--gold); }
+
+    .lv-count {
+      margin-left: auto;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .lv-count span { color: var(--gold); font-weight: 600; }
+
+    /* Table container */
+    .lv-table-wrap {
+      overflow-x: auto;
+      padding: 0 0 8px;
+    }
+    .lv-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .lv-table thead th {
+      position: sticky;
+      top: 0;
+      background: var(--bg-2);
+      border-bottom: 2px solid var(--gold);
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    .lv-table thead th:hover { color: var(--gold); }
+    .lv-table thead th.sort-asc::after { content: ' ↑'; color: var(--gold); }
+    .lv-table thead th.sort-desc::after { content: ' ↓'; color: var(--gold); }
+    .lv-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition-fast);
+    }
+    .lv-table tbody tr:hover { background: var(--bg-hover); }
+    .lv-table tbody td {
+      padding: 10px 14px;
+      vertical-align: middle;
+      color: var(--text-2);
+    }
+
+    /* Tier badges */
+    .tier-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .tier-hot   { background: rgba(239,68,68,0.15);  color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+    .tier-warm  { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+    .tier-cold  { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+    .tier-new   { background: rgba(34,197,94,0.15);  color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+
+    /* Score bar */
+    .score-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .score-val {
+      font-weight: 700;
+      color: var(--gold);
+      min-width: 28px;
+      font-size: 0.9rem;
+    }
+    .score-bar {
+      flex: 1;
+      height: 6px;
+      background: var(--bg-3);
+      border-radius: 4px;
+      min-width: 60px;
+      overflow: hidden;
+    }
+    .score-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    }
+
+    /* Rating stars */
+    .rating-val {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* Link */
+    .lv-link {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .lv-link:hover { text-decoration: underline; }
+
+    /* Empty state */
+    .lv-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+    .lv-empty-icon { font-size: 3rem; margin-bottom: 16px; }
+
+    /* ── Pagination ── */
+    .lv-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 20px;
+      flex-wrap: wrap;
+      background: var(--bg-1);
+      border-top: 1px solid var(--border);
+    }
+    .lv-page-btn {
+      min-width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--bg-2);
+      color: var(--text-2);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      padding: 0 8px;
+      font-family: var(--font-sans);
+    }
+    .lv-page-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+    .lv-page-btn.active { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 700; }
+    .lv-page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .lv-page-ellipsis { color: var(--text-faint); padding: 0 4px; }
+
+    /* Pagination info */
+    .lv-page-info {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      padding: 0 12px;
+    }
+
+    /* ── Export Modal ── */
+    .lv-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition);
+    }
+    .lv-modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .lv-modal {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      max-width: 480px;
+      width: 100%;
+      transform: scale(0.95);
+      transition: transform var(--transition);
+    }
+    .lv-modal-overlay.open .lv-modal { transform: scale(1); }
+    .lv-modal h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin: 0 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lv-modal p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0 0 20px;
+    }
+    .lv-modal-field {
+      margin-bottom: 14px;
+    }
+    .lv-modal-field label {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .lv-modal-field input,
+    .lv-modal-field textarea,
+    .lv-modal-field select {
+      width: 100%;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      outline: none;
+      box-sizing: border-box;
+      font-family: var(--font-sans);
+    }
+    .lv-modal-field input:focus,
+    .lv-modal-field textarea:focus,
+    .lv-modal-field select:focus { border-color: var(--gold); }
+    .lv-modal-field textarea { min-height: 80px; resize: vertical; }
+    .lv-modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+    .lv-modal-cancel {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-family: var(--font-sans);
+    }
+    .lv-modal-cancel:hover { border-color: var(--gold); color: var(--gold); }
+    .lv-modal-submit {
+      background: var(--gold);
+      border: none;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: var(--font-sans);
+    }
+    .lv-modal-submit:hover { background: var(--gold-light); }
+
+    /* Loading spinner */
+    .lv-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      gap: 16px;
+      color: var(--text-muted);
+    }
+    .lv-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Toast notification */
+    .lv-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg-2);
+      border: 1px solid var(--gold);
+      color: var(--text);
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      z-index: 2000;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    .lv-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .lv-topbar { padding: 0 14px; }
+      .lv-stats, .lv-controls { padding: 10px 14px; }
+      .lv-table { font-size: 0.82rem; }
+      .lv-table tbody td, .lv-table thead th { padding: 8px 10px; }
+      .score-bar { display: none; }
+      .hide-mobile { display: none !important; }
+    }
+  </style>
+</head>
+<body class="leads-page">
+
+  <!-- ── Top Bar ── -->
+  <header class="lv-topbar">
+    <div class="lv-topbar-left">
+      <a href="index.html" class="lv-back-btn">&#8592; Dashboard</a>
+      <a href="index.html" class="lv-brand">
+        &#9889;
+        <span>
+          <span style="display:block">Lead IQ</span>
+          <span class="lv-brand-sub">XPS Intelligence</span>
+        </span>
+      </a>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="lv-theme-btn" id="themeToggle" title="Toggle theme">🌙</button>
+      <button class="lv-export-btn" id="exportBtn">
+        ✉️ Export via Gmail
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Stats Bar ── -->
+  <div class="lv-stats" id="statsBar">
+    <div class="lv-stat">📋 Total: <strong id="totalCount">—</strong></div>
+    <div class="lv-stat">🔥 HOT: <strong id="hotCount">—</strong></div>
+    <div class="lv-stat">🌡️ WARM: <strong id="warmCount">—</strong></div>
+    <div class="lv-stat">❄️ COLD: <strong id="coldCount">—</strong></div>
+    <div class="lv-stat">⭐ Avg Score: <strong id="avgScore">—</strong></div>
+    <div class="lv-stat" style="margin-left:auto">
+      <span id="dataSource" style="font-size:0.78rem;color:var(--text-faint)">Loading…</span>
+    </div>
+  </div>
+
+  <!-- ── Controls ── -->
+  <div class="lv-controls">
+    <input
+      type="search"
+      class="lv-search"
+      id="searchInput"
+      placeholder="🔍 Search company, city, state, email…"
+      aria-label="Search leads"
+    />
+    <select class="lv-filter-select" id="tierFilter" aria-label="Filter by tier">
+      <option value="">All Tiers</option>
+      <option value="HOT">🔥 HOT</option>
+      <option value="WARM">🌡️ WARM</option>
+      <option value="COLD">❄️ COLD</option>
+    </select>
+    <select class="lv-filter-select" id="stateFilter" aria-label="Filter by state">
+      <option value="">All States</option>
+    </select>
+    <select class="lv-filter-select" id="industryFilter" aria-label="Filter by industry">
+      <option value="">All Industries</option>
+    </select>
+    <select class="lv-per-page" id="perPageSelect" aria-label="Leads per page">
+      <option value="25">25 / page</option>
+      <option value="50" selected>50 / page</option>
+      <option value="100">100 / page</option>
+      <option value="200">200 / page</option>
+    </select>
+    <div class="lv-count">Showing <span id="showingRange">—</span> of <span id="filteredCount">—</span></div>
+  </div>
+
+  <!-- ── Table ── -->
+  <div class="lv-table-wrap" id="tableWrap">
+    <div class="lv-loading" id="loadingState">
+      <div class="lv-spinner"></div>
+      <div>Loading leads…</div>
+    </div>
+    <table class="lv-table" id="leadsTable" style="display:none">
+      <thead>
+        <tr>
+          <th data-col="id">#</th>
+          <th data-col="company">Company</th>
+          <th data-col="phone" class="hide-mobile">Phone</th>
+          <th data-col="email" class="hide-mobile">Email</th>
+          <th data-col="city">City</th>
+          <th data-col="state">State</th>
+          <th data-col="industry" class="hide-mobile">Industry</th>
+          <th data-col="rating" class="hide-mobile">Rating</th>
+          <th data-col="lead_score">Score</th>
+          <th data-col="tier">Tier</th>
+          <th data-col="website" class="hide-mobile">Website</th>
+        </tr>
+      </thead>
+      <tbody id="leadsBody"></tbody>
+    </table>
+    <div class="lv-empty" id="emptyState" style="display:none">
+      <div class="lv-empty-icon">🔍</div>
+      <div>No leads match your filters.</div>
+    </div>
+  </div>
+
+  <!-- ── Pagination ── -->
+  <div class="lv-pagination" id="paginationBar" style="display:none">
+    <button class="lv-page-btn" id="prevBtn" disabled>&#8592; Prev</button>
+    <div id="pageButtons" style="display:flex;gap:4px;flex-wrap:wrap;align-items:center"></div>
+    <button class="lv-page-btn" id="nextBtn">Next &#8594;</button>
+    <div class="lv-page-info" id="pageInfo"></div>
+  </div>
+
+  <!-- ── Export Modal ── -->
+  <div class="lv-modal-overlay" id="exportModal" role="dialog" aria-modal="true" aria-label="Export leads via Gmail">
+    <div class="lv-modal">
+      <h2>✉️ Export Leads via Gmail</h2>
+      <p>Send the current filtered leads to your Gmail inbox as a formatted report.</p>
+      <div class="lv-modal-field">
+        <label for="recipientEmail">Gmail Address</label>
+        <input type="email" id="recipientEmail" placeholder="you@gmail.com" />
+      </div>
+      <div class="lv-modal-field">
+        <label for="exportSubject">Email Subject</label>
+        <input type="text" id="exportSubject" value="XPS Lead Intelligence Export" />
+      </div>
+      <div class="lv-modal-field">
+        <label for="exportScope">Leads to Export</label>
+        <select id="exportScope">
+          <option value="page">Current Page Only</option>
+          <option value="filtered" selected>All Filtered Leads</option>
+          <option value="all">All Leads</option>
+          <option value="hot">HOT Tier Only</option>
+        </select>
+      </div>
+      <div class="lv-modal-field">
+        <label for="exportNote">Personal Note (optional)</label>
+        <textarea id="exportNote" placeholder="Add any notes to include in the email…"></textarea>
+      </div>
+      <div class="lv-modal-actions">
+        <button class="lv-modal-cancel" id="modalCancelBtn">Cancel</button>
+        <button class="lv-modal-submit" id="modalSendBtn">📤 Open Gmail</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Toast ── -->
+  <div class="lv-toast" id="toast"></div>
+
+  <script>
+  /* ═══════════════════════════════════════════════════════════
+     XPS Leads Viewer — Vanilla JS, no dependencies
+     ═══════════════════════════════════════════════════════════ */
+  (function () {
+    'use strict';
+
+    // ── State ───────────────────────────────────────────────
+    let allLeads = [];
+    let filteredLeads = [];
+    let currentPage = 1;
+    let perPage = 50;
+    let sortCol = 'lead_score';
+    let sortDir = 'desc';
+
+    // ── DOM refs ────────────────────────────────────────────
+    const searchInput    = document.getElementById('searchInput');
+    const tierFilter     = document.getElementById('tierFilter');
+    const stateFilter    = document.getElementById('stateFilter');
+    const industryFilter = document.getElementById('industryFilter');
+    const perPageSelect  = document.getElementById('perPageSelect');
+    const leadsTable     = document.getElementById('leadsTable');
+    const leadsBody      = document.getElementById('leadsBody');
+    const loadingState   = document.getElementById('loadingState');
+    const emptyState     = document.getElementById('emptyState');
+    const paginationBar  = document.getElementById('paginationBar');
+    const prevBtn        = document.getElementById('prevBtn');
+    const nextBtn        = document.getElementById('nextBtn');
+    const pageButtons    = document.getElementById('pageButtons');
+    const pageInfo       = document.getElementById('pageInfo');
+    const exportModal    = document.getElementById('exportModal');
+    const exportBtn      = document.getElementById('exportBtn');
+    const modalCancelBtn = document.getElementById('modalCancelBtn');
+    const modalSendBtn   = document.getElementById('modalSendBtn');
+    const themeToggle    = document.getElementById('themeToggle');
+    const toast          = document.getElementById('toast');
+
+    // ── Theme ───────────────────────────────────────────────
+    const savedTheme = localStorage.getItem('xps-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    themeToggle.addEventListener('click', () => {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('xps-theme', next);
+      themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+
+    // ── Toast ───────────────────────────────────────────────
+    function showToast(msg, duration = 3000) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), duration);
+    }
+
+    // ── Load Leads ───────────────────────────────────────────
+    const DATA_PATHS = [
+      'data/scored_leads.json',
+      '../data/leads/scored_leads.json',
+      '../leads/scored_leads.json',
+    ];
+
+    async function loadLeads() {
+      for (const path of DATA_PATHS) {
+        try {
+          const res = await fetch(path);
+          if (!res.ok) continue;
+          const raw = await res.json();
+          const leads = Array.isArray(raw) ? raw : (raw.leads || []);
+          if (leads.length > 0) {
+            document.getElementById('dataSource').textContent = `Source: ${path} (${new Date().toLocaleTimeString()})`;
+            return leads;
+          }
+        } catch (_) { /* try next */ }
+      }
+      return SAMPLE_LEADS; // Fallback demo data when no real lead data files are accessible (dev mode or data unavailable)
+    }
+
+    // ── Normalise lead ───────────────────────────────────────
+    function normaliseLead(l) {
+      return {
+        id:         l.id || 0,
+        company:    l.company || l.name || '—',
+        phone:      l.phone || '—',
+        email:      l.email || '',
+        website:    l.website || '',
+        city:       l.city || '',
+        state:      l.state || '',
+        address:    l.address || '',
+        industry:   l.industry || l.category || 'General',
+        rating:     parseFloat(l.rating) || 0,
+        reviews:    parseInt(l.reviews || l.review_count) || 0,
+        lead_score: parseInt(l.lead_score || l.score) || 0,
+        tier:       (l.tier || '').toUpperCase() || scoreTier(parseInt(l.lead_score || l.score) || 0),
+        status:     l.status || 'new',
+        source:     l.source || '',
+        date:       l.date_scraped || l.date || '',
+      };
+    }
+
+    function scoreTier(score) {
+      if (score >= 80) return 'HOT';
+      if (score >= 50) return 'WARM';
+      return 'COLD';
+    }
+
+    // ── Populate filter dropdowns ─────────────────────────────
+    function populateFilters(leads) {
+      const states = [...new Set(leads.map(l => l.state).filter(Boolean))].sort();
+      const industries = [...new Set(leads.map(l => l.industry).filter(Boolean))].sort();
+      states.forEach(s => {
+        const o = document.createElement('option');
+        o.value = o.textContent = s;
+        stateFilter.appendChild(o);
+      });
+      industries.forEach(ind => {
+        const o = document.createElement('option');
+        o.value = o.textContent = ind;
+        industryFilter.appendChild(o);
+      });
+    }
+
+    // ── Update stats ──────────────────────────────────────────
+    function updateStats(leads) {
+      document.getElementById('totalCount').textContent = allLeads.length.toLocaleString();
+      document.getElementById('hotCount').textContent  = allLeads.filter(l => l.tier === 'HOT').length.toLocaleString();
+      document.getElementById('warmCount').textContent = allLeads.filter(l => l.tier === 'WARM').length.toLocaleString();
+      document.getElementById('coldCount').textContent = allLeads.filter(l => l.tier === 'COLD').length.toLocaleString();
+      const avg = allLeads.length ? Math.round(allLeads.reduce((s, l) => s + l.lead_score, 0) / allLeads.length) : 0;
+      document.getElementById('avgScore').textContent  = avg;
+    }
+
+    // ── Filter & sort ─────────────────────────────────────────
+    function applyFilters() {
+      const q    = searchInput.value.trim().toLowerCase();
+      const tier = tierFilter.value;
+      const state = stateFilter.value;
+      const industry = industryFilter.value;
+
+      filteredLeads = allLeads.filter(l => {
+        if (tier && l.tier !== tier) return false;
+        if (state && l.state !== state) return false;
+        if (industry && l.industry !== industry) return false;
+        if (q) {
+          const haystack = [l.company, l.city, l.state, l.email, l.phone, l.industry].join(' ').toLowerCase();
+          if (!haystack.includes(q)) return false;
+        }
+        return true;
+      });
+
+      // Sort
+      filteredLeads.sort((a, b) => {
+        let va = a[sortCol], vb = b[sortCol];
+        if (typeof va === 'string') va = va.toLowerCase();
+        if (typeof vb === 'string') vb = vb.toLowerCase();
+        if (va < vb) return sortDir === 'asc' ? -1 : 1;
+        if (va > vb) return sortDir === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      currentPage = 1;
+      render();
+    }
+
+    // ── Render table ──────────────────────────────────────────
+    function render() {
+      const total = filteredLeads.length;
+      const totalPages = Math.max(1, Math.ceil(total / perPage));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const start = (currentPage - 1) * perPage;
+      const end   = Math.min(start + perPage, total);
+      const pageLeads = filteredLeads.slice(start, end);
+
+      // Update count
+      document.getElementById('filteredCount').textContent = total.toLocaleString();
+      document.getElementById('showingRange').textContent =
+        total === 0 ? '0' : `${start + 1}–${end}`;
+
+      loadingState.style.display = 'none';
+
+      if (total === 0) {
+        leadsTable.style.display = 'none';
+        emptyState.style.display = 'block';
+        paginationBar.style.display = 'none';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      leadsTable.style.display = 'table';
+      paginationBar.style.display = 'flex';
+
+      // Render rows
+      leadsBody.innerHTML = pageLeads.map((l, i) => {
+        const tierClass = { HOT: 'tier-hot', WARM: 'tier-warm', COLD: 'tier-cold' }[l.tier] || 'tier-new';
+        const scorePct = Math.min(100, l.lead_score);
+        const websiteLink = l.website
+          ? `<a class="lv-link" href="${escHtml(l.website)}" target="_blank" rel="noopener noreferrer">🔗 Visit</a>`
+          : '—';
+        const emailLink = l.email
+          ? `<a class="lv-link" href="mailto:${escHtml(l.email)}">${escHtml(l.email)}</a>`
+          : '—';
+        const ratingStr = l.rating > 0
+          ? `<span class="rating-val">★ ${l.rating.toFixed(1)}</span> <span style="color:var(--text-faint);font-size:0.8rem">(${l.reviews})</span>`
+          : '—';
+
+        return `<tr>
+          <td style="color:var(--text-faint);font-size:0.78rem">${start + i + 1}</td>
+          <td><strong style="color:var(--text)">${escHtml(l.company)}</strong></td>
+          <td class="hide-mobile" style="font-family:var(--font-mono);font-size:0.82rem">${escHtml(l.phone)}</td>
+          <td class="hide-mobile">${emailLink}</td>
+          <td>${escHtml(l.city)}</td>
+          <td><span style="font-family:var(--font-mono);font-size:0.82rem">${escHtml(l.state)}</span></td>
+          <td class="hide-mobile"><span style="color:var(--text-muted);font-size:0.82rem">${escHtml(l.industry)}</span></td>
+          <td class="hide-mobile">${ratingStr}</td>
+          <td>
+            <div class="score-wrap">
+              <span class="score-val">${l.lead_score}</span>
+              <div class="score-bar"><div class="score-fill" style="width:${scorePct}%"></div></div>
+            </div>
+          </td>
+          <td><span class="tier-badge ${tierClass}">${escHtml(l.tier)}</span></td>
+          <td class="hide-mobile">${websiteLink}</td>
+        </tr>`;
+      }).join('');
+
+      renderPagination(totalPages);
+    }
+
+    // ── Render pagination ─────────────────────────────────────
+    function renderPagination(totalPages) {
+      prevBtn.disabled = currentPage <= 1;
+      nextBtn.disabled = currentPage >= totalPages;
+      pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+
+      // Build page buttons (show max 7 around current)
+      pageButtons.innerHTML = '';
+      const pages = getPageRange(currentPage, totalPages);
+      let lastPage = 0;
+      pages.forEach(p => {
+        if (p === '…') {
+          const el = document.createElement('span');
+          el.className = 'lv-page-ellipsis';
+          el.textContent = '…';
+          pageButtons.appendChild(el);
+          return;
+        }
+        if (p !== lastPage + 1 && lastPage > 0) {
+          // no-op, ellipsis already added
+        }
+        lastPage = p;
+        const btn = document.createElement('button');
+        btn.className = 'lv-page-btn' + (p === currentPage ? ' active' : '');
+        btn.textContent = p;
+        btn.addEventListener('click', () => { currentPage = p; render(); scrollToTop(); });
+        pageButtons.appendChild(btn);
+      });
+    }
+
+    function getPageRange(cur, total) {
+      if (total <= 9) return Array.from({ length: total }, (_, i) => i + 1);
+      const pages = new Set([1, total, cur]);
+      for (let d = 1; d <= 2; d++) {
+        if (cur - d > 0) pages.add(cur - d);
+        if (cur + d <= total) pages.add(cur + d);
+      }
+      const sorted = [...pages].sort((a, b) => a - b);
+      const result = [];
+      let prev = 0;
+      for (const p of sorted) {
+        if (prev && p - prev > 1) result.push('…');
+        result.push(p);
+        prev = p;
+      }
+      return result;
+    }
+
+    function scrollToTop() {
+      document.getElementById('tableWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Escape HTML ───────────────────────────────────────────
+    function escHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ── Column sort ───────────────────────────────────────────
+    document.querySelectorAll('.lv-table thead th[data-col]').forEach(th => {
+      th.addEventListener('click', () => {
+        const col = th.getAttribute('data-col');
+        if (sortCol === col) {
+          sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          sortCol = col;
+          sortDir = col === 'lead_score' ? 'desc' : 'asc';
+        }
+        document.querySelectorAll('.lv-table thead th').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+        th.classList.add(sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+        applyFilters();
+      });
+    });
+
+    // ── Event listeners ───────────────────────────────────────
+    let searchTimer;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(applyFilters, 200);
+    });
+    tierFilter.addEventListener('change', applyFilters);
+    stateFilter.addEventListener('change', applyFilters);
+    industryFilter.addEventListener('change', applyFilters);
+    perPageSelect.addEventListener('change', () => {
+      perPage = parseInt(perPageSelect.value);
+      currentPage = 1;
+      render();
+    });
+    prevBtn.addEventListener('click', () => { if (currentPage > 1) { currentPage--; render(); scrollToTop(); } });
+    nextBtn.addEventListener('click', () => {
+      const totalPages = Math.ceil(filteredLeads.length / perPage);
+      if (currentPage < totalPages) { currentPage++; render(); scrollToTop(); }
+    });
+
+    // ── Export Modal ──────────────────────────────────────────
+    exportBtn.addEventListener('click', () => {
+      exportModal.classList.add('open');
+    });
+    modalCancelBtn.addEventListener('click', () => {
+      exportModal.classList.remove('open');
+    });
+    exportModal.addEventListener('click', (e) => {
+      if (e.target === exportModal) exportModal.classList.remove('open');
+    });
+
+    modalSendBtn.addEventListener('click', () => {
+      const recipient = document.getElementById('recipientEmail').value.trim();
+      const subject   = encodeURIComponent(document.getElementById('exportSubject').value.trim() || 'XPS Lead Intelligence Export');
+      const scope     = document.getElementById('exportScope').value;
+      const note      = document.getElementById('exportNote').value.trim();
+
+      if (!recipient) {
+        showToast('⚠️ Please enter a Gmail address');
+        return;
+      }
+
+      // Determine which leads to export
+      let exportLeads;
+      if (scope === 'page') {
+        const start = (currentPage - 1) * perPage;
+        exportLeads = filteredLeads.slice(start, start + perPage);
+      } else if (scope === 'hot') {
+        exportLeads = allLeads.filter(l => l.tier === 'HOT');
+      } else if (scope === 'all') {
+        exportLeads = allLeads;
+      } else {
+        exportLeads = filteredLeads;
+      }
+
+      // Format email body — sanitize each field to remove characters that could
+      // affect email formatting (newlines, pipes, etc.) before concatenation.
+      function sanitizeField(val) {
+        return String(val || '').replace(/[\r\n|]+/g, ' ').trim();
+      }
+      const rows = exportLeads.slice(0, 250).map((l, i) =>
+        `${i + 1}. ${sanitizeField(l.company)} | ${sanitizeField(l.city)}, ${sanitizeField(l.state)} | ${sanitizeField(l.phone)} | ${sanitizeField(l.email) || '—'} | Score: ${l.lead_score} | Tier: ${sanitizeField(l.tier)}`
+      ).join('\n');
+
+      const extra = exportLeads.length > 250 ? `\n\n[${exportLeads.length - 250} more leads not shown. Download full CSV for complete data.]` : '';
+
+      const body = encodeURIComponent(
+        (note ? note + '\n\n' : '') +
+        `XPS Lead Intelligence Export\n` +
+        `Generated: ${new Date().toLocaleString()}\n` +
+        `Total Leads: ${exportLeads.length}\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+        rows +
+        extra +
+        `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `Dashboard: https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/\n` +
+        `Leads Viewer: https://infinityxonesystems.github.io/LEAD_GEN_INTELLIGENCE/pages/leads.html`
+      );
+
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${subject}&body=${body}`;
+      window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+
+      exportModal.classList.remove('open');
+      showToast(`✅ Gmail opened with ${exportLeads.length} leads`);
+    });
+
+    // ── Sample data fallback ──────────────────────────────────
+    const SAMPLE_LEADS = [
+      { id:1, company:'Desert Epoxy Solutions', phone:'(480)555-1101', email:'info@desertepoxy.com', website:'https://desertepoxy.com', city:'Tempe', state:'AZ', industry:'Epoxy', rating:4.9, reviews:83, lead_score:95, tier:'HOT' },
+      { id:2, company:'Valley Metallic Epoxy', phone:'(480)555-1505', email:'info@valleymetallic.com', website:'', city:'Phoenix', state:'AZ', industry:'Epoxy', rating:4.8, reviews:61, lead_score:88, tier:'HOT' },
+      { id:3, company:'TX Flooring Pro', phone:'(512)555-2211', email:'', website:'https://txflooring.com', city:'Austin', state:'TX', industry:'Flooring', rating:4.5, reviews:34, lead_score:72, tier:'WARM' },
+      { id:4, company:'Midwest Hardwood Co', phone:'(312)555-3333', email:'sales@midwesthw.com', website:'', city:'Chicago', state:'IL', industry:'Hardwood', rating:4.1, reviews:18, lead_score:55, tier:'WARM' },
+      { id:5, company:'Southeast Tile Works', phone:'(404)555-4444', email:'', website:'', city:'Atlanta', state:'GA', industry:'Tile', rating:3.8, reviews:9, lead_score:38, tier:'COLD' },
+    ];
+
+    // ── Boot ──────────────────────────────────────────────────
+    async function boot() {
+      const raw = await loadLeads();
+      allLeads = raw.map(normaliseLead);
+      updateStats();
+      populateFilters(allLeads);
+      applyFilters();
+
+      // Set initial sort indicator
+      const scoreHeader = document.querySelector('.lv-table thead th[data-col="lead_score"]');
+      if (scoreHeader) scoreHeader.classList.add('sort-desc');
+    }
+
+    boot();
+  })();
+  </script>
+</body>
+</html>
