@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-07
 
-**Total leads:** 236
+**Total leads:** 276
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
-| COLD | 0 |
+| HOT  | 9  |
+| WARM | 61 |
+| COLD | 206 |
 
 ## Top Leads
 
@@ -29,8 +29,8 @@
 | Two Brothers Epoxy Flooring |  |  | 55 |
 | Epoxy Flooring Phoenix |  |  | 55 |
 | Quality Epoxy |  |  | 55 |
-| Marvelous Epoxy Flooring |  |  | 55 |
 | Ultimate Concrete Coatings & Epoxy Flooring |  |  | 55 |
-| Easy Epoxy |  |  | 55 |
-| MR Epoxy |  |  | 55 |
-| Epoxy Werx - Epoxy Garage Floors |  |  | 55 |
+| Marvelous Epoxy Flooring |  |  | 55 |
+| Epoxy Strong Phoenix |  |  | 55 |
+| Orange Door Custom Coatings - Epoxy Flooring & Painting |  |  | 55 |
+| Brilliant Epoxy Flooring Inc |  |  | 55 |

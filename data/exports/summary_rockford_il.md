@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-07
 
-**Total leads:** 178
+**Total leads:** 274
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
-| COLD | 0 |
+| HOT  | 4  |
+| WARM | 42 |
+| COLD | 228 |
 
 ## Top Leads
 
@@ -27,10 +27,10 @@
 | SBRI Epoxy |  |  | 55 |
 | Diedrich Epoxy Flooring |  |  | 55 |
 | Perry's Decorative Concrete and Painting |  |  | 55 |
-| Precision Epoxy |  |  | 55 |
 | Epoxy Worx - Concrete Coatings |  |  | 55 |
 | Deluxe Epoxy Flooring |  |  | 55 |
 | Naperville Painting and Epoxy Flooring |  |  | 55 |
-| Chi Resin Custom Coatings |  |  | 55 |
-| Epoxy Champions |  |  | 55 |
 | James Concrete Polishing |  |  | 55 |
+| Polished Concreto and Concreto floor Polishing & Epoxy Coating Metallic Epoxy Floor Solution |  |  | 55 |
+| Polished Concrete Solution |  |  | 55 |
+| ETR Flooring Inc. Concrete Polishing & Epoxy Floor Contractors - Illinois |  |  | 55 |
