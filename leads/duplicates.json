@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "company": "Team Industrial Services, Inc.",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "industrial maintenance contractor",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-07T03:53:54.921Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  }
+]
