@@ -283,11 +283,6 @@ class AgentOrchestrator {
       { name: 'api_gateway', path: path.join(ROOT, 'api/gateway') },
     ];
 
-    const status = agents.map(({ name, p: modulePath = path }) =>
-      this._checkAgent(name, modulePath)
-    );
-
-    // Re-map correctly
     const agentStatus = agents.map(({ name, path: modulePath }) => {
       let available = false;
       try { require.resolve(modulePath); available = true; } catch (_) {}

@@ -29,12 +29,16 @@ class CallIntelligenceRecorder {
   }
 
   recordCall(repId, leadId, duration, outcome, notes = '') {
+    const VALID_OUTCOMES = ['connected', 'voicemail', 'no_answer', 'closed', 'not_interested', 'follow_up'];
+    if (!VALID_OUTCOMES.includes(outcome)) {
+      throw new Error(`Invalid outcome '${outcome}'. Must be one of: ${VALID_OUTCOMES.join(', ')}`);
+    }
     const record = {
       id: generateId(),
       rep_id: repId,
       lead_id: leadId,
       duration_seconds: duration,
-      outcome, // 'connected'|'voicemail'|'no_answer'|'closed'|'not_interested'|'follow_up'
+      outcome,
       notes,
       recorded_at: new Date().toISOString(),
       hour_of_day: new Date().getHours(),

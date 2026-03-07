@@ -33,7 +33,7 @@ class CaptchaSolver {
         console.info('[CaptchaSolver] reCAPTCHA solved');
         return pollRes.data.request;
       }
-      if (pollRes.data.request !== 'CAPCHA_NOT_READY') {
+      if (pollRes.data.request !== 'CAPTCHA_NOT_READY') {
         throw new Error(`[CaptchaSolver] Poll error: ${pollRes.data.request}`);
       }
     }
@@ -63,7 +63,7 @@ class CaptchaSolver {
         console.info('[CaptchaSolver] hCaptcha solved');
         return pollRes.data.request;
       }
-      if (pollRes.data.request !== 'CAPCHA_NOT_READY') {
+      if (pollRes.data.request !== 'CAPTCHA_NOT_READY') {
         throw new Error(`[CaptchaSolver] hCaptcha poll error: ${pollRes.data.request}`);
       }
     }

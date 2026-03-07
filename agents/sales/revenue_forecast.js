@@ -20,7 +20,17 @@ class RevenueForecastEngine {
   _loadDeals() {
     try {
       const fs = require('fs');
-      return Object.values(JSON.parse(fs.readFileSync(this._dealsFile, 'utf8')).deals || {});
+      const raw = fs.readFileSync(this._dealsFile, 'utf8');
+      let parsed;
+      try {
+        parsed = JSON.parse(raw);
+      } catch (parseErr) {
+        throw new Error(`Invalid JSON in deals file ${this._dealsFile}: ${parseErr.message}`);
+      }
+      if (!parsed || typeof parsed !== 'object') {
+        throw new Error(`Deals file ${this._dealsFile} must contain a JSON object with a "deals" property`);
+      }
+      return Object.values(parsed.deals || {});
     } catch {
       return [];
     }
