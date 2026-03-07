@@ -1,0 +1,13 @@
+[
+  {
+    "id": "call_1772906414205_t7lh73",
+    "rep_id": "rep1",
+    "lead_id": "lead1",
+    "duration_seconds": 300,
+    "outcome": "connected",
+    "notes": "Good call",
+    "recorded_at": "2026-03-07T18:00:14.205Z",
+    "hour_of_day": 18,
+    "day_of_week": "Saturday"
+  }
+]
