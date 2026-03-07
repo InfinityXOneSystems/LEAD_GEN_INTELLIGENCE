@@ -50,7 +50,7 @@ jobs:
         run: |
           node -e "
             const fs = require('fs');
-            const required = ['data/leads', 'data/datasets', 'data/outreach'];
+            const required = ['leads', 'data/leads', 'data/datasets', 'data/outreach'];
             let ok = true;
             for (const dir of required) {
               if (fs.existsSync(dir)) {

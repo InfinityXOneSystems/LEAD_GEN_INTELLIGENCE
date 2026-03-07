@@ -3,11 +3,13 @@
 /**
  * Lead Scoring Pipeline - Phase 4
  *
- * Reads raw leads from data/leads/leads.json, scores each lead using the
- * scoring engine, and writes two output files:
+ * Reads raw leads from leads/leads.json (preferred) or data/leads/leads.json
+ * (fallback), scores each lead using the scoring engine, and writes outputs to:
  *
- *   data/leads/scored_leads.json   – all leads sorted by score descending
- *   data/leads/scoring_report.json – summary statistics and top leads
+ *   leads/scored_leads.json        – primary output (dedicated leads folder)
+ *   leads/scoring_report.json      – primary report
+ *   data/leads/scored_leads.json   – backward-compatible copy
+ *   data/leads/scoring_report.json – backward-compatible copy
  */
 
 const fs = require("fs");
@@ -20,15 +22,33 @@ const {
 } = require("./lead_scoring");
 
 const ROOT = path.resolve(__dirname, "..", "..");
-const LEADS_PATH = path.join(ROOT, "data", "leads", "leads.json");
-const SCORED_PATH = path.join(ROOT, "data", "leads", "scored_leads.json");
-const REPORT_PATH = path.join(ROOT, "data", "leads", "scoring_report.json");
+// Primary leads directory (dedicated leads/ folder at repo root)
+const LEADS_DIR_PRIMARY = path.join(ROOT, "leads");
+// Backward-compatible data/leads directory
+const LEADS_DIR_LEGACY = path.join(ROOT, "data", "leads");
+
+const LEADS_PATH = fs.existsSync(path.join(LEADS_DIR_PRIMARY, "leads.json"))
+  ? path.join(LEADS_DIR_PRIMARY, "leads.json")
+  : path.join(LEADS_DIR_LEGACY, "leads.json");
+
+const SCORED_PATH = path.join(LEADS_DIR_PRIMARY, "scored_leads.json");
+const REPORT_PATH = path.join(LEADS_DIR_PRIMARY, "scoring_report.json");
 
 function ensureDir(filePath) {
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
+}
+
+function writeLeadFile(filename, data) {
+  const json = JSON.stringify(data, null, 2);
+  const primary = path.join(LEADS_DIR_PRIMARY, filename);
+  const legacy = path.join(LEADS_DIR_LEGACY, filename);
+  ensureDir(primary);
+  fs.writeFileSync(primary, json);
+  ensureDir(legacy);
+  fs.writeFileSync(legacy, json);
 }
 
 function loadLeads() {
@@ -70,8 +90,8 @@ function runPipeline() {
   const report = generateReport(scored);
 
   ensureDir(SCORED_PATH);
-  fs.writeFileSync(SCORED_PATH, JSON.stringify(scored, null, 2));
-  fs.writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2));
+  writeLeadFile("scored_leads.json", scored);
+  writeLeadFile("scoring_report.json", report);
 
   console.log(`[scoring_pipeline] Scored ${scored.length} lead(s).`);
   console.log(

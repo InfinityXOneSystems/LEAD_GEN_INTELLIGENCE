@@ -10,6 +10,7 @@ const fs = require("fs");
 const path = require("path");
 
 const REQUIRED_DIRS = [
+  "leads",
   "data/leads",
   "data/datasets",
   "data/outreach",

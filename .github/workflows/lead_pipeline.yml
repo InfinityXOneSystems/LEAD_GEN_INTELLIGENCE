@@ -84,7 +84,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/leads/leads.json data/scraper_progress.json 2>/dev/null || true
+          git add leads/leads.json data/leads/leads.json data/scraper_progress.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new leads to commit."
           else
@@ -140,7 +140,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/leads/validated_leads.json
+          git add leads/validated_leads.json leads/validation_report.json leads/duplicates.json leads/invalid_leads.json data/leads/validated_leads.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No validation changes to commit."
           else
@@ -224,7 +224,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/leads/scored_leads.json data/leads/scoring_report.json pages/data/ dashboard/public/data/ data/exports/ 2>/dev/null || true
+          git add leads/ data/leads/scored_leads.json data/leads/scoring_report.json pages/data/ dashboard/public/data/ data/exports/ 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No scoring changes to commit."
           else

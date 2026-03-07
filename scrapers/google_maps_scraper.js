@@ -44,8 +44,10 @@ const RESET_FLAG = process.env.SCRAPER_RESET === "1";
 // Comma-separated "City:State" pairs – when set, overrides batch/state/progress.
 const CITIES_FILTER = process.env.SCRAPER_CITIES || null;
 
+const LEADS_DIR_PRIMARY = path.join(__dirname, "../leads");
 const LEADS_DIR = path.join(__dirname, "../data/leads");
-const LEADS_FILE = path.join(LEADS_DIR, "leads.json");
+const LEADS_FILE = path.join(LEADS_DIR_PRIMARY, "leads.json");
+const LEADS_FILE_LEGACY = path.join(LEADS_DIR, "leads.json");
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -58,8 +60,9 @@ function delay(ms) {
 }
 
 function loadExistingLeads() {
+  const src = fs.existsSync(LEADS_FILE) ? LEADS_FILE : LEADS_FILE_LEGACY;
   try {
-    return JSON.parse(fs.readFileSync(LEADS_FILE, "utf8"));
+    return JSON.parse(fs.readFileSync(src, "utf8"));
   } catch (err) {
     if (err.code !== "ENOENT") {
       console.warn(
@@ -72,8 +75,11 @@ function loadExistingLeads() {
 }
 
 function saveLeads(leads) {
+  const json = JSON.stringify(leads, null, 2);
+  ensureDir(LEADS_DIR_PRIMARY);
+  fs.writeFileSync(LEADS_FILE, json);
   ensureDir(LEADS_DIR);
-  fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2));
+  fs.writeFileSync(LEADS_FILE_LEGACY, json);
 }
 
 /** Remove duplicate leads keyed on (company, city). */

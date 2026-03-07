@@ -1,14 +1,14 @@
 {
   "summary": {
-    "total": 2258,
-    "valid": 2258,
+    "total": 2326,
+    "valid": 2326,
     "invalid": 0,
-    "unique": 2257,
+    "unique": 2325,
     "duplicates": 1,
-    "generated_at": "2026-03-07T03:55:58.675Z"
+    "generated_at": "2026-03-07T06:29:58.480Z"
   },
   "invalid_count": 0,
-  "duplicate_count": 1,
+  "duplicate_count": 0,
   "samples": {
     "invalid": [],
     "duplicates": [
@@ -25,7 +25,7 @@
         "rating": 5,
         "reviews": 0,
         "source": "google_maps",
-        "scrapedAt": "2026-03-07T03:53:54.921Z",
+        "scrapedAt": "2026-03-07T06:27:53.391Z",
         "_validation": {
           "valid": true,
           "errors": [],

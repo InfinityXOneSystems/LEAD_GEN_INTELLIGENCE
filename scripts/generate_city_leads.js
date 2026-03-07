@@ -16,14 +16,18 @@
  *   node scripts/generate_city_leads.js
  *
  * Outputs:
- *   data/leads/leads.json  (merges new city leads, deduplicates by company+city)
+ *   leads/leads.json        (primary — dedicated leads folder)
+ *   data/leads/leads.json  (backup — backward-compatible copy)
  */
 
 const fs = require("fs");
 const path = require("path");
 
-const LEADS_DIR = path.resolve(__dirname, "..", "data", "leads");
-const LEADS_FILE = path.join(LEADS_DIR, "leads.json");
+const ROOT = path.resolve(__dirname, "..");
+const LEADS_DIR_PRIMARY = path.resolve(ROOT, "leads");
+const LEADS_DIR_LEGACY = path.resolve(ROOT, "data", "leads");
+const LEADS_FILE = path.join(LEADS_DIR_PRIMARY, "leads.json");
+const LEADS_FILE_LEGACY = path.join(LEADS_DIR_LEGACY, "leads.json");
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 
@@ -32,8 +36,10 @@ function ensureDir(dir) {
 }
 
 function loadExisting() {
+  // Prefer primary leads/ folder, fall back to data/leads/
+  const src = fs.existsSync(LEADS_FILE) ? LEADS_FILE : LEADS_FILE_LEGACY;
   try {
-    const raw = fs.readFileSync(LEADS_FILE, "utf8");
+    const raw = fs.readFileSync(src, "utf8");
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
   } catch {
@@ -52,8 +58,11 @@ function dedup(leads) {
 }
 
 function saveLeads(leads) {
-  ensureDir(LEADS_DIR);
-  fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), "utf8");
+  const json = JSON.stringify(leads, null, 2);
+  ensureDir(LEADS_DIR_PRIMARY);
+  fs.writeFileSync(LEADS_FILE, json, "utf8");
+  ensureDir(LEADS_DIR_LEGACY);
+  fs.writeFileSync(LEADS_FILE_LEGACY, json, "utf8");
 }
 
 // ─── lead data ────────────────────────────────────────────────────────────────
@@ -598,8 +607,10 @@ function run() {
     (l) => l.city === "Columbus" && l.state === "OH",
   );
 
-  console.log(`[generate_city_leads] Leads written to ${LEADS_FILE}`);
-  console.log(`  Rockville, IL : ${rockville.length} leads`);
+  console.log(
+    `[generate_city_leads] Leads written to ${LEADS_FILE} (and ${LEADS_FILE_LEGACY})`,
+  );
+  console.log(`  Rockford, IL : ${rockford.length} leads`);
   console.log(`  Tempe, AZ    : ${tempe.length} leads`);
   console.log(`  Columbus, OH : ${columbus.length} leads`);
   console.log(`  Total        : ${merged.length} leads`);

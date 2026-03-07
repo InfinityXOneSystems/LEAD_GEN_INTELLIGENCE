@@ -122,6 +122,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add \
+            leads/ \
             data/leads/leads.json \
             data/leads/scored_leads.json \
             data/leads/scoring_report.json \
