@@ -99,7 +99,7 @@ function normalizeLead(l, index) {
     contact: l.contact || l.contact_name || "",
     phone,
     email,
-    website: website && !/^https?:\/\//i.test(website) ? "https://" + website : website,
+    website: website && website.trim() && !/^https?:\/\//i.test(website) ? "https://" + website : website,
     city,
     state: stateVal,
     industry,
@@ -192,13 +192,18 @@ function companyInitial(company) {
    ═══════════════════════════════════════════════════════════ */
 window.exportCSV = function () {
   const headers = ["ID","Company","Phone","Email","Website","City","State","Industry","Rating","Reviews","Score","Status","Source","Date"];
+  // Guard against CSV formula injection: prefix fields starting with =, +, @, - with a tab
+  const safeVal = (v) => {
+    const s = String(v == null ? "" : v);
+    return /^[=+@-]/.test(s) ? `\t${s}` : s;
+  };
   const rows = state.filtered.map(l => [
     l.id,
-    `"${(l.company||"").replace(/"/g,'""')}"`,
-    `"${(l.phone||"").replace(/"/g,'""')}"`,
-    `"${(l.email||"").replace(/"/g,'""')}"`,
-    `"${(l.website||"").replace(/"/g,'""')}"`,
-    `"${(l.city||"").replace(/"/g,'""')}"`,
+    `"${safeVal(l.company).replace(/"/g,'""')}"`,
+    `"${safeVal(l.phone).replace(/"/g,'""')}"`,
+    `"${safeVal(l.email).replace(/"/g,'""')}"`,
+    `"${safeVal(l.website).replace(/"/g,'""')}"`,
+    `"${safeVal(l.city).replace(/"/g,'""')}"`,
     l.state || "",
     l.industry || "",
     l.rating || 0,
@@ -206,7 +211,7 @@ window.exportCSV = function () {
     l.score || 0,
     l.status || "",
     l.source || "",
-    `"${(l.date||"").replace(/"/g,'""')}"`,
+    `"${safeVal(l.date).replace(/"/g,'""')}"`,
   ]);
 
   const csv = [headers.join(","), ...rows.map(r => r.join(","))].join("\n");

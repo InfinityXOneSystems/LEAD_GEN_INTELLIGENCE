@@ -63,6 +63,7 @@ jobs:
 
       - name: Run Google Maps scraper for target cities
         env:
+          # Rockville:IL is the intended city target (not Rockford, IL)
           SCRAPER_CITIES: 'Rockville:IL,Columbus:OH,Tempe:AZ'
           SCRAPER_CONCURRENCY: '2'
           SCRAPER_RATE_LIMIT_MS: '2000'

@@ -35,7 +35,8 @@ const OUTPUT_PATH = path.resolve(
 
 // ── Normalise a single lead ──────────────────────────────────────────────────
 function normalizeLead(l, index) {
-  const score = Number(l.lead_score ?? l.score ?? 0) || 0;
+  const rawScore = l.lead_score ?? l.score ?? 0;
+  const score = (typeof rawScore === "number" && !isNaN(rawScore)) ? rawScore : (Number(rawScore) || 0);
   const today = new Date().toISOString().split("T")[0];
 
   // Resolve website protocol safely
