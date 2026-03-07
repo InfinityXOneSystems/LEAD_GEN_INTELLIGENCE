@@ -1,44 +1,50 @@
-'use strict';
+"use strict";
 
-require('dotenv').config();
-const axios = require('axios');
+require("dotenv").config();
+const axios = require("axios");
 
-const GITHUB_API = 'https://api.github.com';
+const GITHUB_API = "https://api.github.com";
 
 // Workflow file names as defined in .github/workflows/
 const WORKFLOW_IDS = {
-  lead_pipeline: 'lead_pipeline.yml',
-  repo_guardian: 'repo_guardian.yml',
-  national_discovery: 'national_discovery.yml',
+  lead_pipeline: "lead_pipeline.yml",
+  repo_guardian: "repo_guardian.yml",
+  national_discovery: "national_discovery.yml",
 };
 
 class GitHubWorkflowDispatcher {
   constructor() {
     this._token = process.env.GITHUB_TOKEN;
-    this._owner = process.env.GITHUB_REPOSITORY_OWNER || process.env.GITHUB_OWNER;
+    this._owner =
+      process.env.GITHUB_REPOSITORY_OWNER || process.env.GITHUB_OWNER;
     this._repo = process.env.GITHUB_REPOSITORY
-      ? process.env.GITHUB_REPOSITORY.split('/')[1]
+      ? process.env.GITHUB_REPOSITORY.split("/")[1]
       : process.env.GITHUB_REPO;
 
     this._client = axios.create({
       baseURL: GITHUB_API,
       timeout: 15000,
       headers: {
-        'Accept': 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
         ...(this._token ? { Authorization: `Bearer ${this._token}` } : {}),
       },
     });
   }
 
   _requireAuth() {
-    if (!this._token) throw new Error('GITHUB_TOKEN env var is required for workflow dispatch.');
+    if (!this._token)
+      throw new Error(
+        "GITHUB_TOKEN env var is required for workflow dispatch.",
+      );
     if (!this._owner || !this._repo) {
-      throw new Error('GITHUB_REPOSITORY_OWNER and GITHUB_REPO env vars are required.');
+      throw new Error(
+        "GITHUB_REPOSITORY_OWNER and GITHUB_REPO env vars are required.",
+      );
     }
   }
 
-  async dispatch(workflowId, ref = 'main', inputs = {}) {
+  async dispatch(workflowId, ref = "main", inputs = {}) {
     this._requireAuth();
     try {
       const response = await this._client.post(
@@ -103,15 +109,15 @@ class GitHubWorkflowDispatcher {
     }
   }
 
-  async dispatchLeadPipeline(ref = 'main', inputs = {}) {
+  async dispatchLeadPipeline(ref = "main", inputs = {}) {
     return this.dispatch(WORKFLOW_IDS.lead_pipeline, ref, inputs);
   }
 
-  async dispatchRepoGuardian(ref = 'main', inputs = {}) {
+  async dispatchRepoGuardian(ref = "main", inputs = {}) {
     return this.dispatch(WORKFLOW_IDS.repo_guardian, ref, inputs);
   }
 
-  async dispatchNationalDiscovery(ref = 'main', inputs = {}) {
+  async dispatchNationalDiscovery(ref = "main", inputs = {}) {
     return this.dispatch(WORKFLOW_IDS.national_discovery, ref, inputs);
   }
 }

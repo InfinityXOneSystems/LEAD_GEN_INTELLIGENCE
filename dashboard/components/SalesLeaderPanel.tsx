@@ -47,10 +47,30 @@ const REPS: Rep[] = [
 ];
 
 const TOP_OPPORTUNITIES = [
-  { company: "Premier Epoxy TX", value: 42_000, stage: "Negotiation", score: 91 },
-  { company: "FloorPro Solutions", value: 38_500, stage: "Proposal", score: 84 },
-  { company: "Elite Hardwood Co.", value: 31_000, stage: "Negotiation", score: 80 },
-  { company: "StoneCraft Systems", value: 27_500, stage: "Qualified", score: 76 },
+  {
+    company: "Premier Epoxy TX",
+    value: 42_000,
+    stage: "Negotiation",
+    score: 91,
+  },
+  {
+    company: "FloorPro Solutions",
+    value: 38_500,
+    stage: "Proposal",
+    score: 84,
+  },
+  {
+    company: "Elite Hardwood Co.",
+    value: 31_000,
+    stage: "Negotiation",
+    score: 80,
+  },
+  {
+    company: "StoneCraft Systems",
+    value: 27_500,
+    stage: "Qualified",
+    score: 76,
+  },
   { company: "MetroFloor Inc.", value: 24_000, stage: "Proposal", score: 72 },
 ];
 
@@ -96,7 +116,9 @@ export default function SalesLeaderPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-white">Sales Leader Dashboard</h2>
+          <h2 className="text-lg font-bold text-white">
+            Sales Leader Dashboard
+          </h2>
           <p className="text-xs text-gray-500 mt-0.5">
             Team KPIs, rep performance &amp; top opportunities
           </p>
@@ -109,11 +131,31 @@ export default function SalesLeaderPanel() {
       {/* Team KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
         {[
-          { label: "Total Leads", value: totalLeads.toString(), color: "text-white" },
-          { label: "Qualified", value: totalQualified.toString(), color: "text-yellow-400" },
-          { label: "Active Deals", value: totalDeals.toString(), color: "text-amber-400" },
-          { label: "Won (MTD)", value: totalWon.toString(), color: "text-green-400" },
-          { label: "Revenue (MTD)", value: fmt(totalRevenue), color: "text-yellow-400" },
+          {
+            label: "Total Leads",
+            value: totalLeads.toString(),
+            color: "text-white",
+          },
+          {
+            label: "Qualified",
+            value: totalQualified.toString(),
+            color: "text-yellow-400",
+          },
+          {
+            label: "Active Deals",
+            value: totalDeals.toString(),
+            color: "text-amber-400",
+          },
+          {
+            label: "Won (MTD)",
+            value: totalWon.toString(),
+            color: "text-green-400",
+          },
+          {
+            label: "Revenue (MTD)",
+            value: fmt(totalRevenue),
+            color: "text-yellow-400",
+          },
         ].map((kpi) => (
           <div
             key={kpi.label}
@@ -129,13 +171,23 @@ export default function SalesLeaderPanel() {
       <div className="bg-[#111111] border border-[#2a2a2a] rounded-xl overflow-hidden">
         <div className="px-4 py-3 border-b border-[#2a2a2a] flex items-center justify-between">
           <h3 className="text-sm font-semibold text-white">Rep Performance</h3>
-          <span className="text-xs text-gray-600">{REPS.length} reps this period</span>
+          <span className="text-xs text-gray-600">
+            {REPS.length} reps this period
+          </span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-[#1a1a1a]">
-                {["Rep", "Leads", "Qualified", "Active Deals", "Won", "Revenue", "Activity"].map((h) => (
+                {[
+                  "Rep",
+                  "Leads",
+                  "Qualified",
+                  "Active Deals",
+                  "Won",
+                  "Revenue",
+                  "Activity",
+                ].map((h) => (
                   <th
                     key={h}
                     className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
@@ -157,8 +209,8 @@ export default function SalesLeaderPanel() {
                       isActive
                         ? "bg-yellow-400/5"
                         : idx % 2 === 0
-                        ? "hover:bg-white/[0.02]"
-                        : "bg-white/[0.01] hover:bg-white/[0.02]",
+                          ? "hover:bg-white/[0.02]"
+                          : "bg-white/[0.01] hover:bg-white/[0.02]",
                     ].join(" ")}
                   >
                     <td className="px-4 py-3">
@@ -172,10 +224,16 @@ export default function SalesLeaderPanel() {
                       </div>
                     </td>
                     <td className="px-4 py-3 text-gray-300">{rep.leads}</td>
-                    <td className="px-4 py-3 text-yellow-400">{rep.qualified}</td>
+                    <td className="px-4 py-3 text-yellow-400">
+                      {rep.qualified}
+                    </td>
                     <td className="px-4 py-3 text-amber-400">{rep.deals}</td>
-                    <td className="px-4 py-3 text-green-400 font-semibold">{rep.won}</td>
-                    <td className="px-4 py-3 text-white font-semibold">{fmt(rep.revenue)}</td>
+                    <td className="px-4 py-3 text-green-400 font-semibold">
+                      {rep.won}
+                    </td>
+                    <td className="px-4 py-3 text-white font-semibold">
+                      {fmt(rep.revenue)}
+                    </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         <div className="w-16 h-1.5 bg-[#2a2a2a] rounded-full overflow-hidden">
@@ -184,7 +242,9 @@ export default function SalesLeaderPanel() {
                             style={{ width: `${rep.activity}%` }}
                           />
                         </div>
-                        <span className="text-xs text-gray-400">{rep.activity}%</span>
+                        <span className="text-xs text-gray-400">
+                          {rep.activity}%
+                        </span>
                       </div>
                     </td>
                   </tr>
@@ -196,11 +256,21 @@ export default function SalesLeaderPanel() {
                 <td className="px-4 py-2 text-xs font-semibold text-yellow-400">
                   Team Total
                 </td>
-                <td className="px-4 py-2 text-xs text-gray-300">{totalLeads}</td>
-                <td className="px-4 py-2 text-xs text-yellow-400">{totalQualified}</td>
-                <td className="px-4 py-2 text-xs text-amber-400">{totalDeals}</td>
-                <td className="px-4 py-2 text-xs text-green-400 font-semibold">{totalWon}</td>
-                <td className="px-4 py-2 text-xs text-white font-semibold">{fmt(totalRevenue)}</td>
+                <td className="px-4 py-2 text-xs text-gray-300">
+                  {totalLeads}
+                </td>
+                <td className="px-4 py-2 text-xs text-yellow-400">
+                  {totalQualified}
+                </td>
+                <td className="px-4 py-2 text-xs text-amber-400">
+                  {totalDeals}
+                </td>
+                <td className="px-4 py-2 text-xs text-green-400 font-semibold">
+                  {totalWon}
+                </td>
+                <td className="px-4 py-2 text-xs text-white font-semibold">
+                  {fmt(totalRevenue)}
+                </td>
                 <td className="px-4 py-2" />
               </tr>
             </tfoot>
@@ -217,13 +287,16 @@ export default function SalesLeaderPanel() {
           </h3>
           <div className="flex items-center gap-4 mb-4 text-xs text-gray-500">
             <span>
-              <span className="text-white font-semibold">{totalCalls}</span> calls
+              <span className="text-white font-semibold">{totalCalls}</span>{" "}
+              calls
             </span>
             <span>
-              <span className="text-white font-semibold">{totalEmails}</span> emails
+              <span className="text-white font-semibold">{totalEmails}</span>{" "}
+              emails
             </span>
             <span>
-              <span className="text-white font-semibold">{totalMeetings}</span> meetings
+              <span className="text-white font-semibold">{totalMeetings}</span>{" "}
+              meetings
             </span>
           </div>
           {/* Bar chart */}
@@ -231,7 +304,10 @@ export default function SalesLeaderPanel() {
             {WEEKLY_ACTIVITY.map((day) => {
               const pct = Math.max(4, Math.round((day.calls / maxCalls) * 100));
               return (
-                <div key={day.day} className="flex-1 flex flex-col items-center gap-1">
+                <div
+                  key={day.day}
+                  className="flex-1 flex flex-col items-center gap-1"
+                >
                   <div
                     className="w-full bg-yellow-400 rounded-t transition-all duration-500"
                     style={{ height: `${pct}%` }}
@@ -241,7 +317,9 @@ export default function SalesLeaderPanel() {
               );
             })}
           </div>
-          <p className="text-[10px] text-gray-600 mt-2">Bar = calls · Mon–Fri</p>
+          <p className="text-[10px] text-gray-600 mt-2">
+            Bar = calls · Mon–Fri
+          </p>
         </div>
 
         {/* Top Opportunities */}

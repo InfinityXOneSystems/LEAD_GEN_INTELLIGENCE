@@ -73,7 +73,11 @@ export default function RevenuePanel() {
                   : "text-gray-400 hover:text-white",
               ].join(" ")}
             >
-              {p === "monthly" ? "Monthly" : p === "quarterly" ? "Quarterly" : "Annual"}
+              {p === "monthly"
+                ? "Monthly"
+                : p === "quarterly"
+                  ? "Quarterly"
+                  : "Annual"}
             </button>
           ))}
         </div>
@@ -198,7 +202,10 @@ export default function RevenuePanel() {
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
-            { label: "Avg Deal Size", value: fmt(Math.round(data.revenue / data.deals)) },
+            {
+              label: "Avg Deal Size",
+              value: fmt(Math.round(data.revenue / data.deals)),
+            },
             { label: "Avg Sales Cycle", value: "18 days" },
             { label: "Deals / Month", value: data.deals.toString() },
             { label: "Conversion Rate", value: "9.0%" },

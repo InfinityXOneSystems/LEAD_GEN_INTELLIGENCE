@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 class ProxyRotationSystem {
   constructor() {
@@ -26,7 +26,9 @@ class ProxyRotationSystem {
     const count = (this.failures.get(proxy) || 0) + 1;
     this.failures.set(proxy, count);
     if (count >= this.MAX_FAILURES) {
-      console.warn(`[ProxyRotation] Removing proxy ${proxy} after ${count} failures`);
+      console.warn(
+        `[ProxyRotation] Removing proxy ${proxy} after ${count} failures`,
+      );
       this.proxies = this.proxies.filter((p) => p !== proxy);
       this.failures.delete(proxy);
       this.currentIndex = 0;
@@ -35,18 +37,20 @@ class ProxyRotationSystem {
 
   getHealthy() {
     return this.proxies.filter(
-      (p) => (this.failures.get(p) || 0) < this.MAX_FAILURES
+      (p) => (this.failures.get(p) || 0) < this.MAX_FAILURES,
     );
   }
 
   loadFromEnv() {
-    const raw = process.env.PROXY_LIST || '';
+    const raw = process.env.PROXY_LIST || "";
     const urls = raw
-      .split(',')
+      .split(",")
       .map((s) => s.trim())
       .filter(Boolean);
     urls.forEach((url) => this.addProxy(url));
-    console.info(`[ProxyRotation] Loaded ${urls.length} proxies from environment`);
+    console.info(
+      `[ProxyRotation] Loaded ${urls.length} proxies from environment`,
+    );
     return urls.length;
   }
 }

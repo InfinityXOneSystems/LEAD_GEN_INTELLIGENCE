@@ -77,17 +77,14 @@ export default function SalesPipelinePanel() {
 
   const totalPipeline = PIPELINE_STAGES.slice(0, 4).reduce(
     (s, st) => s + st.value,
-    0
+    0,
   );
   const closedWon = PIPELINE_STAGES.find((s) => s.id === "closed-won")!;
-  const winRate = conversionRate(
-    PIPELINE_STAGES[0].leads,
-    closedWon.leads
-  );
+  const winRate = conversionRate(PIPELINE_STAGES[0].leads, closedWon.leads);
   const weightedForecast = Math.round(
     PIPELINE_STAGES[2].value * 0.4 +
       PIPELINE_STAGES[3].value * 0.7 +
-      closedWon.value
+      closedWon.value,
   );
 
   return (
@@ -109,9 +106,21 @@ export default function SalesPipelinePanel() {
       {/* Revenue Forecast Summary */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
-          { label: "Total Pipeline", value: fmt(totalPipeline), sub: "Active stages" },
-          { label: "Weighted Forecast", value: fmt(weightedForecast), sub: "Probability adj." },
-          { label: "Closed Won (MTD)", value: fmt(closedWon.value), sub: `${closedWon.leads} deals` },
+          {
+            label: "Total Pipeline",
+            value: fmt(totalPipeline),
+            sub: "Active stages",
+          },
+          {
+            label: "Weighted Forecast",
+            value: fmt(weightedForecast),
+            sub: "Probability adj.",
+          },
+          {
+            label: "Closed Won (MTD)",
+            value: fmt(closedWon.value),
+            sub: `${closedWon.leads} deals`,
+          },
           { label: "Win Rate", value: winRate, sub: "Prospect → Won" },
         ].map((m) => (
           <div
@@ -131,14 +140,15 @@ export default function SalesPipelinePanel() {
           const nextStage = PIPELINE_STAGES[idx + 1];
           const isSelected = selectedStage === stage.id;
           const maxLeads = PIPELINE_STAGES[0].leads;
-          const barPct = Math.max(4, Math.round((stage.leads / maxLeads) * 100));
+          const barPct = Math.max(
+            4,
+            Math.round((stage.leads / maxLeads) * 100),
+          );
 
           return (
             <div
               key={stage.id}
-              onClick={() =>
-                setSelectedStage(isSelected ? null : stage.id)
-              }
+              onClick={() => setSelectedStage(isSelected ? null : stage.id)}
               className={[
                 "bg-[#111111] border rounded-xl p-3 cursor-pointer transition-all",
                 isSelected
@@ -169,13 +179,14 @@ export default function SalesPipelinePanel() {
               </p>
 
               {/* Conversion arrow to next */}
-              {nextStage && !["closed-won", "closed-lost"].includes(stage.id) && (
-                <div className="mt-2 pt-2 border-t border-[#2a2a2a]">
-                  <p className="text-[10px] text-gray-600">
-                    → {conversionRate(stage.leads, nextStage.leads)} convert
-                  </p>
-                </div>
-              )}
+              {nextStage &&
+                !["closed-won", "closed-lost"].includes(stage.id) && (
+                  <div className="mt-2 pt-2 border-t border-[#2a2a2a]">
+                    <p className="text-[10px] text-gray-600">
+                      → {conversionRate(stage.leads, nextStage.leads)} convert
+                    </p>
+                  </div>
+                )}
             </div>
           );
         })}
@@ -189,7 +200,7 @@ export default function SalesPipelinePanel() {
         <div className="space-y-2">
           {PIPELINE_STAGES.map((stage, idx) => {
             const pct = Math.round(
-              (stage.leads / PIPELINE_STAGES[0].leads) * 100
+              (stage.leads / PIPELINE_STAGES[0].leads) * 100,
             );
             return (
               <div key={stage.id} className="flex items-center gap-3">
@@ -202,8 +213,8 @@ export default function SalesPipelinePanel() {
                       stage.id === "closed-won"
                         ? "bg-green-400"
                         : stage.id === "closed-lost"
-                        ? "bg-red-400/60"
-                        : "bg-yellow-400"
+                          ? "bg-red-400/60"
+                          : "bg-yellow-400"
                     }`}
                     style={{ width: `${pct}%` }}
                   />
@@ -220,7 +231,7 @@ export default function SalesPipelinePanel() {
                       ↓{" "}
                       {conversionRate(
                         stage.leads,
-                        PIPELINE_STAGES[idx + 1].leads
+                        PIPELINE_STAGES[idx + 1].leads,
                       )}
                     </span>
                   )}
@@ -240,10 +251,7 @@ export default function SalesPipelinePanel() {
             <p className="text-gray-500 text-xs mb-1">Best Case</p>
             <p className="text-white font-bold text-lg">
               {fmt(
-                PIPELINE_STAGES.slice(0, 5).reduce(
-                  (s, st) => s + st.value,
-                  0
-                )
+                PIPELINE_STAGES.slice(0, 5).reduce((s, st) => s + st.value, 0),
               )}
             </p>
             <p className="text-[10px] text-gray-600">All active stages close</p>

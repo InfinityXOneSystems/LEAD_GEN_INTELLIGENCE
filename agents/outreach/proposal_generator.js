@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
-const PROPOSALS_DIR = path.join(__dirname, '../../data/proposals');
+const PROPOSALS_DIR = path.join(__dirname, "../../data/proposals");
 
 class ProposalGenerator {
   constructor() {
@@ -18,22 +18,31 @@ class ProposalGenerator {
    * @param {Object} customFields - Optional overrides: { estimatedValue, terms, contactName, contactEmail, contactPhone }
    * @returns {{ id, html, text, filePath }}
    */
-  generateProposal(lead, serviceType = 'Flooring Services', customFields = {}) {
+  generateProposal(lead, serviceType = "Flooring Services", customFields = {}) {
     const id = crypto.randomUUID();
-    const date = new Date().toLocaleDateString('en-US', {
-      year: 'numeric', month: 'long', day: 'numeric',
+    const date = new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
 
-    const company = lead.company_name || lead.name || 'Valued Client';
-    const city = lead.city || '';
-    const state = lead.state || '';
-    const location = [city, state].filter(Boolean).join(', ');
+    const company = lead.company_name || lead.name || "Valued Client";
+    const city = lead.city || "";
+    const state = lead.state || "";
+    const location = [city, state].filter(Boolean).join(", ");
 
-    const estimatedValue = customFields.estimatedValue || '$2,500 – $15,000';
-    const terms = customFields.terms || 'Net 30 days from invoice date. 50% deposit required to schedule.';
-    const contactName = customFields.contactName || process.env.CONTACT_NAME || 'Sales Team';
-    const contactEmail = customFields.contactEmail || process.env.OUTREACH_EMAIL || 'sales@xpsintelligence.com';
-    const contactPhone = customFields.contactPhone || process.env.CONTACT_PHONE || '';
+    const estimatedValue = customFields.estimatedValue || "$2,500 – $15,000";
+    const terms =
+      customFields.terms ||
+      "Net 30 days from invoice date. 50% deposit required to schedule.";
+    const contactName =
+      customFields.contactName || process.env.CONTACT_NAME || "Sales Team";
+    const contactEmail =
+      customFields.contactEmail ||
+      process.env.OUTREACH_EMAIL ||
+      "sales@xpsintelligence.com";
+    const contactPhone =
+      customFields.contactPhone || process.env.CONTACT_PHONE || "";
 
     const html = `<!DOCTYPE html>
 <html lang="en">
@@ -60,14 +69,14 @@ class ProposalGenerator {
 
   <div class="section">
     <h2>Prepared For</h2>
-    <p><strong>${company}</strong>${location ? `<br />${location}` : ''}</p>
-    ${lead.email ? `<p>Email: ${lead.email}</p>` : ''}
-    ${lead.phone ? `<p>Phone: ${lead.phone}</p>` : ''}
+    <p><strong>${company}</strong>${location ? `<br />${location}` : ""}</p>
+    ${lead.email ? `<p>Email: ${lead.email}</p>` : ""}
+    ${lead.phone ? `<p>Phone: ${lead.phone}</p>` : ""}
   </div>
 
   <div class="section">
     <h2>Service Description</h2>
-    <p>We are pleased to present this proposal for <strong>${serviceType}</strong> services${location ? ` in the ${location} area` : ''}. Our team specializes in delivering high-quality results tailored to your business needs.</p>
+    <p>We are pleased to present this proposal for <strong>${serviceType}</strong> services${location ? ` in the ${location} area` : ""}. Our team specializes in delivering high-quality results tailored to your business needs.</p>
     <p>Services include site preparation, material supply, professional installation, and post-installation cleanup and inspection.</p>
   </div>
 
@@ -95,8 +104,8 @@ class ProposalGenerator {
   <div class="footer">
     <p><strong>Contact Us</strong><br />
     ${contactName}<br />
-    ${contactEmail ? `Email: ${contactEmail}<br />` : ''}
-    ${contactPhone ? `Phone: ${contactPhone}` : ''}
+    ${contactEmail ? `Email: ${contactEmail}<br />` : ""}
+    ${contactPhone ? `Phone: ${contactPhone}` : ""}
     </p>
     <p>This proposal is valid for 30 days from the date above.</p>
   </div>
@@ -108,9 +117,9 @@ class ProposalGenerator {
 Date: ${date}
 Proposal ID: ${id}
 
-Prepared For: ${company}${location ? ` | ${location}` : ''}
-${lead.email ? `Email: ${lead.email}` : ''}
-${lead.phone ? `Phone: ${lead.phone}` : ''}
+Prepared For: ${company}${location ? ` | ${location}` : ""}
+${lead.email ? `Email: ${lead.email}` : ""}
+${lead.phone ? `Phone: ${lead.phone}` : ""}
 
 SERVICE: ${serviceType}
 We propose professional ${serviceType} services tailored to your business.
@@ -119,12 +128,12 @@ ESTIMATED VALUE: ${estimatedValue}
 
 TERMS: ${terms}
 
-CONTACT: ${contactName} | ${contactEmail}${contactPhone ? ` | ${contactPhone}` : ''}
+CONTACT: ${contactName} | ${contactEmail}${contactPhone ? ` | ${contactPhone}` : ""}
 
 This proposal is valid for 30 days.`;
 
     const filePath = path.join(PROPOSALS_DIR, `proposal_${id}.html`);
-    fs.writeFileSync(filePath, html, 'utf8');
+    fs.writeFileSync(filePath, html, "utf8");
 
     return { id, html, text, filePath };
   }

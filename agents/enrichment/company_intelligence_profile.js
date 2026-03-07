@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-const CompanyEnrichmentEngine = require('./company_enrichment_engine');
-const TechnologyStackDetector = require('./technology_stack_detection');
-const ReviewAggregator = require('./review_aggregator');
-const RevenueEstimationEngine = require('./revenue_estimation');
-const ServiceClassificationEngine = require('./service_classification');
-const ConstructionSignalDetector = require('./construction_signal_detection');
-const SocialProfileFinder = require('./social_profile_finder');
+const CompanyEnrichmentEngine = require("./company_enrichment_engine");
+const TechnologyStackDetector = require("./technology_stack_detection");
+const ReviewAggregator = require("./review_aggregator");
+const RevenueEstimationEngine = require("./revenue_estimation");
+const ServiceClassificationEngine = require("./service_classification");
+const ConstructionSignalDetector = require("./construction_signal_detection");
+const SocialProfileFinder = require("./social_profile_finder");
 
 class CompanyIntelligenceProfileBuilder {
   constructor() {
@@ -25,7 +25,7 @@ class CompanyIntelligenceProfileBuilder {
     // Run independent enrichment steps in parallel
     const [enriched, reviewData, socialProfiles] = await Promise.all([
       this.enrichmentEngine.enrichLead(lead).catch((err) => {
-        console.error('[ProfileBuilder] Enrichment error:', err.message);
+        console.error("[ProfileBuilder] Enrichment error:", err.message);
         return lead;
       }),
       this.reviewAggregator.aggregateForLead(lead).catch(() => null),
@@ -43,10 +43,12 @@ class CompanyIntelligenceProfileBuilder {
     // Tech detection (requires website)
     if (profile.website) {
       try {
-        const url = profile.website.startsWith('http') ? profile.website : `https://${profile.website}`;
+        const url = profile.website.startsWith("http")
+          ? profile.website
+          : `https://${profile.website}`;
         profile.techStack = await this.techDetector.detect(url);
       } catch (err) {
-        console.error('[ProfileBuilder] Tech detection error:', err.message);
+        console.error("[ProfileBuilder] Tech detection error:", err.message);
       }
     }
 
@@ -69,9 +71,10 @@ class CompanyIntelligenceProfileBuilder {
     if ((profile.reviewCount || 0) > 10) score += 5;
     if ((profile.rating || 0) > 4) score += 10;
     if (profile.linkedin) score += 5;
-    if (profile.constructionSignals?.opportunity_level === 'HIGH') score += 20;
-    else if (profile.constructionSignals?.opportunity_level === 'MEDIUM') score += 10;
-    if (profile.revenue?.confidence === 'HIGH') score += 15;
+    if (profile.constructionSignals?.opportunity_level === "HIGH") score += 20;
+    else if (profile.constructionSignals?.opportunity_level === "MEDIUM")
+      score += 10;
+    if (profile.revenue?.confidence === "HIGH") score += 15;
     return score;
   }
 }

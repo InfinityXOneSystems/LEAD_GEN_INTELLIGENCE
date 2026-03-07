@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // TODO: Replace mock data generation with real API integrations:
 //   - Google Places API for Google reviews
@@ -7,7 +7,7 @@
 
 class ReviewAggregator {
   async aggregateForLead(lead) {
-    const { name = '', city = '', state = '' } = lead;
+    const { name = "", city = "", state = "" } = lead;
 
     // Mock realistic data until real API keys are configured
     const seed = this._hashString(`${name}${city}${state}`);
@@ -16,13 +16,25 @@ class ReviewAggregator {
 
     const sources = [];
     if (reviewCount > 0) {
-      sources.push({ source: 'Google', rating, count: Math.floor(reviewCount * 0.6) });
+      sources.push({
+        source: "Google",
+        rating,
+        count: Math.floor(reviewCount * 0.6),
+      });
     }
     if (reviewCount > 5) {
-      sources.push({ source: 'Yelp', rating: Math.max(1, rating - 0.3), count: Math.floor(reviewCount * 0.3) });
+      sources.push({
+        source: "Yelp",
+        rating: Math.max(1, rating - 0.3),
+        count: Math.floor(reviewCount * 0.3),
+      });
     }
     if (reviewCount > 15) {
-      sources.push({ source: 'Facebook', rating: Math.min(5, rating + 0.1), count: Math.floor(reviewCount * 0.1) });
+      sources.push({
+        source: "Facebook",
+        rating: Math.min(5, rating + 0.1),
+        count: Math.floor(reviewCount * 0.1),
+      });
     }
 
     return {

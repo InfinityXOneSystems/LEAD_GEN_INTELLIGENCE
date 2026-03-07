@@ -1,10 +1,13 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
-const DATA_FILE = path.join(__dirname, '../../data/outreach/follow_up_schedule.json');
+const DATA_FILE = path.join(
+  __dirname,
+  "../../data/outreach/follow_up_schedule.json",
+);
 
 class FollowUpAutomation {
   constructor() {
@@ -14,7 +17,7 @@ class FollowUpAutomation {
 
   _load() {
     try {
-      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+      return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
     } catch {
       return { followUps: {} };
     }
@@ -37,11 +40,11 @@ class FollowUpAutomation {
       id,
       leadId: lead.id || lead.company_name || null,
       leadEmail: lead.email || null,
-      leadName: lead.company_name || lead.name || 'Unknown',
+      leadName: lead.company_name || lead.name || "Unknown",
       campaignId,
-      dueDate: dueDate.toISOString().split('T')[0],
+      dueDate: dueDate.toISOString().split("T")[0],
       dayOffset,
-      status: 'pending',
+      status: "pending",
       createdAt: new Date().toISOString(),
       sentAt: null,
     };
@@ -55,9 +58,9 @@ class FollowUpAutomation {
    * Returns all follow-ups whose dueDate is today or in the past and are still pending.
    */
   getDueFollowUps() {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
     return Object.values(this._data.followUps).filter(
-      (f) => f.status === 'pending' && f.dueDate <= today
+      (f) => f.status === "pending" && f.dueDate <= today,
     );
   }
 
@@ -67,7 +70,7 @@ class FollowUpAutomation {
   markSent(followUpId) {
     const f = this._data.followUps[followUpId];
     if (!f) throw new Error(`Follow-up not found: ${followUpId}`);
-    f.status = 'sent';
+    f.status = "sent";
     f.sentAt = new Date().toISOString();
     this._save();
     return f;
@@ -79,7 +82,7 @@ class FollowUpAutomation {
   cancelFollowUp(followUpId) {
     const f = this._data.followUps[followUpId];
     if (!f) throw new Error(`Follow-up not found: ${followUpId}`);
-    f.status = 'cancelled';
+    f.status = "cancelled";
     this._save();
     return f;
   }

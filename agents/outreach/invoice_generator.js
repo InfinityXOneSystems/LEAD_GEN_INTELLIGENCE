@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
-const INVOICES_DIR = path.join(__dirname, '../../data/invoices');
+const INVOICES_DIR = path.join(__dirname, "../../data/invoices");
 
 // Tax rate — can be overridden via env
-const TAX_RATE = parseFloat(process.env.INVOICE_TAX_RATE || '0.08');
+const TAX_RATE = parseFloat(process.env.INVOICE_TAX_RATE || "0.08");
 
 class InvoiceGenerator {
   constructor() {
@@ -16,12 +16,12 @@ class InvoiceGenerator {
   }
 
   _counterFile() {
-    return path.join(INVOICES_DIR, '.invoice_counter');
+    return path.join(INVOICES_DIR, ".invoice_counter");
   }
 
   _loadCounter() {
     try {
-      return parseInt(fs.readFileSync(this._counterFile(), 'utf8'), 10) || 1000;
+      return parseInt(fs.readFileSync(this._counterFile(), "utf8"), 10) || 1000;
     } catch {
       return 1000;
     }
@@ -43,24 +43,44 @@ class InvoiceGenerator {
    */
   generateInvoice(lead, services = [], amount = 0, dueDate = null) {
     const invoiceNumber = this._nextInvoiceNumber();
-    const issueDate = new Date().toLocaleDateString('en-US', {
-      year: 'numeric', month: 'long', day: 'numeric',
+    const issueDate = new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
     const dueDateStr = dueDate
-      ? new Date(dueDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-      : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', {
-          year: 'numeric', month: 'long', day: 'numeric',
-        });
+      ? new Date(dueDate).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(
+          "en-US",
+          {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          },
+        );
 
-    const company = lead.company_name || lead.name || 'Client';
-    const city = lead.city || '';
-    const state = lead.state || '';
-    const location = [city, state].filter(Boolean).join(', ');
+    const company = lead.company_name || lead.name || "Client";
+    const city = lead.city || "";
+    const state = lead.state || "";
+    const location = [city, state].filter(Boolean).join(", ");
 
     // Build line items
-    let lineItems = services.length > 0 ? services : [{ description: 'Professional Services', quantity: 1, unitPrice: amount }];
+    let lineItems =
+      services.length > 0
+        ? services
+        : [
+            {
+              description: "Professional Services",
+              quantity: 1,
+              unitPrice: amount,
+            },
+          ];
     lineItems = lineItems.map((s) => ({
-      description: s.description || 'Service',
+      description: s.description || "Service",
       quantity: Number(s.quantity) || 1,
       unitPrice: Number(s.unitPrice) || 0,
       lineTotal: (Number(s.quantity) || 1) * (Number(s.unitPrice) || 0),
@@ -70,7 +90,7 @@ class InvoiceGenerator {
     const taxAmount = subtotal * TAX_RATE;
     const total = subtotal + taxAmount;
 
-    const fmt = (n) => `$${n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+    const fmt = (n) => `$${n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 
     const lineRowsHtml = lineItems
       .map(
@@ -80,9 +100,9 @@ class InvoiceGenerator {
             <td style="text-align:center">${s.quantity}</td>
             <td style="text-align:right">${fmt(s.unitPrice)}</td>
             <td style="text-align:right">${fmt(s.lineTotal)}</td>
-          </tr>`
+          </tr>`,
       )
-      .join('\n');
+      .join("\n");
 
     const html = `<!DOCTYPE html>
 <html lang="en">
@@ -109,9 +129,9 @@ class InvoiceGenerator {
   <div class="header">
     <div>
       <h1>INVOICE</h1>
-      <p>${process.env.CONTACT_NAME || 'XPS Intelligence'}</p>
-      <p>${process.env.CONTACT_EMAIL || process.env.OUTREACH_EMAIL || 'billing@xpsintelligence.com'}</p>
-      ${process.env.CONTACT_PHONE ? `<p>${process.env.CONTACT_PHONE}</p>` : ''}
+      <p>${process.env.CONTACT_NAME || "XPS Intelligence"}</p>
+      <p>${process.env.CONTACT_EMAIL || process.env.OUTREACH_EMAIL || "billing@xpsintelligence.com"}</p>
+      ${process.env.CONTACT_PHONE ? `<p>${process.env.CONTACT_PHONE}</p>` : ""}
     </div>
     <div class="invoice-meta">
       <p><strong>Invoice #:</strong> ${invoiceNumber}</p>
@@ -123,9 +143,9 @@ class InvoiceGenerator {
 
   <div style="margin-bottom:24px">
     <h3>Bill To</h3>
-    <p><strong>${company}</strong>${location ? `<br />${location}` : ''}</p>
-    ${lead.email ? `<p>${lead.email}</p>` : ''}
-    ${lead.phone ? `<p>${lead.phone}</p>` : ''}
+    <p><strong>${company}</strong>${location ? `<br />${location}` : ""}</p>
+    ${lead.email ? `<p>${lead.email}</p>` : ""}
+    ${lead.phone ? `<p>${lead.phone}</p>` : ""}
   </div>
 
   <table>
@@ -156,7 +176,7 @@ class InvoiceGenerator {
 </html>`;
 
     const filePath = path.join(INVOICES_DIR, `invoice_${invoiceNumber}.html`);
-    fs.writeFileSync(filePath, html, 'utf8');
+    fs.writeFileSync(filePath, html, "utf8");
 
     return { invoiceNumber, html, filePath, subtotal, taxAmount, total };
   }

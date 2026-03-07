@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const ROOT = path.join(__dirname, '../..');
-const LEADS_DIR = path.join(ROOT, 'leads');
-const DATA_DIR = path.join(ROOT, 'data');
+const ROOT = path.join(__dirname, "../..");
+const LEADS_DIR = path.join(ROOT, "leads");
+const DATA_DIR = path.join(ROOT, "data");
 
 // Lazy-load sales agents to avoid hard failures if files are missing
 function safeLazyLoad(modulePath) {
@@ -20,34 +20,40 @@ function safeLazyLoad(modulePath) {
 
 class SalesLeaderDashboardData {
   constructor() {
-    this._pipelineTracker = safeLazyLoad(path.join(__dirname, 'sales_pipeline_tracker'));
-    this._revenueForecast = safeLazyLoad(path.join(__dirname, 'revenue_forecast'));
+    this._pipelineTracker = safeLazyLoad(
+      path.join(__dirname, "sales_pipeline_tracker"),
+    );
+    this._revenueForecast = safeLazyLoad(
+      path.join(__dirname, "revenue_forecast"),
+    );
   }
 
   // ── internal data loaders ─────────────────────────────────────────────────
 
   _loadLeads() {
-    const scoredFile = path.join(LEADS_DIR, 'scored_leads.json');
-    const rawFile = path.join(LEADS_DIR, 'leads.json');
+    const scoredFile = path.join(LEADS_DIR, "scored_leads.json");
+    const rawFile = path.join(LEADS_DIR, "leads.json");
     try {
-      if (fs.existsSync(scoredFile)) return JSON.parse(fs.readFileSync(scoredFile, 'utf8'));
-      if (fs.existsSync(rawFile)) return JSON.parse(fs.readFileSync(rawFile, 'utf8'));
+      if (fs.existsSync(scoredFile))
+        return JSON.parse(fs.readFileSync(scoredFile, "utf8"));
+      if (fs.existsSync(rawFile))
+        return JSON.parse(fs.readFileSync(rawFile, "utf8"));
     } catch (_) {}
     return [];
   }
 
   _loadSalesData(filename) {
-    const file = path.join(DATA_DIR, 'sales', filename);
+    const file = path.join(DATA_DIR, "sales", filename);
     try {
-      if (fs.existsSync(file)) return JSON.parse(fs.readFileSync(file, 'utf8'));
+      if (fs.existsSync(file)) return JSON.parse(fs.readFileSync(file, "utf8"));
     } catch (_) {}
     return null;
   }
 
   _loadRepData(repId) {
-    const file = path.join(DATA_DIR, 'sales', 'reps', `${repId}.json`);
+    const file = path.join(DATA_DIR, "sales", "reps", `${repId}.json`);
     try {
-      if (fs.existsSync(file)) return JSON.parse(fs.readFileSync(file, 'utf8'));
+      if (fs.existsSync(file)) return JSON.parse(fs.readFileSync(file, "utf8"));
     } catch (_) {}
     return null;
   }
@@ -55,7 +61,7 @@ class SalesLeaderDashboardData {
   // ── pipeline summary ──────────────────────────────────────────────────────
 
   _getPipelineSummary() {
-    const pipeline = this._loadSalesData('pipeline.json');
+    const pipeline = this._loadSalesData("pipeline.json");
     if (!pipeline || !pipeline.stages) {
       return { stages: {}, totalDeals: 0, pipelineValue: 0 };
     }
@@ -71,22 +77,24 @@ class SalesLeaderDashboardData {
   // ── revenue forecast ──────────────────────────────────────────────────────
 
   _getRevenueForecast() {
-    const forecast = this._loadSalesData('revenue_forecast.json');
-    if (!forecast) return { forecast: null, message: 'No forecast data available' };
+    const forecast = this._loadSalesData("revenue_forecast.json");
+    if (!forecast)
+      return { forecast: null, message: "No forecast data available" };
     return forecast;
   }
 
   // ── rep activity ──────────────────────────────────────────────────────────
 
   _getRepActivity() {
-    const assignments = this._loadSalesData('assignments.json');
+    const assignments = this._loadSalesData("assignments.json");
     if (!assignments || !assignments.assignments) return [];
 
     const repStats = {};
     Object.entries(assignments.assignments).forEach(([leadId, assignment]) => {
       const rep = assignment.repId || assignment.assignedTo;
       if (!rep) return;
-      if (!repStats[rep]) repStats[rep] = { repId: rep, assignedLeads: 0, deals: 0, calls: 0 };
+      if (!repStats[rep])
+        repStats[rep] = { repId: rep, assignedLeads: 0, deals: 0, calls: 0 };
       repStats[rep].assignedLeads += 1;
     });
 
@@ -99,7 +107,7 @@ class SalesLeaderDashboardData {
     const leads = this._loadLeads();
     return Array.isArray(leads)
       ? leads
-          .filter((l) => typeof l.score === 'number')
+          .filter((l) => typeof l.score === "number")
           .sort((a, b) => b.score - a.score)
           .slice(0, n)
           .map((l) => ({
@@ -117,10 +125,10 @@ class SalesLeaderDashboardData {
   // ── recent activity ───────────────────────────────────────────────────────
 
   _getRecentActivity() {
-    const logFile = path.join(DATA_DIR, 'outreach', 'outreach_queue.json');
+    const logFile = path.join(DATA_DIR, "outreach", "outreach_queue.json");
     try {
       if (fs.existsSync(logFile)) {
-        const queue = JSON.parse(fs.readFileSync(logFile, 'utf8'));
+        const queue = JSON.parse(fs.readFileSync(logFile, "utf8"));
         return Array.isArray(queue)
           ? queue
               .sort((a, b) => new Date(b.queuedAt) - new Date(a.queuedAt))
@@ -136,7 +144,9 @@ class SalesLeaderDashboardData {
   getDashboardData() {
     const leads = this._loadLeads();
     const total = Array.isArray(leads) ? leads.length : 0;
-    const scored = Array.isArray(leads) ? leads.filter((l) => typeof l.score === 'number') : [];
+    const scored = Array.isArray(leads)
+      ? leads.filter((l) => typeof l.score === "number")
+      : [];
     const avgScore = scored.length
       ? Math.round(scored.reduce((s, l) => s + l.score, 0) / scored.length)
       : 0;
@@ -154,7 +164,7 @@ class SalesLeaderDashboardData {
 
   getRepPerformance(repId) {
     const repData = this._loadRepData(repId);
-    const assignments = this._loadSalesData('assignments.json');
+    const assignments = this._loadSalesData("assignments.json");
     const assigned = [];
 
     if (assignments && assignments.assignments) {
@@ -168,15 +178,16 @@ class SalesLeaderDashboardData {
       assignedLeads: assigned.length,
       calls: repData ? (repData.calls || []).length : 0,
       deals: repData ? (repData.deals || []).length : 0,
-      conversionRate: assigned.length > 0 && repData
-        ? Math.round(((repData.deals || []).length / assigned.length) * 100)
-        : 0,
+      conversionRate:
+        assigned.length > 0 && repData
+          ? Math.round(((repData.deals || []).length / assigned.length) * 100)
+          : 0,
       lastActivity: repData ? repData.lastActivity : null,
     };
   }
 
   getTeamPerformance() {
-    const assignments = this._loadSalesData('assignments.json');
+    const assignments = this._loadSalesData("assignments.json");
     const reps = new Set();
 
     if (assignments && assignments.assignments) {
@@ -204,7 +215,8 @@ class SalesLeaderDashboardData {
       withEmail: list.filter((l) => l.email).length,
       withWebsite: list.filter((l) => l.website).length,
       pipelineDeals: pipeline.totalDeals,
-      qualificationRate: list.length > 0 ? Math.round((qualifiedLeads / list.length) * 100) : 0,
+      qualificationRate:
+        list.length > 0 ? Math.round((qualifiedLeads / list.length) * 100) : 0,
     };
   }
 }

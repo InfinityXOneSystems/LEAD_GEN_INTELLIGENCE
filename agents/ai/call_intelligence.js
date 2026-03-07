@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const CALLS_FILE = path.join(__dirname, '../../data/calls/call_history.json');
+const CALLS_FILE = path.join(__dirname, "../../data/calls/call_history.json");
 
 function loadCalls() {
   try {
     if (fs.existsSync(CALLS_FILE)) {
-      return JSON.parse(fs.readFileSync(CALLS_FILE, 'utf8'));
+      return JSON.parse(fs.readFileSync(CALLS_FILE, "utf8"));
     }
   } catch (_) {}
   return [];
@@ -28,10 +28,19 @@ class CallIntelligenceRecorder {
     this._calls = loadCalls();
   }
 
-  recordCall(repId, leadId, duration, outcome, notes = '') {
-    const VALID_OUTCOMES = ['connected', 'voicemail', 'no_answer', 'closed', 'not_interested', 'follow_up'];
+  recordCall(repId, leadId, duration, outcome, notes = "") {
+    const VALID_OUTCOMES = [
+      "connected",
+      "voicemail",
+      "no_answer",
+      "closed",
+      "not_interested",
+      "follow_up",
+    ];
     if (!VALID_OUTCOMES.includes(outcome)) {
-      throw new Error(`Invalid outcome '${outcome}'. Must be one of: ${VALID_OUTCOMES.join(', ')}`);
+      throw new Error(
+        `Invalid outcome '${outcome}'. Must be one of: ${VALID_OUTCOMES.join(", ")}`,
+      );
     }
     const record = {
       id: generateId(),
@@ -42,7 +51,7 @@ class CallIntelligenceRecorder {
       notes,
       recorded_at: new Date().toISOString(),
       hour_of_day: new Date().getHours(),
-      day_of_week: new Date().toLocaleDateString('en-US', { weekday: 'long' }),
+      day_of_week: new Date().toLocaleDateString("en-US", { weekday: "long" }),
     };
     this._calls.push(record);
     this._persist();
@@ -64,7 +73,11 @@ class CallIntelligenceRecorder {
   analyzeCallPatterns(repId) {
     const calls = this.getCallHistory(repId);
     if (calls.length === 0) {
-      return { rep_id: repId, message: 'No call history found.', patterns: null };
+      return {
+        rep_id: repId,
+        message: "No call history found.",
+        patterns: null,
+      };
     }
 
     // Outcome rates
@@ -74,25 +87,31 @@ class CallIntelligenceRecorder {
     }, {});
 
     const outcomeRates = Object.fromEntries(
-      Object.entries(outcomeCounts).map(([k, v]) => [k, `${((v / calls.length) * 100).toFixed(1)}%`]),
+      Object.entries(outcomeCounts).map(([k, v]) => [
+        k,
+        `${((v / calls.length) * 100).toFixed(1)}%`,
+      ]),
     );
 
     // Avg duration
-    const avgDuration = calls.reduce((sum, c) => sum + (c.duration_seconds || 0), 0) / calls.length;
+    const avgDuration =
+      calls.reduce((sum, c) => sum + (c.duration_seconds || 0), 0) /
+      calls.length;
 
     // Best hours
     const hourMap = calls.reduce((acc, c) => {
       const h = c.hour_of_day;
       if (!acc[h]) acc[h] = { total: 0, connected: 0 };
       acc[h].total++;
-      if (['connected', 'closed', 'follow_up'].includes(c.outcome)) acc[h].connected++;
+      if (["connected", "closed", "follow_up"].includes(c.outcome))
+        acc[h].connected++;
       return acc;
     }, {});
 
     const bestHours = Object.entries(hourMap)
       .map(([h, data]) => ({
         hour: parseInt(h),
-        connect_rate: ((data.connected / data.total) * 100).toFixed(1) + '%',
+        connect_rate: ((data.connected / data.total) * 100).toFixed(1) + "%",
         total_calls: data.total,
       }))
       .sort((a, b) => parseFloat(b.connect_rate) - parseFloat(a.connect_rate))
@@ -103,14 +122,15 @@ class CallIntelligenceRecorder {
       const d = c.day_of_week;
       if (!acc[d]) acc[d] = { total: 0, connected: 0 };
       acc[d].total++;
-      if (['connected', 'closed', 'follow_up'].includes(c.outcome)) acc[d].connected++;
+      if (["connected", "closed", "follow_up"].includes(c.outcome))
+        acc[d].connected++;
       return acc;
     }, {});
 
     const bestDays = Object.entries(dayMap)
       .map(([day, data]) => ({
         day,
-        connect_rate: ((data.connected / data.total) * 100).toFixed(1) + '%',
+        connect_rate: ((data.connected / data.total) * 100).toFixed(1) + "%",
         total_calls: data.total,
       }))
       .sort((a, b) => parseFloat(b.connect_rate) - parseFloat(a.connect_rate))
@@ -128,7 +148,7 @@ class CallIntelligenceRecorder {
 
   getInsights() {
     if (this._calls.length === 0) {
-      return { message: 'No call data available yet.', total_calls: 0 };
+      return { message: "No call data available yet.", total_calls: 0 };
     }
 
     const totalCalls = this._calls.length;
@@ -140,18 +160,21 @@ class CallIntelligenceRecorder {
       return acc;
     }, {});
 
-    const closedCalls = outcomeCounts['closed'] || 0;
-    const closeRate = ((closedCalls / totalCalls) * 100).toFixed(1) + '%';
+    const closedCalls = outcomeCounts["closed"] || 0;
+    const closeRate = ((closedCalls / totalCalls) * 100).toFixed(1) + "%";
 
     const avgDuration =
-      this._calls.reduce((sum, c) => sum + (c.duration_seconds || 0), 0) / totalCalls;
+      this._calls.reduce((sum, c) => sum + (c.duration_seconds || 0), 0) /
+      totalCalls;
 
     // System-wide best hour
     const hourMap = this._calls.reduce((acc, c) => {
       acc[c.hour_of_day] = (acc[c.hour_of_day] || 0) + 1;
       return acc;
     }, {});
-    const busiest_hour = Object.entries(hourMap).sort((a, b) => b[1] - a[1])[0]?.[0];
+    const busiest_hour = Object.entries(hourMap).sort(
+      (a, b) => b[1] - a[1],
+    )[0]?.[0];
 
     return {
       total_calls: totalCalls,
@@ -160,7 +183,7 @@ class CallIntelligenceRecorder {
       close_rate: closeRate,
       avg_duration_seconds: Math.round(avgDuration),
       outcome_breakdown: outcomeCounts,
-      busiest_hour: busiest_hour ? `${busiest_hour}:00` : 'N/A',
+      busiest_hour: busiest_hour ? `${busiest_hour}:00` : "N/A",
       generated_at: new Date().toISOString(),
     };
   }
@@ -169,7 +192,10 @@ class CallIntelligenceRecorder {
     try {
       saveCalls(this._calls);
     } catch (err) {
-      console.error('[CallIntelligenceRecorder] Failed to persist calls:', err.message);
+      console.error(
+        "[CallIntelligenceRecorder] Failed to persist calls:",
+        err.message,
+      );
     }
   }
 }

@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const ROOT = path.join(__dirname, '../..');
-const DATA_DIR = path.join(ROOT, 'data');
-const LEADS_DIR = path.join(ROOT, 'leads');
+const ROOT = path.join(__dirname, "../..");
+const DATA_DIR = path.join(ROOT, "data");
+const LEADS_DIR = path.join(ROOT, "leads");
 
-const REPS_DIR = path.join(DATA_DIR, 'sales', 'reps');
-const ASSIGNMENTS_FILE = path.join(DATA_DIR, 'sales', 'assignments.json');
-const REMINDERS_FILE = path.join(DATA_DIR, 'sales', 'follow_up_reminders.json');
+const REPS_DIR = path.join(DATA_DIR, "sales", "reps");
+const ASSIGNMENTS_FILE = path.join(DATA_DIR, "sales", "assignments.json");
+const REMINDERS_FILE = path.join(DATA_DIR, "sales", "follow_up_reminders.json");
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 
@@ -19,7 +19,8 @@ function ensureRepDir() {
 
 function readJson(filePath, fallback = null) {
   try {
-    if (fs.existsSync(filePath)) return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    if (fs.existsSync(filePath))
+      return JSON.parse(fs.readFileSync(filePath, "utf8"));
   } catch (_) {}
   return fallback;
 }
@@ -30,8 +31,8 @@ function writeJson(filePath, data) {
 }
 
 function loadLeads() {
-  const scored = path.join(LEADS_DIR, 'scored_leads.json');
-  const raw = path.join(LEADS_DIR, 'leads.json');
+  const scored = path.join(LEADS_DIR, "scored_leads.json");
+  const raw = path.join(LEADS_DIR, "leads.json");
   const data = readJson(scored) || readJson(raw) || [];
   return Array.isArray(data) ? data : [];
 }
@@ -82,7 +83,11 @@ class SalesRepPortal {
   _resolveLeads(leadIds) {
     const all = loadLeads();
     return leadIds
-      .map((id) => all.find((l) => String(l.id) === String(id) || l.place_id === String(id)))
+      .map((id) =>
+        all.find(
+          (l) => String(l.id) === String(id) || l.place_id === String(id),
+        ),
+      )
       .filter(Boolean);
   }
 
@@ -90,10 +95,15 @@ class SalesRepPortal {
 
   _getDueFollowUps(repId) {
     const reminders = readJson(REMINDERS_FILE, { reminders: [] });
-    const list = Array.isArray(reminders.reminders) ? reminders.reminders : reminders;
+    const list = Array.isArray(reminders.reminders)
+      ? reminders.reminders
+      : reminders;
     const today = isoToday();
     return (Array.isArray(list) ? list : []).filter(
-      (r) => (r.repId === repId || r.assignedTo === repId) && r.dueDate <= today && r.status !== 'done'
+      (r) =>
+        (r.repId === repId || r.assignedTo === repId) &&
+        r.dueDate <= today &&
+        r.status !== "done",
     );
   }
 
@@ -102,13 +112,28 @@ class SalesRepPortal {
   _getTodaysTasks(repId, assignedLeads) {
     const tasks = [];
     const dueFollowUps = this._getDueFollowUps(repId);
-    dueFollowUps.forEach((r) => tasks.push({ type: 'follow_up', priority: 'high', leadId: r.leadId, note: r.note || '', dueDate: r.dueDate }));
+    dueFollowUps.forEach((r) =>
+      tasks.push({
+        type: "follow_up",
+        priority: "high",
+        leadId: r.leadId,
+        note: r.note || "",
+        dueDate: r.dueDate,
+      }),
+    );
 
     // High-score leads without recent contact are suggested for outreach
     assignedLeads
       .filter((l) => (l.score || 0) >= 60 && l.email && !l.contacted)
       .slice(0, 5)
-      .forEach((l) => tasks.push({ type: 'outreach', priority: 'medium', leadId: l.id || l.place_id, name: l.name || l.company_name }));
+      .forEach((l) =>
+        tasks.push({
+          type: "outreach",
+          priority: "medium",
+          leadId: l.id || l.place_id,
+          name: l.name || l.company_name,
+        }),
+      );
 
     return tasks;
   }
@@ -117,7 +142,9 @@ class SalesRepPortal {
 
   _getPersonalPipelineValue(repId) {
     const profile = this._getRepProfile(repId);
-    const active = (profile.deals || []).filter((d) => d.status !== 'closed_lost');
+    const active = (profile.deals || []).filter(
+      (d) => d.status !== "closed_lost",
+    );
     const total = active.reduce((sum, d) => sum + (d.value || 0), 0);
     return { activeDeals: active.length, estimatedValue: total };
   }
@@ -125,7 +152,7 @@ class SalesRepPortal {
   // ── public API ────────────────────────────────────────────────────────────
 
   getRepDashboard(repId) {
-    if (!repId) throw new Error('repId is required');
+    if (!repId) throw new Error("repId is required");
 
     const assignedIds = this._getAssignedLeadIds(repId);
     const assignedLeads = this._resolveLeads(assignedIds);
@@ -149,7 +176,7 @@ class SalesRepPortal {
         state: l.state,
         phone: l.phone,
         email: l.email,
-        status: l.repStatus || 'new',
+        status: l.repStatus || "new",
       })),
       totalAssigned: assignedIds.length,
       dueFollowUps,
@@ -159,14 +186,27 @@ class SalesRepPortal {
     };
   }
 
-  updateLeadStatus(repId, leadId, status, notes = '') {
-    if (!repId) throw new Error('repId is required');
-    if (!leadId) throw new Error('leadId is required');
-    if (!status) throw new Error('status is required');
+  updateLeadStatus(repId, leadId, status, notes = "") {
+    if (!repId) throw new Error("repId is required");
+    if (!leadId) throw new Error("leadId is required");
+    if (!status) throw new Error("status is required");
 
-    const VALID_STATUSES = ['new', 'contacted', 'interested', 'proposal_sent', 'negotiating', 'closed_won', 'closed_lost', 'not_interested', 'callback', 'voicemail'];
+    const VALID_STATUSES = [
+      "new",
+      "contacted",
+      "interested",
+      "proposal_sent",
+      "negotiating",
+      "closed_won",
+      "closed_lost",
+      "not_interested",
+      "callback",
+      "voicemail",
+    ];
     if (!VALID_STATUSES.includes(status)) {
-      throw new Error(`Invalid status. Must be one of: ${VALID_STATUSES.join(', ')}`);
+      throw new Error(
+        `Invalid status. Must be one of: ${VALID_STATUSES.join(", ")}`,
+      );
     }
 
     const profile = this._getRepProfile(repId);
@@ -183,23 +223,37 @@ class SalesRepPortal {
     profile.lastActivity = entry.timestamp;
 
     // Track calls
-    if (status === 'contacted' || status === 'voicemail' || status === 'callback') {
+    if (
+      status === "contacted" ||
+      status === "voicemail" ||
+      status === "callback"
+    ) {
       profile.calls = profile.calls || [];
-      profile.calls.push({ leadId, outcome: status, notes, timestamp: entry.timestamp });
+      profile.calls.push({
+        leadId,
+        outcome: status,
+        notes,
+        timestamp: entry.timestamp,
+      });
     }
 
     // Track deals
-    if (status === 'closed_won') {
+    if (status === "closed_won") {
       profile.deals = profile.deals || [];
       if (!profile.deals.find((d) => d.leadId === leadId)) {
-        profile.deals.push({ leadId, status: 'closed_won', closedAt: entry.timestamp, value: 0 });
+        profile.deals.push({
+          leadId,
+          status: "closed_won",
+          closedAt: entry.timestamp,
+          value: 0,
+        });
       }
     }
 
     this._saveRepProfile(repId, profile);
 
     // Persist status back to shared status file
-    const statusFile = path.join(DATA_DIR, 'sales', 'lead_statuses.json');
+    const statusFile = path.join(DATA_DIR, "sales", "lead_statuses.json");
     const statuses = readJson(statusFile, {});
     statuses[leadId] = { status, repId, notes, updatedAt: entry.timestamp };
     writeJson(statusFile, statuses);
@@ -214,10 +268,17 @@ class SalesRepPortal {
       .slice(0, limit);
   }
 
-  addFollowUpReminder(repId, leadId, dueDate, note = '') {
+  addFollowUpReminder(repId, leadId, dueDate, note = "") {
     const reminders = readJson(REMINDERS_FILE, { reminders: [] });
     const list = Array.isArray(reminders.reminders) ? reminders.reminders : [];
-    list.push({ repId, leadId, dueDate, note, status: 'pending', createdAt: new Date().toISOString() });
+    list.push({
+      repId,
+      leadId,
+      dueDate,
+      note,
+      status: "pending",
+      createdAt: new Date().toISOString(),
+    });
     writeJson(REMINDERS_FILE, { reminders: list });
     return { ok: true, reminder: { repId, leadId, dueDate, note } };
   }

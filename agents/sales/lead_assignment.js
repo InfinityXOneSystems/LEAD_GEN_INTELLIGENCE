@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
-const DATA_FILE = path.join(__dirname, '../../data/sales/assignments.json');
+const DATA_FILE = path.join(__dirname, "../../data/sales/assignments.json");
 
 class LeadAssignmentEngine {
   constructor() {
@@ -14,7 +14,7 @@ class LeadAssignmentEngine {
 
   _load() {
     try {
-      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+      return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
     } catch {
       return { assignments: {} };
     }
@@ -32,8 +32,8 @@ class LeadAssignmentEngine {
     let score = 0;
 
     // Territory match — state first, then city
-    const leadState = (lead.state || '').toLowerCase();
-    const leadCity = (lead.city || '').toLowerCase();
+    const leadState = (lead.state || "").toLowerCase();
+    const leadCity = (lead.city || "").toLowerCase();
     const repTerritories = (rep.territories || []).map((t) => t.toLowerCase());
 
     if (repTerritories.includes(leadState)) score += 30;
@@ -47,9 +47,15 @@ class LeadAssignmentEngine {
     else if (workload < 10) score += 5;
 
     // Specialization match
-    const leadIndustry = (lead.industry || lead.category || '').toLowerCase();
-    const repSpecializations = (rep.specializations || []).map((s) => s.toLowerCase());
-    if (repSpecializations.some((s) => leadIndustry.includes(s) || s.includes(leadIndustry))) {
+    const leadIndustry = (lead.industry || lead.category || "").toLowerCase();
+    const repSpecializations = (rep.specializations || []).map((s) =>
+      s.toLowerCase(),
+    );
+    if (
+      repSpecializations.some(
+        (s) => leadIndustry.includes(s) || s.includes(leadIndustry),
+      )
+    ) {
       score += 20;
     }
 
@@ -63,15 +69,16 @@ class LeadAssignmentEngine {
    * @returns assignment record
    */
   assignLead(lead, salesReps = []) {
-    if (!salesReps.length) throw new Error('No sales reps provided for assignment');
+    if (!salesReps.length)
+      throw new Error("No sales reps provided for assignment");
 
     const activeReps = salesReps.filter((r) => r.active !== false);
-    if (!activeReps.length) throw new Error('No active sales reps available');
+    if (!activeReps.length) throw new Error("No active sales reps available");
 
     // Calculate current workload per rep
     const workload = {};
     Object.values(this._data.assignments).forEach((a) => {
-      if (a.status === 'active') {
+      if (a.status === "active") {
         workload[a.repId] = (workload[a.repId] || 0) + 1;
       }
     });
@@ -92,11 +99,11 @@ class LeadAssignmentEngine {
     const assignment = {
       id: assignmentId,
       leadId,
-      leadName: lead.company_name || lead.name || 'Unknown',
+      leadName: lead.company_name || lead.name || "Unknown",
       repId: bestRep.id,
       repName: bestRep.name,
       score: bestScore,
-      status: 'active',
+      status: "active",
       assignedAt: new Date().toISOString(),
       reassignedAt: null,
     };
@@ -119,11 +126,12 @@ class LeadAssignmentEngine {
   /**
    * Manually reassigns a lead to a different rep.
    */
-  reassign(leadId, newRepId, newRepName = '') {
+  reassign(leadId, newRepId, newRepName = "") {
     const assignment = Object.values(this._data.assignments).find(
-      (a) => a.leadId === leadId && a.status === 'active'
+      (a) => a.leadId === leadId && a.status === "active",
     );
-    if (!assignment) throw new Error(`No active assignment found for lead: ${leadId}`);
+    if (!assignment)
+      throw new Error(`No active assignment found for lead: ${leadId}`);
 
     assignment.repId = newRepId;
     assignment.repName = newRepName || newRepId;

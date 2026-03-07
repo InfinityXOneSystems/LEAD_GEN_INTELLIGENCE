@@ -1,34 +1,74 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const LEADS_DIR = path.join(__dirname, '../../leads');
+const LEADS_DIR = path.join(__dirname, "../../leads");
 
 const STATE_ABBREVIATIONS = {
-  AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California',
-  CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', FL: 'Florida', GA: 'Georgia',
-  HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa',
-  KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland',
-  MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri',
-  MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey',
-  NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio',
-  OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina',
-  SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont',
-  VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming',
+  AL: "Alabama",
+  AK: "Alaska",
+  AZ: "Arizona",
+  AR: "Arkansas",
+  CA: "California",
+  CO: "Colorado",
+  CT: "Connecticut",
+  DE: "Delaware",
+  FL: "Florida",
+  GA: "Georgia",
+  HI: "Hawaii",
+  ID: "Idaho",
+  IL: "Illinois",
+  IN: "Indiana",
+  IA: "Iowa",
+  KS: "Kansas",
+  KY: "Kentucky",
+  LA: "Louisiana",
+  ME: "Maine",
+  MD: "Maryland",
+  MA: "Massachusetts",
+  MI: "Michigan",
+  MN: "Minnesota",
+  MS: "Mississippi",
+  MO: "Missouri",
+  MT: "Montana",
+  NE: "Nebraska",
+  NV: "Nevada",
+  NH: "New Hampshire",
+  NJ: "New Jersey",
+  NM: "New Mexico",
+  NY: "New York",
+  NC: "North Carolina",
+  ND: "North Dakota",
+  OH: "Ohio",
+  OK: "Oklahoma",
+  OR: "Oregon",
+  PA: "Pennsylvania",
+  RI: "Rhode Island",
+  SC: "South Carolina",
+  SD: "South Dakota",
+  TN: "Tennessee",
+  TX: "Texas",
+  UT: "Utah",
+  VT: "Vermont",
+  VA: "Virginia",
+  WA: "Washington",
+  WV: "West Virginia",
+  WI: "Wisconsin",
+  WY: "Wyoming",
 };
 
 function loadAllLeads() {
   const leads = [];
   const files = [
-    path.join(LEADS_DIR, 'leads.json'),
-    path.join(LEADS_DIR, 'scored_leads.json'),
+    path.join(LEADS_DIR, "leads.json"),
+    path.join(LEADS_DIR, "scored_leads.json"),
   ];
 
   for (const file of files) {
     if (fs.existsSync(file)) {
       try {
-        const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+        const data = JSON.parse(fs.readFileSync(file, "utf8"));
         const arr = Array.isArray(data) ? data : data.leads || [];
         leads.push(...arr);
       } catch (_) {}
@@ -39,10 +79,15 @@ function loadAllLeads() {
   try {
     const entries = fs.readdirSync(LEADS_DIR, { withFileTypes: true });
     for (const entry of entries) {
-      if (entry.isFile() && entry.name.endsWith('.json') &&
-          !['leads.json', 'scored_leads.json'].includes(entry.name)) {
+      if (
+        entry.isFile() &&
+        entry.name.endsWith(".json") &&
+        !["leads.json", "scored_leads.json"].includes(entry.name)
+      ) {
         try {
-          const raw = JSON.parse(fs.readFileSync(path.join(LEADS_DIR, entry.name), 'utf8'));
+          const raw = JSON.parse(
+            fs.readFileSync(path.join(LEADS_DIR, entry.name), "utf8"),
+          );
           const arr = Array.isArray(raw) ? raw : raw.leads || [];
           leads.push(...arr);
         } catch (_) {}
@@ -54,18 +99,18 @@ function loadAllLeads() {
 }
 
 function normalizeState(raw) {
-  if (!raw) return 'Unknown';
+  if (!raw) return "Unknown";
   const upper = raw.trim().toUpperCase();
   if (STATE_ABBREVIATIONS[upper]) return STATE_ABBREVIATIONS[upper];
   // Try to match full name
   const titleCase = raw.trim().replace(/\b\w/g, (c) => c.toUpperCase());
-  return titleCase || 'Unknown';
+  return titleCase || "Unknown";
 }
 
 function calcOpportunityScore(count, avgScore, avgRating, avgReviews) {
   let score = 0;
-  score += Math.min(count * 2, 40);          // Volume: up to 40 pts
-  score += Math.min(avgScore * 0.3, 30);     // Lead quality: up to 30 pts
+  score += Math.min(count * 2, 40); // Volume: up to 40 pts
+  score += Math.min(avgScore * 0.3, 30); // Lead quality: up to 30 pts
   score += Math.min((avgRating / 5) * 15, 15); // Rating: up to 15 pts
   score += Math.min((avgReviews / 50) * 15, 15); // Review momentum: up to 15 pts
   return Math.round(Math.min(score, 100));
@@ -84,7 +129,7 @@ class OpportunityHeatmapEngine {
   generateHeatmap() {
     const stateData = this.getStateOpportunities();
     return {
-      type: 'heatmap',
+      type: "heatmap",
       generated_at: new Date().toISOString(),
       total_leads: this._getLeads().length,
       states: stateData,
@@ -97,14 +142,16 @@ class OpportunityHeatmapEngine {
     const stateMap = {};
 
     for (const lead of leads) {
-      const state = normalizeState(lead.state || lead.State || '');
+      const state = normalizeState(lead.state || lead.State || "");
       if (!stateMap[state]) {
         stateMap[state] = { leads: [], scores: [], ratings: [], reviews: [] };
       }
       stateMap[state].leads.push(lead);
       if (lead.score != null) stateMap[state].scores.push(Number(lead.score));
-      if (lead.rating != null) stateMap[state].ratings.push(Number(lead.rating));
-      if (lead.review_count != null) stateMap[state].reviews.push(Number(lead.review_count));
+      if (lead.rating != null)
+        stateMap[state].ratings.push(Number(lead.rating));
+      if (lead.review_count != null)
+        stateMap[state].reviews.push(Number(lead.review_count));
     }
 
     return Object.entries(stateMap)
@@ -126,7 +173,12 @@ class OpportunityHeatmapEngine {
           avg_lead_score: Math.round(avgScore),
           avg_rating: parseFloat(avgRating.toFixed(2)),
           avg_reviews: Math.round(avgReviews),
-          opportunity_score: calcOpportunityScore(count, avgScore, avgRating, avgReviews),
+          opportunity_score: calcOpportunityScore(
+            count,
+            avgScore,
+            avgRating,
+            avgReviews,
+          ),
         };
       })
       .sort((a, b) => b.opportunity_score - a.opportunity_score);
@@ -134,7 +186,7 @@ class OpportunityHeatmapEngine {
 
   getCityOpportunities(state) {
     const leads = this._getLeads().filter((l) => {
-      const s = normalizeState(l.state || l.State || '');
+      const s = normalizeState(l.state || l.State || "");
       return s.toLowerCase() === state.toLowerCase();
     });
 
@@ -142,8 +194,9 @@ class OpportunityHeatmapEngine {
 
     const cityMap = {};
     for (const lead of leads) {
-      const city = (lead.city || lead.City || 'Unknown').trim();
-      if (!cityMap[city]) cityMap[city] = { leads: [], scores: [], ratings: [] };
+      const city = (lead.city || lead.City || "Unknown").trim();
+      if (!cityMap[city])
+        cityMap[city] = { leads: [], scores: [], ratings: [] };
       cityMap[city].leads.push(lead);
       if (lead.score != null) cityMap[city].scores.push(Number(lead.score));
       if (lead.rating != null) cityMap[city].ratings.push(Number(lead.rating));
@@ -164,7 +217,12 @@ class OpportunityHeatmapEngine {
           lead_count: count,
           avg_lead_score: Math.round(avgScore),
           avg_rating: parseFloat(avgRating.toFixed(2)),
-          opportunity_score: calcOpportunityScore(count, avgScore, avgRating, 0),
+          opportunity_score: calcOpportunityScore(
+            count,
+            avgScore,
+            avgRating,
+            0,
+          ),
         };
       })
       .sort((a, b) => b.opportunity_score - a.opportunity_score);

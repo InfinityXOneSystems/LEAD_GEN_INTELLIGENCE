@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 class AsyncScrapingEngine {
   constructor(concurrency = 5) {
@@ -29,10 +29,10 @@ class AsyncScrapingEngine {
           Promise.resolve()
             .then(() => tasks[taskIndex]())
             .then((result) => {
-              results[taskIndex] = { status: 'fulfilled', value: result };
+              results[taskIndex] = { status: "fulfilled", value: result };
             })
             .catch((err) => {
-              results[taskIndex] = { status: 'rejected', reason: err };
+              results[taskIndex] = { status: "rejected", reason: err };
             })
             .finally(() => {
               active--;

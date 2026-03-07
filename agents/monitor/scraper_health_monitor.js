@@ -1,9 +1,12 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const STATS_FILE = path.join(__dirname, '../../data/monitor/scraper_stats.json');
+const STATS_FILE = path.join(
+  __dirname,
+  "../../data/monitor/scraper_stats.json",
+);
 
 class ScraperHealthMonitor {
   constructor() {
@@ -20,11 +23,11 @@ class ScraperHealthMonitor {
   _load() {
     try {
       if (fs.existsSync(STATS_FILE)) {
-        const raw = fs.readFileSync(STATS_FILE, 'utf8');
+        const raw = fs.readFileSync(STATS_FILE, "utf8");
         this.stats = JSON.parse(raw);
       }
     } catch (err) {
-      console.error('[HealthMonitor] Failed to load stats:', err.message);
+      console.error("[HealthMonitor] Failed to load stats:", err.message);
       this.stats = {};
     }
   }
@@ -33,7 +36,7 @@ class ScraperHealthMonitor {
     try {
       fs.writeFileSync(STATS_FILE, JSON.stringify(this.stats, null, 2));
     } catch (err) {
-      console.error('[HealthMonitor] Failed to save stats:', err.message);
+      console.error("[HealthMonitor] Failed to save stats:", err.message);
     }
   }
 
@@ -55,7 +58,8 @@ class ScraperHealthMonitor {
     s.totalRuns += 1;
     if (success) s.successRuns += 1;
     s.totalLeads += count;
-    if (error) s.lastError = error instanceof Error ? error.message : String(error);
+    if (error)
+      s.lastError = error instanceof Error ? error.message : String(error);
     s.lastRunAt = new Date().toISOString();
     this._save();
   }
@@ -66,8 +70,10 @@ class ScraperHealthMonitor {
     return {
       scraperName,
       totalRuns: s.totalRuns,
-      successRate: s.totalRuns === 0 ? 0 : Math.round((s.successRuns / s.totalRuns) * 100),
-      avgLeadsPerRun: s.totalRuns === 0 ? 0 : Math.round(s.totalLeads / s.totalRuns),
+      successRate:
+        s.totalRuns === 0 ? 0 : Math.round((s.successRuns / s.totalRuns) * 100),
+      avgLeadsPerRun:
+        s.totalRuns === 0 ? 0 : Math.round(s.totalLeads / s.totalRuns),
       totalLeads: s.totalLeads,
       lastError: s.lastError,
       lastRunAt: s.lastRunAt,

@@ -1,9 +1,12 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const DATA_FILE = path.join(__dirname, '../../data/outreach/email_tracking.json');
+const DATA_FILE = path.join(
+  __dirname,
+  "../../data/outreach/email_tracking.json",
+);
 
 class EmailTrackingSystem {
   constructor() {
@@ -13,7 +16,7 @@ class EmailTrackingSystem {
 
   _load() {
     try {
-      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+      return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
     } catch {
       return { emails: {}, campaigns: {} };
     }
@@ -43,18 +46,18 @@ class EmailTrackingSystem {
   createTrackingPixel(emailId) {
     this._ensureEmail(emailId);
     this._save();
-    const baseUrl = process.env.TRACKING_BASE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.TRACKING_BASE_URL || "http://localhost:3000";
     return `<img src="${baseUrl}/track/open/${emailId}" width="1" height="1" style="display:none" alt="" />`;
   }
 
   /**
    * Records an email open event.
    */
-  recordOpen(emailId, ip = '', userAgent = '') {
+  recordOpen(emailId, ip = "", userAgent = "") {
     const entry = this._ensureEmail(emailId);
     const event = { timestamp: new Date().toISOString(), ip, userAgent };
     entry.opens.push(event);
-    this._updateCampaignStats(entry.campaignId, 'opens');
+    this._updateCampaignStats(entry.campaignId, "opens");
     this._save();
     return event;
   }
@@ -62,11 +65,11 @@ class EmailTrackingSystem {
   /**
    * Records a tracked link click.
    */
-  recordClick(emailId, linkId = '', ip = '') {
+  recordClick(emailId, linkId = "", ip = "") {
     const entry = this._ensureEmail(emailId);
     const event = { timestamp: new Date().toISOString(), linkId, ip };
     entry.clicks.push(event);
-    this._updateCampaignStats(entry.campaignId, 'clicks');
+    this._updateCampaignStats(entry.campaignId, "clicks");
     this._save();
     return event;
   }
@@ -116,10 +119,21 @@ class EmailTrackingSystem {
    * Returns aggregate statistics for an entire campaign.
    */
   getCampaignStats(campaignId) {
-    const stats = this._data.campaigns[campaignId] || { sent: 0, opens: 0, clicks: 0 };
-    const openRate = stats.sent > 0 ? ((stats.opens / stats.sent) * 100).toFixed(1) : '0.0';
-    const clickRate = stats.opens > 0 ? ((stats.clicks / stats.opens) * 100).toFixed(1) : '0.0';
-    return { campaignId, ...stats, openRate: `${openRate}%`, clickRate: `${clickRate}%` };
+    const stats = this._data.campaigns[campaignId] || {
+      sent: 0,
+      opens: 0,
+      clicks: 0,
+    };
+    const openRate =
+      stats.sent > 0 ? ((stats.opens / stats.sent) * 100).toFixed(1) : "0.0";
+    const clickRate =
+      stats.opens > 0 ? ((stats.clicks / stats.opens) * 100).toFixed(1) : "0.0";
+    return {
+      campaignId,
+      ...stats,
+      openRate: `${openRate}%`,
+      clickRate: `${clickRate}%`,
+    };
   }
 }
 

@@ -1,12 +1,19 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
-const DATA_FILE = path.join(__dirname, '../../data/sales/deals.json');
+const DATA_FILE = path.join(__dirname, "../../data/sales/deals.json");
 
-const VALID_STAGES = ['prospect', 'qualified', 'proposal', 'negotiation', 'closed_won', 'closed_lost'];
+const VALID_STAGES = [
+  "prospect",
+  "qualified",
+  "proposal",
+  "negotiation",
+  "closed_won",
+  "closed_lost",
+];
 
 class DealValueTracker {
   constructor() {
@@ -16,7 +23,7 @@ class DealValueTracker {
 
   _load() {
     try {
-      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+      return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
     } catch {
       return { deals: {} };
     }
@@ -33,9 +40,11 @@ class DealValueTracker {
    * @param {string} stage - one of VALID_STAGES
    * @returns deal record
    */
-  createDeal(leadId, estimatedValue = 0, stage = 'prospect') {
+  createDeal(leadId, estimatedValue = 0, stage = "prospect") {
     if (!VALID_STAGES.includes(stage)) {
-      throw new Error(`Invalid stage. Must be one of: ${VALID_STAGES.join(', ')}`);
+      throw new Error(
+        `Invalid stage. Must be one of: ${VALID_STAGES.join(", ")}`,
+      );
     }
     const id = crypto.randomUUID();
     const deal = {
@@ -64,8 +73,11 @@ class DealValueTracker {
       if (!VALID_STAGES.includes(updates.stage)) {
         throw new Error(`Invalid stage: ${updates.stage}`);
       }
-      deal.history.push({ stage: updates.stage, timestamp: new Date().toISOString() });
-      if (updates.stage === 'closed_won' || updates.stage === 'closed_lost') {
+      deal.history.push({
+        stage: updates.stage,
+        timestamp: new Date().toISOString(),
+      });
+      if (updates.stage === "closed_won" || updates.stage === "closed_lost") {
         deal.closedAt = new Date().toISOString();
       }
     }
@@ -98,20 +110,24 @@ class DealValueTracker {
    * Returns the total estimated value of all active (non-closed) deals.
    */
   getPipelineValue() {
-    const activeStages = ['prospect', 'qualified', 'proposal', 'negotiation'];
+    const activeStages = ["prospect", "qualified", "proposal", "negotiation"];
     const deals = this.getDeals().filter((d) => activeStages.includes(d.stage));
     const total = deals.reduce((sum, d) => sum + d.estimatedValue, 0);
-    return { total, dealCount: deals.length, byStage: this._groupByStage(deals) };
+    return {
+      total,
+      dealCount: deals.length,
+      byStage: this._groupByStage(deals),
+    };
   }
 
   /**
    * Returns the total value of closed-won deals in a period.
    * @param {string} period - 'month'|'quarter'|'year'|'all'
    */
-  getWonValue(period = 'month') {
+  getWonValue(period = "month") {
     const since = this._periodStart(period);
-    const deals = this.getDeals({ stage: 'closed_won' }).filter(
-      (d) => !since || d.closedAt >= since
+    const deals = this.getDeals({ stage: "closed_won" }).filter(
+      (d) => !since || d.closedAt >= since,
     );
     const total = deals.reduce((sum, d) => sum + d.estimatedValue, 0);
     return { period, total, dealCount: deals.length };
@@ -131,12 +147,14 @@ class DealValueTracker {
 
   _periodStart(period) {
     const now = new Date();
-    if (period === 'month') return new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-    if (period === 'quarter') {
+    if (period === "month")
+      return new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+    if (period === "quarter") {
       const q = Math.floor(now.getMonth() / 3);
       return new Date(now.getFullYear(), q * 3, 1).toISOString();
     }
-    if (period === 'year') return new Date(now.getFullYear(), 0, 1).toISOString();
+    if (period === "year")
+      return new Date(now.getFullYear(), 0, 1).toISOString();
     return null;
   }
 }

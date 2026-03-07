@@ -1,16 +1,21 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const MEMORY_FILE = path.join(__dirname, '../../data/ai/memory.json');
+const MEMORY_FILE = path.join(__dirname, "../../data/ai/memory.json");
 
-const VALID_CATEGORIES = ['lead_context', 'preference', 'conversation', 'system'];
+const VALID_CATEGORIES = [
+  "lead_context",
+  "preference",
+  "conversation",
+  "system",
+];
 
 function loadMemory() {
   try {
     if (fs.existsSync(MEMORY_FILE)) {
-      return JSON.parse(fs.readFileSync(MEMORY_FILE, 'utf8'));
+      return JSON.parse(fs.readFileSync(MEMORY_FILE, "utf8"));
     }
   } catch (_) {}
   return {};
@@ -26,9 +31,11 @@ class AIMemoryLayer {
     this._memory = loadMemory();
   }
 
-  store(key, value, category = 'system') {
+  store(key, value, category = "system") {
     if (!VALID_CATEGORIES.includes(category)) {
-      throw new Error(`Invalid category "${category}". Valid: ${VALID_CATEGORIES.join(', ')}`);
+      throw new Error(
+        `Invalid category "${category}". Valid: ${VALID_CATEGORIES.join(", ")}`,
+      );
     }
     this._memory[key] = {
       value,
@@ -47,13 +54,13 @@ class AIMemoryLayer {
   }
 
   search(query) {
-    if (!query || typeof query !== 'string') return [];
+    if (!query || typeof query !== "string") return [];
     const lower = query.toLowerCase();
     const results = [];
 
     for (const [key, entry] of Object.entries(this._memory)) {
       const valueStr =
-        typeof entry.value === 'string'
+        typeof entry.value === "string"
           ? entry.value
           : JSON.stringify(entry.value);
 
@@ -95,14 +102,17 @@ class AIMemoryLayer {
   }
 
   listAll() {
-    return Object.entries(this._memory).map(([key, entry]) => ({ key, ...entry }));
+    return Object.entries(this._memory).map(([key, entry]) => ({
+      key,
+      ...entry,
+    }));
   }
 
   _persist() {
     try {
       saveMemory(this._memory);
     } catch (err) {
-      console.error('[AIMemoryLayer] Failed to persist memory:', err.message);
+      console.error("[AIMemoryLayer] Failed to persist memory:", err.message);
     }
   }
 }

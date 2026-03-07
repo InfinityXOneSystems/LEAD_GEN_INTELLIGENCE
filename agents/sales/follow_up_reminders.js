@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
-const DATA_FILE = path.join(__dirname, '../../data/sales/reminders.json');
+const DATA_FILE = path.join(__dirname, "../../data/sales/reminders.json");
 
 class FollowUpReminderSystem {
   constructor() {
@@ -14,7 +14,7 @@ class FollowUpReminderSystem {
 
   _load() {
     try {
-      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+      return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
     } catch {
       return { reminders: {} };
     }
@@ -32,15 +32,15 @@ class FollowUpReminderSystem {
    * @param {string} note
    * @returns reminder record
    */
-  addReminder(leadId, repId, dueDate, note = '') {
+  addReminder(leadId, repId, dueDate, note = "") {
     const id = crypto.randomUUID();
     const reminder = {
       id,
       leadId,
       repId,
-      dueDate: dueDate.split('T')[0],
+      dueDate: dueDate.split("T")[0],
       note,
-      status: 'pending',
+      status: "pending",
       createdAt: new Date().toISOString(),
       completedAt: null,
       snoozedUntil: null,
@@ -54,10 +54,10 @@ class FollowUpReminderSystem {
    * Returns all pending reminders due today or earlier for a rep.
    */
   getDueReminders(repId = null) {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
     return Object.values(this._data.reminders).filter((r) => {
       const matchesRep = !repId || r.repId === repId;
-      const isDue = r.status === 'pending' && r.dueDate <= today;
+      const isDue = r.status === "pending" && r.dueDate <= today;
       const notSnoozed = !r.snoozedUntil || r.snoozedUntil <= today;
       return matchesRep && isDue && notSnoozed;
     });
@@ -67,10 +67,10 @@ class FollowUpReminderSystem {
    * Returns overdue reminders (due before today, still pending).
    */
   getOverdue(repId = null) {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
     return Object.values(this._data.reminders).filter((r) => {
       const matchesRep = !repId || r.repId === repId;
-      return matchesRep && r.status === 'pending' && r.dueDate < today;
+      return matchesRep && r.status === "pending" && r.dueDate < today;
     });
   }
 
@@ -80,7 +80,7 @@ class FollowUpReminderSystem {
   markComplete(reminderId) {
     const r = this._data.reminders[reminderId];
     if (!r) throw new Error(`Reminder not found: ${reminderId}`);
-    r.status = 'completed';
+    r.status = "completed";
     r.completedAt = new Date().toISOString();
     this._save();
     return r;
@@ -94,7 +94,7 @@ class FollowUpReminderSystem {
     if (!r) throw new Error(`Reminder not found: ${reminderId}`);
     const snoozeDate = new Date();
     snoozeDate.setDate(snoozeDate.getDate() + days);
-    r.snoozedUntil = snoozeDate.toISOString().split('T')[0];
+    r.snoozedUntil = snoozeDate.toISOString().split("T")[0];
     this._save();
     return r;
   }

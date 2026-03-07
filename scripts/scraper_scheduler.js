@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
-require('dotenv').config();
+require("dotenv").config();
 
-const cron = require('node-cron');
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+const cron = require("node-cron");
+const fs = require("fs");
+const path = require("path");
+const { execSync } = require("child_process");
 
-const ROOT = path.join(__dirname, '..');
-const DATA_DIR = path.join(ROOT, 'data');
-const LOG_FILE = path.join(DATA_DIR, 'logs', 'scheduler.log');
+const ROOT = path.join(__dirname, "..");
+const DATA_DIR = path.join(ROOT, "data");
+const LOG_FILE = path.join(DATA_DIR, "logs", "scheduler.log");
 
 // ── logging ───────────────────────────────────────────────────────────────────
 
@@ -17,12 +17,12 @@ function ensureLogDir() {
   fs.mkdirSync(path.dirname(LOG_FILE), { recursive: true });
 }
 
-function log(msg, level = 'INFO') {
+function log(msg, level = "INFO") {
   ensureLogDir();
   const line = `[${new Date().toISOString()}] [${level}] [Scheduler] ${msg}`;
   console.log(line);
   try {
-    fs.appendFileSync(LOG_FILE, line + '\n');
+    fs.appendFileSync(LOG_FILE, line + "\n");
   } catch (_) {}
 }
 
@@ -30,19 +30,21 @@ function log(msg, level = 'INFO') {
 
 const JOB_DEFINITIONS = [
   {
-    name: 'scraper',
-    schedule: '0 */4 * * *', // every 4 hours
-    description: 'Lead scraper run',
-    command: 'node scripts/generate_city_leads.js',
+    name: "scraper",
+    schedule: "0 */4 * * *", // every 4 hours
+    description: "Lead scraper run",
+    command: "node scripts/generate_city_leads.js",
     enabled: true,
   },
   {
-    name: 'enrichment',
-    schedule: '30 */6 * * *', // every 6 hours (offset by 30min)
-    description: 'Lead enrichment run',
+    name: "enrichment",
+    schedule: "30 */6 * * *", // every 6 hours (offset by 30min)
+    description: "Lead enrichment run",
     command: null, // handled by orchestrator
     handler: async () => {
-      const AgentOrchestrator = require(path.join(ROOT, 'agents/orchestrator/agent_orchestrator'));
+      const AgentOrchestrator = require(
+        path.join(ROOT, "agents/orchestrator/agent_orchestrator"),
+      );
       const orch = new AgentOrchestrator();
       const leads = loadLeads();
       return await orch.runEnrichmentPipeline(leads.slice(0, 100));
@@ -50,10 +52,10 @@ const JOB_DEFINITIONS = [
     enabled: true,
   },
   {
-    name: 'score_export',
-    schedule: '0 * * * *', // every hour
-    description: 'Score and export leads',
-    command: 'npm run pipeline --prefix ' + ROOT,
+    name: "score_export",
+    schedule: "0 * * * *", // every hour
+    description: "Score and export leads",
+    command: "npm run pipeline --prefix " + ROOT,
     enabled: true,
   },
 ];
@@ -67,18 +69,24 @@ const _nextRuns = {};
 // ── helpers ───────────────────────────────────────────────────────────────────
 
 function loadLeads() {
-  const scoredFile = path.join(ROOT, 'leads/scored_leads.json');
-  const rawFile = path.join(ROOT, 'leads/leads.json');
+  const scoredFile = path.join(ROOT, "leads/scored_leads.json");
+  const rawFile = path.join(ROOT, "leads/leads.json");
   try {
-    if (fs.existsSync(scoredFile)) return JSON.parse(fs.readFileSync(scoredFile, 'utf8'));
-    if (fs.existsSync(rawFile)) return JSON.parse(fs.readFileSync(rawFile, 'utf8'));
+    if (fs.existsSync(scoredFile))
+      return JSON.parse(fs.readFileSync(scoredFile, "utf8"));
+    if (fs.existsSync(rawFile))
+      return JSON.parse(fs.readFileSync(rawFile, "utf8"));
   } catch (_) {}
   return [];
 }
 
 function runCommand(cmd) {
   try {
-    const output = execSync(cmd, { cwd: ROOT, timeout: 10 * 60 * 1000, encoding: 'utf8' });
+    const output = execSync(cmd, {
+      cwd: ROOT,
+      timeout: 10 * 60 * 1000,
+      encoding: "utf8",
+    });
     return { ok: true, output: output.slice(0, 500) };
   } catch (err) {
     return { ok: false, error: err.message.slice(0, 300) };
@@ -94,11 +102,11 @@ function updateNextRun(jobName, schedule) {
 
 function start() {
   if (Object.keys(_tasks).length > 0) {
-    log('Scheduler already running');
+    log("Scheduler already running");
     return;
   }
   ensureLogDir();
-  log('Starting scheduler');
+  log("Starting scheduler");
 
   JOB_DEFINITIONS.forEach((job) => {
     if (!job.enabled) {
@@ -107,7 +115,7 @@ function start() {
     }
 
     if (!cron.validate(job.schedule)) {
-      log(`Invalid cron schedule for "${job.name}": ${job.schedule}`, 'WARN');
+      log(`Invalid cron schedule for "${job.name}": ${job.schedule}`, "WARN");
       return;
     }
 
@@ -124,11 +132,11 @@ function start() {
           if (result.ok) {
             log(`Job "${job.name}" completed successfully`);
           } else {
-            log(`Job "${job.name}" failed: ${result.error}`, 'ERROR');
+            log(`Job "${job.name}" failed: ${result.error}`, "ERROR");
           }
         }
       } catch (err) {
-        log(`Job "${job.name}" threw: ${err.message}`, 'ERROR');
+        log(`Job "${job.name}" threw: ${err.message}`, "ERROR");
       }
     });
 
@@ -146,11 +154,11 @@ function stop() {
       task.stop();
       log(`Stopped job: ${name}`);
     } catch (err) {
-      log(`Error stopping job "${name}": ${err.message}`, 'WARN');
+      log(`Error stopping job "${name}": ${err.message}`, "WARN");
     }
   });
   Object.keys(_tasks).forEach((k) => delete _tasks[k]);
-  log('Scheduler stopped');
+  log("Scheduler stopped");
 }
 
 function getStatus() {
@@ -174,12 +182,18 @@ module.exports = { start, stop, getStatus };
 
 if (require.main === module) {
   const cmd = process.argv[2];
-  if (cmd === 'status') {
+  if (cmd === "status") {
     console.log(JSON.stringify(getStatus(), null, 2));
   } else {
     start();
-    log('Scheduler running. Press Ctrl+C to stop.');
-    process.on('SIGINT', () => { stop(); process.exit(0); });
-    process.on('SIGTERM', () => { stop(); process.exit(0); });
+    log("Scheduler running. Press Ctrl+C to stop.");
+    process.on("SIGINT", () => {
+      stop();
+      process.exit(0);
+    });
+    process.on("SIGTERM", () => {
+      stop();
+      process.exit(0);
+    });
   }
 }

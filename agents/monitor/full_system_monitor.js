@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
-require('dotenv').config();
+require("dotenv").config();
 
-const fs = require('fs');
-const path = require('path');
-const http = require('http');
+const fs = require("fs");
+const path = require("path");
+const http = require("http");
 
-const ROOT = path.join(__dirname, '../..');
-const LEADS_DIR = path.join(ROOT, 'leads');
-const DATA_DIR = path.join(ROOT, 'data');
-const REPORT_FILE = path.join(DATA_DIR, 'monitor', 'health_reports.json');
+const ROOT = path.join(__dirname, "../..");
+const LEADS_DIR = path.join(ROOT, "leads");
+const DATA_DIR = path.join(ROOT, "data");
+const REPORT_FILE = path.join(DATA_DIR, "monitor", "health_reports.json");
 
 const GPT_ACTIONS_PORT = process.env.GPT_ACTIONS_PORT || 3100;
 const MAX_REPORTS = 100;
@@ -24,7 +24,9 @@ function saveReport(report) {
   fs.mkdirSync(path.dirname(REPORT_FILE), { recursive: true });
   let reports = [];
   if (fs.existsSync(REPORT_FILE)) {
-    try { reports = JSON.parse(fs.readFileSync(REPORT_FILE, 'utf8')); } catch (_) {}
+    try {
+      reports = JSON.parse(fs.readFileSync(REPORT_FILE, "utf8"));
+    } catch (_) {}
   }
   reports.push(report);
   if (reports.length > MAX_REPORTS) reports = reports.slice(-MAX_REPORTS);
@@ -34,12 +36,19 @@ function saveReport(report) {
 function httpGet(url, timeoutMs = 3000) {
   return new Promise((resolve) => {
     const req = http.get(url, { timeout: timeoutMs }, (res) => {
-      let body = '';
-      res.on('data', (d) => { body += d; });
-      res.on('end', () => resolve({ ok: res.statusCode < 400, statusCode: res.statusCode, body }));
+      let body = "";
+      res.on("data", (d) => {
+        body += d;
+      });
+      res.on("end", () =>
+        resolve({ ok: res.statusCode < 400, statusCode: res.statusCode, body }),
+      );
     });
-    req.on('error', () => resolve({ ok: false, statusCode: null }));
-    req.on('timeout', () => { req.destroy(); resolve({ ok: false, statusCode: null, timedOut: true }); });
+    req.on("error", () => resolve({ ok: false, statusCode: null }));
+    req.on("timeout", () => {
+      req.destroy();
+      resolve({ ok: false, statusCode: null, timedOut: true });
+    });
   });
 }
 
@@ -56,20 +65,41 @@ class FullSystemMonitor {
     const checks = [];
 
     const files = [
-      { key: 'leads.json', file: path.join(LEADS_DIR, 'leads.json'), critical: true },
-      { key: 'scored_leads.json', file: path.join(LEADS_DIR, 'scored_leads.json'), critical: false },
-      { key: 'scoring_report.json', file: path.join(LEADS_DIR, 'scoring_report.json'), critical: false },
+      {
+        key: "leads.json",
+        file: path.join(LEADS_DIR, "leads.json"),
+        critical: true,
+      },
+      {
+        key: "scored_leads.json",
+        file: path.join(LEADS_DIR, "scored_leads.json"),
+        critical: false,
+      },
+      {
+        key: "scoring_report.json",
+        file: path.join(LEADS_DIR, "scoring_report.json"),
+        critical: false,
+      },
     ];
 
     for (const { key, file, critical } of files) {
       if (!fs.existsSync(file)) {
-        checks.push({ name: `fs:${key}`, ok: false, critical, message: 'File does not exist' });
+        checks.push({
+          name: `fs:${key}`,
+          ok: false,
+          critical,
+          message: "File does not exist",
+        });
         continue;
       }
       try {
         const stat = fs.statSync(file);
-        const content = JSON.parse(fs.readFileSync(file, 'utf8'));
-        const count = Array.isArray(content) ? content.length : (typeof content === 'object' ? Object.keys(content).length : 0);
+        const content = JSON.parse(fs.readFileSync(file, "utf8"));
+        const count = Array.isArray(content)
+          ? content.length
+          : typeof content === "object"
+            ? Object.keys(content).length
+            : 0;
         checks.push({
           name: `fs:${key}`,
           ok: true,
@@ -79,7 +109,12 @@ class FullSystemMonitor {
           sizeBytes: stat.size,
         });
       } catch (err) {
-        checks.push({ name: `fs:${key}`, ok: false, critical, message: err.message });
+        checks.push({
+          name: `fs:${key}`,
+          ok: false,
+          critical,
+          message: err.message,
+        });
       }
     }
 
@@ -89,13 +124,29 @@ class FullSystemMonitor {
   // ── dependency checks ─────────────────────────────────────────────────────
 
   _checkDependencies() {
-    const pkgs = ['express', 'axios', 'node-cron', 'express-rate-limit', 'dotenv'];
+    const pkgs = [
+      "express",
+      "axios",
+      "node-cron",
+      "express-rate-limit",
+      "dotenv",
+    ];
     return pkgs.map((pkg) => {
       try {
         require.resolve(pkg);
-        return { name: `dep:${pkg}`, ok: true, critical: false, message: 'available' };
+        return {
+          name: `dep:${pkg}`,
+          ok: true,
+          critical: false,
+          message: "available",
+        };
       } catch {
-        return { name: `dep:${pkg}`, ok: false, critical: pkg === 'express', message: 'not installed' };
+        return {
+          name: `dep:${pkg}`,
+          ok: false,
+          critical: pkg === "express",
+          message: "not installed",
+        };
       }
     });
   }
@@ -107,8 +158,8 @@ class FullSystemMonitor {
     const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
 
     const files = [
-      path.join(LEADS_DIR, 'scored_leads.json'),
-      path.join(LEADS_DIR, 'leads.json'),
+      path.join(LEADS_DIR, "scored_leads.json"),
+      path.join(LEADS_DIR, "leads.json"),
     ];
 
     let latestMtime = null;
@@ -125,13 +176,18 @@ class FullSystemMonitor {
     }
 
     if (!latestMtime) {
-      checks.push({ name: 'freshness:leads', ok: false, critical: false, message: 'No lead files found' });
+      checks.push({
+        name: "freshness:leads",
+        ok: false,
+        critical: false,
+        message: "No lead files found",
+      });
     } else {
       const ageMs = Date.now() - latestMtime;
-      const ageHours = Math.round(ageMs / 3600000 * 10) / 10;
+      const ageHours = Math.round((ageMs / 3600000) * 10) / 10;
       const stale = ageMs > MAX_AGE_MS;
       checks.push({
-        name: 'freshness:leads',
+        name: "freshness:leads",
         ok: !stale,
         critical: false,
         message: `Last updated ${ageHours}h ago (${path.basename(latestFile)})`,
@@ -147,8 +203,14 @@ class FullSystemMonitor {
 
   async _checkApiConnectivity() {
     const endpoints = [
-      { name: 'gpt_actions_server', url: `http://localhost:${GPT_ACTIONS_PORT}/health` },
-      { name: 'api_gateway', url: `http://localhost:${process.env.GATEWAY_PORT || 3200}/api/monitoring/health` },
+      {
+        name: "gpt_actions_server",
+        url: `http://localhost:${GPT_ACTIONS_PORT}/health`,
+      },
+      {
+        name: "api_gateway",
+        url: `http://localhost:${process.env.GATEWAY_PORT || 3200}/api/monitoring/health`,
+      },
     ];
 
     const results = await Promise.all(
@@ -161,10 +223,10 @@ class FullSystemMonitor {
           message: result.ok
             ? `HTTP ${result.statusCode}`
             : result.timedOut
-            ? 'timeout'
-            : `HTTP ${result.statusCode || 'unreachable'}`,
+              ? "timeout"
+              : `HTTP ${result.statusCode || "unreachable"}`,
         };
-      })
+      }),
     );
 
     return results;
@@ -178,15 +240,22 @@ class FullSystemMonitor {
     const freshnessChecks = this._checkDataFreshness();
     const apiChecks = await this._checkApiConnectivity();
 
-    const checks = [...fsChecks, ...depChecks, ...freshnessChecks, ...apiChecks];
+    const checks = [
+      ...fsChecks,
+      ...depChecks,
+      ...freshnessChecks,
+      ...apiChecks,
+    ];
 
-    const issues = checks.filter((c) => !c.ok).map((c) => `${c.name}: ${c.message}`);
+    const issues = checks
+      .filter((c) => !c.ok)
+      .map((c) => `${c.name}: ${c.message}`);
     const criticalFailures = checks.filter((c) => !c.ok && c.critical);
 
     let status;
-    if (criticalFailures.length > 0) status = 'unhealthy';
-    else if (issues.length > 0) status = 'degraded';
-    else status = 'healthy';
+    if (criticalFailures.length > 0) status = "unhealthy";
+    else if (issues.length > 0) status = "degraded";
+    else status = "healthy";
 
     const report = {
       status,
@@ -214,7 +283,7 @@ class FullSystemMonitor {
     const run = async () => {
       try {
         const report = await this.runHealthCheck();
-        if (report.status !== 'healthy') {
+        if (report.status !== "healthy") {
           log(`[${report.status.toUpperCase()}] Issues detected:`);
           report.issues.forEach((i) => log(`  ✗ ${i}`));
         } else {
@@ -234,7 +303,7 @@ class FullSystemMonitor {
     if (this._interval) {
       clearInterval(this._interval);
       this._interval = null;
-      log('Monitoring stopped');
+      log("Monitoring stopped");
     }
   }
 }
@@ -245,6 +314,6 @@ if (require.main === module) {
   const monitor = new FullSystemMonitor();
   monitor.runHealthCheck().then((report) => {
     console.log(JSON.stringify(report, null, 2));
-    process.exit(report.status === 'unhealthy' ? 1 : 0);
+    process.exit(report.status === "unhealthy" ? 1 : 0);
   });
 }

@@ -1,12 +1,19 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
-const DATA_FILE = path.join(__dirname, '../../data/sales/pipeline.json');
+const DATA_FILE = path.join(__dirname, "../../data/sales/pipeline.json");
 
-const STAGES = ['prospect', 'qualified', 'proposal', 'negotiation', 'closed_won', 'closed_lost'];
+const STAGES = [
+  "prospect",
+  "qualified",
+  "proposal",
+  "negotiation",
+  "closed_won",
+  "closed_lost",
+];
 
 class SalesPipelineTracker {
   constructor() {
@@ -16,10 +23,12 @@ class SalesPipelineTracker {
 
   _load() {
     try {
-      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+      return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
     } catch {
       const stages = {};
-      STAGES.forEach((s) => { stages[s] = []; });
+      STAGES.forEach((s) => {
+        stages[s] = [];
+      });
       return { stages, moves: [] };
     }
   }
@@ -36,7 +45,9 @@ class SalesPipelineTracker {
 
     // Remove from source stage if specified and present
     if (fromStage && this._data.stages[fromStage]) {
-      const idx = this._data.stages[fromStage].findIndex((e) => e.leadId === leadId);
+      const idx = this._data.stages[fromStage].findIndex(
+        (e) => e.leadId === leadId,
+      );
       if (idx !== -1) this._data.stages[fromStage].splice(idx, 1);
     }
 
@@ -44,9 +55,14 @@ class SalesPipelineTracker {
     if (!this._data.stages[toStage]) this._data.stages[toStage] = [];
 
     // Avoid duplicates in target stage
-    const alreadyInTarget = this._data.stages[toStage].some((e) => e.leadId === leadId);
+    const alreadyInTarget = this._data.stages[toStage].some(
+      (e) => e.leadId === leadId,
+    );
     if (!alreadyInTarget) {
-      this._data.stages[toStage].push({ leadId, movedAt: new Date().toISOString() });
+      this._data.stages[toStage].push({
+        leadId,
+        movedAt: new Date().toISOString(),
+      });
     }
 
     // Append to move history
@@ -79,10 +95,11 @@ class SalesPipelineTracker {
     for (const stage of STAGES) {
       const count = (this._data.stages[stage] || []).length;
       counts[stage] = count;
-      if (!['closed_won', 'closed_lost'].includes(stage)) total += count;
+      if (!["closed_won", "closed_lost"].includes(stage)) total += count;
     }
     const closed = counts.closed_won + counts.closed_lost;
-    const winRate = closed > 0 ? ((counts.closed_won / closed) * 100).toFixed(1) : '0.0';
+    const winRate =
+      closed > 0 ? ((counts.closed_won / closed) * 100).toFixed(1) : "0.0";
     return { counts, activePipelineLeads: total, winRate: `${winRate}%` };
   }
 
@@ -90,7 +107,13 @@ class SalesPipelineTracker {
    * Returns funnel data with conversion rates between consecutive stages.
    */
   getFunnelData() {
-    const funnelStages = ['prospect', 'qualified', 'proposal', 'negotiation', 'closed_won'];
+    const funnelStages = [
+      "prospect",
+      "qualified",
+      "proposal",
+      "negotiation",
+      "closed_won",
+    ];
     const counts = funnelStages.map((s) => ({
       stage: s,
       count: (this._data.stages[s] || []).length,
@@ -101,7 +124,10 @@ class SalesPipelineTracker {
         i === 0 || counts[i - 1].count === 0
           ? null
           : ((item.count / counts[i - 1].count) * 100).toFixed(1);
-      return { ...item, conversionFromPrev: conversionRate ? `${conversionRate}%` : null };
+      return {
+        ...item,
+        conversionFromPrev: conversionRate ? `${conversionRate}%` : null,
+      };
     });
 
     return funnel;

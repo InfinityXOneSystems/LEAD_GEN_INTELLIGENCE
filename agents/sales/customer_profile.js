@@ -1,12 +1,15 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const LEADS_FILE = path.join(__dirname, '../../leads/leads.json');
-const SCORED_FILE = path.join(__dirname, '../../leads/scored_leads.json');
-const OUTREACH_LOG = path.join(__dirname, '../../data/outreach/follow_up_schedule.json');
-const DEALS_FILE = path.join(__dirname, '../../data/sales/deals.json');
+const LEADS_FILE = path.join(__dirname, "../../leads/leads.json");
+const SCORED_FILE = path.join(__dirname, "../../leads/scored_leads.json");
+const OUTREACH_LOG = path.join(
+  __dirname,
+  "../../data/outreach/follow_up_schedule.json",
+);
+const DEALS_FILE = path.join(__dirname, "../../data/sales/deals.json");
 
 class CustomerProfileBuilder {
   /**
@@ -51,19 +54,25 @@ class CustomerProfileBuilder {
       scoring: {
         score: scoredData?.score ?? lead.score ?? null,
         score_breakdown: scoredData?.score_breakdown ?? null,
-        tier: scoredData?.tier ?? this._scoreTier(scoredData?.score ?? lead.score),
+        tier:
+          scoredData?.tier ?? this._scoreTier(scoredData?.score ?? lead.score),
       },
       deals: {
         total: deals.length,
-        active: deals.filter((d) => !['closed_won', 'closed_lost'].includes(d.stage)).length,
-        won: deals.filter((d) => d.stage === 'closed_won').length,
-        total_value: deals.reduce((s, d) => s + (Number(d.estimatedValue) || 0), 0),
+        active: deals.filter(
+          (d) => !["closed_won", "closed_lost"].includes(d.stage),
+        ).length,
+        won: deals.filter((d) => d.stage === "closed_won").length,
+        total_value: deals.reduce(
+          (s, d) => s + (Number(d.estimatedValue) || 0),
+          0,
+        ),
         list: deals,
       },
       outreach: {
         total_follow_ups: outreachHistory.length,
-        sent: outreachHistory.filter((o) => o.status === 'sent').length,
-        pending: outreachHistory.filter((o) => o.status === 'pending').length,
+        sent: outreachHistory.filter((o) => o.status === "sent").length,
+        pending: outreachHistory.filter((o) => o.status === "pending").length,
         history: outreachHistory,
       },
       generatedAt: new Date().toISOString(),
@@ -72,7 +81,7 @@ class CustomerProfileBuilder {
 
   _loadJson(filePath, fallback = []) {
     try {
-      return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+      return JSON.parse(fs.readFileSync(filePath, "utf8"));
     } catch {
       return fallback;
     }
@@ -80,16 +89,22 @@ class CustomerProfileBuilder {
 
   _findLead(leadId) {
     const leads = this._loadJson(LEADS_FILE, []);
-    return leads.find(
-      (l) => l.id === leadId || l.company_name === leadId || String(l.id) === String(leadId)
-    ) || null;
+    return (
+      leads.find(
+        (l) =>
+          l.id === leadId ||
+          l.company_name === leadId ||
+          String(l.id) === String(leadId),
+      ) || null
+    );
   }
 
   _findScored(leadId, companyName) {
     const scored = this._loadJson(SCORED_FILE, []);
-    return scored.find(
-      (l) => l.id === leadId || l.company_name === companyName
-    ) || null;
+    return (
+      scored.find((l) => l.id === leadId || l.company_name === companyName) ||
+      null
+    );
   }
 
   _getDeals(leadId, companyName) {
@@ -97,7 +112,7 @@ class CustomerProfileBuilder {
       const data = this._loadJson(DEALS_FILE, { deals: {} });
       const deals = Object.values(data.deals || {});
       return deals.filter(
-        (d) => d.leadId === leadId || d.leadId === companyName
+        (d) => d.leadId === leadId || d.leadId === companyName,
       );
     } catch {
       return [];
@@ -108,7 +123,10 @@ class CustomerProfileBuilder {
     try {
       const data = this._loadJson(OUTREACH_LOG, { followUps: {} });
       return Object.values(data.followUps || {}).filter(
-        (f) => f.leadId === leadId || f.leadId === companyName || f.leadName === companyName
+        (f) =>
+          f.leadId === leadId ||
+          f.leadId === companyName ||
+          f.leadName === companyName,
       );
     } catch {
       return [];
@@ -116,10 +134,10 @@ class CustomerProfileBuilder {
   }
 
   _scoreTier(score) {
-    if (score === null || score === undefined) return 'unscored';
-    if (score >= 40) return 'hot';
-    if (score >= 25) return 'warm';
-    return 'cold';
+    if (score === null || score === undefined) return "unscored";
+    if (score >= 40) return "hot";
+    if (score >= 25) return "warm";
+    return "cold";
   }
 }
 

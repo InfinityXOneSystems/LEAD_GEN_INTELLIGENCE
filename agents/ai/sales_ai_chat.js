@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-require('dotenv').config();
-const fs = require('fs');
-const path = require('path');
-const OpenAI = require('openai');
+require("dotenv").config();
+const fs = require("fs");
+const path = require("path");
+const OpenAI = require("openai");
 
-const SESSIONS_FILE = path.join(__dirname, '../../data/ai/chat_sessions.json');
+const SESSIONS_FILE = path.join(__dirname, "../../data/ai/chat_sessions.json");
 const MAX_HISTORY = 20;
 
 const SYSTEM_PROMPT = `You are an expert AI sales assistant for XPS Intelligence, a lead generation platform
@@ -27,27 +27,27 @@ const RULE_BASED_RESPONSES = [
   {
     patterns: [/pipeline status/i, /pipeline/i],
     reply: () =>
-      'Your pipeline status is available in the dashboard under Analytics. For a quick CLI snapshot, run `npm run export` to get a fresh CSV report.',
+      "Your pipeline status is available in the dashboard under Analytics. For a quick CLI snapshot, run `npm run export` to get a fresh CSV report.",
   },
   {
     patterns: [/best time to call/i, /when to call/i, /call time/i],
     reply: () =>
-      'For flooring contractors, the best call windows are typically Tuesday–Thursday, 8–10 AM and 2–4 PM local time. Avoid Monday mornings and Friday afternoons.',
+      "For flooring contractors, the best call windows are typically Tuesday–Thursday, 8–10 AM and 2–4 PM local time. Avoid Monday mornings and Friday afternoons.",
   },
   {
     patterns: [/objection/i, /not interested/i, /busy/i],
     reply: () =>
-      'Try: "I completely understand — that\'s exactly why I\'m reaching out. We help busy contractors like you get leads on autopilot so you can focus on the work, not the hunt." Then ask for just 10 minutes.',
+      "Try: \"I completely understand — that's exactly why I'm reaching out. We help busy contractors like you get leads on autopilot so you can focus on the work, not the hunt.\" Then ask for just 10 minutes.",
   },
   {
     patterns: [/export/i, /download leads/i, /csv/i],
     reply: () =>
-      'You can export leads by running `npm run export` in the terminal, or use the Export button in the dashboard. Your file will be saved to data/exports/.',
+      "You can export leads by running `npm run export` in the terminal, or use the Export button in the dashboard. Your file will be saved to data/exports/.",
   },
   {
     patterns: [/score/i, /lead score/i, /rank/i],
     reply: () =>
-      'Leads are scored on a 0–100 scale based on: website presence (+10), email discovered (+15), phone present (+10), reviews > 10 (+5), rating > 4 (+10). Focus on leads above 60 for best conversion.',
+      "Leads are scored on a 0–100 scale based on: website presence (+10), email discovered (+15), phone present (+10), reviews > 10 (+5), rating > 4 (+10). Focus on leads above 60 for best conversion.",
   },
   {
     patterns: [/hello/i, /hi\b/i, /hey/i, /help/i],
@@ -64,7 +64,7 @@ const RULE_BASED_RESPONSES = [
 function loadSessions() {
   try {
     if (fs.existsSync(SESSIONS_FILE)) {
-      return JSON.parse(fs.readFileSync(SESSIONS_FILE, 'utf8'));
+      return JSON.parse(fs.readFileSync(SESSIONS_FILE, "utf8"));
     }
   } catch (_) {}
   return {};
@@ -85,11 +85,18 @@ class SalesAIChatAssistant {
 
   async chat(sessionId, message, context = {}) {
     if (!this._sessions[sessionId]) {
-      this._sessions[sessionId] = { history: [], created_at: new Date().toISOString() };
+      this._sessions[sessionId] = {
+        history: [],
+        created_at: new Date().toISOString(),
+      };
     }
 
     const session = this._sessions[sessionId];
-    session.history.push({ role: 'user', content: message, ts: new Date().toISOString() });
+    session.history.push({
+      role: "user",
+      content: message,
+      ts: new Date().toISOString(),
+    });
 
     let reply;
     if (this._openai) {
@@ -98,7 +105,11 @@ class SalesAIChatAssistant {
       reply = this._chatRuleBased(message);
     }
 
-    session.history.push({ role: 'assistant', content: reply, ts: new Date().toISOString() });
+    session.history.push({
+      role: "assistant",
+      content: reply,
+      ts: new Date().toISOString(),
+    });
 
     // Trim to MAX_HISTORY pairs
     if (session.history.length > MAX_HISTORY * 2) {
@@ -114,24 +125,26 @@ class SalesAIChatAssistant {
   async _chatWithAI(history, context) {
     const contextNote = Object.keys(context).length
       ? `\nCurrent context: ${JSON.stringify(context)}`
-      : '';
+      : "";
 
     const messages = [
-      { role: 'system', content: SYSTEM_PROMPT + contextNote },
-      ...history.slice(-MAX_HISTORY * 2).map(({ role, content }) => ({ role, content })),
+      { role: "system", content: SYSTEM_PROMPT + contextNote },
+      ...history
+        .slice(-MAX_HISTORY * 2)
+        .map(({ role, content }) => ({ role, content })),
     ];
 
     try {
       const completion = await this._openai.chat.completions.create({
-        model: 'gpt-4o-mini',
+        model: "gpt-4o-mini",
         messages,
         max_tokens: 500,
         temperature: 0.6,
       });
       return completion.choices[0].message.content.trim();
     } catch (err) {
-      console.error('[SalesAIChatAssistant] OpenAI error:', err.message);
-      return this._chatRuleBased(history[history.length - 1]?.content || '');
+      console.error("[SalesAIChatAssistant] OpenAI error:", err.message);
+      return this._chatRuleBased(history[history.length - 1]?.content || "");
     }
   }
 
@@ -158,7 +171,10 @@ class SalesAIChatAssistant {
     try {
       saveSessions(this._sessions);
     } catch (err) {
-      console.error('[SalesAIChatAssistant] Failed to persist sessions:', err.message);
+      console.error(
+        "[SalesAIChatAssistant] Failed to persist sessions:",
+        err.message,
+      );
     }
   }
 }

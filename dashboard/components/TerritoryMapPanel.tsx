@@ -14,21 +14,126 @@ interface StateData {
 }
 
 const STATE_DATA: StateData[] = [
-  { state: "Texas", abbr: "TX", leads: 847, opportunityScore: 96, avgLeadScore: 74, topCategory: "Epoxy Flooring" },
-  { state: "California", abbr: "CA", leads: 763, opportunityScore: 92, avgLeadScore: 71, topCategory: "Hardwood" },
-  { state: "Florida", abbr: "FL", leads: 698, opportunityScore: 89, avgLeadScore: 69, topCategory: "Tile & Stone" },
-  { state: "New York", abbr: "NY", leads: 534, opportunityScore: 84, avgLeadScore: 67, topCategory: "Hardwood" },
-  { state: "Illinois", abbr: "IL", leads: 412, opportunityScore: 79, avgLeadScore: 65, topCategory: "Commercial" },
-  { state: "Ohio", abbr: "OH", leads: 389, opportunityScore: 76, avgLeadScore: 63, topCategory: "Epoxy Flooring" },
-  { state: "Georgia", abbr: "GA", leads: 371, opportunityScore: 75, avgLeadScore: 62, topCategory: "Carpet" },
-  { state: "Arizona", abbr: "AZ", leads: 348, opportunityScore: 73, avgLeadScore: 61, topCategory: "Tile & Stone" },
-  { state: "Pennsylvania", abbr: "PA", leads: 327, opportunityScore: 71, avgLeadScore: 60, topCategory: "Hardwood" },
-  { state: "Michigan", abbr: "MI", leads: 298, opportunityScore: 68, avgLeadScore: 58, topCategory: "Commercial" },
-  { state: "Colorado", abbr: "CO", leads: 276, opportunityScore: 65, avgLeadScore: 57, topCategory: "Epoxy Flooring" },
-  { state: "North Carolina", abbr: "NC", leads: 254, opportunityScore: 62, avgLeadScore: 55, topCategory: "Hardwood" },
-  { state: "Washington", abbr: "WA", leads: 231, opportunityScore: 59, avgLeadScore: 53, topCategory: "Commercial" },
-  { state: "Tennessee", abbr: "TN", leads: 198, opportunityScore: 54, avgLeadScore: 51, topCategory: "Carpet" },
-  { state: "Nevada", abbr: "NV", leads: 172, opportunityScore: 48, avgLeadScore: 48, topCategory: "Tile & Stone" },
+  {
+    state: "Texas",
+    abbr: "TX",
+    leads: 847,
+    opportunityScore: 96,
+    avgLeadScore: 74,
+    topCategory: "Epoxy Flooring",
+  },
+  {
+    state: "California",
+    abbr: "CA",
+    leads: 763,
+    opportunityScore: 92,
+    avgLeadScore: 71,
+    topCategory: "Hardwood",
+  },
+  {
+    state: "Florida",
+    abbr: "FL",
+    leads: 698,
+    opportunityScore: 89,
+    avgLeadScore: 69,
+    topCategory: "Tile & Stone",
+  },
+  {
+    state: "New York",
+    abbr: "NY",
+    leads: 534,
+    opportunityScore: 84,
+    avgLeadScore: 67,
+    topCategory: "Hardwood",
+  },
+  {
+    state: "Illinois",
+    abbr: "IL",
+    leads: 412,
+    opportunityScore: 79,
+    avgLeadScore: 65,
+    topCategory: "Commercial",
+  },
+  {
+    state: "Ohio",
+    abbr: "OH",
+    leads: 389,
+    opportunityScore: 76,
+    avgLeadScore: 63,
+    topCategory: "Epoxy Flooring",
+  },
+  {
+    state: "Georgia",
+    abbr: "GA",
+    leads: 371,
+    opportunityScore: 75,
+    avgLeadScore: 62,
+    topCategory: "Carpet",
+  },
+  {
+    state: "Arizona",
+    abbr: "AZ",
+    leads: 348,
+    opportunityScore: 73,
+    avgLeadScore: 61,
+    topCategory: "Tile & Stone",
+  },
+  {
+    state: "Pennsylvania",
+    abbr: "PA",
+    leads: 327,
+    opportunityScore: 71,
+    avgLeadScore: 60,
+    topCategory: "Hardwood",
+  },
+  {
+    state: "Michigan",
+    abbr: "MI",
+    leads: 298,
+    opportunityScore: 68,
+    avgLeadScore: 58,
+    topCategory: "Commercial",
+  },
+  {
+    state: "Colorado",
+    abbr: "CO",
+    leads: 276,
+    opportunityScore: 65,
+    avgLeadScore: 57,
+    topCategory: "Epoxy Flooring",
+  },
+  {
+    state: "North Carolina",
+    abbr: "NC",
+    leads: 254,
+    opportunityScore: 62,
+    avgLeadScore: 55,
+    topCategory: "Hardwood",
+  },
+  {
+    state: "Washington",
+    abbr: "WA",
+    leads: 231,
+    opportunityScore: 59,
+    avgLeadScore: 53,
+    topCategory: "Commercial",
+  },
+  {
+    state: "Tennessee",
+    abbr: "TN",
+    leads: 198,
+    opportunityScore: 54,
+    avgLeadScore: 51,
+    topCategory: "Carpet",
+  },
+  {
+    state: "Nevada",
+    abbr: "NV",
+    leads: 172,
+    opportunityScore: 48,
+    avgLeadScore: 48,
+    topCategory: "Tile & Stone",
+  },
 ];
 
 function heatClass(value: number, max: number): string {
@@ -94,26 +199,53 @@ export default function TerritoryMapPanel() {
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs text-gray-500">
-          <span className="px-2 py-0.5 bg-yellow-400/20 rounded text-yellow-400/70">Low</span>
-          <span className="px-2 py-0.5 bg-yellow-400/50 rounded text-yellow-200">Med</span>
-          <span className="px-2 py-0.5 bg-yellow-400 rounded text-black font-bold">High</span>
+          <span className="px-2 py-0.5 bg-yellow-400/20 rounded text-yellow-400/70">
+            Low
+          </span>
+          <span className="px-2 py-0.5 bg-yellow-400/50 rounded text-yellow-200">
+            Med
+          </span>
+          <span className="px-2 py-0.5 bg-yellow-400 rounded text-black font-bold">
+            High
+          </span>
         </div>
       </div>
 
       {/* Summary bar */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
-          { label: "Total Leads", value: totalLeads.toLocaleString(), sub: "Across 15 states" },
-          { label: "Top Territory", value: sorted[0]?.state ?? "—", sub: `${sorted[0]?.leads ?? 0} leads` },
-          { label: "Avg Opp Score", value: Math.round(STATE_DATA.reduce((s, st) => s + st.opportunityScore, 0) / STATE_DATA.length).toString(), sub: "Out of 100" },
-          { label: "Top Category", value: "Epoxy Flooring", sub: "Most common" },
+          {
+            label: "Total Leads",
+            value: totalLeads.toLocaleString(),
+            sub: "Across 15 states",
+          },
+          {
+            label: "Top Territory",
+            value: sorted[0]?.state ?? "—",
+            sub: `${sorted[0]?.leads ?? 0} leads`,
+          },
+          {
+            label: "Avg Opp Score",
+            value: Math.round(
+              STATE_DATA.reduce((s, st) => s + st.opportunityScore, 0) /
+                STATE_DATA.length,
+            ).toString(),
+            sub: "Out of 100",
+          },
+          {
+            label: "Top Category",
+            value: "Epoxy Flooring",
+            sub: "Most common",
+          },
         ].map((m) => (
           <div
             key={m.label}
             className="bg-[#111111] border border-[#2a2a2a] rounded-xl p-4"
           >
             <p className="text-xs text-gray-500 mb-1">{m.label}</p>
-            <p className="text-base font-bold text-yellow-400 truncate">{m.value}</p>
+            <p className="text-base font-bold text-yellow-400 truncate">
+              {m.value}
+            </p>
             <p className="text-[10px] text-gray-600 mt-0.5">{m.sub}</p>
           </div>
         ))}
@@ -162,7 +294,11 @@ export default function TerritoryMapPanel() {
                   onMouseLeave={() => setHovered(null)}
                   className={[
                     "border-b border-[#1a1a1a] transition-colors",
-                    hovered === row.abbr ? "bg-yellow-400/5" : idx % 2 === 0 ? "" : "bg-white/[0.01]",
+                    hovered === row.abbr
+                      ? "bg-yellow-400/5"
+                      : idx % 2 === 0
+                        ? ""
+                        : "bg-white/[0.01]",
                   ].join(" ")}
                 >
                   <td className="px-4 py-3">
@@ -181,7 +317,9 @@ export default function TerritoryMapPanel() {
                       <div className="w-16 h-1.5 bg-[#2a2a2a] rounded-full overflow-hidden hidden sm:block">
                         <div
                           className="h-full bg-yellow-400/70 rounded-full"
-                          style={{ width: `${(row.opportunityScore / maxOpp) * 100}%` }}
+                          style={{
+                            width: `${(row.opportunityScore / maxOpp) * 100}%`,
+                          }}
                         />
                       </div>
                       <ScoreBadge score={row.opportunityScore} max={maxOpp} />
@@ -222,9 +360,28 @@ export default function TerritoryMapPanel() {
         </h3>
         <div className="flex gap-3 flex-wrap">
           {[
-            { label: "High (75%+)", cls: "bg-yellow-400", count: STATE_DATA.filter((s) => s.opportunityScore / maxOpp >= 0.75).length },
-            { label: "Medium (45–74%)", cls: "bg-yellow-400/50", count: STATE_DATA.filter((s) => { const p = s.opportunityScore / maxOpp; return p >= 0.45 && p < 0.75; }).length },
-            { label: "Low (<45%)", cls: "bg-yellow-400/20", count: STATE_DATA.filter((s) => s.opportunityScore / maxOpp < 0.45).length },
+            {
+              label: "High (75%+)",
+              cls: "bg-yellow-400",
+              count: STATE_DATA.filter(
+                (s) => s.opportunityScore / maxOpp >= 0.75,
+              ).length,
+            },
+            {
+              label: "Medium (45–74%)",
+              cls: "bg-yellow-400/50",
+              count: STATE_DATA.filter((s) => {
+                const p = s.opportunityScore / maxOpp;
+                return p >= 0.45 && p < 0.75;
+              }).length,
+            },
+            {
+              label: "Low (<45%)",
+              cls: "bg-yellow-400/20",
+              count: STATE_DATA.filter(
+                (s) => s.opportunityScore / maxOpp < 0.45,
+              ).length,
+            },
           ].map((tier) => (
             <div key={tier.label} className="flex items-center gap-2">
               <span className={`w-3 h-3 rounded-sm ${tier.cls}`} />
