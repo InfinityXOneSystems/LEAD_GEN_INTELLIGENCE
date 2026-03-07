@@ -8,40 +8,331 @@
    SAMPLE / SEED LEADS
    ═══════════════════════════════════════════════════════════ */
 const SAMPLE_LEADS = [
-  { id:1, company:"ProEpoxy Solutions", contact:"Mark Rivera", phone:"(614) 555-0101", email:"mark@proepoxy.com", website:"https://proepoxy.com", city:"Columbus", state:"OH", industry:"Epoxy", rating:4.8, reviews:142, score:88, status:"qualified", date:"2025-03-01", source:"sample" },
-  { id:2, company:"Concrete Masters LLC", contact:"Sarah Kim", phone:"(480) 555-0192", email:"sarah@concretemasters.com", website:"https://concretemasters.com", city:"Tempe", state:"AZ", industry:"Concrete", rating:4.5, reviews:98, score:76, status:"contacted", date:"2025-03-01", source:"sample" },
-  { id:3, company:"GlossFloor Chicago", contact:"David Park", phone:"(312) 555-0345", email:"", website:"", city:"West Chicago", state:"IL", industry:"Epoxy", rating:4.2, reviews:55, score:52, status:"new", date:"2025-03-02", source:"sample" },
-  { id:4, company:"OKC Floor Systems", contact:"Lisa Moore", phone:"(405) 555-0567", email:"lisa@okcfloor.com", website:"https://okcfloor.com", city:"Oklahoma City", state:"OK", industry:"Concrete", rating:4.6, reviews:77, score:71, status:"contacted", date:"2025-03-02", source:"sample" },
-  { id:5, company:"SurfacePro FL", contact:"James White", phone:"(954) 555-0789", email:"james@surfacepro.com", website:"https://surfacepro.com", city:"Pompano Beach", state:"FL", industry:"SurfacePrep", rating:4.9, reviews:213, score:94, status:"converted", date:"2025-02-28", source:"sample" },
-  { id:6, company:"Midwest Resin Works", contact:"Tom Hansen", phone:"", email:"", website:"", city:"Columbus", state:"OH", industry:"Epoxy", rating:3.8, reviews:22, score:31, status:"new", date:"2025-03-03", source:"sample" },
-  { id:7, company:"Arizona Polished Concrete", contact:"Elena Cruz", phone:"(602) 555-0234", email:"elena@azpolished.com", website:"https://azpolished.com", city:"Tempe", state:"AZ", industry:"Concrete", rating:4.7, reviews:89, score:82, status:"qualified", date:"2025-03-03", source:"sample" },
-  { id:8, company:"FlakeFloor Inc.", contact:"Ryan Scott", phone:"(614) 555-0891", email:"ryan@flakefloor.com", website:"https://flakefloor.com", city:"Columbus", state:"OH", industry:"Epoxy", rating:4.4, reviews:67, score:73, status:"new", date:"2025-03-04", source:"sample" },
-  { id:9, company:"IL Concrete Co.", contact:"Nancy Bell", phone:"(630) 555-0123", email:"nancy@ilconcrete.com", website:"https://ilconcrete.com", city:"Chicago", state:"IL", industry:"Concrete", rating:4.3, reviews:44, score:65, status:"contacted", date:"2025-03-04", source:"sample" },
-  { id:10, company:"ToughCoat Flooring", contact:"Chris Adams", phone:"(954) 555-0456", email:"chris@toughcoat.com", website:"https://toughcoat.com", city:"Pompano Beach", state:"FL", industry:"Epoxy", rating:4.6, reviews:101, score:80, status:"qualified", date:"2025-03-04", source:"sample" },
-  { id:11, company:"Grind & Shine LLC", contact:"Amy Foster", phone:"(405) 555-0678", email:"amy@grindshine.com", website:"https://grindshine.com", city:"Oklahoma City", state:"OK", industry:"SurfacePrep", rating:4.1, reviews:30, score:58, status:"new", date:"2025-03-05", source:"sample" },
-  { id:12, company:"LevelUp Concrete", contact:"Kevin Turner", phone:"(312) 555-0567", email:"", website:"", city:"Chicago", state:"IL", industry:"Concrete", rating:3.9, reviews:18, score:28, status:"new", date:"2025-03-05", source:"sample" },
-  { id:13, company:"ResinPros AZ", contact:"Olivia Lane", phone:"(480) 555-0345", email:"olivia@resinpros.com", website:"https://resinpros.com", city:"Tempe", state:"AZ", industry:"Epoxy", rating:4.8, reviews:156, score:91, status:"converted", date:"2025-02-27", source:"sample" },
-  { id:14, company:"BlastMasters Corp", contact:"Derek Hughes", phone:"(877) 555-0001", email:"derek@blastmasters.com", website:"https://blastmasters.com", city:"Pompano Beach", state:"FL", industry:"SurfacePrep", rating:4.5, reviews:72, score:74, status:"qualified", date:"2025-03-01", source:"sample" },
-  { id:15, company:"TopCoat OH", contact:"Samantha Vega", phone:"(614) 555-0999", email:"sam@topcoatoh.com", website:"https://topcoatoh.com", city:"Columbus", state:"OH", industry:"Epoxy", rating:4.7, reviews:188, score:87, status:"qualified", date:"2025-03-02", source:"sample" },
-  { id:16, company:"Desert Epoxy Solutions", contact:"", phone:"(480) 555-1101", email:"info@desertepoxy.com", website:"https://desertepoxy.com", city:"Tempe", state:"AZ", industry:"Epoxy", rating:4.9, reviews:83, score:95, status:"new", date:"", source:"google_maps" },
-  { id:17, company:"Chicago Floor Pros", contact:"", phone:"(815) 555-0222", email:"contact@chicagofloor.com", website:"https://chicagofloor.com", city:"Chicago", state:"IL", industry:"Flooring", rating:4.3, reviews:38, score:66, status:"new", date:"", source:"yelp" },
-  { id:18, company:"Columbus Epoxy Kings", contact:"", phone:"(614) 555-0444", email:"", website:"", city:"Columbus", state:"OH", industry:"Epoxy", rating:4.0, reviews:15, score:40, status:"new", date:"", source:"bing_maps" },
+  {
+    id: 1,
+    company: "ProEpoxy Solutions",
+    contact: "Mark Rivera",
+    phone: "(614) 555-0101",
+    email: "mark@proepoxy.com",
+    website: "https://proepoxy.com",
+    city: "Columbus",
+    state: "OH",
+    industry: "Epoxy",
+    rating: 4.8,
+    reviews: 142,
+    score: 88,
+    status: "qualified",
+    date: "2025-03-01",
+    source: "sample",
+  },
+  {
+    id: 2,
+    company: "Concrete Masters LLC",
+    contact: "Sarah Kim",
+    phone: "(480) 555-0192",
+    email: "sarah@concretemasters.com",
+    website: "https://concretemasters.com",
+    city: "Tempe",
+    state: "AZ",
+    industry: "Concrete",
+    rating: 4.5,
+    reviews: 98,
+    score: 76,
+    status: "contacted",
+    date: "2025-03-01",
+    source: "sample",
+  },
+  {
+    id: 3,
+    company: "GlossFloor Chicago",
+    contact: "David Park",
+    phone: "(312) 555-0345",
+    email: "",
+    website: "",
+    city: "West Chicago",
+    state: "IL",
+    industry: "Epoxy",
+    rating: 4.2,
+    reviews: 55,
+    score: 52,
+    status: "new",
+    date: "2025-03-02",
+    source: "sample",
+  },
+  {
+    id: 4,
+    company: "OKC Floor Systems",
+    contact: "Lisa Moore",
+    phone: "(405) 555-0567",
+    email: "lisa@okcfloor.com",
+    website: "https://okcfloor.com",
+    city: "Oklahoma City",
+    state: "OK",
+    industry: "Concrete",
+    rating: 4.6,
+    reviews: 77,
+    score: 71,
+    status: "contacted",
+    date: "2025-03-02",
+    source: "sample",
+  },
+  {
+    id: 5,
+    company: "SurfacePro FL",
+    contact: "James White",
+    phone: "(954) 555-0789",
+    email: "james@surfacepro.com",
+    website: "https://surfacepro.com",
+    city: "Pompano Beach",
+    state: "FL",
+    industry: "SurfacePrep",
+    rating: 4.9,
+    reviews: 213,
+    score: 94,
+    status: "converted",
+    date: "2025-02-28",
+    source: "sample",
+  },
+  {
+    id: 6,
+    company: "Midwest Resin Works",
+    contact: "Tom Hansen",
+    phone: "",
+    email: "",
+    website: "",
+    city: "Columbus",
+    state: "OH",
+    industry: "Epoxy",
+    rating: 3.8,
+    reviews: 22,
+    score: 31,
+    status: "new",
+    date: "2025-03-03",
+    source: "sample",
+  },
+  {
+    id: 7,
+    company: "Arizona Polished Concrete",
+    contact: "Elena Cruz",
+    phone: "(602) 555-0234",
+    email: "elena@azpolished.com",
+    website: "https://azpolished.com",
+    city: "Tempe",
+    state: "AZ",
+    industry: "Concrete",
+    rating: 4.7,
+    reviews: 89,
+    score: 82,
+    status: "qualified",
+    date: "2025-03-03",
+    source: "sample",
+  },
+  {
+    id: 8,
+    company: "FlakeFloor Inc.",
+    contact: "Ryan Scott",
+    phone: "(614) 555-0891",
+    email: "ryan@flakefloor.com",
+    website: "https://flakefloor.com",
+    city: "Columbus",
+    state: "OH",
+    industry: "Epoxy",
+    rating: 4.4,
+    reviews: 67,
+    score: 73,
+    status: "new",
+    date: "2025-03-04",
+    source: "sample",
+  },
+  {
+    id: 9,
+    company: "IL Concrete Co.",
+    contact: "Nancy Bell",
+    phone: "(630) 555-0123",
+    email: "nancy@ilconcrete.com",
+    website: "https://ilconcrete.com",
+    city: "Chicago",
+    state: "IL",
+    industry: "Concrete",
+    rating: 4.3,
+    reviews: 44,
+    score: 65,
+    status: "contacted",
+    date: "2025-03-04",
+    source: "sample",
+  },
+  {
+    id: 10,
+    company: "ToughCoat Flooring",
+    contact: "Chris Adams",
+    phone: "(954) 555-0456",
+    email: "chris@toughcoat.com",
+    website: "https://toughcoat.com",
+    city: "Pompano Beach",
+    state: "FL",
+    industry: "Epoxy",
+    rating: 4.6,
+    reviews: 101,
+    score: 80,
+    status: "qualified",
+    date: "2025-03-04",
+    source: "sample",
+  },
+  {
+    id: 11,
+    company: "Grind & Shine LLC",
+    contact: "Amy Foster",
+    phone: "(405) 555-0678",
+    email: "amy@grindshine.com",
+    website: "https://grindshine.com",
+    city: "Oklahoma City",
+    state: "OK",
+    industry: "SurfacePrep",
+    rating: 4.1,
+    reviews: 30,
+    score: 58,
+    status: "new",
+    date: "2025-03-05",
+    source: "sample",
+  },
+  {
+    id: 12,
+    company: "LevelUp Concrete",
+    contact: "Kevin Turner",
+    phone: "(312) 555-0567",
+    email: "",
+    website: "",
+    city: "Chicago",
+    state: "IL",
+    industry: "Concrete",
+    rating: 3.9,
+    reviews: 18,
+    score: 28,
+    status: "new",
+    date: "2025-03-05",
+    source: "sample",
+  },
+  {
+    id: 13,
+    company: "ResinPros AZ",
+    contact: "Olivia Lane",
+    phone: "(480) 555-0345",
+    email: "olivia@resinpros.com",
+    website: "https://resinpros.com",
+    city: "Tempe",
+    state: "AZ",
+    industry: "Epoxy",
+    rating: 4.8,
+    reviews: 156,
+    score: 91,
+    status: "converted",
+    date: "2025-02-27",
+    source: "sample",
+  },
+  {
+    id: 14,
+    company: "BlastMasters Corp",
+    contact: "Derek Hughes",
+    phone: "(877) 555-0001",
+    email: "derek@blastmasters.com",
+    website: "https://blastmasters.com",
+    city: "Pompano Beach",
+    state: "FL",
+    industry: "SurfacePrep",
+    rating: 4.5,
+    reviews: 72,
+    score: 74,
+    status: "qualified",
+    date: "2025-03-01",
+    source: "sample",
+  },
+  {
+    id: 15,
+    company: "TopCoat OH",
+    contact: "Samantha Vega",
+    phone: "(614) 555-0999",
+    email: "sam@topcoatoh.com",
+    website: "https://topcoatoh.com",
+    city: "Columbus",
+    state: "OH",
+    industry: "Epoxy",
+    rating: 4.7,
+    reviews: 188,
+    score: 87,
+    status: "qualified",
+    date: "2025-03-02",
+    source: "sample",
+  },
+  {
+    id: 16,
+    company: "Desert Epoxy Solutions",
+    contact: "",
+    phone: "(480) 555-1101",
+    email: "info@desertepoxy.com",
+    website: "https://desertepoxy.com",
+    city: "Tempe",
+    state: "AZ",
+    industry: "Epoxy",
+    rating: 4.9,
+    reviews: 83,
+    score: 95,
+    status: "new",
+    date: "",
+    source: "google_maps",
+  },
+  {
+    id: 17,
+    company: "Chicago Floor Pros",
+    contact: "",
+    phone: "(815) 555-0222",
+    email: "contact@chicagofloor.com",
+    website: "https://chicagofloor.com",
+    city: "Chicago",
+    state: "IL",
+    industry: "Flooring",
+    rating: 4.3,
+    reviews: 38,
+    score: 66,
+    status: "new",
+    date: "",
+    source: "yelp",
+  },
+  {
+    id: 18,
+    company: "Columbus Epoxy Kings",
+    contact: "",
+    phone: "(614) 555-0444",
+    email: "",
+    website: "",
+    city: "Columbus",
+    state: "OH",
+    industry: "Epoxy",
+    rating: 4.0,
+    reviews: 15,
+    score: 40,
+    status: "new",
+    date: "",
+    source: "bing_maps",
+  },
 ];
 
 /* ═══════════════════════════════════════════════════════════
    TERMINAL COMMANDS
    ═══════════════════════════════════════════════════════════ */
 const COMMANDS_HELP = [
-  { cmd: "help",                 desc: "Show available commands" },
-  { cmd: "leads list",           desc: "List all leads" },
-  { cmd: "leads status <s>",     desc: "Filter by status (new|contacted|qualified|converted)" },
-  { cmd: "leads top <n>",        desc: "Show top N leads by score" },
-  { cmd: "leads city <city>",    desc: "Filter leads by city name" },
-  { cmd: "stats",                desc: "Show lead statistics summary" },
-  { cmd: "score <company>",      desc: "Show score breakdown for a company" },
-  { cmd: "export",               desc: "Export filtered leads as CSV" },
-  { cmd: "refresh",              desc: "Reload live data now" },
-  { cmd: "clear",                desc: "Clear terminal output" },
+  { cmd: "help", desc: "Show available commands" },
+  { cmd: "leads list", desc: "List all leads" },
+  {
+    cmd: "leads status <s>",
+    desc: "Filter by status (new|contacted|qualified|converted)",
+  },
+  { cmd: "leads top <n>", desc: "Show top N leads by score" },
+  { cmd: "leads city <city>", desc: "Filter leads by city name" },
+  { cmd: "stats", desc: "Show lead statistics summary" },
+  { cmd: "score <company>", desc: "Show score breakdown for a company" },
+  { cmd: "export", desc: "Export filtered leads as CSV" },
+  { cmd: "refresh", desc: "Reload live data now" },
+  { cmd: "clear", desc: "Clear terminal output" },
 ];
 
 /* ═══════════════════════════════════════════════════════════
@@ -99,7 +390,10 @@ function normalizeLead(l, index) {
     contact: l.contact || l.contact_name || "",
     phone,
     email,
-    website: website && website.trim() && !/^https?:\/\//i.test(website) ? "https://" + website : website,
+    website:
+      website && website.trim() && !/^https?:\/\//i.test(website)
+        ? "https://" + website
+        : website,
     city,
     state: stateVal,
     industry,
@@ -141,11 +435,11 @@ function tierClass(score) {
 
 function statusBadge(status) {
   const map = {
-    new:       ["badge-new",       "🔵", "New"],
+    new: ["badge-new", "🔵", "New"],
     contacted: ["badge-contacted", "🟡", "Contacted"],
     qualified: ["badge-qualified", "🟢", "Qualified"],
     converted: ["badge-converted", "🟣", "Converted"],
-    pending:   ["badge-pending",   "⚪", "Pending"],
+    pending: ["badge-pending", "⚪", "Pending"],
   };
   const [cls, dot, label] = map[status] || map.pending;
   return `<span class="badge ${cls}">${dot} ${label}</span>`;
@@ -170,7 +464,11 @@ function formatDate(dateStr) {
   if (!dateStr) return "—";
   const d = new Date(dateStr);
   if (isNaN(d.getTime())) return dateStr;
-  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  return d.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
 function timeAgo(dateStr) {
@@ -191,19 +489,34 @@ function companyInitial(company) {
    CSV EXPORT
    ═══════════════════════════════════════════════════════════ */
 window.exportCSV = function () {
-  const headers = ["ID","Company","Phone","Email","Website","City","State","Industry","Rating","Reviews","Score","Status","Source","Date"];
+  const headers = [
+    "ID",
+    "Company",
+    "Phone",
+    "Email",
+    "Website",
+    "City",
+    "State",
+    "Industry",
+    "Rating",
+    "Reviews",
+    "Score",
+    "Status",
+    "Source",
+    "Date",
+  ];
   // Guard against CSV formula injection: prefix fields starting with =, +, @, - with a tab
   const safeVal = (v) => {
     const s = String(v == null ? "" : v);
     return /^[=+@-]/.test(s) ? `\t${s}` : s;
   };
-  const rows = state.filtered.map(l => [
+  const rows = state.filtered.map((l) => [
     l.id,
-    `"${safeVal(l.company).replace(/"/g,'""')}"`,
-    `"${safeVal(l.phone).replace(/"/g,'""')}"`,
-    `"${safeVal(l.email).replace(/"/g,'""')}"`,
-    `"${safeVal(l.website).replace(/"/g,'""')}"`,
-    `"${safeVal(l.city).replace(/"/g,'""')}"`,
+    `"${safeVal(l.company).replace(/"/g, '""')}"`,
+    `"${safeVal(l.phone).replace(/"/g, '""')}"`,
+    `"${safeVal(l.email).replace(/"/g, '""')}"`,
+    `"${safeVal(l.website).replace(/"/g, '""')}"`,
+    `"${safeVal(l.city).replace(/"/g, '""')}"`,
     l.state || "",
     l.industry || "",
     l.rating || 0,
@@ -211,15 +524,15 @@ window.exportCSV = function () {
     l.score || 0,
     l.status || "",
     l.source || "",
-    `"${safeVal(l.date).replace(/"/g,'""')}"`,
+    `"${safeVal(l.date).replace(/"/g, '""')}"`,
   ]);
 
-  const csv = [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
+  const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `xps_leads_${new Date().toISOString().slice(0,10)}.csv`;
+  a.download = `xps_leads_${new Date().toISOString().slice(0, 10)}.csv`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -233,18 +546,29 @@ window.exportCSV = function () {
    ═══════════════════════════════════════════════════════════ */
 function computeStats(leads) {
   const total = leads.length;
-  const withEmail = leads.filter(l => l.email).length;
-  const withPhone = leads.filter(l => l.phone).length;
-  const hot = leads.filter(l => l.score >= 75).length;
-  const warm = leads.filter(l => l.score >= 50 && l.score < 75).length;
-  const cold = leads.filter(l => l.score < 50).length;
-  const highScore = total ? Math.max(...leads.map(l => l.score)) : 0;
-  const converted = leads.filter(l => l.status === "converted").length;
-  const contacted = leads.filter(l => l.status === "contacted").length;
+  const withEmail = leads.filter((l) => l.email).length;
+  const withPhone = leads.filter((l) => l.phone).length;
+  const hot = leads.filter((l) => l.score >= 75).length;
+  const warm = leads.filter((l) => l.score >= 50 && l.score < 75).length;
+  const cold = leads.filter((l) => l.score < 50).length;
+  const highScore = total ? Math.max(...leads.map((l) => l.score)) : 0;
+  const converted = leads.filter((l) => l.status === "converted").length;
+  const contacted = leads.filter((l) => l.status === "contacted").length;
   const avgScore = total
     ? Math.round(leads.reduce((a, l) => a + l.score, 0) / total)
     : 0;
-  return { total, withEmail, withPhone, hot, warm, cold, highScore, converted, contacted, avgScore };
+  return {
+    total,
+    withEmail,
+    withPhone,
+    hot,
+    warm,
+    cold,
+    highScore,
+    converted,
+    contacted,
+    avgScore,
+  };
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -254,26 +578,29 @@ function applyFilters() {
   let leads = [...state.leads];
 
   if (state.filterStatus) {
-    leads = leads.filter(l => l.status === state.filterStatus);
+    leads = leads.filter((l) => l.status === state.filterStatus);
   }
   if (state.filterIndustry) {
-    leads = leads.filter(l => l.industry === state.filterIndustry);
+    leads = leads.filter((l) => l.industry === state.filterIndustry);
   }
   if (state.filterState) {
-    leads = leads.filter(l => l.state === state.filterState);
+    leads = leads.filter((l) => l.state === state.filterState);
   }
   if (state.filterCity) {
-    leads = leads.filter(l => l.city.toLowerCase().includes(state.filterCity.toLowerCase()));
+    leads = leads.filter((l) =>
+      l.city.toLowerCase().includes(state.filterCity.toLowerCase()),
+    );
   }
   if (state.searchQuery) {
     const q = state.searchQuery.toLowerCase();
-    leads = leads.filter(l =>
-      (l.company || "").toLowerCase().includes(q) ||
-      (l.city    || "").toLowerCase().includes(q) ||
-      (l.contact || "").toLowerCase().includes(q) ||
-      (l.industry|| "").toLowerCase().includes(q) ||
-      (l.email   || "").toLowerCase().includes(q) ||
-      (l.phone   || "").toLowerCase().includes(q)
+    leads = leads.filter(
+      (l) =>
+        (l.company || "").toLowerCase().includes(q) ||
+        (l.city || "").toLowerCase().includes(q) ||
+        (l.contact || "").toLowerCase().includes(q) ||
+        (l.industry || "").toLowerCase().includes(q) ||
+        (l.email || "").toLowerCase().includes(q) ||
+        (l.phone || "").toLowerCase().includes(q),
     );
   }
 
@@ -292,7 +619,8 @@ function applyFilters() {
 
   // Update filter count
   const countEl = document.getElementById("filterCount");
-  if (countEl) countEl.textContent = `${state.filtered.length} lead${state.filtered.length !== 1 ? "s" : ""}`;
+  if (countEl)
+    countEl.textContent = `${state.filtered.length} lead${state.filtered.length !== 1 ? "s" : ""}`;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -312,7 +640,9 @@ function renderTable() {
       </div>
     </td></tr>`;
   } else {
-    tbody.innerHTML = pageLeads.map(lead => `
+    tbody.innerHTML = pageLeads
+      .map(
+        (lead) => `
       <tr data-id="${lead.id}" onclick="openLeadModal(${lead.id})" style="cursor:pointer">
         <td>
           <div class="company-name">${escapeHtml(lead.company)}</div>
@@ -330,9 +660,11 @@ function renderTable() {
         <td>${statusBadge(lead.status)}</td>
         <td class="col-hide-sm fs-12 text-muted">${lead.phone ? escapeHtml(lead.phone) : '<span style="opacity:.35">—</span>'}</td>
         <td class="col-hide-sm fs-12">
-          ${lead.email
-            ? `<a href="mailto:${escapeHtml(lead.email)}" style="color:var(--gold);text-decoration:none;font-size:12px" onclick="event.stopPropagation()">${escapeHtml(lead.email)}</a>`
-            : '<span style="opacity:.35;font-size:12px">—</span>'}
+          ${
+            lead.email
+              ? `<a href="mailto:${escapeHtml(lead.email)}" style="color:var(--gold);text-decoration:none;font-size:12px" onclick="event.stopPropagation()">${escapeHtml(lead.email)}</a>`
+              : '<span style="opacity:.35;font-size:12px">—</span>'
+          }
         </td>
         <td class="col-hide-md fs-12 text-muted">${timeAgo(lead.date)}</td>
         <td class="col-hide-md">
@@ -343,7 +675,9 @@ function renderTable() {
           </div>
         </td>
       </tr>
-    `).join("");
+    `,
+      )
+      .join("");
   }
 
   renderPagination();
@@ -366,7 +700,9 @@ function renderLeadCards() {
     return;
   }
 
-  container.innerHTML = pageLeads.map(lead => `
+  container.innerHTML = pageLeads
+    .map(
+      (lead) => `
     <div class="lead-card" onclick="openLeadModal(${lead.id})" role="button" tabindex="0"
       onkeydown="if(event.key==='Enter')openLeadModal(${lead.id})">
       <div class="lead-card-header">
@@ -394,32 +730,47 @@ function renderLeadCards() {
             ${statusBadge(lead.status)}
           </div>
         </div>
-        ${lead.rating ? `
+        ${
+          lead.rating
+            ? `
         <div class="lead-card-row">
           <span class="lead-card-stars">${renderStars(lead.rating)} <span style="color:var(--text-muted);font-size:11px">${lead.rating.toFixed(1)} (${lead.reviews})</span></span>
-        </div>` : ""}
+        </div>`
+            : ""
+        }
       </div>
 
       <div class="lead-card-actions">
-        ${lead.phone
-          ? `<a class="lead-action-btn phone" href="tel:${escapeHtml(lead.phone)}" onclick="event.stopPropagation()">📞 Call</a>`
-          : `<span class="lead-action-btn" style="opacity:.35;pointer-events:none">📞 No Phone</span>`}
-        ${lead.email
-          ? `<a class="lead-action-btn email" href="mailto:${escapeHtml(lead.email)}" onclick="event.stopPropagation()">📧 Email</a>`
-          : `<span class="lead-action-btn" style="opacity:.35;pointer-events:none">📧 No Email</span>`}
-        ${lead.website
-          ? `<a class="lead-action-btn web" href="${escapeHtml(lead.website)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">🌐 Web</a>`
-          : `<span class="lead-action-btn" style="opacity:.35;pointer-events:none">🌐 No Site</span>`}
+        ${
+          lead.phone
+            ? `<a class="lead-action-btn phone" href="tel:${escapeHtml(lead.phone)}" onclick="event.stopPropagation()">📞 Call</a>`
+            : `<span class="lead-action-btn" style="opacity:.35;pointer-events:none">📞 No Phone</span>`
+        }
+        ${
+          lead.email
+            ? `<a class="lead-action-btn email" href="mailto:${escapeHtml(lead.email)}" onclick="event.stopPropagation()">📧 Email</a>`
+            : `<span class="lead-action-btn" style="opacity:.35;pointer-events:none">📧 No Email</span>`
+        }
+        ${
+          lead.website
+            ? `<a class="lead-action-btn web" href="${escapeHtml(lead.website)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">🌐 Web</a>`
+            : `<span class="lead-action-btn" style="opacity:.35;pointer-events:none">🌐 No Site</span>`
+        }
       </div>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 }
 
 /* ═══════════════════════════════════════════════════════════
    PAGINATION
    ═══════════════════════════════════════════════════════════ */
 function renderPagination() {
-  const totalPages = Math.max(1, Math.ceil(state.filtered.length / state.pageSize));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(state.filtered.length / state.pageSize),
+  );
   const paginationInfo = document.getElementById("paginationInfo");
   const paginationBtns = document.getElementById("paginationBtns");
   if (!paginationInfo || !paginationBtns) return;
@@ -432,7 +783,12 @@ function renderPagination() {
 
   let btns = `<button class="page-btn" ${state.page <= 1 ? "disabled" : ""} onclick="changePage(${state.page - 1})">‹</button>`;
   for (let p = 1; p <= totalPages; p++) {
-    if (totalPages <= 7 || p === 1 || p === totalPages || Math.abs(p - state.page) <= 1) {
+    if (
+      totalPages <= 7 ||
+      p === 1 ||
+      p === totalPages ||
+      Math.abs(p - state.page) <= 1
+    ) {
       btns += `<button class="page-btn ${p === state.page ? "active" : ""}" onclick="changePage(${p})">${p}</button>`;
     } else if (Math.abs(p - state.page) === 2) {
       btns += `<span style="color:var(--text-muted);padding:0 4px;font-size:13px">…</span>`;
@@ -460,7 +816,7 @@ window.sortBy = function (col) {
     state.sortDir = col === "score" ? "desc" : "asc";
   }
 
-  document.querySelectorAll(".leads-table th").forEach(th => {
+  document.querySelectorAll(".leads-table th").forEach((th) => {
     th.classList.remove("sorted");
     const arrow = th.querySelector(".sort-arrow");
     if (arrow) arrow.textContent = "";
@@ -481,7 +837,9 @@ window.sortBy = function (col) {
    LEAD DETAIL MODAL
    ═══════════════════════════════════════════════════════════ */
 window.openLeadModal = function (leadId) {
-  const lead = state.leads.find(l => l.id === leadId || l.id === String(leadId));
+  const lead = state.leads.find(
+    (l) => l.id === leadId || l.id === String(leadId),
+  );
   if (!lead) return;
 
   const modal = document.getElementById("leadModal");
@@ -495,7 +853,9 @@ window.openLeadModal = function (leadId) {
   if (nameEl) nameEl.textContent = lead.company;
 
   const locEl = document.getElementById("modalLocation");
-  if (locEl) locEl.textContent = [lead.city, lead.state].filter(Boolean).join(", ") || "—";
+  if (locEl)
+    locEl.textContent =
+      [lead.city, lead.state].filter(Boolean).join(", ") || "—";
 
   // Score ring
   const ring = document.getElementById("modalScoreRing");
@@ -515,7 +875,10 @@ window.openLeadModal = function (leadId) {
   if (industryEl) industryEl.textContent = lead.industry || "—";
 
   const ratingEl = document.getElementById("modalRating");
-  if (ratingEl) ratingEl.textContent = lead.rating ? `${renderStars(lead.rating)} ${lead.rating.toFixed(1)} (${lead.reviews} reviews)` : "—";
+  if (ratingEl)
+    ratingEl.textContent = lead.rating
+      ? `${renderStars(lead.rating)} ${lead.rating.toFixed(1)} (${lead.reviews} reviews)`
+      : "—";
 
   // Status badge
   const statusEl = document.getElementById("modalStatusBadge");
@@ -559,7 +922,10 @@ window.openLeadModal = function (leadId) {
   const setDetail = (id, val, isLink) => {
     const el = document.getElementById(id);
     if (!el) return;
-    if (!val) { el.textContent = "—"; return; }
+    if (!val) {
+      el.textContent = "—";
+      return;
+    }
     if (isLink === "email") {
       el.innerHTML = `<a href="mailto:${escapeHtml(val)}" style="color:var(--gold)">${escapeHtml(val)}</a>`;
     } else if (isLink === "web") {
@@ -574,7 +940,10 @@ window.openLeadModal = function (leadId) {
   setDetail("modalWebsite", lead.website, "web");
   setDetail("modalIndustryDetail", lead.industry);
   setDetail("modalSource", lead.source);
-  setDetail("modalRatingDetail", lead.rating ? `${lead.rating.toFixed(1)} ★ (${lead.reviews} reviews)` : "");
+  setDetail(
+    "modalRatingDetail",
+    lead.rating ? `${lead.rating.toFixed(1)} ★ (${lead.reviews} reviews)` : "",
+  );
   setDetail("modalReviews", lead.reviews ? String(lead.reviews) : "");
   setDetail("modalDate", lead.date ? formatDate(lead.date) : "");
 
@@ -597,7 +966,7 @@ window.closeLeadModal = function () {
    ═══════════════════════════════════════════════════════════ */
 function renderStats() {
   const s = computeStats(state.leads);
-  const el = id => document.getElementById(id);
+  const el = (id) => document.getElementById(id);
 
   const animateVal = (id, val) => {
     const e = el(id);
@@ -625,16 +994,19 @@ function renderStats() {
   if (badgeLeadsEl) badgeLeadsEl.textContent = s.hot;
 
   // Analytics — tiers
-  const setEl = (id, val) => { const e = el(id); if (e) e.textContent = val; };
+  const setEl = (id, val) => {
+    const e = el(id);
+    if (e) e.textContent = val;
+  };
   setEl("tier-hot-count", s.hot);
   setEl("tier-warm-count", s.warm);
   setEl("tier-cold-count", s.cold);
 
   // Pipeline bars
   const statusCounts = {
-    new: state.leads.filter(l => l.status === "new").length,
+    new: state.leads.filter((l) => l.status === "new").length,
     contacted: s.contacted,
-    qualified: state.leads.filter(l => l.status === "qualified").length,
+    qualified: state.leads.filter((l) => l.status === "qualified").length,
     converted: s.converted,
   };
   const maxCount = Math.max(1, ...Object.values(statusCounts));
@@ -652,12 +1024,18 @@ function renderStats() {
 function renderTopLeadsPreview() {
   const container = document.getElementById("topLeadsPreview");
   if (!container) return;
-  const hotLeads = [...state.leads].filter(l => l.score >= 75).sort((a, b) => b.score - a.score).slice(0, 6);
+  const hotLeads = [...state.leads]
+    .filter((l) => l.score >= 75)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 6);
   if (!hotLeads.length) {
-    container.innerHTML = '<p class="empty-hint">No HOT leads yet. Run the scraper to discover leads.</p>';
+    container.innerHTML =
+      '<p class="empty-hint">No HOT leads yet. Run the scraper to discover leads.</p>';
     return;
   }
-  container.innerHTML = hotLeads.map(l => `
+  container.innerHTML = hotLeads
+    .map(
+      (l) => `
     <div class="top-lead-row" onclick="openLeadModal(${l.id})" role="button">
       <div class="top-lead-info">
         <span class="top-lead-company">${escapeHtml(l.company)}</span>
@@ -668,32 +1046,41 @@ function renderTopLeadsPreview() {
         <span class="score-badge" style="background:${scoreColor(l.score)}">${l.score}</span>
       </div>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 }
 
 function renderCitiesAnalytics() {
   const container = document.getElementById("citiesAnalytics");
   if (!container) return;
   const cityMap = {};
-  state.leads.forEach(l => {
+  state.leads.forEach((l) => {
     if (l.city) {
       const key = l.city + (l.state ? ", " + l.state : "");
       cityMap[key] = (cityMap[key] || 0) + 1;
     }
   });
-  const sorted = Object.entries(cityMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  const sorted = Object.entries(cityMap)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10);
   if (!sorted.length) {
-    container.innerHTML = '<p class="empty-hint">No city data available yet.</p>';
+    container.innerHTML =
+      '<p class="empty-hint">No city data available yet.</p>';
     return;
   }
   const max = sorted[0][1];
-  container.innerHTML = sorted.map(([city, count]) => `
+  container.innerHTML = sorted
+    .map(
+      ([city, count]) => `
     <div class="city-row">
       <span class="city-name" title="${escapeHtml(city)}">${escapeHtml(city)}</span>
       <div class="city-bar-wrap"><div class="city-bar" style="width:${Math.round((count / max) * 100)}%"></div></div>
       <span class="city-count">${count}</span>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -702,7 +1089,8 @@ function renderCitiesAnalytics() {
 function buildCharts() {
   if (typeof Chart === "undefined") return;
 
-  const isDark = document.documentElement.getAttribute("data-theme") !== "light";
+  const isDark =
+    document.documentElement.getAttribute("data-theme") !== "light";
   const gridColor = isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.06)";
   const labelColor = isDark ? "#888888" : "#666666";
   const borderColor = isDark ? "#1c1c1c" : "#ffffff";
@@ -714,7 +1102,9 @@ function buildCharts() {
 
   // Industry doughnut
   const industryCounts = {};
-  state.leads.forEach(l => { industryCounts[l.industry] = (industryCounts[l.industry] || 0) + 1; });
+  state.leads.forEach((l) => {
+    industryCounts[l.industry] = (industryCounts[l.industry] || 0) + 1;
+  });
   const industryCtx = document.getElementById("industryChart");
   if (industryCtx) {
     if (state.charts.industry) state.charts.industry.destroy();
@@ -722,13 +1112,22 @@ function buildCharts() {
       type: "doughnut",
       data: {
         labels: Object.keys(industryCounts),
-        datasets: [{
-          data: Object.values(industryCounts),
-          backgroundColor: ["#EAB308","#ef4444","#3b82f6","#22c55e","#a855f7","#f59e0b"],
-          borderWidth: 2,
-          borderColor,
-          hoverOffset: 5,
-        }],
+        datasets: [
+          {
+            data: Object.values(industryCounts),
+            backgroundColor: [
+              "#EAB308",
+              "#ef4444",
+              "#3b82f6",
+              "#22c55e",
+              "#a855f7",
+              "#f59e0b",
+            ],
+            borderWidth: 2,
+            borderColor,
+            hoverOffset: 5,
+          },
+        ],
       },
       options: {
         responsive: true,
@@ -736,7 +1135,9 @@ function buildCharts() {
         cutout: "65%",
         plugins: {
           legend: { position: "bottom", labels: { padding: 12, boxWidth: 10 } },
-          tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}` } },
+          tooltip: {
+            callbacks: { label: (ctx) => ` ${ctx.label}: ${ctx.parsed}` },
+          },
         },
       },
     });
@@ -744,7 +1145,9 @@ function buildCharts() {
 
   // Status bar
   const statusCounts = { new: 0, contacted: 0, qualified: 0, converted: 0 };
-  state.leads.forEach(l => { if (statusCounts[l.status] !== undefined) statusCounts[l.status]++; });
+  state.leads.forEach((l) => {
+    if (statusCounts[l.status] !== undefined) statusCounts[l.status]++;
+  });
   const statusCtx = document.getElementById("statusChart");
   if (statusCtx) {
     if (state.charts.status) state.charts.status.destroy();
@@ -752,13 +1155,20 @@ function buildCharts() {
       type: "bar",
       data: {
         labels: ["New", "Contacted", "Qualified", "Converted"],
-        datasets: [{
-          data: Object.values(statusCounts),
-          backgroundColor: ["rgba(59,130,246,0.75)","rgba(234,179,8,0.75)","rgba(34,197,94,0.75)","rgba(168,85,247,0.75)"],
-          borderColor: ["#3b82f6","#EAB308","#22c55e","#a855f7"],
-          borderWidth: 1,
-          borderRadius: 4,
-        }],
+        datasets: [
+          {
+            data: Object.values(statusCounts),
+            backgroundColor: [
+              "rgba(59,130,246,0.75)",
+              "rgba(234,179,8,0.75)",
+              "rgba(34,197,94,0.75)",
+              "rgba(168,85,247,0.75)",
+            ],
+            borderColor: ["#3b82f6", "#EAB308", "#22c55e", "#a855f7"],
+            borderWidth: 1,
+            borderRadius: 4,
+          },
+        ],
       },
       options: {
         responsive: true,
@@ -766,7 +1176,10 @@ function buildCharts() {
         indexAxis: "y",
         plugins: { legend: { display: false } },
         scales: {
-          x: { grid: { color: gridColor }, ticks: { precision: 0, color: labelColor } },
+          x: {
+            grid: { color: gridColor },
+            ticks: { precision: 0, color: labelColor },
+          },
           y: { grid: { display: false }, ticks: { color: labelColor } },
         },
       },
@@ -774,9 +1187,12 @@ function buildCharts() {
   }
 
   // Score distribution histogram
-  const buckets = ["0–20","21–40","41–60","61–80","81–100"];
-  const bucketCounts = [0,0,0,0,0];
-  state.leads.forEach(l => { const b = Math.min(4, Math.floor(l.score / 20)); bucketCounts[b]++; });
+  const buckets = ["0–20", "21–40", "41–60", "61–80", "81–100"];
+  const bucketCounts = [0, 0, 0, 0, 0];
+  state.leads.forEach((l) => {
+    const b = Math.min(4, Math.floor(l.score / 20));
+    bucketCounts[b]++;
+  });
   const scoreDistCtx = document.getElementById("scoreDistChart");
   if (scoreDistCtx) {
     if (state.charts.scoreDist) state.charts.scoreDist.destroy();
@@ -784,13 +1200,21 @@ function buildCharts() {
       type: "bar",
       data: {
         labels: buckets,
-        datasets: [{
-          label: "Leads",
-          data: bucketCounts,
-          backgroundColor: ["rgba(107,114,128,0.7)","rgba(59,130,246,0.7)","rgba(234,179,8,0.7)","rgba(249,115,22,0.7)","rgba(239,68,68,0.8)"],
-          borderWidth: 0,
-          borderRadius: 4,
-        }],
+        datasets: [
+          {
+            label: "Leads",
+            data: bucketCounts,
+            backgroundColor: [
+              "rgba(107,114,128,0.7)",
+              "rgba(59,130,246,0.7)",
+              "rgba(234,179,8,0.7)",
+              "rgba(249,115,22,0.7)",
+              "rgba(239,68,68,0.8)",
+            ],
+            borderWidth: 0,
+            borderRadius: 4,
+          },
+        ],
       },
       options: {
         responsive: true,
@@ -798,7 +1222,10 @@ function buildCharts() {
         plugins: { legend: { display: false } },
         scales: {
           x: { grid: { display: false }, ticks: { color: labelColor } },
-          y: { grid: { color: gridColor }, ticks: { precision: 0, color: labelColor } },
+          y: {
+            grid: { color: gridColor },
+            ticks: { precision: 0, color: labelColor },
+          },
         },
       },
     });
@@ -834,11 +1261,11 @@ function runCommand(cmd) {
 
   if (parts[0] === "help") {
     termPrint("Available commands:", "info");
-    COMMANDS_HELP.forEach(c => termPrint(`  ${c.cmd.padEnd(25)} ${c.desc}`, "output"));
-
+    COMMANDS_HELP.forEach((c) =>
+      termPrint(`  ${c.cmd.padEnd(25)} ${c.desc}`, "output"),
+    );
   } else if (parts[0] === "clear") {
     window.termClear();
-
   } else if (parts[0] === "stats") {
     const s = computeStats(state.leads);
     termPrint(`Total leads      : ${s.total}`, "output");
@@ -850,61 +1277,101 @@ function runCommand(cmd) {
     termPrint(`Converted        : ${s.converted}`, "success");
     termPrint(`With email       : ${s.withEmail}`, "output");
     termPrint(`With phone       : ${s.withPhone}`, "output");
-    termPrint(`Data mode        : ${state.isLiveData ? "LIVE" : "DEMO"}`, state.isLiveData ? "success" : "warning");
-
-  } else if (parts[0] === "leads" && parts[1] === "list") {
-    state.leads.slice(0, 10).forEach(l =>
-      termPrint(`  [${String(l.score).padStart(3)}] ${l.company.padEnd(30)} ${l.city}, ${l.state}  (${l.status})`)
+    termPrint(
+      `Data mode        : ${state.isLiveData ? "LIVE" : "DEMO"}`,
+      state.isLiveData ? "success" : "warning",
     );
+  } else if (parts[0] === "leads" && parts[1] === "list") {
+    state.leads
+      .slice(0, 10)
+      .forEach((l) =>
+        termPrint(
+          `  [${String(l.score).padStart(3)}] ${l.company.padEnd(30)} ${l.city}, ${l.state}  (${l.status})`,
+        ),
+      );
     if (state.leads.length > 10)
       termPrint(`  … and ${state.leads.length - 10} more`, "comment");
-
   } else if (parts[0] === "leads" && parts[1] === "status") {
     const s = parts[2];
-    if (!s) { termPrint("Usage: leads status <new|contacted|qualified|converted>", "warning"); return; }
-    const filtered = state.leads.filter(l => l.status === s);
-    if (!filtered.length) { termPrint(`No leads with status "${s}"`, "warning"); return; }
+    if (!s) {
+      termPrint(
+        "Usage: leads status <new|contacted|qualified|converted>",
+        "warning",
+      );
+      return;
+    }
+    const filtered = state.leads.filter((l) => l.status === s);
+    if (!filtered.length) {
+      termPrint(`No leads with status "${s}"`, "warning");
+      return;
+    }
     termPrint(`Leads with status "${s}" (${filtered.length}):`, "info");
-    filtered.forEach(l => termPrint(`  [${String(l.score).padStart(3)}] ${l.company}  — ${l.city}, ${l.state}`));
-
+    filtered.forEach((l) =>
+      termPrint(
+        `  [${String(l.score).padStart(3)}] ${l.company}  — ${l.city}, ${l.state}`,
+      ),
+    );
   } else if (parts[0] === "leads" && parts[1] === "top") {
     const n = parseInt(parts[2]) || 5;
     const top = [...state.leads].sort((a, b) => b.score - a.score).slice(0, n);
     termPrint(`Top ${n} leads by score:`, "info");
     top.forEach((l, i) =>
-      termPrint(`  ${String(i + 1).padStart(2)}. [${l.score}] ${l.company.padEnd(30)} ${l.city}, ${l.state}`)
+      termPrint(
+        `  ${String(i + 1).padStart(2)}. [${l.score}] ${l.company.padEnd(30)} ${l.city}, ${l.state}`,
+      ),
     );
-
   } else if (parts[0] === "leads" && parts[1] === "city") {
     const cityQ = parts.slice(2).join(" ");
-    if (!cityQ) { termPrint("Usage: leads city <city name>", "warning"); return; }
-    const filtered = state.leads.filter(l => (l.city || "").toLowerCase().includes(cityQ));
-    if (!filtered.length) { termPrint(`No leads found in "${cityQ}"`, "warning"); return; }
+    if (!cityQ) {
+      termPrint("Usage: leads city <city name>", "warning");
+      return;
+    }
+    const filtered = state.leads.filter((l) =>
+      (l.city || "").toLowerCase().includes(cityQ),
+    );
+    if (!filtered.length) {
+      termPrint(`No leads found in "${cityQ}"`, "warning");
+      return;
+    }
     termPrint(`Leads in "${cityQ}" (${filtered.length}):`, "info");
-    filtered.forEach(l => termPrint(`  [${String(l.score).padStart(3)}] ${l.company}  (${l.status})`));
-
+    filtered.forEach((l) =>
+      termPrint(
+        `  [${String(l.score).padStart(3)}] ${l.company}  (${l.status})`,
+      ),
+    );
   } else if (parts[0] === "score") {
     const query = parts.slice(1).join(" ");
-    const lead = state.leads.find(l => l.company.toLowerCase().includes(query));
-    if (!lead) { termPrint(`Lead not found: "${query}"`, "warning"); return; }
+    const lead = state.leads.find((l) =>
+      l.company.toLowerCase().includes(query),
+    );
+    if (!lead) {
+      termPrint(`Lead not found: "${query}"`, "warning");
+      return;
+    }
     termPrint(`Score breakdown for "${lead.company}":`, "info");
     termPrint(`  Website present  : ${lead.website ? "+10" : "  0"}`, "output");
-    termPrint(`  Email present    : ${lead.email   ? "+15" : "  0"}`, "output");
-    termPrint(`  Phone present    : ${lead.phone   ? "+10" : "  0"}`, "output");
-    termPrint(`  Reviews > 10     : ${lead.reviews > 10  ? " +5" : "  0"}`, "output");
-    termPrint(`  Rating > 4       : ${lead.rating  > 4   ? "+10" : "  0"}`, "output");
+    termPrint(`  Email present    : ${lead.email ? "+15" : "  0"}`, "output");
+    termPrint(`  Phone present    : ${lead.phone ? "+10" : "  0"}`, "output");
+    termPrint(
+      `  Reviews > 10     : ${lead.reviews > 10 ? " +5" : "  0"}`,
+      "output",
+    );
+    termPrint(
+      `  Rating > 4       : ${lead.rating > 4 ? "+10" : "  0"}`,
+      "output",
+    );
     termPrint(`  ─────────────────────────────────────`, "comment");
     termPrint(`  Total score      : ${lead.score}`, "success");
-
   } else if (parts[0] === "export") {
     window.exportCSV();
-
   } else if (parts[0] === "refresh") {
     termPrint("Refreshing live data…", "info");
     loadLiveLeads();
-
   } else {
-    termPrint(`Unknown command: "${trimmed}". Type "help" for available commands.`, "warning");
+    termPrint(
+      `Unknown command: "${trimmed}". Type "help" for available commands.`,
+      "warning",
+    );
   }
 }
 
@@ -912,8 +1379,8 @@ function runCommand(cmd) {
    DATA STATUS BANNER
    ═══════════════════════════════════════════════════════════ */
 function updateDataBanner(isLive, lastUpdate) {
-  const dot    = document.getElementById("dataBannerDot");
-  const text   = document.getElementById("dataBannerText");
+  const dot = document.getElementById("dataBannerDot");
+  const text = document.getElementById("dataBannerText");
   const timeEl = document.getElementById("dataBannerTime");
 
   if (!dot || !text) return;
@@ -930,11 +1397,13 @@ function updateDataBanner(isLive, lastUpdate) {
 
   if (lastUpdate && timeEl) {
     const d = new Date(lastUpdate);
-    timeEl.textContent = "· updated " + d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+    timeEl.textContent =
+      "· updated " +
+      d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
   }
 
   // Also update sidebar status
-  const sidebarDot   = document.getElementById("sidebarStatusDot");
+  const sidebarDot = document.getElementById("sidebarStatusDot");
   const sidebarLabel = document.getElementById("sidebarStatusLabel");
   if (sidebarDot && sidebarLabel) {
     if (isLive) {
@@ -1009,13 +1478,18 @@ function loadLiveLeads(silent = false) {
     }
 
     fetch(PATHS[index] + "?t=" + Date.now())
-      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-      .then(data => {
+      .then((r) => {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
           state.leads = normalizeLeads(data);
           state.isLiveData = true;
           state.lastUpdated = new Date();
-          console.info(`[dashboard] Loaded ${data.length} live leads from ${PATHS[index]}`);
+          console.info(
+            `[dashboard] Loaded ${data.length} live leads from ${PATHS[index]}`,
+          );
           renderDashboard();
           updateDataBanner(true, state.lastUpdated);
           if (!silent) bootTerminal();
@@ -1040,8 +1514,11 @@ function startClock() {
   if (!el) return;
   const update = () => {
     el.textContent = new Date().toLocaleString("en-US", {
-      month: "short", day: "numeric", year: "numeric",
-      hour: "2-digit", minute: "2-digit",
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
   update();
@@ -1055,7 +1532,10 @@ let _booted = false;
 function bootTerminal() {
   if (_booted) {
     termPrint("", "output");
-    termPrint(`Data refreshed — ${state.leads.length} leads loaded (${state.isLiveData ? "LIVE" : "DEMO"})`, "success");
+    termPrint(
+      `Data refreshed — ${state.leads.length} leads loaded (${state.isLiveData ? "LIVE" : "DEMO"})`,
+      "success",
+    );
     return;
   }
   _booted = true;
@@ -1065,10 +1545,13 @@ function bootTerminal() {
     ["# Phase 7 — Autonomous Orchestration Active", "comment"],
     ["", "output"],
     ["Initializing lead database…", "info"],
-    [`Loaded ${state.leads.length} leads [${state.isLiveData ? "LIVE" : "DEMO MODE"}]`, state.isLiveData ? "success" : "warning"],
+    [
+      `Loaded ${state.leads.length} leads [${state.isLiveData ? "LIVE" : "DEMO MODE"}]`,
+      state.isLiveData ? "success" : "warning",
+    ],
     ["", "output"],
     ['Type "help" to see available commands.', "output"],
-    ['Try: leads top 5 | stats | score ProEpoxy', "comment"],
+    ["Try: leads top 5 | stats | score ProEpoxy", "comment"],
   ];
   let delay = 0;
   lines.forEach(([text, cls]) => {
@@ -1082,21 +1565,39 @@ function bootTerminal() {
    ═══════════════════════════════════════════════════════════ */
 function bindEvents() {
   // Table sort headers
-  document.querySelectorAll(".leads-table th[data-sort]").forEach(th => {
+  document.querySelectorAll(".leads-table th[data-sort]").forEach((th) => {
     th.addEventListener("click", () => sortBy(th.dataset.sort));
   });
 
   // Filter dropdowns / search
-  const filterStatus   = document.getElementById("filterStatus");
+  const filterStatus = document.getElementById("filterStatus");
   const filterIndustry = document.getElementById("filterIndustry");
-  const filterState    = document.getElementById("filterStateEl");
-  const searchInput    = document.getElementById("searchInput");
+  const filterState = document.getElementById("filterStateEl");
+  const searchInput = document.getElementById("searchInput");
 
-  if (filterStatus)   filterStatus.addEventListener("change",   e => { state.filterStatus   = e.target.value; applyFilters(); renderTable(); renderLeadCards(); });
-  if (filterIndustry) filterIndustry.addEventListener("change", e => { state.filterIndustry = e.target.value; applyFilters(); renderTable(); renderLeadCards(); });
-  if (filterState)    filterState.addEventListener("change",    e => { state.filterState    = e.target.value; applyFilters(); renderTable(); renderLeadCards(); });
+  if (filterStatus)
+    filterStatus.addEventListener("change", (e) => {
+      state.filterStatus = e.target.value;
+      applyFilters();
+      renderTable();
+      renderLeadCards();
+    });
+  if (filterIndustry)
+    filterIndustry.addEventListener("change", (e) => {
+      state.filterIndustry = e.target.value;
+      applyFilters();
+      renderTable();
+      renderLeadCards();
+    });
+  if (filterState)
+    filterState.addEventListener("change", (e) => {
+      state.filterState = e.target.value;
+      applyFilters();
+      renderTable();
+      renderLeadCards();
+    });
   if (searchInput) {
-    searchInput.addEventListener("input", e => {
+    searchInput.addEventListener("input", (e) => {
       state.searchQuery = e.target.value;
       applyFilters();
       renderTable();
@@ -1107,7 +1608,7 @@ function bindEvents() {
   // Topbar search mirrors lead search
   const topbarSearch = document.getElementById("topbarSearch");
   if (topbarSearch) {
-    topbarSearch.addEventListener("input", e => {
+    topbarSearch.addEventListener("input", (e) => {
       state.searchQuery = e.target.value;
       if (searchInput) searchInput.value = e.target.value;
       applyFilters();
@@ -1121,9 +1622,11 @@ function bindEvents() {
   if (exportBtn) exportBtn.addEventListener("click", window.exportCSV);
 
   // City spotlight tabs
-  document.querySelectorAll(".spotlight-tab").forEach(btn => {
+  document.querySelectorAll(".spotlight-tab").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".spotlight-tab").forEach(b => b.classList.remove("active"));
+      document
+        .querySelectorAll(".spotlight-tab")
+        .forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       state.filterCity = btn.dataset.city || "";
       applyFilters();
@@ -1138,23 +1641,28 @@ function bindEvents() {
   // Tab navigation (desktop tab bar + nav items + bottom nav)
   function activateTab(tabName) {
     // Tab content panels
-    document.querySelectorAll(".tab-content").forEach(p => p.classList.remove("active"));
+    document
+      .querySelectorAll(".tab-content")
+      .forEach((p) => p.classList.remove("active"));
     const panel = document.getElementById(`tab-${tabName}`);
     if (panel) panel.classList.add("active");
 
     // Desktop tab buttons
-    document.querySelectorAll(".tab-btn").forEach(b => {
+    document.querySelectorAll(".tab-btn").forEach((b) => {
       b.classList.toggle("active", b.dataset.tab === tabName);
-      b.setAttribute("aria-selected", b.dataset.tab === tabName ? "true" : "false");
+      b.setAttribute(
+        "aria-selected",
+        b.dataset.tab === tabName ? "true" : "false",
+      );
     });
 
     // Sidebar nav items
-    document.querySelectorAll(".nav-item[data-tab]").forEach(n => {
+    document.querySelectorAll(".nav-item[data-tab]").forEach((n) => {
       n.classList.toggle("active", n.dataset.tab === tabName);
     });
 
     // Bottom nav items
-    document.querySelectorAll(".bottom-nav-item[data-tab]").forEach(n => {
+    document.querySelectorAll(".bottom-nav-item[data-tab]").forEach((n) => {
       n.classList.toggle("active", n.dataset.tab === tabName);
     });
 
@@ -1163,18 +1671,20 @@ function bindEvents() {
     if (tabName === "overview") buildCharts();
   }
 
-  document.querySelectorAll("[data-tab]").forEach(btn => {
-    if (btn.classList.contains("tab-btn") ||
-        btn.classList.contains("nav-item") ||
-        btn.classList.contains("bottom-nav-item")) {
+  document.querySelectorAll("[data-tab]").forEach((btn) => {
+    if (
+      btn.classList.contains("tab-btn") ||
+      btn.classList.contains("nav-item") ||
+      btn.classList.contains("bottom-nav-item")
+    ) {
       btn.addEventListener("click", () => activateTab(btn.dataset.tab));
     }
   });
 
   // Sidebar overlay / mobile toggle
-  const menuBtn         = document.getElementById("menuBtn");
-  const sidebar         = document.getElementById("sidebar");
-  const sidebarOverlay  = document.getElementById("sidebarOverlay");
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  const sidebarOverlay = document.getElementById("sidebarOverlay");
 
   function openSidebar() {
     if (!sidebar) return;
@@ -1204,7 +1714,7 @@ function bindEvents() {
   }
 
   // Close sidebar when nav item clicked on mobile
-  document.querySelectorAll(".nav-item[data-tab]").forEach(item => {
+  document.querySelectorAll(".nav-item[data-tab]").forEach((item) => {
     item.addEventListener("click", () => {
       if (window.innerWidth <= 900) closeSidebar();
     });
@@ -1212,15 +1722,15 @@ function bindEvents() {
 
   // Modal close events
   const modalOverlay = document.getElementById("leadModal");
-  const modalClose   = document.getElementById("modalClose");
+  const modalClose = document.getElementById("modalClose");
 
   if (modalClose) modalClose.addEventListener("click", window.closeLeadModal);
   if (modalOverlay) {
-    modalOverlay.addEventListener("click", e => {
+    modalOverlay.addEventListener("click", (e) => {
       if (e.target === modalOverlay) window.closeLeadModal();
     });
     // Escape key
-    document.addEventListener("keydown", e => {
+    document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && modalOverlay.classList.contains("open")) {
         window.closeLeadModal();
       }
@@ -1230,7 +1740,7 @@ function bindEvents() {
   // Terminal input
   const termInput = document.getElementById("terminalInput");
   if (termInput) {
-    termInput.addEventListener("keydown", e => {
+    termInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         runCommand(termInput.value);
         termInput.value = "";
@@ -1263,7 +1773,7 @@ function bindEvents() {
   }
 
   // Keyboard shortcut ⌘K / Ctrl+K → focus search
-  document.addEventListener("keydown", e => {
+  document.addEventListener("keydown", (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "k") {
       e.preventDefault();
       const s = document.getElementById("topbarSearch");
@@ -1286,12 +1796,12 @@ function bindEvents() {
 /* ═══════════════════════════════════════════════════════════
    GLOBAL HELPERS (window scope for inline HTML usage)
    ═══════════════════════════════════════════════════════════ */
-window.sortBy        = window.sortBy;
-window.changePage    = window.changePage;
+window.sortBy = window.sortBy;
+window.changePage = window.changePage;
 window.openLeadModal = window.openLeadModal;
-window.closeLeadModal= window.closeLeadModal;
-window.exportCSV     = window.exportCSV;
-window.termClear     = window.termClear;
+window.closeLeadModal = window.closeLeadModal;
+window.exportCSV = window.exportCSV;
+window.termClear = window.termClear;
 
 window.switchTab = function (tabName) {
   const btn = document.querySelector('.tab-btn[data-tab="' + tabName + '"]');
