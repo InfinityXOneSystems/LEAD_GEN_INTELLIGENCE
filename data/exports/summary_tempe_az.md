@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-07
 
-**Total leads:** 350
+**Total leads:** 221
 
 | Tier | Count |
 |------|-------|
-| HOT  | 9  |
-| WARM | 71 |
-| COLD | 270 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -29,8 +29,8 @@
 | Two Brothers Epoxy Flooring |  |  | 55 |
 | Quality Epoxy |  |  | 55 |
 | Epoxy Flooring Phoenix |  |  | 55 |
-| Ultimate Concrete Coatings & Epoxy Flooring |  |  | 55 |
 | Epoxy Strong Phoenix |  |  | 55 |
+| Ultimate Concrete Coatings & Epoxy Flooring |  |  | 55 |
 | Marvelous Epoxy Flooring |  |  | 55 |
 | Brilliant Epoxy Flooring Inc |  |  | 55 |
 | Garage Floor Coating Direct |  |  | 55 |

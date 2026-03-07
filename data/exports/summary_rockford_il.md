@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-07
 
-**Total leads:** 247
+**Total leads:** 200
 
 | Tier | Count |
 |------|-------|
-| HOT  | 4  |
-| WARM | 37 |
-| COLD | 206 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -30,7 +30,7 @@
 | Epoxy Worx - Concrete Coatings |  |  | 55 |
 | Deluxe Epoxy Flooring |  |  | 55 |
 | James Concrete Polishing |  |  | 55 |
-| Lifestyle-Garage Concrete Floor Coatings |  |  | 50 |
-| Superior Epoxy |  |  | 50 |
-| Andys Automotive Repair |  |  | 50 |
-| Bove's Auto Repair |  |  | 50 |
+| Precision Epoxy |  |  | 55 |
+| Miller’s Epoxy Solutions |  |  | 55 |
+| Elegant Epoxy Flooring |  |  | 55 |
+| Chicago Epoxy Floors |  |  | 55 |
