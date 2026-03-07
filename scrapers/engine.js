@@ -17,8 +17,10 @@ const LOCATIONS_CSV = path.join(
   __dirname,
   "../data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/locations.csv",
 );
+const LEADS_DIR_PRIMARY = path.join(__dirname, "../leads");
 const LEADS_DIR = path.join(__dirname, "../data/leads");
-const LEADS_FILE = path.join(LEADS_DIR, "leads.json");
+const LEADS_FILE = path.join(LEADS_DIR_PRIMARY, "leads.json");
+const LEADS_FILE_LEGACY = path.join(LEADS_DIR, "leads.json");
 
 /** Default engine configuration */
 const DEFAULT_CONFIG = {
@@ -79,9 +81,10 @@ function parseCsv(filePath) {
  * Load leads from the leads file.
  */
 function loadExistingLeads() {
-  if (!fs.existsSync(LEADS_FILE)) return [];
+  const src = fs.existsSync(LEADS_FILE) ? LEADS_FILE : LEADS_FILE_LEGACY;
+  if (!fs.existsSync(src)) return [];
   try {
-    return JSON.parse(fs.readFileSync(LEADS_FILE, "utf-8"));
+    return JSON.parse(fs.readFileSync(src, "utf-8"));
   } catch {
     return [];
   }
@@ -104,10 +107,15 @@ function dedupeLeads(leads) {
  * Save leads array to the leads JSON file.
  */
 function saveLeads(leads) {
+  const json = JSON.stringify(leads, null, 2);
+  if (!fs.existsSync(LEADS_DIR_PRIMARY)) {
+    fs.mkdirSync(LEADS_DIR_PRIMARY, { recursive: true });
+  }
+  fs.writeFileSync(LEADS_FILE, json);
   if (!fs.existsSync(LEADS_DIR)) {
     fs.mkdirSync(LEADS_DIR, { recursive: true });
   }
-  fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2));
+  fs.writeFileSync(LEADS_FILE_LEGACY, json);
 }
 
 /**

@@ -4,7 +4,8 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
-const LEADS_DIR = path.join(ROOT, "data", "leads");
+const LEADS_DIR_PRIMARY = path.join(ROOT, "leads");
+const LEADS_DIR_LEGACY = path.join(ROOT, "data", "leads");
 
 /**
  * Quality gate thresholds.  Override via environment variables.
@@ -64,12 +65,20 @@ function runValidationPipeline(leads, opts = {}) {
 
   console.log("[LeadValidation] Pipeline summary:", summary);
 
+  /**
+   * Writes a file to both the primary leads/ directory and the legacy
+   * data/leads/ directory for backward compatibility.
+   */
+  function writeToLeadsDirs(filename, content) {
+    [LEADS_DIR_PRIMARY, LEADS_DIR_LEGACY].forEach((dir) => {
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, filename), content);
+    });
+  }
+
   // ── Write report files ──────────────────────────────────────────────────
   if (writeReports) {
     try {
-      if (!fs.existsSync(LEADS_DIR))
-        fs.mkdirSync(LEADS_DIR, { recursive: true });
-
       const report = {
         summary,
         invalid_count: invalid.length,
@@ -80,18 +89,12 @@ function runValidationPipeline(leads, opts = {}) {
         },
       };
 
-      fs.writeFileSync(
-        path.join(LEADS_DIR, "validation_report.json"),
+      writeToLeadsDirs(
+        "validation_report.json",
         JSON.stringify(report, null, 2),
       );
-      fs.writeFileSync(
-        path.join(LEADS_DIR, "duplicates.json"),
-        JSON.stringify(duplicates, null, 2),
-      );
-      fs.writeFileSync(
-        path.join(LEADS_DIR, "invalid_leads.json"),
-        JSON.stringify(invalid, null, 2),
-      );
+      writeToLeadsDirs("duplicates.json", JSON.stringify(duplicates, null, 2));
+      writeToLeadsDirs("invalid_leads.json", JSON.stringify(invalid, null, 2));
     } catch (err) {
       console.error(
         "[LeadValidation] Could not write report files:",
