@@ -124,7 +124,11 @@ test("validateLeadContract - fully populated valid lead", () => {
     last_contacted: "2026-03-07T14:00:00Z",
   };
   const result = validateLeadContract(lead);
-  assert.equal(result.valid, true, `Unexpected errors: ${result.errors?.join(", ") || "none"}`);
+  assert.equal(
+    result.valid,
+    true,
+    `Unexpected errors: ${result.errors?.join(", ") || "none"}`,
+  );
 });
 
 // ---------------------------------------------------------------------------

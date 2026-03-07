@@ -47,7 +47,8 @@ function validateProperty(fieldPath, value, subSchema, errors) {
       if (t === "number") return jsType === "number" && !isNaN(value);
       if (t === "string") return jsType === "string";
       if (t === "boolean") return jsType === "boolean";
-      if (t === "object") return jsType === "object" && value !== null && !Array.isArray(value);
+      if (t === "object")
+        return jsType === "object" && value !== null && !Array.isArray(value);
       if (t === "array") return Array.isArray(value);
       if (t === "null") return value === null;
       return false;
@@ -133,7 +134,9 @@ function validateProperty(fieldPath, value, subSchema, errors) {
     if (subSchema.additionalProperties === false) {
       for (const k of Object.keys(value)) {
         if (!(k in subSchema.properties)) {
-          errors.push(`'${fieldPath}' has unexpected additional property: '${k}'`);
+          errors.push(
+            `'${fieldPath}' has unexpected additional property: '${k}'`,
+          );
         }
       }
     }
@@ -175,4 +178,3 @@ function validateLeadContract(lead) {
 }
 
 module.exports = { validateLeadContract };
-
