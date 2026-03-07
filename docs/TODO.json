@@ -1,31 +1,51 @@
 {
-  "generated": "2026-03-07T18:50:17.907Z",
-  "total": 2,
+  "generated": "2026-03-07T20:00:44.503Z",
+  "total": 4,
   "summary": {
     "HIGH": 0,
     "MEDIUM": 0,
-    "LOW": 2
+    "LOW": 4
   },
   "items": [
     {
       "id": "TODO-1",
+      "file": "agents/enrichment/review_aggregator.js",
+      "line": 3,
+      "text": "Replace mock data generation with real API integrations:",
+      "priority": "LOW",
+      "label": "enhancement",
+      "status": "open",
+      "discovered": "2026-03-07T20:00:44.503Z"
+    },
+    {
+      "id": "TODO-2",
+      "file": "agents/enrichment/social_profile_finder.js",
+      "line": 29,
+      "text": "Use each platform's official search API or a people-data provider",
+      "priority": "LOW",
+      "label": "enhancement",
+      "status": "open",
+      "discovered": "2026-03-07T20:00:44.503Z"
+    },
+    {
+      "id": "TODO-3",
       "file": "outreach/follow_up_scheduler.js",
       "line": 27,
       "text": "integrate with SMTP or SendGrid using environment credentials",
       "priority": "LOW",
       "label": "enhancement",
       "status": "open",
-      "discovered": "2026-03-07T18:50:17.907Z"
+      "discovered": "2026-03-07T20:00:44.503Z"
     },
     {
-      "id": "TODO-2",
+      "id": "TODO-4",
       "file": "outreach/outreach_engine.js",
       "line": 66,
       "text": "integrate with SMTP or SendGrid using environment credentials",
       "priority": "LOW",
       "label": "enhancement",
       "status": "open",
-      "discovered": "2026-03-07T18:50:17.907Z"
+      "discovered": "2026-03-07T20:00:44.503Z"
     }
   ]
 }
