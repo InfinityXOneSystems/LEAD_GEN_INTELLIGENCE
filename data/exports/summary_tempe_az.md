@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-07
 
-**Total leads:** 320
+**Total leads:** 309
 
 | Tier | Count |
 |------|-------|
 | HOT  | 9  |
 | WARM | 66 |
-| COLD | 245 |
+| COLD | 234 |
 
 ## Top Leads
 
@@ -32,5 +32,5 @@
 | Marvelous Epoxy Flooring |  |  | 55 |
 | Ultimate Concrete Coatings & Epoxy Flooring |  |  | 55 |
 | Sun Valley Epoxy - Residential Epoxy Flooring |  |  | 55 |
-| Epoxy Strong Phoenix |  |  | 55 |
-| Garage Floor Coating Direct |  |  | 55 |
+| Easy Epoxy |  |  | 55 |
+| MR Epoxy |  |  | 55 |

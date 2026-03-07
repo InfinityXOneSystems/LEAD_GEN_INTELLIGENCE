@@ -44,3 +44,5 @@ data/sales/deals.json
 data/sales/pipeline.json
 data/sales/reminders.json
 data/logs/
+logs/*.jsonl
+logs/*.log
