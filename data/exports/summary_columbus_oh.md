@@ -2,7 +2,7 @@
 
 > Generated: 2026-03-08
 
-**Total leads:** 227
+**Total leads:** 242
 
 | Tier | Count |
 |------|-------|
@@ -25,12 +25,12 @@
 | Metro Metallic Floors Columbus | (614) 555-2909 | https://metrometallicfloors.com | 75 |
 | Capital City Floor Coatings | (614) 555-2505 | https://capitalfloorcoatings.com | 70 |
 | Columbus Epoxy Flooring |  |  | 55 |
-| Columbus Garage Floor Coating |  |  | 55 |
 | Columbus Epoxy Floors |  |  | 55 |
-| "Showroom Floors Ltd, Epoxy Floors, Columbus, Oh" |  |  | 55 |
+| Ohio Garage Epoxy |  |  | 55 |
+| Columbus Garage Floor Coating |  |  | 55 |
 | Epoxy Flooring Columbus |  |  | 55 |
-| Epoxy and Polished Floors of Columbus |  |  | 55 |
+| Buckeye Epoxy Flooring |  |  | 55 |
 | Ideal Garage Floor Coatings |  |  | 55 |
-| Global Epoxy LLC |  |  | 55 |
-| Elite Epoxy Coatings of Columbus |  |  | 55 |
-| J&G Epoxy Coatings |  |  | 55 |
+| Epoxy Flooring Masters |  |  | 55 |
+| "Showroom Floors Ltd, Epoxy Floors, Columbus, Oh" |  |  | 55 |
+| Epoxy Flooring Cincinnati |  |  | 55 |
