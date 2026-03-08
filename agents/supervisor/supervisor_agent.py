@@ -136,27 +136,6 @@ class SupervisorAgent:
             from agents.interpreter.interpreter_agent import InterpreterAgent
             return await InterpreterAgent().run(command)
 
-        if task_type == "build":
-            from agents.builder.builder_agent import BuilderAgent
-            return await BuilderAgent().run(command)
-
-        if task_type == "media":
-            from agents.media.media_agent import MediaAgent
-            return await MediaAgent().run(command)
-
-        if task_type in ("devops", "deploy", "docker"):
-            from agents.devops.devops_agent import DevOpsAgent
-            return await DevOpsAgent().run(command)
-
-        if task_type in ("monitor", "metrics"):
-            from agents.shadow.shadow_agent import get_metrics
-            return await get_metrics()
-
-        if task_type == "memory":
-            from memory.memory_manager import MemoryManager
-            mm = MemoryManager()
-            return {"success": True, "health": mm.health()}
-
         # Default: run full LangGraph pipeline
         from agent_core.langgraph_runtime import run_graph
         run_id = str(int(time.time() * 1000))
