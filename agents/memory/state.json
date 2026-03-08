@@ -1,9 +1,0 @@
-{
-  "session_id": null,
-  "last_command": "export leads",
-  "last_run": "2026-03-08T23:16:16.601684+00:00",
-  "leads_discovered": 0,
-  "campaigns_sent": 0,
-  "pipeline_runs": 0,
-  "command_history": []
-}

@@ -67,15 +67,35 @@ app = FastAPI(
 # CORS middleware – allow frontend origins
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 
+# Build the allowed-origins list from environment so Vercel / staging URLs
+# are automatically included without changing code.
+_cors_origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:3200",
+    "http://localhost:8000",
+]
+# Accept extra origins from env (comma-separated)
+for _o in filter(None, os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")):
+    _cors_origins.append(_o.strip())
+# Legacy single-origin env vars
+for _o in filter(None, [
+    os.getenv("FRONTEND_URL"),
+    os.getenv("CORS_ALLOW_ORIGIN"),
+    os.getenv("VERCEL_URL"),
+]):
+    # Vercel provides the hostname without scheme
+    if _o and not _o.startswith("http"):
+        _cors_origins.append(f"https://{_o}")
+    elif _o:
+        _cors_origins.append(_o)
+
+# Deduplicate while preserving order
+_cors_origins = list(dict.fromkeys(_cors_origins))
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3200",
-        os.getenv("FRONTEND_URL", "http://localhost:3000"),
-        os.environ.get("CORS_ALLOW_ORIGIN", "http://localhost:3000"),
-    ],
+    allow_origins=_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -249,6 +269,17 @@ async def agent_status() -> Dict[str, Any]:
 
     system_ready = True  # API is reachable → system is ready
 
+    # LLM router status
+    llm_provider = None
+    groq_ok = False
+    try:
+        from llm.llm_router import router_status
+        llm_stat = router_status()
+        llm_provider = llm_stat.get("active_provider")
+        groq_ok = llm_stat.get("providers", {}).get("groq", {}).get("available", False)
+    except Exception:
+        pass
+
     return {
         "system_ready": system_ready,
         "langgraph": langgraph_ok,
@@ -257,6 +288,8 @@ async def agent_status() -> Dict[str, Any]:
         "redis": redis_ok,
         "qdrant": qdrant_ok,
         "ollama": ollama_ok,
+        "groq": groq_ok,
+        "llm_provider": llm_provider,
         "gates_active": True,
     }
 
@@ -351,6 +384,41 @@ async def stream_chat(message: str) -> StreamingResponse:
 
 
 # ---------------------------------------------------------------------------
+# LLM router status endpoint
+# ---------------------------------------------------------------------------
+
+
+@app.get("/agent/llm/status")
+async def llm_status() -> Dict[str, Any]:
+    """Return the current state of the smart LLM router."""
+    try:
+        from llm.llm_router import router_status
+
+        return {"success": True, **router_status()}
+    except Exception as exc:
+        logger.warning("LLM status error: %s", exc)
+        return {"success": False, "error": str(exc)}
+
+
+@app.post("/agent/llm/complete")
+async def llm_complete(request: ChatRequest) -> Dict[str, Any]:
+    """
+    Direct LLM completion endpoint.
+
+    Routes via the smart LLM router (Groq → Ollama → OpenAI).
+    Useful for testing LLM connectivity from the frontend.
+    """
+    try:
+        from llm.llm_router import complete
+
+        text = complete(request.message, task="plan")
+        return {"success": bool(text), "text": text}
+    except Exception as exc:
+        logger.error("LLM complete error: %s", exc)
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+# ---------------------------------------------------------------------------
 # Monitoring
 # ---------------------------------------------------------------------------
 
@@ -405,7 +473,7 @@ _DEFAULT_SETTINGS: Dict[str, Any] = {
     "scraping_rate_limit": int(os.getenv("SCRAPING_RATE_LIMIT", "10")),
     "proxy_enabled": os.getenv("PROXY_ENABLED", "false").lower() == "true",
     "proxy_url": os.getenv("PROXY_URL", ""),
-    "llm_provider": os.getenv("LLM_PROVIDER", "ollama"),
+    "llm_provider": os.getenv("LLM_PROVIDER", "auto"),
     "openai_model": os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
     "groq_model": os.getenv("GROQ_MODEL", "llama3-8b-8192"),
     "media_output_dir": os.getenv("MEDIA_OUTPUT_DIR", "./media/output"),
@@ -443,6 +511,7 @@ def _load_settings() -> Dict[str, Any]:
         "llm_provider": os.getenv("LLM_PROVIDER"),
         "openai_model": os.getenv("OPENAI_MODEL"),
         "groq_model": os.getenv("GROQ_MODEL"),
+        "groq_api_key_configured": "true" if os.getenv("GROQ_API_KEY") else None,
         "media_output_dir": os.getenv("MEDIA_OUTPUT_DIR"),
         "automation_schedule": os.getenv("AUTOMATION_SCHEDULE"),
         "github_repo": os.getenv("GITHUB_REPOSITORY"),
@@ -478,7 +547,7 @@ def _save_settings(settings: Dict[str, Any]) -> None:
     merged = _load_settings()
     merged.update(settings)
     # Never persist secrets to disk
-    for sensitive_key in ("github_token", "google_api_key", "openai_api_key"):
+    for sensitive_key in ("github_token", "google_api_key", "openai_api_key", "groq_api_key"):
         merged.pop(sensitive_key, None)
     with open(_SETTINGS_FILE, "w", encoding="utf-8") as fh:
         json.dump(merged, fh, indent=2)
@@ -506,9 +575,16 @@ async def update_settings(request: SettingsRequest) -> Dict[str, Any]:
         ("github_token", "GITHUB_TOKEN"),
         ("google_api_key", "GOOGLE_API_KEY"),
         ("openai_api_key", "OPENAI_API_KEY"),
+        ("groq_api_key", "GROQ_API_KEY"),
     ]:
         if env_key in settings:
             os.environ[env_var] = settings[env_key]
+            # Reset LLM router probe cache so new key takes effect immediately
+            try:
+                from llm.llm_router import reset_errors
+                reset_errors()
+            except Exception:
+                pass
 
     try:
         _save_settings(settings)

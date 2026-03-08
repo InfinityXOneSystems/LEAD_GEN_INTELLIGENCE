@@ -12,14 +12,27 @@ const ROOT = path.join(__dirname, "..");
 const LEADS_DIR = path.join(ROOT, "leads");
 const DATA_DIR = path.join(ROOT, "data");
 
-const PORT = process.env.PORT || 3200;
+// Default to 3000 so the frontend can reach /api without extra configuration.
+// Override with PORT env var (e.g. PORT=3200 for legacy deployments).
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(express.json());
 
-// CORS – allow all origins for development
+// CORS – allow configured origins; defaults to permissive for local dev
+const CORS_ORIGINS = process.env.CORS_ALLOWED_ORIGINS
+  ? process.env.CORS_ALLOWED_ORIGINS.split(",").map((s) => s.trim())
+  : null;
+
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  const origin = req.headers.origin;
+  if (CORS_ORIGINS) {
+    if (CORS_ORIGINS.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+  } else {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+  }
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   if (req.method === "OPTIONS") return res.sendStatus(204);
@@ -307,6 +320,31 @@ app.get("/api/heatmap", (req, res) => {
   } catch (err) {
     return fail(res, err.message);
   }
+});
+
+// GET /api  – root health check (used by frontend to verify connectivity)
+app.get("/api", (req, res) => {
+  return res.json({
+    success: true,
+    service: "XPS Intelligence API Gateway",
+    version: "2.0.0",
+    status: "running",
+    port: PORT,
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// GET /api/status  – alias for health check (some UIs expect this path)
+app.get("/api/status", (req, res) => {
+  const leads = loadLeads();
+  const list = Array.isArray(leads) ? leads : [];
+  return res.json({
+    success: true,
+    gateway: "running",
+    uptime: process.uptime(),
+    leads_available: list.length,
+    timestamp: new Date().toISOString(),
+  });
 });
 
 // 404 catch-all
