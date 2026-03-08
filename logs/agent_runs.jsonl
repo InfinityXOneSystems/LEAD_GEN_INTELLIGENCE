@@ -9,3 +9,21 @@
 {"timestamp": "2026-03-07T22:22:21.107211+00:00", "command": "export leads CSV", "intent": "export", "tasks_executed": ["export_csv", "return_results"], "leads_count": 50, "error": null}
 {"timestamp": "2026-03-07T22:22:21.116987+00:00", "command": "check email summary", "intent": "status", "tasks_executed": ["system_status", "return_results"], "leads_count": 0, "error": null}
 {"timestamp": "2026-03-07T22:22:21.135846+00:00", "command": "run outreach campaign", "intent": "outreach", "tasks_executed": ["load_top_leads", "generate_emails", "send_outreach_batch", "return_results"], "leads_count": 50, "error": null}
+{"run_id": "1772928684585", "created_at": 1772928684.585371, "updated_at": 1772928684.5853715, "status": "gate_check", "command": {"task": "scrape", "industry": "epoxy", "location": "tampa"}}
+{"run_id": "1772928684585", "created_at": 1772928684.585371, "updated_at": 1772928684.5854576, "status": "executing", "command": {"task": "scrape", "industry": "epoxy", "location": "tampa"}}
+{"run_id": "1772928684585", "created_at": 1772928684.585371, "updated_at": 1772928684.5855072, "status": "running", "command": {"task": "scrape", "industry": "epoxy", "location": "tampa"}, "current_step": "playwright_scraper"}
+{"run_id": "1772928684585", "created_at": 1772928684.585371, "updated_at": 1772928684.5855842, "status": "completed", "command": {"task": "scrape", "industry": "epoxy", "location": "tampa"}, "current_step": "playwright_scraper", "leads_found": 10, "high_value": 3}
+{"run_id": "1772928684586", "created_at": 1772928684.5864437, "updated_at": 1772928684.5864441, "status": "gate_check", "command": {"task": "", "industry": "epoxy", "location": "tampa"}}
+{"run_id": "1772928684586", "created_at": 1772928684.5864437, "updated_at": 1772928684.5866656, "status": "gate_failed", "command": {"task": "", "industry": "epoxy", "location": "tampa"}, "error": "[command_gate] 1 validation error for Command\ntask\n  Value error, task must not be empty [type=value_error, input_value='', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.12/v/value_error"}
+{"run_id": "1772928684587", "created_at": 1772928684.5875106, "updated_at": 1772928684.5875108, "status": "gate_check", "command": {"task": "scrape", "industry": "epoxy", "location": "tampa"}}
+{"run_id": "1772928684587", "created_at": 1772928684.5875106, "updated_at": 1772928684.5876536, "status": "gate_failed", "command": {"task": "scrape", "industry": "epoxy", "location": "tampa"}, "error": "[plan_gate] step[0] uses disallowed tool 'evil_tool' (allowed: ['playwright_scraper', 'email_generator', 'calendar_tool', 'lead_analyzer'])"}
+{"run_id": "1772928684588", "created_at": 1772928684.588479, "updated_at": 1772928684.588479, "status": "gate_check", "command": {"task": "scrape", "industry": "epoxy", "location": "tampa"}}
+{"run_id": "1772928684588", "created_at": 1772928684.588479, "updated_at": 1772928684.5885384, "status": "executing", "command": {"task": "scrape", "industry": "epoxy", "location": "tampa"}}
+{"run_id": "1772928684588", "created_at": 1772928684.588479, "updated_at": 1772928684.5886004, "status": "running", "command": {"task": "scrape", "industry": "epoxy", "location": "tampa"}, "current_step": "playwright_scraper"}
+{"run_id": "1772928684588", "created_at": 1772928684.588479, "updated_at": 1772928684.5888507, "status": "running", "command": {"task": "scrape", "industry": "epoxy", "location": "tampa"}, "current_step": "playwright_scraper"}
+{"run_id": "1772928684588", "created_at": 1772928684.588479, "updated_at": 1772928684.5891058, "status": "fallback", "command": {"task": "scrape", "industry": "epoxy", "location": "tampa"}, "current_step": "playwright_scraper"}
+{"run_id": "run-003", "created_at": 1772928684.5900252, "updated_at": 1772928684.5900252, "status": "init"}
+{"run_id": "run-004", "created_at": 1772928684.590072, "updated_at": 1772928684.5900722, "status": "init"}
+{"run_id": "run-001", "created_at": 1772928684.5908637, "updated_at": 1772928684.590864, "status": "init"}
+{"run_id": "run-002", "created_at": 1772928684.5925517, "updated_at": 1772928684.592552, "status": "init"}
+{"run_id": "run-002", "created_at": 1772928684.5925517, "updated_at": 1772928684.5926204, "status": "completed", "leads_found": 7}
