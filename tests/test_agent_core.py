@@ -438,7 +438,6 @@ class TestStateManager(unittest.TestCase):
 
     def test_audit_log_written(self):
         """Audit log entry must contain all required fields."""
-        import tempfile, json, os
         with tempfile.TemporaryDirectory() as tmpdir:
             from agent_core import state_manager as sm_mod
             original_runs_file = sm_mod.RUNS_FILE
@@ -470,7 +469,6 @@ class TestStateManager(unittest.TestCase):
 
     def test_log_is_append_only(self):
         """Multiple writes must not overwrite prior lines."""
-        import tempfile, json, os
         with tempfile.TemporaryDirectory() as tmpdir:
             from agent_core import state_manager as sm_mod
             original_runs_file = sm_mod.RUNS_FILE

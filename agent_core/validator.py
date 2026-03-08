@@ -161,7 +161,9 @@ def normalize_command(raw_text: str) -> Dict[str, str]:
             break
 
     # Location: remaining tokens after stripping action words and industry words
-    skip = set(industries) | SUPPORTED_TASKS | {"in", "near", "for", "leads", "lead", "outreach", "emails"}
+    _skip_prepositions = {"in", "near", "for"}
+    _skip_context_words = {"leads", "lead", "outreach", "emails"}
+    skip = set(industries) | SUPPORTED_TASKS | _skip_prepositions | _skip_context_words
     location_tokens = [
         re.sub(r"[^a-zA-Z]", "", t)
         for t in tokens

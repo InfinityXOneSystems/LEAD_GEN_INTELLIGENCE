@@ -162,7 +162,11 @@ class Executor:
         # Validate required parameters
         self._validate_tool_params(tool, params)
 
-        # Run with timeout enforcement
+        # Run with timeout enforcement.
+        # NOTE: ThreadPoolExecutor.result(timeout) only stops *waiting* for the
+        # result; it cannot forcibly interrupt an already-executing thread.
+        # Tools that perform long-running I/O should implement their own
+        # cancellation / cooperative timeout checks.
         with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
             future = pool.submit(handler, params or {})
             try:
@@ -182,7 +186,10 @@ class Executor:
         for step in plan.steps:
             self._sm.update(run_id, {"current_step": step.tool, "status": "running"})
             try:
-                # Enrich step params with command-level fields if missing
+                # Enrich step params with command-level fields if missing.
+                # The planner already sets these for steps it creates, but this
+                # defensive fallback ensures manually-constructed PlanSteps
+                # (e.g. in tests or direct API calls) also get the required params.
                 params: Dict[str, Any] = dict(step.params or {})
                 if "industry" not in params:
                     params["industry"] = plan.command.industry
