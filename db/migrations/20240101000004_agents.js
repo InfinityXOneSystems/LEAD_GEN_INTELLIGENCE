@@ -12,11 +12,11 @@ exports.up = async function (knex) {
   // ── agent_tasks ────────────────────────────────────────────────────────────
   await knex.schema.createTable("agent_tasks", (t) => {
     t.increments("id").primary();
-    t.text("agent_type").notNullable();   // scraper | enrichment | scoring | outreach | orchestrator
+    t.text("agent_type").notNullable(); // scraper | enrichment | scoring | outreach | orchestrator
     t.text("command").notNullable();
     t.jsonb("payload");
     t.text("status").notNullable().defaultTo("pending"); // pending|running|completed|failed|cancelled
-    t.integer("priority").notNullable().defaultTo(5);    // 1 (highest) – 10 (lowest)
+    t.integer("priority").notNullable().defaultTo(5); // 1 (highest) – 10 (lowest)
     t.integer("user_id").references("id").inTable("users").onDelete("SET NULL");
     t.text("queue_name").defaultTo("default");
     t.integer("retry_count").notNullable().defaultTo(0);
@@ -45,7 +45,10 @@ exports.up = async function (knex) {
   // ── agent_runs ─────────────────────────────────────────────────────────────
   await knex.schema.createTable("agent_runs", (t) => {
     t.increments("id").primary();
-    t.integer("task_id").references("id").inTable("agent_tasks").onDelete("SET NULL");
+    t.integer("task_id")
+      .references("id")
+      .inTable("agent_tasks")
+      .onDelete("SET NULL");
     t.text("agent_type").notNullable();
     t.text("command").notNullable();
     t.jsonb("input");

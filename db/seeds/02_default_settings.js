@@ -51,7 +51,8 @@ const defaults = [
     value: "50",
     value_type: "number",
     category: "scoring",
-    description: "Minimum score for a lead to be classified as WARM (below = COLD).",
+    description:
+      "Minimum score for a lead to be classified as WARM (below = COLD).",
     is_secret: false,
   },
 

@@ -21,12 +21,15 @@ exports.up = async function (knex) {
     t.text("country").defaultTo("US");
     t.text("status").notNullable().defaultTo("pending"); // pending|running|completed|failed|cancelled
     t.integer("priority").notNullable().defaultTo(5);
-    t.integer("agent_task_id").references("id").inTable("agent_tasks").onDelete("SET NULL");
+    t.integer("agent_task_id")
+      .references("id")
+      .inTable("agent_tasks")
+      .onDelete("SET NULL");
     t.integer("result_count").defaultTo(0);
     t.integer("new_leads").defaultTo(0);
     t.integer("updated_leads").defaultTo(0);
     t.text("error");
-    t.jsonb("options");          // extra scraper config (max_results, radius, etc.)
+    t.jsonb("options"); // extra scraper config (max_results, radius, etc.)
     t.timestamp("started_at", { useTz: true });
     t.timestamp("completed_at", { useTz: true });
     t.timestamp("created_at", { useTz: true }).defaultTo(knex.fn.now());
@@ -49,7 +52,11 @@ exports.up = async function (knex) {
   // ── scrape_results ─────────────────────────────────────────────────────────
   await knex.schema.createTable("scrape_results", (t) => {
     t.increments("id").primary();
-    t.integer("task_id").notNullable().references("id").inTable("scrape_tasks").onDelete("CASCADE");
+    t.integer("task_id")
+      .notNullable()
+      .references("id")
+      .inTable("scrape_tasks")
+      .onDelete("CASCADE");
     t.jsonb("raw_data").notNullable(); // verbatim data returned by the scraper
     t.boolean("processed").notNullable().defaultTo(false);
     t.integer("lead_id").references("id").inTable("leads").onDelete("SET NULL");

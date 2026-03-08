@@ -27,9 +27,7 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "changeme";
  */
 function hashPassword(password) {
   const salt = crypto.randomBytes(16).toString("hex");
-  const hash = crypto
-    .scryptSync(password, salt, 64)
-    .toString("hex");
+  const hash = crypto.scryptSync(password, salt, 64).toString("hex");
   return `${salt}:${hash}`;
 }
 
@@ -44,10 +42,7 @@ exports.seed = async function (knex) {
   // Generate a default API key for CI/dev use
   const rawKey = crypto.randomBytes(32).toString("hex");
   const api_key_prefix = rawKey.slice(0, 8);
-  const api_key_hash = crypto
-    .createHash("sha256")
-    .update(rawKey)
-    .digest("hex");
+  const api_key_hash = crypto.createHash("sha256").update(rawKey).digest("hex");
 
   await knex("users").insert({
     username: ADMIN_USERNAME,

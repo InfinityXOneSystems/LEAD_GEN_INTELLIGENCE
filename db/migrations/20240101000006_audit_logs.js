@@ -11,14 +11,14 @@ exports.up = async function (knex) {
   await knex.schema.createTable("audit_logs", (t) => {
     t.increments("id").primary();
     t.integer("user_id").references("id").inTable("users").onDelete("SET NULL");
-    t.text("action").notNullable();       // create|update|delete|login|export|scrape|…
-    t.text("entity_type");                // lead|user|setting|agent_task|scrape_task
-    t.text("entity_id");                  // pk of the affected entity (text to support non-integer ids)
+    t.text("action").notNullable(); // create|update|delete|login|export|scrape|…
+    t.text("entity_type"); // lead|user|setting|agent_task|scrape_task
+    t.text("entity_id"); // pk of the affected entity (text to support non-integer ids)
     t.jsonb("old_value");
     t.jsonb("new_value");
     t.text("ip_address");
     t.text("user_agent");
-    t.jsonb("metadata");                  // any extra context
+    t.jsonb("metadata"); // any extra context
     t.timestamp("created_at", { useTz: true }).defaultTo(knex.fn.now());
   });
 

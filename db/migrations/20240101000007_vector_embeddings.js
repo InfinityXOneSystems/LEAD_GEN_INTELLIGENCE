@@ -18,9 +18,9 @@ exports.up = async function (knex) {
     t.text("collection_name").notNullable(); // Qdrant collection
     // qdrant_id is the UUID used as the point ID in Qdrant
     t.uuid("qdrant_id").notNullable();
-    t.integer("embedding_dim");            // vector dimension (e.g. 1536 for ada-002)
-    t.text("model_name");                  // embedding model used
-    t.jsonb("metadata");                   // payload stored alongside the vector
+    t.integer("embedding_dim"); // vector dimension (e.g. 1536 for ada-002)
+    t.text("model_name"); // embedding model used
+    t.jsonb("metadata"); // payload stored alongside the vector
     t.timestamp("created_at", { useTz: true }).defaultTo(knex.fn.now());
     t.timestamp("updated_at", { useTz: true }).defaultTo(knex.fn.now());
     t.unique(["entity_type", "entity_id", "collection_name"]);

@@ -130,7 +130,12 @@ test("migration 001 covers initial schema tables in down()", () => {
     path.join(MIGRATIONS_DIR, "20240101000001_initial_schema.js"),
     "utf8",
   );
-  for (const table of ["leads", "scrape_history", "outreach_log", "lead_scores"]) {
+  for (const table of [
+    "leads",
+    "scrape_history",
+    "outreach_log",
+    "lead_scores",
+  ]) {
     assert.ok(src.includes(table), `001 must reference table '${table}'`);
   }
 });
@@ -140,7 +145,14 @@ test("migration 002 creates users table with required columns", () => {
     path.join(MIGRATIONS_DIR, "20240101000002_users.js"),
     "utf8",
   );
-  for (const col of ["username", "email", "password_hash", "role", "api_key_hash", "is_active"]) {
+  for (const col of [
+    "username",
+    "email",
+    "password_hash",
+    "role",
+    "api_key_hash",
+    "is_active",
+  ]) {
     assert.ok(src.includes(col), `002 must define column '${col}'`);
   }
 });
@@ -162,7 +174,13 @@ test("migration 004 creates agent_tasks and agent_runs tables", () => {
   );
   assert.ok(src.includes("agent_tasks"), "004 must create agent_tasks");
   assert.ok(src.includes("agent_runs"), "004 must create agent_runs");
-  for (const col of ["agent_type", "command", "status", "priority", "retry_count"]) {
+  for (const col of [
+    "agent_type",
+    "command",
+    "status",
+    "priority",
+    "retry_count",
+  ]) {
     assert.ok(src.includes(col), `004 must define column '${col}'`);
   }
 });
@@ -174,7 +192,13 @@ test("migration 005 creates scrape_tasks and scrape_results tables", () => {
   );
   assert.ok(src.includes("scrape_tasks"), "005 must create scrape_tasks");
   assert.ok(src.includes("scrape_results"), "005 must create scrape_results");
-  for (const col of ["source", "keyword", "result_count", "raw_data", "processed"]) {
+  for (const col of [
+    "source",
+    "keyword",
+    "result_count",
+    "raw_data",
+    "processed",
+  ]) {
     assert.ok(src.includes(col), `005 must define column '${col}'`);
   }
 });
@@ -185,7 +209,14 @@ test("migration 006 creates audit_logs table with required columns", () => {
     "utf8",
   );
   assert.ok(src.includes("audit_logs"), "006 must create audit_logs");
-  for (const col of ["action", "entity_type", "entity_id", "old_value", "new_value", "ip_address"]) {
+  for (const col of [
+    "action",
+    "entity_type",
+    "entity_id",
+    "old_value",
+    "new_value",
+    "ip_address",
+  ]) {
     assert.ok(src.includes(col), `006 must define column '${col}'`);
   }
 });
@@ -195,8 +226,18 @@ test("migration 007 creates vector_embeddings table with Qdrant fields", () => {
     path.join(MIGRATIONS_DIR, "20240101000007_vector_embeddings.js"),
     "utf8",
   );
-  assert.ok(src.includes("vector_embeddings"), "007 must create vector_embeddings");
-  for (const col of ["entity_type", "entity_id", "collection_name", "qdrant_id", "embedding_dim", "model_name"]) {
+  assert.ok(
+    src.includes("vector_embeddings"),
+    "007 must create vector_embeddings",
+  );
+  for (const col of [
+    "entity_type",
+    "entity_id",
+    "collection_name",
+    "qdrant_id",
+    "embedding_dim",
+    "model_name",
+  ]) {
     assert.ok(src.includes(col), `007 must define column '${col}'`);
   }
 });
@@ -231,17 +272,20 @@ test("seed 02 includes scoring threshold settings", () => {
     path.join(SEEDS_DIR, "02_default_settings.js"),
     "utf8",
   );
-  assert.ok(src.includes("score_threshold_hot"), "seed 02 must include score_threshold_hot");
-  assert.ok(src.includes("score_threshold_warm"), "seed 02 must include score_threshold_warm");
+  assert.ok(
+    src.includes("score_threshold_hot"),
+    "seed 02 must include score_threshold_hot",
+  );
+  assert.ok(
+    src.includes("score_threshold_warm"),
+    "seed 02 must include score_threshold_warm",
+  );
 });
 
 // ── schema.sql completeness ───────────────────────────────────────────────────
 
 test("schema.sql contains all 13 expected tables", () => {
-  const sql = fs.readFileSync(
-    path.join(__dirname, "../db/schema.sql"),
-    "utf8",
-  );
+  const sql = fs.readFileSync(path.join(__dirname, "../db/schema.sql"), "utf8");
   const expectedTables = [
     "schema_version",
     "leads",
@@ -266,20 +310,24 @@ test("schema.sql contains all 13 expected tables", () => {
 });
 
 test("schema.sql leads table has extended fields (country, metadata, tier, status)", () => {
-  const sql = fs.readFileSync(
-    path.join(__dirname, "../db/schema.sql"),
-    "utf8",
-  );
-  for (const field of ["country", "metadata", "tier", "status", "address", "linkedin"]) {
-    assert.ok(sql.includes(field), `schema.sql leads must include field '${field}'`);
+  const sql = fs.readFileSync(path.join(__dirname, "../db/schema.sql"), "utf8");
+  for (const field of [
+    "country",
+    "metadata",
+    "tier",
+    "status",
+    "address",
+    "linkedin",
+  ]) {
+    assert.ok(
+      sql.includes(field),
+      `schema.sql leads must include field '${field}'`,
+    );
   }
 });
 
 test("schema.sql has indexes on critical columns", () => {
-  const sql = fs.readFileSync(
-    path.join(__dirname, "../db/schema.sql"),
-    "utf8",
-  );
+  const sql = fs.readFileSync(path.join(__dirname, "../db/schema.sql"), "utf8");
   const expectedIndexes = [
     "idx_leads_lead_score",
     "idx_leads_state",
@@ -294,12 +342,21 @@ test("schema.sql has indexes on critical columns", () => {
 });
 
 test("schema.sql CHECK constraints are present for enums", () => {
-  const sql = fs.readFileSync(
-    path.join(__dirname, "../db/schema.sql"),
-    "utf8",
+  const sql = fs.readFileSync(path.join(__dirname, "../db/schema.sql"), "utf8");
+  assert.ok(
+    sql.includes("chk_users_role"),
+    "schema.sql must have chk_users_role",
   );
-  assert.ok(sql.includes("chk_users_role"), "schema.sql must have chk_users_role");
-  assert.ok(sql.includes("chk_settings_value_type"), "schema.sql must have chk_settings_value_type");
-  assert.ok(sql.includes("chk_agent_tasks_status"), "schema.sql must have chk_agent_tasks_status");
-  assert.ok(sql.includes("chk_scrape_tasks_status"), "schema.sql must have chk_scrape_tasks_status");
+  assert.ok(
+    sql.includes("chk_settings_value_type"),
+    "schema.sql must have chk_settings_value_type",
+  );
+  assert.ok(
+    sql.includes("chk_agent_tasks_status"),
+    "schema.sql must have chk_agent_tasks_status",
+  );
+  assert.ok(
+    sql.includes("chk_scrape_tasks_status"),
+    "schema.sql must have chk_scrape_tasks_status",
+  );
 });
