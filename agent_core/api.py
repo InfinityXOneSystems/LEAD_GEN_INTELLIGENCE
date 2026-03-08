@@ -69,7 +69,12 @@ from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3200",
+        os.getenv("FRONTEND_URL", "http://localhost:3000"),
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -382,6 +387,12 @@ _SETTINGS_FILE = os.path.join(
     "settings.json",
 )
 
+_SETTINGS_DEFAULT_FILE = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "config",
+    "settings.default.json",
+)
+
 _DEFAULT_SETTINGS: Dict[str, Any] = {
     "ollama_model": os.getenv("OLLAMA_MODEL", "llama3.2"),
     "ollama_base_url": os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
@@ -393,18 +404,72 @@ _DEFAULT_SETTINGS: Dict[str, Any] = {
     "scraping_rate_limit": int(os.getenv("SCRAPING_RATE_LIMIT", "10")),
     "proxy_enabled": os.getenv("PROXY_ENABLED", "false").lower() == "true",
     "proxy_url": os.getenv("PROXY_URL", ""),
+    "llm_provider": os.getenv("LLM_PROVIDER", "ollama"),
+    "openai_model": os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+    "groq_model": os.getenv("GROQ_MODEL", "llama3-8b-8192"),
+    "media_output_dir": os.getenv("MEDIA_OUTPUT_DIR", "./media/output"),
+    "automation_schedule": os.getenv("AUTOMATION_SCHEDULE", "0 */4 * * *"),
+    "agent_timeout_seconds": int(os.getenv("AGENT_TIMEOUT_SECONDS", "120")),
+    "supervisor_max_agents": int(os.getenv("SUPERVISOR_MAX_AGENTS", "5")),
 }
 
 
 def _load_settings() -> Dict[str, Any]:
+    merged = dict(_DEFAULT_SETTINGS)
+    # Layer 1: settings.default.json (repo defaults)
+    if os.path.exists(_SETTINGS_DEFAULT_FILE):
+        try:
+            with open(_SETTINGS_DEFAULT_FILE, "r", encoding="utf-8") as fh:
+                defaults = json.load(fh)
+            merged.update(defaults)
+        except Exception:
+            pass
+    # Layer 2: settings.json (user overrides, gitignored)
     if os.path.exists(_SETTINGS_FILE):
         try:
             with open(_SETTINGS_FILE, "r", encoding="utf-8") as fh:
                 stored = json.load(fh)
-            return {**_DEFAULT_SETTINGS, **stored}
+            merged.update(stored)
         except Exception:
             pass
-    return dict(_DEFAULT_SETTINGS)
+    # Layer 3: environment variables override all file-based settings
+    env_overrides = {
+        "ollama_model": os.getenv("OLLAMA_MODEL"),
+        "ollama_base_url": os.getenv("OLLAMA_BASE_URL"),
+        "redis_url": os.getenv("REDIS_URL"),
+        "qdrant_url": os.getenv("QDRANT_URL"),
+        "database_url": os.getenv("DATABASE_URL"),
+        "llm_provider": os.getenv("LLM_PROVIDER"),
+        "openai_model": os.getenv("OPENAI_MODEL"),
+        "groq_model": os.getenv("GROQ_MODEL"),
+        "media_output_dir": os.getenv("MEDIA_OUTPUT_DIR"),
+        "automation_schedule": os.getenv("AUTOMATION_SCHEDULE"),
+        "github_repo": os.getenv("GITHUB_REPOSITORY"),
+    }
+    for key, val in env_overrides.items():
+        if val is not None:
+            merged[key] = val
+    # Numeric env overrides
+    for key, env_var in [
+        ("max_workers", "MAX_WORKERS"),
+        ("scraping_rate_limit", "SCRAPING_RATE_LIMIT"),
+        ("agent_timeout_seconds", "AGENT_TIMEOUT_SECONDS"),
+        ("supervisor_max_agents", "SUPERVISOR_MAX_AGENTS"),
+    ]:
+        val_str = os.getenv(env_var)
+        if val_str is not None:
+            try:
+                merged[key] = int(val_str)
+            except ValueError:
+                pass
+    # Boolean env overrides
+    proxy_enabled_str = os.getenv("PROXY_ENABLED")
+    if proxy_enabled_str is not None:
+        merged["proxy_enabled"] = proxy_enabled_str.lower() == "true"
+    proxy_url = os.getenv("PROXY_URL")
+    if proxy_url is not None:
+        merged["proxy_url"] = proxy_url
+    return merged
 
 
 def _save_settings(settings: Dict[str, Any]) -> None:

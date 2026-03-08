@@ -78,6 +78,25 @@ _ROUTES: list[dict[str, Any]] = [
         "agent": "frontend",
         "type": "analytics",
     },
+    {
+        "keywords": ["deploy", "deployment", "docker build", "docker push", "docker", "scale service",
+                     "devops", "ci/cd", "release", "vercel deploy"],
+        "agent": "devops",
+        "type": "devops",
+    },
+    {
+        "keywords": ["scaffold", "create service", "new module", "create module",
+                     "migration", "generate migration", "builder"],
+        "agent": "builder",
+        "type": "build",
+    },
+    {
+        "keywords": ["generate image", "create image", "generate logo", "generate banner",
+                     "generate audio", "generate video", "generate avatar", "media", "tts",
+                     "voice", "speech"],
+        "agent": "media",
+        "type": "media",
+    },
 ]
 
 # ---------------------------------------------------------------------------
