@@ -13766,7 +13766,8 @@
     "source": "google_maps",
     "scrapedAt": "2026-03-06T15:15:21.996Z",
     "_merged_from": [
-      "Southwest Surface Blasting"
+      "Southwest Surface Blasting",
+      "Southwest Auto Center"
     ]
   },
   {
@@ -14022,7 +14023,8 @@
       "Columbus Auto Mall",
       "Columbus Design & Manufacturing, LLC",
       "Columbus Liquidation Center",
-      "Columbus Distribution Center Napa"
+      "Columbus Distribution Center Napa",
+      "Columbus Facilities Management"
     ]
   },
   {
@@ -20065,7 +20067,8 @@
     "source": "google_maps",
     "scrapedAt": "2026-03-08T18:20:11.808Z",
     "_merged_from": [
-      "Concrete Contractors"
+      "Concrete Contractors",
+      "Concrete Contracting Solutions, Inc."
     ]
   },
   {
@@ -20270,7 +20273,8 @@
     "scrapedAt": "2026-03-08T18:20:12.018Z",
     "_merged_from": [
       "Central Ohio Blasting",
-      "Central Ohio Mobile Mechanic"
+      "Central Ohio Mobile Mechanic",
+      "Central Ohio Concrete Construction"
     ]
   },
   {
@@ -21204,7 +21208,8 @@
     "source": "google_maps",
     "scrapedAt": "2026-03-08T18:20:53.316Z",
     "_merged_from": [
-      "Mark Wahlberg Chevy Columbus Service Center"
+      "Mark Wahlberg Chevy Columbus Service Center",
+      "Mark Wahlberg Chevrolet of Worthington"
     ]
   },
   {
@@ -21220,7 +21225,10 @@
     "rating": 4.7,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:20:53.316Z"
+    "scrapedAt": "2026-03-08T18:20:53.316Z",
+    "_merged_from": [
+      "Auto Palace"
+    ]
   },
   {
     "company": "Ricart Automotive Mega Mall",
@@ -21403,10 +21411,13 @@
     "country": "USA",
     "keyword": "car dealership service center",
     "category": "General",
-    "rating": 4.6,
+    "rating": 4.8,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:20:53.316Z"
+    "scrapedAt": "2026-03-08T18:20:53.316Z",
+    "_merged_from": [
+      "Ricart Chevrolet Service"
+    ]
   },
   {
     "company": "Subaru Service - Germain Subaru of Columbus Service Center",
@@ -22619,10 +22630,13 @@
     "country": "USA",
     "keyword": "distribution center contractor",
     "category": "General",
-    "rating": 3.7,
+    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:21:17.795Z"
+    "scrapedAt": "2026-03-08T18:21:17.795Z",
+    "_merged_from": [
+      "Distribution Centre"
+    ]
   },
   {
     "company": "King Distribution Center",
@@ -23243,7 +23257,8 @@
     "_merged_from": [
       "Epoxy Strong Phoenix",
       "Epoxy Floors",
-      "Epoxy Garage Floor Coatings - Phoenix"
+      "Epoxy Garage Floor Coatings - Phoenix",
+      "Epoxy Floor Pros Phoenix"
     ]
   },
   {
@@ -23640,7 +23655,10 @@
     "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:21:58.905Z"
+    "scrapedAt": "2026-03-08T18:21:58.905Z",
+    "_merged_from": [
+      "Floor & Decor"
+    ]
   },
   {
     "company": "East Valley Floor Coatings LLC",
@@ -23718,7 +23736,10 @@
     "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:22:06.914Z"
+    "scrapedAt": "2026-03-08T18:22:06.914Z",
+    "_merged_from": [
+      "Mr. Fox Epoxy"
+    ]
   },
   {
     "company": "AZ Stain Concrete",
@@ -24098,7 +24119,8 @@
       "Arizona Concrete Repair Inc.",
       "Arizona Creative Surfaces",
       "Arizona Facility Services",
-      "Arizona Corporate Builders LLC"
+      "Arizona Corporate Builders LLC",
+      "Arizona Contractor License Center"
     ]
   },
   {
@@ -24141,10 +24163,13 @@
     "country": "USA",
     "keyword": "concrete grinding contractor",
     "category": "Concrete",
-    "rating": 4.9,
+    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:22:15.166Z"
+    "scrapedAt": "2026-03-08T18:22:15.166Z",
+    "_merged_from": [
+      "Polished Concrete Solution"
+    ]
   },
   {
     "company": "Arizona Foundation Solutions LLC",
@@ -24174,7 +24199,10 @@
     "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:22:23.326Z"
+    "scrapedAt": "2026-03-08T18:22:23.326Z",
+    "_merged_from": [
+      "TRC Concrete Contractor Phoenix"
+    ]
   },
   {
     "company": "Dalinghaus Foundation Repair",
@@ -24219,7 +24247,10 @@
     "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:22:23.326Z"
+    "scrapedAt": "2026-03-08T18:22:23.326Z",
+    "_merged_from": [
+      "Scottsdale Polished Concrete Company"
+    ]
   },
   {
     "company": "Cool Concrete Creations LLC",
@@ -24396,10 +24427,13 @@
     "country": "USA",
     "keyword": "concrete staining contractor",
     "category": "Concrete",
-    "rating": 0,
+    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:22:39.740Z"
+    "scrapedAt": "2026-03-08T18:22:39.740Z",
+    "_merged_from": [
+      "Mesa Concrete Contractors Co"
+    ]
   },
   {
     "company": "Rock Star Coating Pros",
@@ -25088,7 +25122,8 @@
     "source": "google_maps",
     "scrapedAt": "2026-03-08T18:22:56.122Z",
     "_merged_from": [
-      "AutoNation Toyota Tempe"
+      "AutoNation Toyota Tempe",
+      "AutoNation Collision Center Tempe"
     ]
   },
   {
@@ -25539,10 +25574,13 @@
     "country": "USA",
     "keyword": "truck repair shop",
     "category": "General",
-    "rating": 0,
+    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:23:04.306Z"
+    "scrapedAt": "2026-03-08T18:23:04.306Z",
+    "_merged_from": [
+      "Tempe Mobile Mechanic"
+    ]
   },
   {
     "company": "PHX Truck & Trailer Repair",
@@ -26685,10 +26723,14 @@
     "country": "USA",
     "keyword": "industrial maintenance contractor",
     "category": "General",
-    "rating": 4.5,
+    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:23:28.908Z"
+    "scrapedAt": "2026-03-08T18:23:28.908Z",
+    "_merged_from": [
+      "Commercial Fleet Service, Inc",
+      "Commercial Construction Products"
+    ]
   },
   {
     "company": "SMW Refrigeration and Heating, LLC",
@@ -26931,21 +26973,6 @@
     "scrapedAt": "2026-03-08T18:47:51.968Z"
   },
   {
-    "company": "Central Ohio Concrete Construction",
-    "phone": "",
-    "website": "",
-    "address": "4.7",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "concrete staining contractor",
-    "category": "Concrete",
-    "rating": 4.7,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:47:51.968Z"
-  },
-  {
     "company": "Pummell Construction Services, llc",
     "phone": "",
     "website": "",
@@ -26956,21 +26983,6 @@
     "keyword": "concrete staining contractor",
     "category": "Concrete",
     "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:47:51.968Z"
-  },
-  {
-    "company": "Concrete Contracting Solutions, Inc.",
-    "phone": "",
-    "website": "",
-    "address": "4.0",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "concrete staining contractor",
-    "category": "Concrete",
-    "rating": 4,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T18:47:51.968Z"
@@ -27081,21 +27093,6 @@
     "scrapedAt": "2026-03-08T18:48:08.108Z"
   },
   {
-    "company": "Auto Palace",
-    "phone": "",
-    "website": "",
-    "address": "4.7",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "car dealership service center",
-    "category": "General",
-    "rating": 4.7,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:48:08.162Z"
-  },
-  {
     "company": "Great Lakes Auto Group",
     "phone": "",
     "website": "",
@@ -27121,36 +27118,6 @@
     "keyword": "car dealership service center",
     "category": "General",
     "rating": 4.3,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:48:08.162Z"
-  },
-  {
-    "company": "Mark Wahlberg Chevrolet of Worthington",
-    "phone": "",
-    "website": "",
-    "address": "4.5",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "car dealership service center",
-    "category": "General",
-    "rating": 4.5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:48:08.162Z"
-  },
-  {
-    "company": "Ricart Chevrolet Service",
-    "phone": "",
-    "website": "",
-    "address": "4.8",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "car dealership service center",
-    "category": "General",
-    "rating": 4.8,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T18:48:08.162Z"
@@ -27261,21 +27228,6 @@
     "scrapedAt": "2026-03-08T18:48:24.287Z"
   },
   {
-    "company": "Columbus Facilities Management",
-    "phone": "",
-    "website": "",
-    "address": "· 90 W Broad St # B16",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "fleet maintenance facility",
-    "category": "General",
-    "rating": 0,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:48:24.287Z"
-  },
-  {
     "company": "APCO | The Architectural Products Company",
     "phone": "",
     "website": "",
@@ -27351,21 +27303,6 @@
     "scrapedAt": "2026-03-08T18:48:32.551Z"
   },
   {
-    "company": "Distribution Centre",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "distribution center contractor",
-    "category": "General",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:48:32.551Z"
-  },
-  {
     "company": "CDC Distributors",
     "phone": "",
     "website": "",
@@ -27420,40 +27357,13 @@
     "country": "USA",
     "keyword": "industrial flooring installer",
     "category": "General",
-    "rating": 4.7,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:48:40.616Z"
-  },
-  {
-    "company": "America's Floor Source - Columbus East",
-    "phone": "",
-    "website": "",
-    "address": "4.9",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "industrial flooring installer",
-    "category": "General",
     "rating": 4.9,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:48:40.616Z"
-  },
-  {
-    "company": "Epoxy Floor Pros Phoenix",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "garage epoxy installer",
-    "category": "Epoxy",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:48:48.680Z"
+    "scrapedAt": "2026-03-08T18:48:40.616Z",
+    "_merged_from": [
+      "America's Floor Source - Columbus East"
+    ]
   },
   {
     "company": "Baker Bros Area Rugs & Flooring",
@@ -27469,21 +27379,6 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T18:49:04.835Z"
-  },
-  {
-    "company": "Mr. Fox Epoxy",
-    "phone": "",
-    "website": "",
-    "address": "Open · Closes 5:30 PM",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "polyurea floor coating",
-    "category": "Epoxy",
-    "rating": 0,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:49:12.740Z"
   },
   {
     "company": "Diamond Coatings, AZ",
@@ -27531,21 +27426,6 @@
     "scrapedAt": "2026-03-08T18:49:21.025Z"
   },
   {
-    "company": "Scottsdale Polished Concrete Company",
-    "phone": "",
-    "website": "",
-    "address": "· 7000 E Shea Blvd",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "concrete polishing contractor",
-    "category": "Concrete",
-    "rating": 0,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:49:28.928Z"
-  },
-  {
     "company": "Coating Concrete Pro",
     "phone": "",
     "website": "",
@@ -27562,21 +27442,6 @@
   },
   {
     "company": "King Contracting, LLC",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "concrete polishing contractor",
-    "category": "Concrete",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:49:28.928Z"
-  },
-  {
-    "company": "Polished Concrete Solution",
     "phone": "",
     "website": "",
     "address": "5.0",
@@ -27636,21 +27501,6 @@
     "scrapedAt": "2026-03-08T18:49:29.091Z"
   },
   {
-    "company": "TRC Concrete Contractor Phoenix",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "concrete resurfacing contractor",
-    "category": "Concrete",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:49:37.058Z"
-  },
-  {
     "company": "StrataLock USA - Foundation Repair - Phoenix (Headquarters)",
     "phone": "",
     "website": "",
@@ -27679,21 +27529,6 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T18:49:37.191Z"
-  },
-  {
-    "company": "Mesa Concrete Contractors Co",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "decorative concrete contractor",
-    "category": "Concrete",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:49:45.279Z"
   },
   {
     "company": "John's Concrete LLC",
@@ -27831,21 +27666,6 @@
     "scrapedAt": "2026-03-08T18:50:09.657Z"
   },
   {
-    "company": "Tempe Mobile Mechanic",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "auto repair shop",
-    "category": "General",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:50:09.657Z"
-  },
-  {
     "company": "Lift n Wrench",
     "phone": "",
     "website": "",
@@ -27966,21 +27786,6 @@
     "scrapedAt": "2026-03-08T18:50:09.690Z"
   },
   {
-    "company": "Southwest Auto Center",
-    "phone": "",
-    "website": "",
-    "address": "4.0",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "car dealership service center",
-    "category": "General",
-    "rating": 4,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:50:09.690Z"
-  },
-  {
     "company": "Simply Automotive Sales and Service",
     "phone": "",
     "website": "",
@@ -28021,21 +27826,6 @@
     "keyword": "auto body shop",
     "category": "General",
     "rating": 4.1,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:50:17.856Z"
-  },
-  {
-    "company": "AutoNation Collision Center Tempe",
-    "phone": "",
-    "website": "",
-    "address": "4.4",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "auto body shop",
-    "category": "General",
-    "rating": 4.4,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T18:50:17.856Z"
@@ -28095,25 +27885,13 @@
     "country": "USA",
     "keyword": "truck repair shop",
     "category": "General",
-    "rating": 4.8,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:50:17.888Z"
-  },
-  {
-    "company": "All State Road Service",
-    "phone": "",
-    "website": "",
-    "address": "4.9",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "truck repair shop",
-    "category": "General",
     "rating": 4.9,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:50:17.888Z"
+    "scrapedAt": "2026-03-08T18:50:17.888Z",
+    "_merged_from": [
+      "All State Road Service"
+    ]
   },
   {
     "company": "Complete HTR",
@@ -28186,21 +27964,6 @@
     "keyword": "fleet maintenance facility",
     "category": "General",
     "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:50:26.015Z"
-  },
-  {
-    "company": "Commercial Fleet Service, Inc",
-    "phone": "",
-    "website": "",
-    "address": "· 2847 E Jones Ave",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "fleet maintenance facility",
-    "category": "General",
-    "rating": 0,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T18:50:26.015Z"
@@ -28350,25 +28113,13 @@
     "country": "USA",
     "keyword": "warehouse contractor",
     "category": "General",
-    "rating": 3.9,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:50:34.207Z"
-  },
-  {
-    "company": "The Contractor Guys",
-    "phone": "",
-    "website": "",
-    "address": "4.9",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "warehouse contractor",
-    "category": "General",
     "rating": 4.9,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:50:34.207Z"
+    "scrapedAt": "2026-03-08T18:50:34.207Z",
+    "_merged_from": [
+      "The Contractor Guys"
+    ]
   },
   {
     "company": "McGrath Builders LLC",
@@ -28441,36 +28192,6 @@
     "keyword": "distribution center contractor",
     "category": "General",
     "rating": 0,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:50:34.244Z"
-  },
-  {
-    "company": "Commercial Construction Products",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "distribution center contractor",
-    "category": "General",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:50:34.244Z"
-  },
-  {
-    "company": "Arizona Contractor License Center",
-    "phone": "",
-    "website": "",
-    "address": "4.9",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "distribution center contractor",
-    "category": "General",
-    "rating": 4.9,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T18:50:34.244Z"
@@ -28561,21 +28282,6 @@
     "keyword": "industrial flooring installer",
     "category": "General",
     "rating": 4.7,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T18:50:42.400Z"
-  },
-  {
-    "company": "Floor & Decor",
-    "phone": "",
-    "website": "",
-    "address": "4.5",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "industrial flooring installer",
-    "category": "General",
-    "rating": 4.5,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T18:50:42.400Z"
