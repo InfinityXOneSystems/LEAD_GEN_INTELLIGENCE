@@ -19,12 +19,14 @@ import os
 import textwrap
 from typing import Any
 
+from agents.base_agent import BaseAgent
+
 logger = logging.getLogger(__name__)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-class BuilderAgent:
+class BuilderAgent(BaseAgent):
     """
     Autonomous project builder and scaffolding agent.
 
@@ -34,9 +36,23 @@ class BuilderAgent:
         result = await agent.run("Build a new scraper for HomeAdvisor")
     """
 
-    async def run(self, command: str) -> dict[str, Any]:
+    agent_name = "builder"
+
+    async def execute(
+        self,
+        task: dict[str, Any],
+        context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Execute a build task; delegates to :meth:`run` dispatch logic."""
+        command = task.get("command", "")
+        return await self._dispatch(command)
+
+    async def run(self, command: str) -> dict[str, Any]:  # type: ignore[override]
+        return await self._dispatch(command)
+
+    async def _dispatch(self, command: str) -> dict[str, Any]:
         lower = command.lower()
-        logger.info("BuilderAgent.run: %r", command)
+        logger.info("BuilderAgent._dispatch: %r", command)
 
         if "scraper" in lower:
             return await self._scaffold_scraper(command)

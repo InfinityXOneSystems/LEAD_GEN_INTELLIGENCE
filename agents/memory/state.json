@@ -1,8 +1,8 @@
 {
   "session_id": null,
-  "last_command": "run outreach campaign",
-  "last_run": "2026-03-07T22:22:21.135639+00:00",
-  "leads_discovered": 50,
+  "last_command": "export leads",
+  "last_run": "2026-03-08T22:50:40.860438+00:00",
+  "leads_discovered": 0,
   "campaigns_sent": 0,
   "pipeline_runs": 0,
   "command_history": []

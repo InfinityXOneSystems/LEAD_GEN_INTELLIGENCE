@@ -109,12 +109,20 @@ class SupervisorAgent:
         logger.info("Supervisor dispatching: type=%s command=%r", task_type, command)
 
         if task_type == "scrape":
-            from agents.tools.scraper import scrape_google_maps
+            from agents.scraper.scraper_agent import ScraperAgent
             keyword = task.get("keyword", command)
             city = task.get("city", "")
             state = task.get("state", "")
-            leads = await scrape_google_maps(keyword, city, state)
-            return {"success": True, "leads_found": len(leads)}
+            agent = ScraperAgent()
+            return await agent.execute({"command": keyword, "keyword": keyword, "city": city, "state": state})
+
+        if task_type == "plan":
+            from agents.planner.planner_agent import PlannerAgent
+            return await PlannerAgent().execute({"command": command})
+
+        if task_type == "validate":
+            from agents.validator.validator_agent import ValidatorAgent
+            return await ValidatorAgent().execute(task)
 
         if task_type == "code":
             from agents.code.code_agent import CodeAgent
@@ -138,28 +146,24 @@ class SupervisorAgent:
 
         if task_type == "build":
             from agents.builder.builder_agent import BuilderAgent
-            return await BuilderAgent().run(command)
+            return await BuilderAgent().execute({"command": command})
 
         if task_type == "media":
             from agents.media.media_agent import MediaAgent
-            return await MediaAgent().run(command)
+            return await MediaAgent().execute({"command": command})
 
         if task_type in ("devops", "deploy", "docker"):
             from agents.devops.devops_agent import DevOpsAgent
-            return await DevOpsAgent().run(command)
+            return await DevOpsAgent().execute({"command": command})
 
         if task_type in ("monitor", "metrics"):
             from agents.shadow.shadow_agent import get_metrics
             return await get_metrics()
 
         if task_type == "memory":
-            from memory.memory_manager import MemoryManager
-            mm = MemoryManager()
-            return {"success": True, "health": mm.health()}
+            from agents.memory.memory_agent import MemoryAgent
+            return await MemoryAgent().execute({"operation": "health"})
 
-        # Default: run full LangGraph pipeline
-        from agent_core.langgraph_runtime import run_graph
-        run_id = str(int(time.time() * 1000))
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(None, run_graph, command, run_id)
-        return result
+        # Default: run full multi-agent orchestrator pipeline
+        from agent_core.orchestrator import run_pipeline
+        return await run_pipeline(command)

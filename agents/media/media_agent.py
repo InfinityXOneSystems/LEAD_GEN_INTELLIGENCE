@@ -23,13 +23,15 @@ import logging
 import os
 from typing import Any
 
+from agents.base_agent import BaseAgent
+
 logger = logging.getLogger(__name__)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MEDIA_OUTPUT_DIR = os.getenv("MEDIA_OUTPUT_DIR", os.path.join(ROOT, "media", "output"))
 
 
-class MediaAgent:
+class MediaAgent(BaseAgent):
     """
     AI media creation agent.
 
@@ -39,9 +41,23 @@ class MediaAgent:
         result = await agent.run("Generate a logo for XPS Intelligence")
     """
 
-    async def run(self, command: str) -> dict[str, Any]:
+    agent_name = "media"
+
+    async def execute(
+        self,
+        task: dict[str, Any],
+        context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Execute a media generation task."""
+        command = task.get("command", "")
+        return await self._dispatch(command)
+
+    async def run(self, command: str) -> dict[str, Any]:  # type: ignore[override]
+        return await self._dispatch(command)
+
+    async def _dispatch(self, command: str) -> dict[str, Any]:
         lower = command.lower()
-        logger.info("MediaAgent.run: %r", command)
+        logger.info("MediaAgent._dispatch: %r", command)
 
         if "image" in lower or "logo" in lower or "banner" in lower or "generate" in lower:
             return await self._generate_image(command)

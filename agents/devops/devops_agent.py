@@ -24,6 +24,8 @@ import os
 import subprocess
 from typing import Any
 
+from agents.base_agent import BaseAgent
+
 logger = logging.getLogger(__name__)
 
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
@@ -31,7 +33,7 @@ GITHUB_REPOSITORY = os.getenv("GITHUB_REPOSITORY", "InfinityXOneSystems/XPS_INTE
 VERCEL_TOKEN = os.getenv("VERCEL_TOKEN", "")
 
 
-class DevOpsAgent:
+class DevOpsAgent(BaseAgent):
     """
     Autonomous DevOps and deployment agent.
 
@@ -41,9 +43,23 @@ class DevOpsAgent:
         result = await agent.run("Deploy to production")
     """
 
-    async def run(self, command: str) -> dict[str, Any]:
+    agent_name = "devops"
+
+    async def execute(
+        self,
+        task: dict[str, Any],
+        context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Execute a DevOps task."""
+        command = task.get("command", "")
+        return await self._dispatch(command)
+
+    async def run(self, command: str) -> dict[str, Any]:  # type: ignore[override]
+        return await self._dispatch(command)
+
+    async def _dispatch(self, command: str) -> dict[str, Any]:
         lower = command.lower()
-        logger.info("DevOpsAgent.run: %r", command)
+        logger.info("DevOpsAgent._dispatch: %r", command)
 
         if "deploy" in lower and "vercel" in lower:
             return await self._deploy_vercel()
