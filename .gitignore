@@ -46,3 +46,7 @@ data/sales/reminders.json
 data/logs/
 logs/*.jsonl
 logs/*.log
+
+# User-specific runtime settings (keep defaults in config/settings.default.json)
+config/settings.json
+media/output/
