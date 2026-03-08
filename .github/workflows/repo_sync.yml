@@ -17,8 +17,6 @@ on:
     branches: [main]
     paths:
       - 'data/leads/**'
-      - 'dashboard/public/data/**'
-      - 'pages/data/**'
       - 'docs/**'
 
 permissions:
@@ -31,51 +29,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ── 1. Sync pages/data from dashboard/public/data ──────────────────────────
+  # ── 1. (removed) Sync pages/data — legacy directories no longer tracked ─────
   sync-pages-data:
-    name: Sync Pages Data
+    name: Sync Pages Data (skip — legacy dirs removed)
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: |
-      github.event.inputs.action == 'sync-pages' ||
-      github.event.inputs.action == 'full' ||
-      github.event_name == 'push' ||
-      github.event_name == 'repository_dispatch'
+    timeout-minutes: 5
+    if: false   # legacy dashboard/pages directories removed; nothing to sync
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Sync scored_leads to pages/data
-        run: |
-          mkdir -p pages/data
-          if [ -f dashboard/public/data/scored_leads.json ]; then
-            cp dashboard/public/data/scored_leads.json pages/data/scored_leads.json
-            echo "Synced scored_leads.json to pages/data/"
-          fi
-          if [ -f dashboard/public/data/scoring_report.json ]; then
-            cp dashboard/public/data/scoring_report.json pages/data/scoring_report.json
-            echo "Synced scoring_report.json to pages/data/"
-          fi
-          if [ -f data/leads/scored_leads.json ]; then
-            cp data/leads/scored_leads.json pages/data/scored_leads.json
-            echo "Synced from data/leads/ to pages/data/"
-          fi
-
-      - name: Commit synced data
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pages/data/ || true
-          if git diff --cached --quiet; then
-            echo "Pages data already in sync."
-          else
-            git commit -m "sync: propagate lead data to pages/data/ [repo-sync $(date -u +%Y-%m-%dT%H:%MZ)]"
-            git pull --rebase --autostash origin main || true
-            git push
-          fi
+      - run: echo "Legacy sync skipped"
 
   # ── 2. Validate repo health ─────────────────────────────────────────────────
   validate-health:
@@ -121,8 +83,6 @@ jobs:
             "agents/gpt_actions/openapi.json"
             "integrations/google_workspace.js"
             "docs/RUNBOOK.md"
-            "dashboard/app/page.tsx"
-            "pages/index.html"
           )
           for f in "${REQUIRED[@]}"; do
             [ -f "$f" ] || MISSING+=("$f")

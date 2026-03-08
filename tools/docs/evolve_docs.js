@@ -158,8 +158,6 @@ function getKeyEntrypoints() {
     { path: "db/db.js", desc: "PostgreSQL connection pool" },
     { path: "db/leadStore.js", desc: "Lead CRUD operations" },
     { path: "db/schema.sql", desc: "Database schema DDL" },
-    { path: "dashboard/app/page.tsx", desc: "Next.js dashboard main page" },
-    { path: "pages/index.html", desc: "Static HTML dashboard" },
     {
       path: "tools/docs/evolve_docs.js",
       desc: "Living docs generator (this file)",
