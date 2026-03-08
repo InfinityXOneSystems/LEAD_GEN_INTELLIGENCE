@@ -33,7 +33,10 @@ app.use((req, res, next) => {
   } else {
     res.setHeader("Access-Control-Allow-Origin", "*");
   }
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+  );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   if (req.method === "OPTIONS") return res.sendStatus(204);
   next();
@@ -69,7 +72,60 @@ function loadLeads() {
   return [];
 }
 
+function saveLeads(leads) {
+  fs.mkdirSync(LEADS_DIR, { recursive: true });
+  const raw = path.join(LEADS_DIR, "leads.json");
+  fs.writeFileSync(raw, JSON.stringify(leads, null, 2));
+}
+
+function generateId() {
+  return (
+    Date.now().toString(36).toUpperCase() +
+    Math.random().toString(36).slice(2, 8).toUpperCase()
+  );
+}
+
 // ── routes ───────────────────────────────────────────────────────────────────
+
+// GET /api/leads/metrics  (must be before /api/leads/:id)
+app.get("/api/leads/metrics", (req, res) => {
+  try {
+    const leads = loadLeads();
+    const list = Array.isArray(leads) ? leads : [];
+    const total = list.length;
+    const aPlusOpportunities = list.filter(
+      (l) => (l.rating || l.tier) === "A+",
+    ).length;
+    const emailsSent = (() => {
+      try {
+        const q = path.join(DATA_DIR, "outreach", "outreach_queue.json");
+        return fs.existsSync(q) ? readJson(q).length : 0;
+      } catch (_) {
+        return 0;
+      }
+    })();
+    const scores = list
+      .map((l) => l.lead_score || l.score || l.opportunityScore || 0)
+      .filter(Boolean);
+    const avgScore = scores.length
+      ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
+      : 0;
+    const revenuePipeline = list.reduce(
+      (s, l) => s + (l.revenue || 0),
+      0,
+    );
+    return res.json({
+      totalLeads: total,
+      aPlusOpportunities,
+      emailsSent,
+      responseRate: total ? Math.round((emailsSent / total) * 100) : 0,
+      revenuePipeline,
+      avgScore,
+    });
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
 
 // GET /api/leads
 app.get("/api/leads", (req, res) => {
@@ -113,6 +169,383 @@ app.get("/api/leads/:id", (req, res) => {
   } catch (err) {
     return fail(res, err.message);
   }
+});
+
+// POST /api/leads
+app.post("/api/leads", (req, res) => {
+  try {
+    const leads = loadLeads();
+    const list = Array.isArray(leads) ? leads : [];
+    const newLead = {
+      id: generateId(),
+      ...req.body,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    list.push(newLead);
+    saveLeads(list);
+    return res.status(201).json(newLead);
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// PUT /api/leads/:id
+app.put("/api/leads/:id", (req, res) => {
+  try {
+    const leads = loadLeads();
+    const list = Array.isArray(leads) ? leads : [];
+    const idx = list.findIndex(
+      (l) =>
+        String(l.id) === req.params.id || l.place_id === req.params.id,
+    );
+    if (idx === -1) return fail(res, "Lead not found", 404);
+    list[idx] = {
+      ...list[idx],
+      ...req.body,
+      id: list[idx].id,
+      updatedAt: new Date().toISOString(),
+    };
+    saveLeads(list);
+    return res.json(list[idx]);
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// DELETE /api/leads/:id
+app.delete("/api/leads/:id", (req, res) => {
+  try {
+    const leads = loadLeads();
+    const list = Array.isArray(leads) ? leads : [];
+    const filtered = list.filter(
+      (l) =>
+        String(l.id) !== req.params.id && l.place_id !== req.params.id,
+    );
+    if (filtered.length === list.length)
+      return fail(res, "Lead not found", 404);
+    saveLeads(filtered);
+    return res.status(204).send();
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// POST /api/leads/:id/assign
+app.post("/api/leads/:id/assign", (req, res) => {
+  try {
+    const leads = loadLeads();
+    const list = Array.isArray(leads) ? leads : [];
+    const idx = list.findIndex(
+      (l) =>
+        String(l.id) === req.params.id || l.place_id === req.params.id,
+    );
+    if (idx === -1) return fail(res, "Lead not found", 404);
+    const { repId, repName, repInitials } = req.body;
+    list[idx] = {
+      ...list[idx],
+      assignedRep: repName || repId,
+      assignedInitials: repInitials || "",
+      updatedAt: new Date().toISOString(),
+    };
+    saveLeads(list);
+    return res.json(list[idx]);
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// PUT /api/leads/:id/status
+app.put("/api/leads/:id/status", (req, res) => {
+  try {
+    const leads = loadLeads();
+    const list = Array.isArray(leads) ? leads : [];
+    const idx = list.findIndex(
+      (l) =>
+        String(l.id) === req.params.id || l.place_id === req.params.id,
+    );
+    if (idx === -1) return fail(res, "Lead not found", 404);
+    list[idx] = {
+      ...list[idx],
+      status: req.body.status,
+      updatedAt: new Date().toISOString(),
+    };
+    saveLeads(list);
+    return res.json(list[idx]);
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// POST /api/leads/:id/notes
+app.post("/api/leads/:id/notes", (req, res) => {
+  try {
+    const leads = loadLeads();
+    const list = Array.isArray(leads) ? leads : [];
+    const idx = list.findIndex(
+      (l) =>
+        String(l.id) === req.params.id || l.place_id === req.params.id,
+    );
+    if (idx === -1) return fail(res, "Lead not found", 404);
+    const existing = list[idx].notes || "";
+    const ts = new Date().toISOString().slice(0, 10);
+    list[idx] = {
+      ...list[idx],
+      notes: existing
+        ? `${existing}\n[${ts}] ${req.body.note}`
+        : `[${ts}] ${req.body.note}`,
+      updatedAt: new Date().toISOString(),
+    };
+    saveLeads(list);
+    return res.json(list[idx]);
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// ── Scraper routes ────────────────────────────────────────────────────────────
+
+const scraperJobs = new Map();
+
+// POST /api/scraper/run
+app.post("/api/scraper/run", (req, res) => {
+  try {
+    const jobId = generateId();
+    const entry = {
+      id: jobId,
+      timestamp: new Date().toISOString(),
+      status: "running",
+      message: "Scraper job queued",
+      config: req.body,
+    };
+    scraperJobs.set(jobId, entry);
+    const logsDir = path.join(DATA_DIR, "scraper");
+    fs.mkdirSync(logsDir, { recursive: true });
+    const logsFile = path.join(logsDir, "scraper_jobs.json");
+    let jobs = [];
+    if (fs.existsSync(logsFile)) {
+      try {
+        jobs = readJson(logsFile);
+      } catch (_) {}
+    }
+    jobs.push(entry);
+    fs.writeFileSync(logsFile, JSON.stringify(jobs, null, 2));
+    return res.json({ jobId });
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// GET /api/scraper/status/:jobId
+app.get("/api/scraper/status/:jobId", (req, res) => {
+  try {
+    const job = scraperJobs.get(req.params.jobId);
+    if (job) return res.json(job);
+    const logsFile = path.join(DATA_DIR, "scraper", "scraper_jobs.json");
+    if (fs.existsSync(logsFile)) {
+      const jobs = readJson(logsFile);
+      const found = jobs.find((j) => j.id === req.params.jobId);
+      if (found) return res.json(found);
+    }
+    return fail(res, "Job not found", 404);
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// GET /api/scraper/logs
+app.get("/api/scraper/logs", (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit || "50", 10);
+    const logsFile = path.join(DATA_DIR, "scraper", "scraper_jobs.json");
+    let jobs = [];
+    if (fs.existsSync(logsFile)) {
+      try {
+        jobs = readJson(logsFile);
+      } catch (_) {}
+    }
+    return res.json(jobs.slice(-limit).reverse());
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// POST /api/scraper/results  – ingest results from GitHub Actions worker
+app.post("/api/scraper/results", (req, res) => {
+  try {
+    const { job_id, results = [] } = req.body;
+    const leads = loadLeads();
+    const list = Array.isArray(leads) ? leads : [];
+    let added = 0;
+    results.forEach((r) => {
+      const exists = list.find(
+        (l) =>
+          l.phone === r.phone ||
+          (l.company === r.company && l.city === r.city),
+      );
+      if (!exists) {
+        list.push({
+          id: generateId(),
+          company: r.company || r.name,
+          phone: r.phone,
+          email: r.email,
+          website: r.website,
+          city: r.city || (r.location || "").split(",")[0],
+          state: r.state || (r.location || "").split(",")[1],
+          category: r.industry || r.category,
+          lead_score: r.lead_score,
+          opportunityScore: r.lead_score,
+          status: "new",
+          rating: r.lead_score >= 75 ? "A+" : r.lead_score >= 50 ? "A" : "B",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+        added++;
+      }
+    });
+    saveLeads(list);
+    if (job_id && scraperJobs.has(job_id)) {
+      scraperJobs.get(job_id).status = "completed";
+      scraperJobs.get(job_id).message = `Ingested ${added} new leads`;
+    }
+    return res.json({ success: true, added, total: list.length });
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// ── Agent/Plan routes ─────────────────────────────────────────────────────────
+
+// GET /api/agent/plans
+app.get("/api/agent/plans", (req, res) => {
+  try {
+    const plansFile = path.join(DATA_DIR, "agent", "plans.json");
+    let plans = [];
+    if (fs.existsSync(plansFile)) {
+      try {
+        plans = readJson(plansFile);
+      } catch (_) {}
+    }
+    return res.json(plans);
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// POST /api/agent/plans  – create and optionally execute a plan
+app.post("/api/agent/plans", async (req, res) => {
+  try {
+    const { command } = req.body;
+    if (!command) return fail(res, "command required", 400);
+    const plan = {
+      id: generateId(),
+      userCommand: command,
+      tasks: [],
+      createdAt: new Date().toISOString(),
+      status: "pending",
+    };
+    const plansDir = path.join(DATA_DIR, "agent");
+    fs.mkdirSync(plansDir, { recursive: true });
+    const plansFile = path.join(plansDir, "plans.json");
+    let plans = [];
+    if (fs.existsSync(plansFile)) {
+      try {
+        plans = readJson(plansFile);
+      } catch (_) {}
+    }
+    plans.push(plan);
+    fs.writeFileSync(plansFile, JSON.stringify(plans, null, 2));
+    // Forward to FastAPI agent core if available
+    const agentUrl =
+      process.env.AGENT_CORE_URL || "http://localhost:8000";
+    try {
+      const resp = await axios.post(
+        `${agentUrl}/chat`,
+        { message: command },
+        { timeout: 30000 },
+      );
+      plan.tasks = [
+        {
+          id: generateId(),
+          type: "agent_run",
+          description: command,
+          status: "completed",
+          result: JSON.stringify(resp.data),
+          completedAt: new Date().toISOString(),
+        },
+      ];
+      plan.status = "completed";
+    } catch (_agentErr) {
+      plan.status = "partial";
+    }
+    return res.json(plan);
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// GET /api/agent/plans/:id
+app.get("/api/agent/plans/:id", (req, res) => {
+  try {
+    const plansFile = path.join(DATA_DIR, "agent", "plans.json");
+    let plans = [];
+    if (fs.existsSync(plansFile)) {
+      try {
+        plans = readJson(plansFile);
+      } catch (_) {}
+    }
+    const plan = plans.find((p) => p.id === req.params.id);
+    if (!plan) return fail(res, "Plan not found", 404);
+    return res.json(plan);
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// GET /api/tools
+app.get("/api/tools", (req, res) => {
+  return res.json([
+    {
+      id: "google-maps",
+      name: "Google Maps Scraper",
+      description: "Scrape contractor leads from Google Maps",
+      category: "crawler",
+      enabled: true,
+      configurable: true,
+    },
+    {
+      id: "yelp",
+      name: "Yelp Scraper",
+      description: "Scrape contractor leads from Yelp",
+      category: "crawler",
+      enabled: true,
+      configurable: true,
+    },
+    {
+      id: "github-actions",
+      name: "GitHub Actions",
+      description: "Trigger autonomous pipeline workflows",
+      category: "github",
+      enabled: true,
+      configurable: true,
+    },
+    {
+      id: "email-outreach",
+      name: "Email Outreach",
+      description: "Send personalised outreach emails via Nodemailer",
+      category: "communication",
+      enabled: true,
+      configurable: true,
+    },
+    {
+      id: "lead-scoring",
+      name: "Lead Scoring Engine",
+      description: "Score and tier leads by quality signals",
+      category: "data",
+      enabled: true,
+      configurable: false,
+    },
+  ]);
 });
 
 // GET /api/stats
