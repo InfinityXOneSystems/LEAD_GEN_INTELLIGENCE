@@ -1,61 +1,51 @@
 {
-  "generated": "2026-03-08T22:38:20.756Z",
-  "total": 5,
+  "generated": "2026-03-08T22:48:04.695Z",
+  "total": 4,
   "summary": {
     "HIGH": 0,
     "MEDIUM": 0,
-    "LOW": 5
+    "LOW": 4
   },
   "items": [
     {
       "id": "TODO-1",
-      "file": "agents/builder/builder_agent.py",
-      "line": 84,
-      "text": "implement scraping logic for {scraper_name}",
-      "priority": "LOW",
-      "label": "scraper",
-      "status": "open",
-      "discovered": "2026-03-08T22:38:20.756Z"
-    },
-    {
-      "id": "TODO-2",
       "file": "agents/enrichment/review_aggregator.js",
       "line": 3,
       "text": "Replace mock data generation with real API integrations:",
       "priority": "LOW",
       "label": "enhancement",
       "status": "open",
-      "discovered": "2026-03-08T22:38:20.756Z"
+      "discovered": "2026-03-08T22:48:04.695Z"
     },
     {
-      "id": "TODO-3",
+      "id": "TODO-2",
       "file": "agents/enrichment/social_profile_finder.js",
       "line": 29,
       "text": "Use each platform's official search API or a people-data provider",
       "priority": "LOW",
       "label": "enhancement",
       "status": "open",
-      "discovered": "2026-03-08T22:38:20.756Z"
+      "discovered": "2026-03-08T22:48:04.695Z"
     },
     {
-      "id": "TODO-4",
+      "id": "TODO-3",
       "file": "outreach/follow_up_scheduler.js",
       "line": 27,
       "text": "integrate with SMTP or SendGrid using environment credentials",
       "priority": "LOW",
       "label": "enhancement",
       "status": "open",
-      "discovered": "2026-03-08T22:38:20.756Z"
+      "discovered": "2026-03-08T22:48:04.695Z"
     },
     {
-      "id": "TODO-5",
+      "id": "TODO-4",
       "file": "outreach/outreach_engine.js",
       "line": 66,
       "text": "integrate with SMTP or SendGrid using environment credentials",
       "priority": "LOW",
       "label": "enhancement",
       "status": "open",
-      "discovered": "2026-03-08T22:38:20.756Z"
+      "discovered": "2026-03-08T22:48:04.695Z"
     }
   ]
 }
