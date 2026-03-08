@@ -221,17 +221,17 @@ class ScraperAgent(BaseAgent):
         )
         self.emit_event("scraper.start", {"keyword": keyword, "city": city, "state": state})
 
-        # Fan out concurrently
+        # Fan out concurrently – only iterate sources that have a registered adapter
+        active_sources = [src for src in sources if src in _SOURCE_ADAPTERS]
         coros = [
             _SOURCE_ADAPTERS[src](keyword, city, state)
-            for src in sources
-            if src in _SOURCE_ADAPTERS
+            for src in active_sources
         ]
         results = await asyncio.gather(*coros, return_exceptions=True)
 
         all_leads: list[dict[str, Any]] = []
         source_counts: dict[str, int] = {}
-        for src, result in zip(sources, results):
+        for src, result in zip(active_sources, results):
             if isinstance(result, Exception):
                 logger.warning("Source %s raised: %s", src, result)
                 source_counts[src] = 0
@@ -247,7 +247,7 @@ class ScraperAgent(BaseAgent):
             "leads": deduped,
             "leads_found": len(deduped),
             "source_counts": source_counts,
-            "message": f"Scraped {len(deduped)} unique leads from {len(sources)} sources",
+            "message": f"Scraped {len(deduped)} unique leads from {len(active_sources)} sources",
         }
 
     def _extract_keyword(self, command: str) -> str:

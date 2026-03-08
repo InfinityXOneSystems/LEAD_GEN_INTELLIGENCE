@@ -25,6 +25,7 @@ from __future__ import annotations
 import abc
 import asyncio
 import logging
+import threading
 import time
 import uuid
 from typing import Any, Callable
@@ -36,30 +37,36 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 _EVENT_LISTENERS: dict[str, list[Callable[[dict[str, Any]], None]]] = {}
+_EVENT_LOCK = threading.Lock()
 
 
 def subscribe(event_type: str, handler: Callable[[dict[str, Any]], None]) -> None:
     """Register *handler* to be called whenever *event_type* is emitted."""
-    _EVENT_LISTENERS.setdefault(event_type, []).append(handler)
+    with _EVENT_LOCK:
+        _EVENT_LISTENERS.setdefault(event_type, []).append(handler)
 
 
 def unsubscribe(event_type: str, handler: Callable[[dict[str, Any]], None]) -> None:
     """Remove *handler* from *event_type* listeners."""
-    listeners = _EVENT_LISTENERS.get(event_type, [])
-    if handler in listeners:
-        listeners.remove(handler)
+    with _EVENT_LOCK:
+        listeners = _EVENT_LISTENERS.get(event_type, [])
+        if handler in listeners:
+            listeners.remove(handler)
 
 
 def emit(event: dict[str, Any]) -> None:
     """Dispatch *event* to all registered listeners."""
     event_type = event.get("type", "unknown")
-    for handler in _EVENT_LISTENERS.get(event_type, []):
+    # Snapshot listener lists under the lock so we don't hold it during dispatch
+    with _EVENT_LOCK:
+        typed_handlers = list(_EVENT_LISTENERS.get(event_type, []))
+        wildcard_handlers = list(_EVENT_LISTENERS.get("*", []))
+    for handler in typed_handlers:
         try:
             handler(event)
         except Exception as exc:
             logger.debug("Event handler error for '%s': %s", event_type, exc)
-    # Also dispatch to wildcard listeners
-    for handler in _EVENT_LISTENERS.get("*", []):
+    for handler in wildcard_handlers:
         try:
             handler(event)
         except Exception as exc:

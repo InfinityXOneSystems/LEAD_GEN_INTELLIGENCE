@@ -54,9 +54,6 @@ class DevOpsAgent(BaseAgent):
         command = task.get("command", "")
         return await self._dispatch(command)
 
-    async def run(self, command: str) -> dict[str, Any]:  # type: ignore[override]
-        return await self._dispatch(command)
-
     async def _dispatch(self, command: str) -> dict[str, Any]:
         lower = command.lower()
         logger.info("DevOpsAgent._dispatch: %r", command)

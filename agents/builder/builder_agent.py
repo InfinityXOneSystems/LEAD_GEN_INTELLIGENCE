@@ -43,11 +43,8 @@ class BuilderAgent(BaseAgent):
         task: dict[str, Any],
         context: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        """Execute a build task; delegates to :meth:`run` dispatch logic."""
+        """Execute a build task; delegates to dispatch logic."""
         command = task.get("command", "")
-        return await self._dispatch(command)
-
-    async def run(self, command: str) -> dict[str, Any]:  # type: ignore[override]
         return await self._dispatch(command)
 
     async def _dispatch(self, command: str) -> dict[str, Any]:

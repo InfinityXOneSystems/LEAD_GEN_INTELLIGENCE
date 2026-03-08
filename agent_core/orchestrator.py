@@ -13,9 +13,10 @@ Default pipeline::
                        ↑ (on scrape intent)
     Other intents: PlannerAgent → execute_node → MemoryAgent
 
-The orchestrator also registers with ``agent_core.langgraph_runtime``
-so that ``run_graph()`` uses the full multi-agent graph when LangGraph
-is available.
+This module defines the multi-agent orchestration graph and pipeline
+helpers; integration with ``agent_core.langgraph_runtime`` (for example
+via ``run_graph()``) is handled by the caller or higher-level runtime
+utilities.
 
 Public API::
 
@@ -374,13 +375,8 @@ def run_pipeline_sync(
         except Exception as exc:
             logger.warning("LangGraph sync pipeline failed (%s) – falling back", exc)
 
-    # Sync fallback via asyncio.run
-    try:
-        final_state = asyncio.run(_run_pipeline_async(command, rid))
-    except RuntimeError:
-        # Event loop already running (e.g. inside Jupyter / FastAPI)
-        loop = asyncio.get_event_loop()
-        final_state = loop.run_until_complete(_run_pipeline_async(command, rid))
+    # Sync fallback via shared async runner (handles running event loops safely)
+    final_state = _run_async(_run_pipeline_async(command, rid))
 
     return _state_to_result(final_state, rid)
 
