@@ -20,7 +20,7 @@ from typing import Any, Callable, Dict, List, Optional
 
 from .gates import GateError, run_all_gates
 from .state_manager import StateManager
-from .validator import ExecutionResult, Plan
+from .validator import ExecutionResult, Plan, validate_result_values
 
 logger = logging.getLogger("agent_core.executor")
 
@@ -270,6 +270,31 @@ class Executor:
         for attempt in range(1, MAX_RETRIES + 1):
             result = self._execute_plan(plan, run_id)
             last_result = result
+
+            # ── RESULT VALIDATION stage ───────────────────────────────
+            rv_violations = validate_result_values(result)
+            if rv_violations:
+                msg = "Result validation failed: " + "; ".join(rv_violations)
+                logger.error("run_id=%s  %s", run_id, msg)
+                final_errors = result.errors + [msg]
+                self._sm.update(run_id, {"status": "result_invalid", "errors": final_errors})
+                invalid_result = ExecutionResult(
+                    success=False,
+                    leads_found=0,
+                    high_value=0,
+                    message=msg,
+                    errors=final_errors,
+                    retried=retried,
+                )
+                self._sm.audit(
+                    run_id,
+                    command=raw_command,
+                    plan=plan_dump,
+                    tools_used=tools_used,
+                    results=invalid_result.model_dump(),
+                    errors=final_errors,
+                )
+                return invalid_result
 
             if result.success and result.leads_found >= MIN_LEADS:
                 result.retried = retried

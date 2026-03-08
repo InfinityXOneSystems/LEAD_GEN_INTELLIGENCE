@@ -512,5 +512,133 @@ class TestValidatePlan(unittest.TestCase):
         self.assertIn("bad_tool", violations[0])
 
 
+class TestNormalizeCommandLength(unittest.TestCase):
+    """Tests for command length enforcement in normalize_command."""
+
+    def setUp(self):
+        from agent_core.validator import normalize_command
+        self.normalize_command = normalize_command
+
+    def test_rejects_command_over_200_chars(self):
+        long_cmd = "scrape " + "epoxy " * 40  # well over 200 chars
+        with self.assertRaises(ValueError) as ctx:
+            self.normalize_command(long_cmd)
+        self.assertIn("200", str(ctx.exception))
+
+    def test_accepts_command_at_200_chars(self):
+        # Build a valid command that is exactly 200 characters
+        base = "scrape epoxy "
+        cmd = (base + "x" * (200 - len(base)))
+        self.assertEqual(len(cmd), 200)
+        # Should not raise (even if location extraction is odd)
+        result = self.normalize_command(cmd)
+        self.assertEqual(result["task"], "scrape")
+
+    def test_accepts_normal_length_command(self):
+        result = self.normalize_command("scrape epoxy contractors tampa")
+        self.assertEqual(result["task"], "scrape")
+
+
+class TestValidateResultValues(unittest.TestCase):
+    """Tests for agent_core.validator.validate_result_values."""
+
+    def setUp(self):
+        from agent_core.validator import validate_result_values, ExecutionResult
+        self.validate_result_values = validate_result_values
+        self.ExecutionResult = ExecutionResult
+
+    def test_valid_result_no_violations(self):
+        result = self.ExecutionResult(success=True, leads_found=42, high_value=10)
+        violations = self.validate_result_values(result)
+        self.assertEqual(violations, [])
+
+    def test_valid_result_zero_leads(self):
+        result = self.ExecutionResult(success=False, leads_found=0, high_value=0)
+        violations = self.validate_result_values(result)
+        self.assertEqual(violations, [])
+
+    def test_valid_result_max_leads(self):
+        result = self.ExecutionResult(success=True, leads_found=1000, high_value=1000)
+        violations = self.validate_result_values(result)
+        self.assertEqual(violations, [])
+
+    def test_rejects_leads_found_above_1000(self):
+        result = self.ExecutionResult(success=True, leads_found=1001, high_value=0)
+        violations = self.validate_result_values(result)
+        self.assertTrue(len(violations) > 0)
+        self.assertIn("leads_found", violations[0])
+        self.assertIn("1001", violations[0])
+
+    def test_rejects_high_value_exceeds_leads_found(self):
+        result = self.ExecutionResult(success=True, leads_found=5, high_value=10)
+        violations = self.validate_result_values(result)
+        self.assertTrue(len(violations) > 0)
+        self.assertIn("high_value", violations[0])
+
+    def test_rejects_negative_leads_found(self):
+        result = self.ExecutionResult(success=True, leads_found=-1, high_value=0)
+        violations = self.validate_result_values(result)
+        self.assertTrue(len(violations) > 0)
+
+    def test_multiple_violations_reported(self):
+        # leads_found < 0 AND high_value > leads_found
+        result = self.ExecutionResult(success=True, leads_found=-5, high_value=10)
+        violations = self.validate_result_values(result)
+        self.assertGreaterEqual(len(violations), 1)
+
+
+class TestResultValidationInExecutor(unittest.TestCase):
+    """Tests that the executor enforces result validation before returning."""
+
+    def setUp(self):
+        from agent_core.executor import Executor, register_tool
+        self.Executor = Executor
+        self.register_tool = register_tool
+
+    def tearDown(self):
+        from agent_core.executor import _default_playwright_scraper
+        self.register_tool("playwright_scraper", _default_playwright_scraper)
+
+    def test_executor_rejects_leads_found_above_1000(self):
+        from agent_core.validator import Plan, PlanStep, Command
+        # Register a tool that returns invalid leads_found > 1000
+        self.register_tool("playwright_scraper", lambda p: {"leads_found": 9999, "high_value": 0})
+        executor = self.Executor()
+        cmd_dict = {"task": "scrape", "industry": "epoxy", "location": "tampa"}
+        cmd = Command(**cmd_dict)
+        step = PlanStep(tool="playwright_scraper", description="Scrape")
+        plan = Plan(command=cmd, steps=[step])
+        result = executor.execute(cmd_dict, plan)
+        self.assertFalse(result.success)
+        self.assertTrue(any("leads_found" in e or "Result validation" in e for e in result.errors))
+
+    def test_executor_rejects_high_value_exceeds_leads_found(self):
+        from agent_core.validator import Plan, PlanStep, Command
+        # Register a tool that returns high_value > leads_found
+        self.register_tool("playwright_scraper", lambda p: {"leads_found": 10, "high_value": 50})
+        executor = self.Executor()
+        cmd_dict = {"task": "scrape", "industry": "epoxy", "location": "tampa"}
+        cmd = Command(**cmd_dict)
+        step = PlanStep(tool="playwright_scraper", description="Scrape")
+        plan = Plan(command=cmd, steps=[step])
+        result = executor.execute(cmd_dict, plan)
+        self.assertFalse(result.success)
+        self.assertTrue(any("high_value" in e or "Result validation" in e for e in result.errors))
+
+    def test_executor_accepts_valid_result(self):
+        from agent_core.validator import Plan, PlanStep, Command
+        # Register a tool that returns valid results
+        self.register_tool("playwright_scraper", lambda p: {"leads_found": 10, "high_value": 3})
+        executor = self.Executor()
+        cmd_dict = {"task": "scrape", "industry": "epoxy", "location": "tampa"}
+        cmd = Command(**cmd_dict)
+        step = PlanStep(tool="playwright_scraper", description="Scrape")
+        plan = Plan(command=cmd, steps=[step])
+        result = executor.execute(cmd_dict, plan)
+        self.assertTrue(result.success)
+        self.assertEqual(result.leads_found, 10)
+
+
 if __name__ == "__main__":
     unittest.main()
+

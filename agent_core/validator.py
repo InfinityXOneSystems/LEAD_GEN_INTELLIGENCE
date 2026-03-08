@@ -133,6 +133,11 @@ def normalize_command(raw_text: str) -> Dict[str, str]:
     raw_text = raw_text.strip()
     if not raw_text:
         raise ValueError("command text must not be empty")
+    if len(raw_text) > MAX_FIELD_LENGTH:
+        raise ValueError(
+            f"command must not exceed {MAX_FIELD_LENGTH} characters "
+            f"(got {len(raw_text)})"
+        )
 
     tokens = re.sub(r"[,]", " ", raw_text.lower()).split()
 
@@ -205,3 +210,31 @@ def validate_plan(plan: "Plan", allowed_tools: List[str]) -> List[str]:
 def validate_result(result: ExecutionResult, min_leads: int = 5) -> bool:
     """Return True if the result meets minimum quality thresholds."""
     return result.success and result.leads_found >= min_leads
+
+
+def validate_result_values(result: ExecutionResult) -> List[str]:
+    """
+    Validate ExecutionResult values before returning a response.
+
+    RESULT VALIDATION stage – checks that output values are within
+    reasonable bounds to prevent nonsensical or corrupted results from
+    propagating to callers.
+
+    Rules:
+      - ``leads_found`` must be in the range [0, 1000]
+      - ``high_value`` must not exceed ``leads_found``
+
+    Returns a list of violation messages.  An empty list means the
+    result passes all checks.
+    """
+    violations: List[str] = []
+    if not (0 <= result.leads_found <= 1000):
+        violations.append(
+            f"leads_found={result.leads_found} is out of valid range [0, 1000]"
+        )
+    if result.high_value > result.leads_found:
+        violations.append(
+            f"high_value={result.high_value} must not exceed "
+            f"leads_found={result.leads_found}"
+        )
+    return violations

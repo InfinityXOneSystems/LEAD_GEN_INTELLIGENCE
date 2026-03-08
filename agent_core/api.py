@@ -76,6 +76,10 @@ class RunRequest(BaseModel):
         v = v.strip()
         if not v:
             raise ValueError("command must not be empty")
+        if len(v) > 200:
+            raise ValueError(
+                f"command must not exceed 200 characters (got {len(v)})"
+            )
         return v
 
 
