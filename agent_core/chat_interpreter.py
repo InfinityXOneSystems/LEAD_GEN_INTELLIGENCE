@@ -122,16 +122,17 @@ class ChatInterpreter:
 
     def stream(self, message: str) -> Generator[str, None, None]:
         """
-        Stream a response for *message* token-by-token via Ollama.
+        Stream a response for *message* token-by-token.
 
-        Falls back to non-streaming if Ollama is unavailable.
+        Uses the smart LLM router (Groq → Ollama → OpenAI).
+        Falls back to non-streaming if no provider is available.
         """
         routing = route(message)
 
-        # Use Ollama if available
+        # Use smart LLM router if enabled
         if self._use_llm:
             try:
-                from llm.ollama_client import stream_complete
+                from llm.llm_router import stream_complete
 
                 system = (
                     "You are XPS Intelligence, an autonomous lead generation AI. "
@@ -144,12 +145,15 @@ class ChatInterpreter:
                 )
                 prompt = f"{context}\nuser: {message}" if context else message
 
+                yielded = False
                 for chunk in stream_complete(prompt, system=system, task="plan"):
                     if chunk:
                         yield chunk
-                return
+                        yielded = True
+                if yielded:
+                    return
             except Exception as exc:
-                logger.debug("LLM stream unavailable: %s", exc)
+                logger.debug("LLM router stream unavailable: %s", exc)
 
         # Fallback: yield the non-streaming response
         result = self.process(message)

@@ -17,5 +17,5 @@ RUN python -m playwright install --with-deps chromium
 
 COPY . .
 
-# Run the async scraping engine
+# Run the async scraping engine via task_queue (NOT python -m queue.worker)
 CMD ["python", "-m", "task_queue.worker", "--once"]
