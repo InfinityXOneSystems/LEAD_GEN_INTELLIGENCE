@@ -69,8 +69,14 @@ jobs:
             echo "Leads data already in sync."
           else
             git commit -m "sync: propagate lead data to data/leads/ [repo-sync $(date -u +%Y-%m-%dT%H:%MZ)]"
-            git pull --rebase --autostash origin main || true
-            git push
+            for attempt in 1 2 3; do
+              git push && break || {
+                echo "Push attempt $attempt failed — syncing remote changes..."
+                git fetch origin main
+                git merge -X ours --no-edit origin/main 2>/dev/null || true
+                sleep $((attempt * 5))
+              }
+            done
           fi
 
   # ── 2. Validate repo health ─────────────────────────────────────────────────
@@ -164,8 +170,14 @@ jobs:
             echo "No encoding fixes needed."
           else
             git commit -m "fix: convert UTF-16 JS files to UTF-8 [repo-sync]"
-            git pull --rebase --autostash origin main || true
-            git push
+            for attempt in 1 2 3; do
+              git push && break || {
+                echo "Push attempt $attempt failed — syncing remote changes..."
+                git fetch origin main
+                git merge -X ours --no-edit origin/main 2>/dev/null || true
+                sleep $((attempt * 5))
+              }
+            done
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
