@@ -117,7 +117,6 @@ jobs:
             "agents/gpt_actions/openapi.json"
             "integrations/google_workspace.js"
             "docs/RUNBOOK.md"
-            "dashboard/pages/index.js"
           )
           for f in "${REQUIRED[@]}"; do
             [ -f "$f" ] || MISSING+=("$f")
