@@ -29,15 +29,13 @@ function getArg(name, fallback) {
 const INPUT_PATH = path.resolve(
   getArg("--input", "data/leads/scored_leads.json"),
 );
-const OUTPUT_PATH = path.resolve(getArg("--output", INPUT_PATH));
+const OUTPUT_PATH = path.resolve(
+  getArg("--output", INPUT_PATH),
+);
 
 // ── Normalise a single lead ──────────────────────────────────────────────────
 function normalizeLead(l, index) {
-  const rawScore = l.lead_score ?? l.score ?? 0;
-  const score =
-    typeof rawScore === "number" && !isNaN(rawScore)
-      ? rawScore
-      : Number(rawScore) || 0;
+  const score = Number(l.lead_score ?? l.score ?? 0) || 0;
   const today = new Date().toISOString().split("T")[0];
 
   // Resolve website protocol safely
@@ -47,7 +45,8 @@ function normalizeLead(l, index) {
   }
 
   // Derive tier from score
-  const tier = score >= 75 ? "HOT" : score >= 50 ? "WARM" : "COLD";
+  const tier =
+    score >= 75 ? "HOT" : score >= 50 ? "WARM" : "COLD";
 
   return {
     id: l.id || index + 1,
