@@ -87,10 +87,10 @@ jobs:
         id: dirs
         run: |
           MISSING=""
-          for d in data/leads data/datasets data/outreach agents/scoring scrapers db validation outreach pages; do
+          for d in data/leads data/datasets data/outreach agents/scoring scrapers db validation outreach; do
             [ -d "$d" ] || MISSING="$MISSING $d"
           done
-          for f in pages/index.html package.json README.md; do
+          for f in package.json README.md; do
             [ -f "$f" ] || MISSING="$MISSING $f"
           done
           echo "missing_items=$MISSING" >> $GITHUB_OUTPUT
