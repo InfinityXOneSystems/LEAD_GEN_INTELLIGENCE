@@ -477,6 +477,7 @@ app.post("/api/agent/plans", async (req, res) => {
       plan.status = "completed";
     } catch (_agentErr) {
       plan.status = "partial";
+      plan.agentError = _agentErr.message || "Agent core unavailable";
     }
     return res.json(plan);
   } catch (err) {
