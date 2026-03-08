@@ -1,0 +1,19 @@
+# Dockerfile.gateway – Node.js Express API gateway
+FROM node:20-bookworm-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends curl && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Node dependencies
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+# Copy application code
+COPY . .
+
+EXPOSE 3200
+CMD ["node", "api/gateway.js"]

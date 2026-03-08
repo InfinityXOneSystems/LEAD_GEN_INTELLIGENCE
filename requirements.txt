@@ -12,3 +12,14 @@ langchain>=0.2.0
 langchain-core>=0.2.0
 playwright>=1.44.0
 open-interpreter>=0.3.0
+
+# Queue & memory layer
+redis>=5.0.0
+psycopg2-binary>=2.9.0
+qdrant-client>=1.9.0
+
+# Monitoring
+psutil>=5.9.0
+
+# Optional: vector embeddings (lightweight)
+# sentence-transformers>=2.7.0

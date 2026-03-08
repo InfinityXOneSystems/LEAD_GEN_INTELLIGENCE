@@ -22,7 +22,12 @@
     "gateway": "node api/gateway.js",
     "monitor": "node agents/monitor/full_system_monitor.js",
     "scheduler": "node scripts/scraper_scheduler.js",
-    "test:integration": "node --test tests/integration/full_system_integration.test.js"
+    "test:integration": "node --test tests/integration/full_system_integration.test.js",
+    "contract:sync": "node tools/contract_sync.js --sync",
+    "contract:watch": "node tools/contract_sync.js --watch",
+    "agent:server": "python -m uvicorn agent_core.api:app --reload --port 8000",
+    "worker": "python -m task_queue.worker",
+    "dashboard": "cd dashboard && npm run dev"
   },
   "repository": {
     "type": "git",
