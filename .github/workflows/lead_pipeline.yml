@@ -286,9 +286,9 @@ jobs:
             git push
           fi
 
-  # ── Stage 5: Update Docs & Dashboard ────────────────────────────────────────
+  # ── Stage 5: Update Docs ─────────────────────────────────────────────────────
   update-docs:
-    name: "Stage 5 — Update Docs & Dashboard"
+    name: "Stage 5 — Update Docs"
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [score]
