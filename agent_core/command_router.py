@@ -78,6 +78,16 @@ _ROUTES: list[dict[str, Any]] = [
         "agent": "frontend",
         "type": "analytics",
     },
+    {
+        "keywords": ["predict", "forecast", "trend", "projection", "future", "estimate"],
+        "agent": "prediction",
+        "type": "predict",
+    },
+    {
+        "keywords": ["simulate", "scenario", "what if", "model", "projection", "impact"],
+        "agent": "simulation",
+        "type": "simulate",
+    },
 ]
 
 # ---------------------------------------------------------------------------
