@@ -27,7 +27,12 @@
     "contract:watch": "node tools/contract_sync.js --watch",
     "agent:server": "python -m uvicorn agent_core.api:app --reload --port 8000",
     "worker": "python -m task_queue.worker",
-    "dashboard": "cd dashboard && npm run dev"
+    "dashboard": "cd dashboard && npm run dev",
+    "db:migrate": "knex migrate:latest --knexfile knexfile.js",
+    "db:rollback": "knex migrate:rollback --knexfile knexfile.js",
+    "db:seed": "knex seed:run --knexfile knexfile.js",
+    "db:migrate:status": "knex migrate:status --knexfile knexfile.js",
+    "db:init": "npm run db:migrate && npm run db:seed"
   },
   "repository": {
     "type": "git",
@@ -50,6 +55,7 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "express-rate-limit": "^8.3.0",
+    "knex": "^3.1.0",
     "node-cron": "^4.2.1",
     "nodemailer": "^8.0.1",
     "openai": "^6.26.0",
