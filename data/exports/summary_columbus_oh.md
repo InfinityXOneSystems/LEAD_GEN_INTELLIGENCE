@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-08
 
-**Total leads:** 241
+**Total leads:** 336
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
-| COLD | 0 |
+| HOT  | 9  |
+| WARM | 66 |
+| COLD | 261 |
 
 ## Top Leads
 
@@ -24,6 +24,7 @@
 | Columbus Industrial Coatings LLC | (614) 555-2606 | https://columbusindustrial.com | 75 |
 | Metro Metallic Floors Columbus | (614) 555-2909 | https://metrometallicfloors.com | 75 |
 | Capital City Floor Coatings | (614) 555-2505 | https://capitalfloorcoatings.com | 70 |
+| Epoxy Flooring Cincinnati |  |  | 70 |
 | Columbus Epoxy Flooring |  |  | 55 |
 | Columbus Garage Floor Coating |  |  | 55 |
 | Columbus Epoxy Floors |  |  | 55 |
@@ -33,4 +34,3 @@
 | Ideal Garage Floor Coatings |  |  | 55 |
 | Global Epoxy LLC |  |  | 55 |
 | AR Epoxy Flooring |  |  | 55 |
-| Epoxy Flooring Masters |  |  | 55 |
