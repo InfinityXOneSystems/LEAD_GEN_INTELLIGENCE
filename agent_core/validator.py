@@ -10,7 +10,23 @@ from __future__ import annotations
 import re
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+
+# ---------------------------------------------------------------------------
+# Constants
+# ---------------------------------------------------------------------------
+
+MAX_FIELD_LENGTH = 200
+MAX_PLAN_STEPS = 5
+
+# Tasks that the system recognises and can plan for
+SUPPORTED_TASKS = {
+    "scrape", "find", "search", "discover",
+    "generate", "email",
+    "score", "analyze", "analyse", "rank", "evaluate",
+    "schedule", "calendar",
+    "export", "run",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -20,6 +36,8 @@ from pydantic import BaseModel, field_validator, model_validator
 
 class Command(BaseModel):
     """Validated natural-language command parsed from user input."""
+
+    model_config = ConfigDict(extra="forbid")
 
     task: str
     industry: str
@@ -31,6 +49,8 @@ class Command(BaseModel):
         v = v.strip()
         if not v:
             raise ValueError("task must not be empty")
+        if len(v) > MAX_FIELD_LENGTH:
+            raise ValueError(f"task must not exceed {MAX_FIELD_LENGTH} characters")
         return v
 
     @field_validator("industry")
@@ -39,6 +59,8 @@ class Command(BaseModel):
         v = v.strip()
         if not v:
             raise ValueError("industry must not be empty")
+        if len(v) > MAX_FIELD_LENGTH:
+            raise ValueError(f"industry must not exceed {MAX_FIELD_LENGTH} characters")
         return v.lower()
 
     @field_validator("location")
@@ -47,6 +69,8 @@ class Command(BaseModel):
         v = v.strip()
         if not v:
             raise ValueError("location must not be empty")
+        if len(v) > MAX_FIELD_LENGTH:
+            raise ValueError(f"location must not exceed {MAX_FIELD_LENGTH} characters")
         # Accept "city state", "city, state", or just "state"
         if not re.match(r"^[a-zA-Z ,]+$", v):
             raise ValueError("location must contain only letters, spaces, and commas")
@@ -71,6 +95,11 @@ class Plan(BaseModel):
     def steps_not_empty(self) -> "Plan":
         if not self.steps:
             raise ValueError("plan must contain at least one step")
+        if len(self.steps) > MAX_PLAN_STEPS:
+            raise ValueError(
+                f"plan must not exceed {MAX_PLAN_STEPS} steps "
+                f"(got {len(self.steps)})"
+            )
         return self
 
 
@@ -90,18 +119,80 @@ class ExecutionResult(BaseModel):
 # ---------------------------------------------------------------------------
 
 
+def normalize_command(raw_text: str) -> Dict[str, str]:
+    """
+    Convert a natural-language command string into a structured dict.
+
+    Example::
+
+        normalize_command("scrape epoxy contractors tampa")
+        # → {"task": "scrape", "industry": "epoxy", "location": "tampa"}
+
+    Raises ValueError for unsupported or unrecognisable commands.
+    """
+    raw_text = raw_text.strip()
+    if not raw_text:
+        raise ValueError("command text must not be empty")
+
+    tokens = re.sub(r"[,]", " ", raw_text.lower()).split()
+
+    # Identify the action verb (first supported-task token)
+    task = None
+    for token in tokens:
+        if token in SUPPORTED_TASKS:
+            task = token
+            break
+    if task is None:
+        raise ValueError(
+            f"unsupported command: '{raw_text}'. "
+            f"Supported tasks: {sorted(SUPPORTED_TASKS)}"
+        )
+
+    # Industry: well-known keywords
+    industries = [
+        "epoxy", "flooring", "roofing", "concrete", "tile", "carpet",
+        "painting", "plumbing", "electrical", "hvac", "construction",
+        "contractor", "contractors",
+    ]
+    industry = "contractor"
+    for kw in industries:
+        if kw in tokens:
+            industry = kw
+            break
+
+    # Location: remaining tokens after stripping action words and industry words
+    _skip_prepositions = {"in", "near", "for"}
+    _skip_context_words = {"leads", "lead", "outreach", "emails"}
+    skip = set(industries) | SUPPORTED_TASKS | _skip_prepositions | _skip_context_words
+    location_tokens = [
+        re.sub(r"[^a-zA-Z]", "", t)
+        for t in tokens
+        if t not in skip
+    ]
+    location_tokens = [t for t in location_tokens if t]
+    location = " ".join(location_tokens) if location_tokens else "usa"
+
+    return {"task": task, "industry": industry, "location": location}
+
+
 def validate_command(raw: Dict[str, Any]) -> Command:
     """Parse and validate a raw command dict, raising ValueError on failure."""
     return Command(**raw)
 
 
-def validate_plan(plan: Plan, allowed_tools: List[str]) -> List[str]:
+def validate_plan(plan: "Plan", allowed_tools: List[str]) -> List[str]:
     """
     Validate every step tool against the allowed-tools list.
+
+    Also checks that the plan does not exceed MAX_PLAN_STEPS.
 
     Returns a list of violation messages (empty list means valid).
     """
     violations: List[str] = []
+    if len(plan.steps) > MAX_PLAN_STEPS:
+        violations.append(
+            f"plan has {len(plan.steps)} steps; maximum is {MAX_PLAN_STEPS}"
+        )
     for i, step in enumerate(plan.steps):
         if step.tool not in allowed_tools:
             violations.append(

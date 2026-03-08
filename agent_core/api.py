@@ -148,23 +148,36 @@ async def run_agent(request: RunRequest) -> RunResponse:
 @app.get("/agent/status")
 async def agent_status() -> Dict[str, Any]:
     """Return system / dependency availability status."""
-    deps: Dict[str, bool] = {}
-    for mod in ("langgraph", "langchain", "playwright", "interpreter", "fastapi"):
-        try:
-            __import__(mod)
-            deps[mod] = True
-        except ImportError:
-            deps[mod] = False
+    langgraph_ok = False
+    playwright_ok = False
+    open_interpreter_ok = False
+
+    try:
+        import langgraph  # type: ignore  # noqa: F401
+        langgraph_ok = True
+    except ImportError:
+        pass
+
+    try:
+        import playwright  # type: ignore  # noqa: F401
+        playwright_ok = True
+    except ImportError:
+        pass
+
+    try:
+        import interpreter  # type: ignore  # noqa: F401
+        open_interpreter_ok = True
+    except ImportError:
+        pass
+
+    system_ready = True  # API is reachable → system is ready
 
     return {
-        "status": "ok",
-        "dependencies": deps,
-        "allowed_tools": [
-            "playwright_scraper",
-            "email_generator",
-            "calendar_tool",
-            "lead_analyzer",
-        ],
+        "system_ready": system_ready,
+        "langgraph": langgraph_ok,
+        "playwright": playwright_ok,
+        "open_interpreter": open_interpreter_ok,
+        "gates_active": True,
     }
 
 

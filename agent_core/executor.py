@@ -7,12 +7,13 @@ Flow:
   1. Run all gates (command_gate → plan_gate → tool_gate per step)
   2. Execute each plan step via the registered tool handler
   3. Validate result (min leads threshold)
-  4. Retry scraper once if leads < MIN_LEADS
-  5. Return ExecutionResult
+  4. Retry scraper up to MAX_RETRIES times if leads < MIN_LEADS
+  5. Return ExecutionResult or fallback if all retries exhausted
 """
 
 from __future__ import annotations
 
+import concurrent.futures
 import logging
 import time
 from typing import Any, Callable, Dict, List, Optional
@@ -24,7 +25,44 @@ from .validator import ExecutionResult, Plan
 logger = logging.getLogger("agent_core.executor")
 
 MIN_LEADS = 5
-MAX_RETRIES = 1
+MAX_RETRIES = 3
+MAX_PLAN_STEPS = 5
+MAX_EXECUTION_TIME = 30  # seconds
+
+# Required parameters per tool
+_TOOL_REQUIRED_PARAMS: Dict[str, List[str]] = {
+    "playwright_scraper": ["industry", "location"],
+    "email_generator": [],
+    "lead_analyzer": [],
+    "calendar_tool": [],
+}
+
+# ---------------------------------------------------------------------------
+# Sandbox restrictions
+# ---------------------------------------------------------------------------
+
+_SANDBOX_BLOCKED_PATTERNS = [
+    "rm -", "rmdir", "shutil.rmtree", "os.remove", "os.unlink",
+    "subprocess", "os.system", "shell=True", "os.environ",
+]
+
+
+def _sandbox_check(tool: str, params: Dict[str, Any]) -> None:
+    """
+    Lightweight sandbox guard – blocks obviously dangerous param values.
+
+    Raises RuntimeError if a prohibited pattern is detected.
+    """
+    for key, value in params.items():
+        if isinstance(value, str):
+            lower = value.lower()
+            for pattern in _SANDBOX_BLOCKED_PATTERNS:
+                if pattern in lower:
+                    raise RuntimeError(
+                        f"Sandbox violation: tool '{tool}' param '{key}' "
+                        f"contains blocked pattern '{pattern}'"
+                    )
+
 
 # ---------------------------------------------------------------------------
 # Tool registry
@@ -94,12 +132,50 @@ class Executor:
     # Internal helpers
     # ------------------------------------------------------------------
 
+    def _validate_tool_params(self, tool: str, params: Dict[str, Any]) -> None:
+        """
+        Validate that required parameters are present for the given tool.
+
+        Raises ValueError if a required parameter is missing.
+        """
+        required = _TOOL_REQUIRED_PARAMS.get(tool, [])
+        missing = [k for k in required if k not in params]
+        if missing:
+            raise ValueError(
+                f"tool '{tool}' is missing required parameter(s): {missing}"
+            )
+
     def _run_tool(self, tool: str, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Invoke a registered tool handler (gate already verified by caller)."""
+        """
+        Invoke a registered tool handler inside an execution timeout.
+
+        Raises RuntimeError if no handler is registered.
+        Raises TimeoutError if MAX_EXECUTION_TIME is exceeded.
+        """
         handler = _TOOL_REGISTRY.get(tool)
         if handler is None:
             raise RuntimeError(f"No handler registered for tool '{tool}'")
-        return handler(params or {})
+
+        # Sandbox check before running
+        _sandbox_check(tool, params)
+
+        # Validate required parameters
+        self._validate_tool_params(tool, params)
+
+        # Run with timeout enforcement.
+        # NOTE: ThreadPoolExecutor.result(timeout) only stops *waiting* for the
+        # result; it cannot forcibly interrupt an already-executing thread.
+        # Tools that perform long-running I/O should implement their own
+        # cancellation / cooperative timeout checks.
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+            future = pool.submit(handler, params or {})
+            try:
+                return future.result(timeout=MAX_EXECUTION_TIME)
+            except concurrent.futures.TimeoutError:
+                raise TimeoutError(
+                    f"tool '{tool}' exceeded max execution time "
+                    f"({MAX_EXECUTION_TIME}s)"
+                )
 
     def _execute_plan(self, plan: Plan, run_id: str) -> ExecutionResult:
         """Execute all steps in the plan and aggregate results."""
@@ -110,7 +186,16 @@ class Executor:
         for step in plan.steps:
             self._sm.update(run_id, {"current_step": step.tool, "status": "running"})
             try:
-                result = self._run_tool(step.tool, step.params or {})
+                # Enrich step params with command-level fields if missing.
+                # The planner already sets these for steps it creates, but this
+                # defensive fallback ensures manually-constructed PlanSteps
+                # (e.g. in tests or direct API calls) also get the required params.
+                params: Dict[str, Any] = dict(step.params or {})
+                if "industry" not in params:
+                    params["industry"] = plan.command.industry
+                if "location" not in params:
+                    params["location"] = plan.command.location
+                result = self._run_tool(step.tool, params)
                 leads_found += result.get("leads_found", 0)
                 high_value += result.get("high_value", 0)
                 logger.info("step '%s' completed: %s", step.tool, result)
@@ -155,6 +240,13 @@ class Executor:
         run_id = run_id or str(int(time.time() * 1000))
         self._sm.create(run_id, {"status": "gate_check", "command": raw_command})
 
+        # ── Guard: plan step limit ─────────────────────────────────────
+        if len(plan.steps) > MAX_PLAN_STEPS:
+            msg = f"plan has {len(plan.steps)} steps; maximum is {MAX_PLAN_STEPS}"
+            logger.error(msg)
+            self._sm.update(run_id, {"status": "aborted", "error": msg})
+            return ExecutionResult(success=False, message=msg, errors=[msg])
+
         # ── Gate check ────────────────────────────────────────────────
         try:
             run_all_gates(raw_command, plan)
@@ -169,47 +261,84 @@ class Executor:
 
         self._sm.update(run_id, {"status": "executing"})
 
-        # ── First execution attempt ───────────────────────────────────
-        result = self._execute_plan(plan, run_id)
+        # ── Retry loop (up to MAX_RETRIES attempts) ───────────────────
+        tools_used = [step.tool for step in plan.steps]
+        plan_dump = plan.model_dump()
+        last_result: Optional[ExecutionResult] = None
+        retried = False
 
-        # ── Result validation + retry ─────────────────────────────────
-        if not result.success or result.leads_found < MIN_LEADS:
-            logger.warning(
-                "Insufficient leads (%d < %d) – retrying scraper",
-                result.leads_found,
-                MIN_LEADS,
-            )
-            retry_result = self._execute_plan(plan, run_id)
-            retry_result.retried = True
+        for attempt in range(1, MAX_RETRIES + 1):
+            result = self._execute_plan(plan, run_id)
+            last_result = result
 
-            if retry_result.leads_found >= MIN_LEADS:
-                self._sm.update(run_id, {"status": "completed_after_retry"})
-                return retry_result
+            if result.success and result.leads_found >= MIN_LEADS:
+                result.retried = retried
+                status = "completed" if not retried else "completed_after_retry"
+                self._sm.update(
+                    run_id,
+                    {
+                        "status": status,
+                        "leads_found": result.leads_found,
+                        "high_value": result.high_value,
+                        "tools_used": tools_used,
+                        "results": result.model_dump(),
+                        "errors": result.errors,
+                    },
+                )
+                self._sm.audit(
+                    run_id,
+                    command=raw_command,
+                    plan=plan_dump,
+                    tools_used=tools_used,
+                    results=result.model_dump(),
+                    errors=result.errors,
+                )
+                return result
 
-            # Both attempts failed – return fallback
-            logger.error(
-                "Retry also yielded insufficient leads (%d) – returning fallback",
-                retry_result.leads_found,
-            )
-            self._sm.update(run_id, {"status": "fallback"})
-            return ExecutionResult(
-                success=False,
-                leads_found=retry_result.leads_found,
-                high_value=retry_result.high_value,
-                message=(
-                    f"Insufficient leads found after retry ({retry_result.leads_found}). "
-                    "Try a broader search term or different location."
-                ),
-                errors=result.errors + retry_result.errors,
-                retried=True,
-            )
+            if attempt < MAX_RETRIES:
+                retried = True
+                logger.warning(
+                    "Attempt %d/%d: insufficient leads (%d < %d) – retrying",
+                    attempt,
+                    MAX_RETRIES,
+                    result.leads_found,
+                    MIN_LEADS,
+                )
+                self._sm.update(
+                    run_id,
+                    {"status": f"retry_{attempt}", "leads_found": result.leads_found},
+                )
 
+        # ── All retries exhausted – return fallback ───────────────────
+        logger.error(
+            "All %d attempts yielded insufficient leads (%d) – returning fallback",
+            MAX_RETRIES,
+            last_result.leads_found if last_result else 0,
+        )
+        final_errors = last_result.errors if last_result else []
         self._sm.update(
             run_id,
             {
-                "status": "completed",
-                "leads_found": result.leads_found,
-                "high_value": result.high_value,
+                "status": "fallback",
+                "tools_used": tools_used,
+                "results": last_result.model_dump() if last_result else {},
+                "errors": final_errors,
             },
         )
-        return result
+        fallback = ExecutionResult(
+            success=False,
+            leads_found=last_result.leads_found if last_result else 0,
+            high_value=last_result.high_value if last_result else 0,
+            message="Primary data source unavailable",
+            errors=final_errors,
+            retried=True,
+        )
+        self._sm.audit(
+            run_id,
+            command=raw_command,
+            plan=plan_dump,
+            tools_used=tools_used,
+            results=fallback.model_dump(),
+            errors=final_errors,
+        )
+        return fallback

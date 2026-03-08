@@ -8,6 +8,7 @@ Gates:
   1. command_gate   – command schema is valid
   2. tool_gate      – tool is on the allow-list
   3. plan_gate      – plan structure is valid (non-empty steps, all tools allowed)
+  4. param_gate     – tool parameters match required schema
 """
 
 from __future__ import annotations
@@ -27,6 +28,14 @@ ALLOWED_TOOLS: List[str] = [
     "calendar_tool",
     "lead_analyzer",
 ]
+
+# Required parameters per tool (used by param_gate)
+_TOOL_PARAM_SCHEMA: Dict[str, List[str]] = {
+    "playwright_scraper": ["industry", "location"],
+    "email_generator": [],
+    "lead_analyzer": [],
+    "calendar_tool": [],
+}
 
 
 # ---------------------------------------------------------------------------
@@ -73,6 +82,21 @@ def tool_gate(tool_name: str) -> None:
         )
 
 
+def param_gate(tool_name: str, params: Dict[str, Any]) -> None:
+    """
+    Gate 4 – verify that required parameters are present for a tool.
+
+    Raises GateError if a required parameter is missing.
+    """
+    required = _TOOL_PARAM_SCHEMA.get(tool_name, [])
+    missing = [k for k in required if k not in params]
+    if missing:
+        raise GateError(
+            "param_gate",
+            f"tool '{tool_name}' is missing required parameter(s): {missing}",
+        )
+
+
 def plan_gate(plan: Plan) -> None:
     """
     Gate 3 – validate plan structure and every tool it references.
@@ -102,4 +126,6 @@ def run_all_gates(raw_command: Dict[str, Any], plan: Plan) -> Command:
     # but we run them explicitly here for each step for belt-and-suspenders safety.
     for step in plan.steps:
         tool_gate(step.tool)
+        if step.params:
+            param_gate(step.tool, step.params)
     return cmd
