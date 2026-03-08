@@ -1,14 +1,14 @@
 # Lead Export — Columbus, OH
 
-> Generated: 2026-03-07
+> Generated: 2026-03-08
 
-**Total leads:** 321
+**Total leads:** 226
 
 | Tier | Count |
 |------|-------|
-| HOT  | 9  |
-| WARM | 58 |
-| COLD | 254 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -32,5 +32,5 @@
 | Epoxy and Polished Floors of Columbus |  |  | 55 |
 | Global Epoxy LLC |  |  | 55 |
 | Ideal Garage Floor Coatings |  |  | 55 |
-| Garage Floor Coating - The Great Lakes |  |  | 55 |
+| Infinite Designs Epoxy Solutions of North Columbus |  |  | 55 |
 | Wyckoff Epoxy Flooring |  |  | 55 |
