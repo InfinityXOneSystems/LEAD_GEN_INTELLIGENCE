@@ -31,8 +31,8 @@
 | Keyword dataset | ✅ | `data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/keywords.csv` |
 | Locations dataset | ✅ | `data/datasets/XPS_LEAD_INTELLIGENCE_SYSTEM/locations.csv` |
 | Nationwide discovery workflow | ✅ | `.github/workflows/lead_scraper.yml` |
-| Yelp scraper | ❌ | Not implemented — planned |
-| Contractor directory scrapers | ❌ | Not implemented — planned |
+| Yelp scraper | ✅ | `scrapers/yelp_scraper.js` |
+| Contractor directory scrapers | ✅ | `scrapers/directory_scraper.js` (Angi + HomeAdvisor) |
 
 ---
 
@@ -132,9 +132,9 @@
 | State-level filtering | ✅ | `lead_scraper.yml`, `lead_pipeline.yml` |
 | Progress persistence | ✅ | `data/scraper_progress.json` |
 | Concurrent scraping | ✅ | `scrapers/engine.js` |
-| Yelp scraper | ❌ | Planned |
-| Multi-source aggregation | 🔄 | Google + Bing only |
-| Contractor directory scrapers | ❌ | Planned |
+| Yelp scraper | ✅ | `scrapers/yelp_scraper.js` |
+| Multi-source aggregation | ✅ | Google + Bing + Yelp + Angi + HomeAdvisor |
+| Contractor directory scrapers | ✅ | `scrapers/directory_scraper.js` |
 
 ---
 
@@ -150,6 +150,7 @@
 | Vision | ✅ | `VISION.md`, `docs/VISION.md` |
 | Strategy | ✅ | `STRATEGY.md` |
 | Agent Governance | ✅ | `AGENT_GOVERNANCE.md` |
+| **AGENTS.md (Copilot agent instructions)** | ✅ | `AGENTS.md` |
 | Data Governance | ✅ | `docs/DATA_GOVERNANCE.md` |
 | Security policy | ✅ | `docs/SECURITY.md` |
 | Operations manual | ✅ | `docs/OPERATIONS.md` |
