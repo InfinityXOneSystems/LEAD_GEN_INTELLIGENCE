@@ -21,10 +21,7 @@ const { chromium } = require("playwright");
 const RESULT_LOAD_MS = 3000;
 const MAX_RESULTS_PER_QUERY = 20;
 const NAVIGATION_TIMEOUT_MS = 30_000;
-const RATE_LIMIT_MS = parseInt(
-  process.env.SCRAPER_RATE_LIMIT_MS || "2000",
-  10,
-);
+const RATE_LIMIT_MS = parseInt(process.env.SCRAPER_RATE_LIMIT_MS || "2000", 10);
 
 /**
  * Scrape Yelp for contractor leads matching a keyword in a given city/state.
@@ -108,9 +105,7 @@ async function scrapeYelp(keyword, city, state) {
             '[class*="reviewCount"], [aria-label*="review"]',
           );
           const reviewText =
-            reviewEl?.getAttribute("aria-label") ||
-            reviewEl?.textContent ||
-            "";
+            reviewEl?.getAttribute("aria-label") || reviewEl?.textContent || "";
           const reviewsMatch = reviewText.replace(/,/g, "").match(/(\d+)/);
           const reviews = reviewsMatch ? parseInt(reviewsMatch[1], 10) : 0;
 

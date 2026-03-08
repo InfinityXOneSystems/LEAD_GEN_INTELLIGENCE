@@ -23,10 +23,7 @@ const { chromium } = require("playwright");
 const RESULT_LOAD_MS = 3000;
 const MAX_RESULTS_PER_QUERY = 20;
 const NAVIGATION_TIMEOUT_MS = 30_000;
-const RATE_LIMIT_MS = parseInt(
-  process.env.SCRAPER_RATE_LIMIT_MS || "2000",
-  10,
-);
+const RATE_LIMIT_MS = parseInt(process.env.SCRAPER_RATE_LIMIT_MS || "2000", 10);
 
 // ---------------------------------------------------------------------------
 // Shared helpers
@@ -86,7 +83,9 @@ async function scrapeAngi(keyword, city, state) {
     }
 
     if (!navigated) {
-      console.warn(`[angi] Could not navigate to Angi for: ${keyword} in ${city}, ${state}`);
+      console.warn(
+        `[angi] Could not navigate to Angi for: ${keyword} in ${city}, ${state}`,
+      );
       return leads;
     }
 
@@ -96,7 +95,9 @@ async function scrapeAngi(keyword, city, state) {
         { timeout: 12_000 },
       )
       .catch(() => {
-        console.warn(`[angi] No cards found for: ${keyword} in ${city}, ${state}`);
+        console.warn(
+          `[angi] No cards found for: ${keyword} in ${city}, ${state}`,
+        );
       });
 
     const rawLeads = await page.evaluate(
@@ -110,36 +111,61 @@ async function scrapeAngi(keyword, city, state) {
 
         for (const card of cards) {
           const company =
-            card.querySelector("h2, h3, [class*='companyName'], [class*='businessName']")
+            card
+              .querySelector(
+                "h2, h3, [class*='companyName'], [class*='businessName']",
+              )
               ?.textContent?.trim() || "";
           if (!company) continue;
 
-          const ratingEl = card.querySelector('[class*="rating"], [aria-label*="star"]');
+          const ratingEl = card.querySelector(
+            '[class*="rating"], [aria-label*="star"]',
+          );
           const ratingText =
             ratingEl?.getAttribute("aria-label") || ratingEl?.textContent || "";
           const ratingMatch = ratingText.match(/([\d.]+)/);
           const rating = ratingMatch ? parseFloat(ratingMatch[1]) : 0;
 
-          const reviewEl = card.querySelector('[class*="review"], [class*="ratingCount"]');
+          const reviewEl = card.querySelector(
+            '[class*="review"], [class*="ratingCount"]',
+          );
           const reviewText = reviewEl?.textContent?.replace(/,/g, "") || "";
           const reviewsMatch = reviewText.match(/(\d+)/);
           const reviews = reviewsMatch ? parseInt(reviewsMatch[1], 10) : 0;
 
-          const addressEl = card.querySelector("address, [class*='address'], [class*='location']");
+          const addressEl = card.querySelector(
+            "address, [class*='address'], [class*='location']",
+          );
           const address = addressEl?.textContent?.trim() || "";
 
-          const phoneEl = card.querySelector("[href^='tel:'], [class*='phone']");
+          const phoneEl = card.querySelector(
+            "[href^='tel:'], [class*='phone']",
+          );
           const phone =
             phoneEl?.getAttribute("href")?.replace("tel:", "") ||
-            phoneEl?.textContent?.trim() || "";
+            phoneEl?.textContent?.trim() ||
+            "";
 
-          const websiteEl = card.querySelector("a[href*='website'], a[class*='website']");
+          const websiteEl = card.querySelector(
+            "a[href*='website'], a[class*='website']",
+          );
           const website = websiteEl?.href || "";
 
-          const catEl = card.querySelector("[class*='category'], [class*='serviceType']");
+          const catEl = card.querySelector(
+            "[class*='category'], [class*='serviceType']",
+          );
           const category = catEl?.textContent?.trim() || "";
 
-          results.push({ company, phone, website, address, rating, reviews, category, keyword: kw });
+          results.push({
+            company,
+            phone,
+            website,
+            address,
+            rating,
+            reviews,
+            category,
+            keyword: kw,
+          });
         }
         return results;
       },
@@ -165,12 +191,16 @@ async function scrapeAngi(keyword, city, state) {
 
     await page.waitForTimeout(RATE_LIMIT_MS);
   } catch (err) {
-    console.error(`[angi] Error for "${keyword}" in ${city}, ${state}: ${err.message}`);
+    console.error(
+      `[angi] Error for "${keyword}" in ${city}, ${state}: ${err.message}`,
+    );
   } finally {
     await browser.close();
   }
 
-  console.log(`[angi] Collected ${leads.length} leads for "${keyword}" in ${city}, ${state}`);
+  console.log(
+    `[angi] Collected ${leads.length} leads for "${keyword}" in ${city}, ${state}`,
+  );
   return leads;
 }
 
@@ -226,17 +256,24 @@ async function scrapeHomeAdvisor(keyword, city, state) {
 
         for (const card of cards) {
           const company =
-            card.querySelector("h2, h3, [class*='business-name'], [class*='proName']")
+            card
+              .querySelector(
+                "h2, h3, [class*='business-name'], [class*='proName']",
+              )
               ?.textContent?.trim() || "";
           if (!company) continue;
 
-          const ratingEl = card.querySelector('[class*="rating"], [aria-label*="star"]');
+          const ratingEl = card.querySelector(
+            '[class*="rating"], [aria-label*="star"]',
+          );
           const ratingText =
             ratingEl?.getAttribute("aria-label") || ratingEl?.textContent || "";
           const ratingMatch = ratingText.match(/([\d.]+)/);
           const rating = ratingMatch ? parseFloat(ratingMatch[1]) : 0;
 
-          const reviewEl = card.querySelector('[class*="review"], [class*="reviewCount"]');
+          const reviewEl = card.querySelector(
+            '[class*="review"], [class*="reviewCount"]',
+          );
           const reviewText = reviewEl?.textContent?.replace(/,/g, "") || "";
           const reviewsMatch = reviewText.match(/(\d+)/);
           const reviews = reviewsMatch ? parseInt(reviewsMatch[1], 10) : 0;
@@ -246,18 +283,32 @@ async function scrapeHomeAdvisor(keyword, city, state) {
           );
           const address = addressEl?.textContent?.trim() || "";
 
-          const phoneEl = card.querySelector("[href^='tel:'], [class*='phone']");
+          const phoneEl = card.querySelector(
+            "[href^='tel:'], [class*='phone']",
+          );
           const phone =
             phoneEl?.getAttribute("href")?.replace("tel:", "") ||
-            phoneEl?.textContent?.trim() || "";
+            phoneEl?.textContent?.trim() ||
+            "";
 
           const websiteEl = card.querySelector("a[href*='website']");
           const website = websiteEl?.href || "";
 
-          const catEl = card.querySelector("[class*='category'], [class*='serviceType']");
+          const catEl = card.querySelector(
+            "[class*='category'], [class*='serviceType']",
+          );
           const category = catEl?.textContent?.trim() || "";
 
-          results.push({ company, phone, website, address, rating, reviews, category, keyword: kw });
+          results.push({
+            company,
+            phone,
+            website,
+            address,
+            rating,
+            reviews,
+            category,
+            keyword: kw,
+          });
         }
         return results;
       },
