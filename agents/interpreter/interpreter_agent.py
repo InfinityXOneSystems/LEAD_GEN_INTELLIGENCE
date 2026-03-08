@@ -27,7 +27,10 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-# Safety: block dangerous shell patterns
+# Safety: block dangerous shell patterns.
+# NOTE: This denylist is a best-effort defence-in-depth measure.
+# Production deployments should use container-level isolation (Docker)
+# and/or OS-level sandboxing (seccomp/AppArmor) as primary controls.
 _BLOCKED_PATTERNS = [
     "rm -rf /",
     "rm -rf ~",
@@ -35,6 +38,10 @@ _BLOCKED_PATTERNS = [
     "dd if=",
     "> /dev/",
     "format c:",
+    ":(){ :|: &};:",  # fork bomb
+    "curl | bash",
+    "wget | bash",
+    "curl | sh",
 ]
 
 

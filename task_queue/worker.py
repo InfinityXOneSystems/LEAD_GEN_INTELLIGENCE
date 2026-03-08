@@ -34,8 +34,18 @@ from .redis_queue import TaskQueue
 
 logger = logging.getLogger(__name__)
 
-MAX_RETRIES = int(os.getenv("WORKER_MAX_RETRIES", "3"))
-POLL_TIMEOUT = int(os.getenv("WORKER_POLL_TIMEOUT", "5"))
+MAX_RETRIES = 3
+POLL_TIMEOUT = 5
+
+try:
+    MAX_RETRIES = int(os.getenv("WORKER_MAX_RETRIES", "3"))
+except ValueError:
+    pass
+
+try:
+    POLL_TIMEOUT = int(os.getenv("WORKER_POLL_TIMEOUT", "5"))
+except ValueError:
+    pass
 
 
 # ---------------------------------------------------------------------------

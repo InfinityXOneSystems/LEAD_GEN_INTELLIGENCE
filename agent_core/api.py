@@ -98,6 +98,7 @@ class RunRequest(BaseModel):
         if len(v) > 2000:
             raise ValueError(
                 f"command must not exceed 2000 characters (got {len(v)})"
+                # 2000 chars allows multi-line code generation prompts
             )
         return v
 
@@ -309,6 +310,11 @@ async def stream_chat(message: str) -> StreamingResponse:
     Query parameter: ``message``
 
     Returns a stream of text chunks as ``data: <chunk>\\n\\n`` SSE events.
+
+    Note: SSE requires GET by the EventSource spec. Message content is
+    passed as a URL query parameter and will appear in server access logs.
+    For production deployments where privacy is a concern, prefer the
+    non-streaming POST /agent/chat endpoint instead.
     """
     if not message or not message.strip():
         raise HTTPException(status_code=400, detail="message query param required")

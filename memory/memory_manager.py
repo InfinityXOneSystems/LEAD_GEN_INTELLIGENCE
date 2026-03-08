@@ -83,10 +83,16 @@ def _embed(text: str) -> list[float]:
     except Exception:
         pass
 
-    # Minimal fallback: 384-dim zero vector with a few hash-based dimensions set
+    # Minimal fallback: 384-dim vector with hash-based distribution across all dimensions
     vec = [0.0] * _VECTOR_DIM
-    for i, ch in enumerate(text[:_VECTOR_DIM]):
-        vec[i % _VECTOR_DIM] += ord(ch) / 1000.0
+    for i, ch in enumerate(text):
+        # Distribute across all dimensions using multiple hash positions
+        idx1 = (i * 31 + ord(ch)) % _VECTOR_DIM
+        idx2 = (i * 37 + ord(ch) * 7) % _VECTOR_DIM
+        idx3 = (i * 41 + ord(ch) * 13) % _VECTOR_DIM
+        vec[idx1] += ord(ch) / 1000.0
+        vec[idx2] += ord(ch) / 2000.0
+        vec[idx3] += ord(ch) / 3000.0
     mag = sum(v * v for v in vec) ** 0.5 or 1.0
     return [v / mag for v in vec]
 

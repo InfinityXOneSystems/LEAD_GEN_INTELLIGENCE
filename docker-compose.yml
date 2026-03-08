@@ -232,33 +232,6 @@ services:
     networks:
       - xps_net
 
-  # ── Agent Runtime (LangGraph) ────────────────────────────────────────────
-  agent-runtime:
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
-    container_name: xps_agent_runtime
-    restart: unless-stopped
-    command: python -m uvicorn agent_core.api:app --host 0.0.0.0 --port 8000 --workers 2
-    ports:
-      - "8001:8000"
-    environment:
-      - REDIS_URL=redis://redis:6379/0
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-xps}:${POSTGRES_PASSWORD:-xpspass}@postgres:5432/${POSTGRES_DB:-xps}
-      - QDRANT_URL=http://qdrant:6333
-      - OLLAMA_BASE_URL=http://ollama:11434
-      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.2}
-      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
-    volumes:
-      - .:/app
-      - ./logs:/app/logs
-    depends_on:
-      - redis
-      - postgres
-      - qdrant
-    networks:
-      - xps_net
-
 volumes:
   redis_data:
   postgres_data:

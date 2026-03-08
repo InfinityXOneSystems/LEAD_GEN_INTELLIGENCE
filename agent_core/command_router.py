@@ -117,8 +117,8 @@ def _extract_location(text: str) -> dict[str, str]:
     city = ""
     state = ""
 
-    # Check for "in/near <city> <state>" patterns
-    match = re.search(r"\b(?:in|near|around)\s+([a-zA-Z\s]+?)(?:\s+([a-z]{2}))?\s*$", lower)
+    # Check for "in/near <city> <state>" patterns (location can be anywhere in string)
+    match = re.search(r"\b(?:in|near|around)\s+([a-zA-Z][a-zA-Z\s]{1,30}?)(?:\s+([a-z]{2}))?\s*(?:\b|$)", lower)
     if match:
         city = match.group(1).strip().title()
         state_raw = match.group(2)

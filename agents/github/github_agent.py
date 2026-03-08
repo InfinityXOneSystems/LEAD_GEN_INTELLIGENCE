@@ -124,7 +124,16 @@ class GitHubAgent:
             msg_match = re.search(r'(?:message|msg|commit)\s+["\']?(.+?)["\']?\s*$', command, re.I)
             msg = msg_match.group(1) if msg_match else "chore: autonomous agent update"
 
-            subprocess.run(["git", "add", "-A"], check=True, capture_output=True)
+            # Use targeted file patterns rather than staging everything.
+            # Only stage code and data files to avoid accidentally committing secrets.
+            safe_patterns = [
+                "agents/", "api/", "agent_core/", "dashboard/",
+                "leads/", "scripts/", "tools/", "task_queue/",
+                "llm/", "memory/", "requirements.txt", "package.json",
+            ]
+            for pattern in safe_patterns:
+                subprocess.run(["git", "add", pattern], capture_output=True)
+
             result = subprocess.run(
                 ["git", "commit", "-m", msg],
                 capture_output=True,

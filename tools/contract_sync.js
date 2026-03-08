@@ -119,8 +119,8 @@ function syncFrontendClient() {
   fs.mkdirSync(path.dirname(TS_CLIENT_OUT), { recursive: true });
   try {
     execSync(
-      `npx --yes openapi-typescript "${OPENAPI_OUT}" --output "${TS_CLIENT_OUT}"`,
-      { stdio: "inherit", timeout: 60000 }
+      `npx --yes openapi-typescript ${JSON.stringify(OPENAPI_OUT)} --output ${JSON.stringify(TS_CLIENT_OUT)}`,
+      { stdio: "inherit", timeout: 60000, shell: false }
     );
     console.log("TypeScript client written to:", TS_CLIENT_OUT);
   } catch (err) {
