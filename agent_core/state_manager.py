@@ -12,7 +12,7 @@ import logging
 import os
 import threading
 import time
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger("agent_core.state_manager")
 
@@ -77,6 +77,39 @@ class StateManager:
         """Return a snapshot of all in-memory run states."""
         with self._lock:
             return {k: dict(v) for k, v in self._runs.items()}
+
+    # ------------------------------------------------------------------
+    # Audit logging
+    # ------------------------------------------------------------------
+
+    def audit(
+        self,
+        run_id: str,
+        *,
+        command: Optional[Dict[str, Any]] = None,
+        plan: Optional[Dict[str, Any]] = None,
+        tools_used: Optional[List[str]] = None,
+        results: Optional[Dict[str, Any]] = None,
+        errors: Optional[List[str]] = None,
+    ) -> None:
+        """
+        Write a structured audit log entry with all required fields.
+
+        The entry is appended to ``logs/agent_runs.jsonl`` and is
+        separate from the incremental state updates written by
+        ``create`` / ``update``.
+        """
+        entry: Dict[str, Any] = {
+            "timestamp": time.time(),
+            "run_id": run_id,
+            "command": command or {},
+            "plan": plan or {},
+            "tools_used": tools_used or [],
+            "results": results or {},
+            "errors": errors or [],
+        }
+        self._append_log(entry)
+        logger.debug("audit log entry written for run %s", run_id)
 
     # ------------------------------------------------------------------
     # Persistence

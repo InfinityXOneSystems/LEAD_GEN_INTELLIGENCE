@@ -109,7 +109,7 @@ def _parse_command_text(text: str) -> Dict[str, str]:
     }
 
 
-def _build_steps(task_text: str) -> List[PlanStep]:
+def _build_steps(task_text: str, industry: str = "contractor", location: str = "usa") -> List[PlanStep]:
     """Build plan steps by matching task keywords to tool mappings."""
     task_lower = task_text.lower()
     matched: List[PlanStep] = []
@@ -124,7 +124,7 @@ def _build_steps(task_text: str) -> List[PlanStep]:
                     PlanStep(
                         tool=tool,
                         description=mapping["description"],
-                        params={"task": task_text},
+                        params={"task": task_text, "industry": industry, "location": location},
                     )
                 )
 
@@ -135,7 +135,7 @@ def _build_steps(task_text: str) -> List[PlanStep]:
                 PlanStep(
                     tool=d["tool"],
                     description=d["description"],
-                    params={"task": task_text},
+                    params={"task": task_text, "industry": industry, "location": location},
                 )
             )
 
@@ -150,7 +150,7 @@ def plan_from_text(command_text: str) -> Plan:
     """
     parsed = _parse_command_text(command_text)
     command = Command(**parsed)
-    steps = _build_steps(command_text)
+    steps = _build_steps(command_text, industry=command.industry, location=command.location)
     return Plan(command=command, steps=steps)
 
 

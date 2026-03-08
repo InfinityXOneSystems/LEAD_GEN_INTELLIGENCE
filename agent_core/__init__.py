@@ -12,4 +12,4 @@ Modules:
   api            – FastAPI server exposing POST /agent/run
 """
 
-from .validator import Command, Plan, ExecutionResult  # noqa: F401
+from .validator import Command, Plan, ExecutionResult, normalize_command  # noqa: F401
