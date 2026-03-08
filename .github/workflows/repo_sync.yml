@@ -17,8 +17,7 @@ on:
     branches: [main]
     paths:
       - 'data/leads/**'
-      - 'dashboard/public/data/**'
-      - 'pages/data/**'
+      - 'leads/**'
       - 'docs/**'
 
 permissions:
@@ -31,9 +30,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ── 1. Sync pages/data from dashboard/public/data ──────────────────────────
-  sync-pages-data:
-    name: Sync Pages Data
+  # ── 1. Sync leads data ───────────────────────────────────────────────────────
+  sync-leads-data:
+    name: Sync Leads Data
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: |
@@ -48,31 +47,28 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Sync scored_leads to pages/data
+      - name: Sync scored_leads to data/leads
         run: |
-          mkdir -p pages/data
-          if [ -f dashboard/public/data/scored_leads.json ]; then
-            cp dashboard/public/data/scored_leads.json pages/data/scored_leads.json
-            echo "Synced scored_leads.json to pages/data/"
+          mkdir -p data/leads
+          if [ -f leads/scored_leads.json ] && [ ! -f data/leads/scored_leads.json ]; then
+            cp leads/scored_leads.json data/leads/scored_leads.json
+            echo "Synced scored_leads.json to data/leads/"
           fi
-          if [ -f dashboard/public/data/scoring_report.json ]; then
-            cp dashboard/public/data/scoring_report.json pages/data/scoring_report.json
-            echo "Synced scoring_report.json to pages/data/"
+          if [ -f leads/scoring_report.json ] && [ ! -f data/leads/scoring_report.json ]; then
+            cp leads/scoring_report.json data/leads/scoring_report.json
+            echo "Synced scoring_report.json to data/leads/"
           fi
-          if [ -f data/leads/scored_leads.json ]; then
-            cp data/leads/scored_leads.json pages/data/scored_leads.json
-            echo "Synced from data/leads/ to pages/data/"
-          fi
+          echo "Leads data sync complete."
 
       - name: Commit synced data
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pages/data/ || true
+          git add data/leads/ || true
           if git diff --cached --quiet; then
-            echo "Pages data already in sync."
+            echo "Leads data already in sync."
           else
-            git commit -m "sync: propagate lead data to pages/data/ [repo-sync $(date -u +%Y-%m-%dT%H:%MZ)]"
+            git commit -m "sync: propagate lead data to data/leads/ [repo-sync $(date -u +%Y-%m-%dT%H:%MZ)]"
             git pull --rebase --autostash origin main || true
             git push
           fi
@@ -121,8 +117,7 @@ jobs:
             "agents/gpt_actions/openapi.json"
             "integrations/google_workspace.js"
             "docs/RUNBOOK.md"
-            "dashboard/app/page.tsx"
-            "pages/index.html"
+            "dashboard/pages/index.js"
           )
           for f in "${REQUIRED[@]}"; do
             [ -f "$f" ] || MISSING+=("$f")
@@ -179,7 +174,7 @@ jobs:
   report:
     name: Sync Status Report
     runs-on: ubuntu-latest
-    needs: [sync-pages-data, validate-health]
+    needs: [sync-leads-data, validate-health]
     if: always()
 
     steps:
@@ -187,7 +182,7 @@ jobs:
         run: |
           echo "=== Repo Sync Status ==="
           echo "Trigger:         ${{ github.event_name }}"
-          echo "Pages data sync: ${{ needs.sync-pages-data.result }}"
+          echo "Leads data sync: ${{ needs.sync-leads-data.result }}"
           echo "Health check:    ${{ needs.validate-health.result }}"
           if [ "${{ needs.validate-health.result }}" = "failure" ]; then
             echo "⚠️  Health validation failed — check the logs"
@@ -199,5 +194,5 @@ jobs:
           echo "## Repo Sync Report" >> $GITHUB_STEP_SUMMARY
           echo "| Job | Result |" >> $GITHUB_STEP_SUMMARY
           echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Sync Pages Data | ${{ needs.sync-pages-data.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Sync Leads Data | ${{ needs.sync-leads-data.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Validate Health | ${{ needs.validate-health.result }} |" >> $GITHUB_STEP_SUMMARY

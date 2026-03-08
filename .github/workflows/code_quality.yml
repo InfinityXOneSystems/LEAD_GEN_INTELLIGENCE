@@ -98,7 +98,7 @@ jobs:
           cache-dependency-path: dashboard/package-lock.json
 
       - name: Install dashboard dependencies
-        run: npm ci
+        run: npm install
 
       - name: Lint dashboard
         run: npm run lint
