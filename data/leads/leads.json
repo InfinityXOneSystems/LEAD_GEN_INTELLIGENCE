@@ -13937,10 +13937,14 @@
     "country": "USA",
     "keyword": "concrete polishing contractor",
     "category": "Concrete",
-    "rating": 4.7,
+    "rating": 5,
     "reviews": 52,
     "source": "google_maps",
-    "scrapedAt": "2026-03-06T15:15:21.996Z"
+    "scrapedAt": "2026-03-06T15:15:21.996Z",
+    "_merged_from": [
+      "Buckeye Epoxy Flooring",
+      "Buckeye Complete Auto Care"
+    ]
   },
   {
     "company": "Ohio Garage Transformations",
@@ -14017,7 +14021,8 @@
       "Columbus Collision Center",
       "Columbus Design & Manufacturing, LLC",
       "Columbus Liquidation Center",
-      "Columbus Distribution Center Napa"
+      "Columbus Distribution Center Napa",
+      "The Columbus Distributing Company"
     ]
   },
   {
@@ -19691,7 +19696,8 @@
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:16:43.701Z",
     "_merged_from": [
-      "Epoxy Flooring"
+      "Epoxy Flooring",
+      "Epoxy Flooring Masters"
     ]
   },
   {
@@ -19812,7 +19818,10 @@
     "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:16:51.858Z"
+    "scrapedAt": "2026-03-08T14:16:51.858Z",
+    "_merged_from": [
+      "Refloor"
+    ]
   },
   {
     "company": "J&G Epoxy Coatings",
@@ -20076,7 +20085,8 @@
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:17:24.670Z",
     "_merged_from": [
-      "Concrete Contractors"
+      "Concrete Contractors",
+      "Concrete Contracting Solutions, Inc."
     ]
   },
   {
@@ -20444,10 +20454,13 @@
     "country": "USA",
     "keyword": "concrete repair contractor",
     "category": "Concrete",
-    "rating": 4.8,
+    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:17:33.034Z"
+    "scrapedAt": "2026-03-08T14:17:33.034Z",
+    "_merged_from": [
+      "Daniel's concrete"
+    ]
   },
   {
     "company": "Ronk Construction",
@@ -21204,7 +21217,10 @@
     "rating": 4.7,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:18:06.046Z"
+    "scrapedAt": "2026-03-08T14:18:06.046Z",
+    "_merged_from": [
+      "Auto Palace"
+    ]
   },
   {
     "company": "Jeff Wyler Columbus Auto Mall",
@@ -21282,7 +21298,10 @@
     "rating": 4.7,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:18:06.046Z"
+    "scrapedAt": "2026-03-08T14:18:06.046Z",
+    "_merged_from": [
+      "Byers Auto Group"
+    ]
   },
   {
     "company": "Service Center - Toyota West",
@@ -21456,7 +21475,9 @@
       "Fine Line Auto Body North High",
       "Fine Line Auto Body at Twins Buick GMC",
       "Fine Line Auto Body Alum Creek",
-      "Fine Line Auto Body-Lewis Center"
+      "Fine Line Auto Body-Lewis Center",
+      "Fine Line Auto Body - Bethel Road",
+      "Fine Line Auto Body South High"
     ]
   },
   {
@@ -22172,10 +22193,13 @@
     "country": "USA",
     "keyword": "manufacturing facility contractor",
     "category": "General",
-    "rating": 4.3,
+    "rating": 4.7,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:18:22.322Z"
+    "scrapedAt": "2026-03-08T14:18:22.322Z",
+    "_merged_from": [
+      "Construction Systems Inc"
+    ]
   },
   {
     "company": "TKS Industrial Company",
@@ -23105,7 +23129,10 @@
     "rating": 4.9,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:18:38.541Z"
+    "scrapedAt": "2026-03-08T14:18:38.541Z",
+    "_merged_from": [
+      "America's Floor Source - Columbus West"
+    ]
   },
   {
     "company": "Floors Revolution/Wholesale Price",
@@ -23346,7 +23373,8 @@
     "_merged_from": [
       "GarageFloorCoating.com",
       "Garage Floor in 24, LLC",
-      "The Garage Floor Company Tempe"
+      "The Garage Floor Company Tempe",
+      "Garage Floor Coating Direct"
     ]
   },
   {
@@ -24871,7 +24899,8 @@
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:20:08.269Z",
     "_merged_from": [
-      "Arizona Custom Blends Manufacturing"
+      "Arizona Custom Blends Manufacturing",
+      "Arizona Truck A/C & Repair LLC"
     ]
   },
   {
@@ -25045,7 +25074,9 @@
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:20:08.295Z",
     "_merged_from": [
-      "AutoNation Toyota Tempe"
+      "AutoNation Toyota Tempe",
+      "AutoNation Hyundai Tempe Service Center",
+      "AutoNation Collision Center Tempe"
     ]
   },
   {
@@ -25139,12 +25170,13 @@
     "country": "USA",
     "keyword": "car dealership service center",
     "category": "General",
-    "rating": 4.1,
+    "rating": 4.5,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:20:08.295Z",
     "_merged_from": [
-      "Chapman Collision Tempe"
+      "Chapman Collision Tempe",
+      "Chapman Commercial & Fleet"
     ]
   },
   {
@@ -26006,10 +26038,13 @@
     "country": "USA",
     "keyword": "warehouse contractor",
     "category": "General",
-    "rating": 3.9,
+    "rating": 4.9,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:20:32.735Z"
+    "scrapedAt": "2026-03-08T14:20:32.735Z",
+    "_merged_from": [
+      "The Contractor Guys"
+    ]
   },
   {
     "company": "Vortex Doors",
@@ -26486,10 +26521,13 @@
     "country": "USA",
     "keyword": "industrial maintenance contractor",
     "category": "General",
-    "rating": 4.5,
+    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:20:45.364Z"
+    "scrapedAt": "2026-03-08T14:20:45.364Z",
+    "_merged_from": [
+      "Commercial Construction Products"
+    ]
   },
   {
     "company": "Cactus Kitchen & Bath",
@@ -26642,36 +26680,6 @@
     "scrapedAt": "2026-03-08T14:33:14.556Z"
   },
   {
-    "company": "Epoxy Flooring Masters",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "epoxy flooring contractor",
-    "category": "Epoxy",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:33:14.556Z"
-  },
-  {
-    "company": "Buckeye Epoxy Flooring",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "epoxy flooring contractor",
-    "category": "Epoxy",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:33:14.556Z"
-  },
-  {
     "company": "Epic Epoxy 614",
     "phone": "",
     "website": "",
@@ -26685,21 +26693,6 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:33:23.019Z"
-  },
-  {
-    "company": "Refloor",
-    "phone": "",
-    "website": "",
-    "address": "4.9",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "resin flooring contractor",
-    "category": "Epoxy",
-    "rating": 4.9,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:33:31.238Z"
   },
   {
     "company": "Bill Lewis Cement Contractor, LLC",
@@ -26792,21 +26785,6 @@
     "scrapedAt": "2026-03-08T14:34:20.650Z"
   },
   {
-    "company": "Daniel's concrete",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "concrete staining contractor",
-    "category": "Concrete",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:34:20.650Z"
-  },
-  {
     "company": "Hilliard Concrete Company",
     "phone": "",
     "website": "",
@@ -26817,21 +26795,6 @@
     "keyword": "concrete staining contractor",
     "category": "Concrete",
     "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:34:20.650Z"
-  },
-  {
-    "company": "Concrete Contracting Solutions, Inc.",
-    "phone": "",
-    "website": "",
-    "address": "4.0",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "concrete staining contractor",
-    "category": "Concrete",
-    "rating": 4,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:34:20.650Z"
@@ -26912,21 +26875,6 @@
     "scrapedAt": "2026-03-08T14:34:37.124Z"
   },
   {
-    "company": "Buckeye Complete Auto Care",
-    "phone": "",
-    "website": "",
-    "address": "4.7",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "auto repair shop",
-    "category": "General",
-    "rating": 4.7,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:34:37.124Z"
-  },
-  {
     "company": "Streamline Auto",
     "phone": "",
     "website": "",
@@ -26972,21 +26920,6 @@
     "scrapedAt": "2026-03-08T14:34:37.124Z"
   },
   {
-    "company": "Byers Auto Group",
-    "phone": "",
-    "website": "",
-    "address": "4.0",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "car dealership service center",
-    "category": "General",
-    "rating": 4,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:34:37.160Z"
-  },
-  {
     "company": "Columbus Luxury Cars LLC",
     "phone": "",
     "website": "",
@@ -27029,22 +26962,10 @@
     "rating": 4.9,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:34:37.160Z"
-  },
-  {
-    "company": "Auto Palace",
-    "phone": "",
-    "website": "",
-    "address": "4.7",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "car dealership service center",
-    "category": "General",
-    "rating": 4.7,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:34:37.160Z"
+    "scrapedAt": "2026-03-08T14:34:37.160Z",
+    "_merged_from": [
+      "Service Center - Germain Volkswagen of Columbus"
+    ]
   },
   {
     "company": "Subaru Service - Germain Subaru of Columbus Service Center",
@@ -27077,21 +26998,6 @@
     "scrapedAt": "2026-03-08T14:34:37.160Z"
   },
   {
-    "company": "Service Center - Germain Volkswagen of Columbus",
-    "phone": "",
-    "website": "",
-    "address": "4.8",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "car dealership service center",
-    "category": "General",
-    "rating": 4.8,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:34:37.160Z"
-  },
-  {
     "company": "Service & Parts Center - Germain Kia",
     "phone": "",
     "website": "",
@@ -27105,36 +27011,6 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:34:37.160Z"
-  },
-  {
-    "company": "Fine Line Auto Body - Bethel Road",
-    "phone": "",
-    "website": "",
-    "address": "4.9",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "auto body shop",
-    "category": "General",
-    "rating": 4.9,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:34:45.322Z"
-  },
-  {
-    "company": "Fine Line Auto Body South High",
-    "phone": "",
-    "website": "",
-    "address": "4.8",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "auto body shop",
-    "category": "General",
-    "rating": 4.8,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:34:45.322Z"
   },
   {
     "company": "King Collision Auto Repair",
@@ -27272,21 +27148,6 @@
     "scrapedAt": "2026-03-08T14:34:53.540Z"
   },
   {
-    "company": "Construction Systems Inc",
-    "phone": "",
-    "website": "",
-    "address": "4.7",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "manufacturing facility contractor",
-    "category": "General",
-    "rating": 4.7,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:34:53.540Z"
-  },
-  {
     "company": "S&G Manufacturing Group LLC",
     "phone": "",
     "website": "",
@@ -27347,21 +27208,6 @@
     "scrapedAt": "2026-03-08T14:35:01.749Z"
   },
   {
-    "company": "The Columbus Distributing Company",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "distribution center contractor",
-    "category": "General",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:35:01.749Z"
-  },
-  {
     "company": "CDC Distributors",
     "phone": "",
     "website": "",
@@ -27405,36 +27251,6 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:35:09.951Z"
-  },
-  {
-    "company": "America's Floor Source - Columbus West",
-    "phone": "",
-    "website": "",
-    "address": "4.7",
-    "city": "Columbus",
-    "state": "OH",
-    "country": "USA",
-    "keyword": "industrial flooring installer",
-    "category": "General",
-    "rating": 4.7,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:35:09.951Z"
-  },
-  {
-    "company": "Garage Floor Coating Direct",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "garage epoxy installer",
-    "category": "Epoxy",
-    "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:35:18.161Z"
   },
   {
     "company": "Orange Door Custom Coatings - Epoxy Flooring & Painting",
@@ -27752,36 +27568,6 @@
     "scrapedAt": "2026-03-08T14:36:40.193Z"
   },
   {
-    "company": "AutoNation Hyundai Tempe Service Center",
-    "phone": "",
-    "website": "",
-    "address": "4.1",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "car dealership service center",
-    "category": "General",
-    "rating": 4.1,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:36:40.259Z"
-  },
-  {
-    "company": "AutoNation Collision Center Tempe",
-    "phone": "",
-    "website": "",
-    "address": "4.4",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "auto body shop",
-    "category": "General",
-    "rating": 4.4,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:36:48.367Z"
-  },
-  {
     "company": "Penske Collision Arizona",
     "phone": "",
     "website": "",
@@ -27852,21 +27638,6 @@
     "keyword": "truck repair shop",
     "category": "General",
     "rating": 5,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:36:48.416Z"
-  },
-  {
-    "company": "Arizona Truck A/C & Repair LLC",
-    "phone": "",
-    "website": "",
-    "address": "4.2",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "truck repair shop",
-    "category": "General",
-    "rating": 4.2,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:36:48.416Z"
@@ -27987,21 +27758,6 @@
     "keyword": "fleet maintenance facility",
     "category": "General",
     "rating": 0,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:36:56.522Z"
-  },
-  {
-    "company": "Chapman Commercial & Fleet",
-    "phone": "",
-    "website": "",
-    "address": "4.5",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "fleet maintenance facility",
-    "category": "General",
-    "rating": 4.5,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:36:56.522Z"
@@ -28142,21 +27898,6 @@
     "scrapedAt": "2026-03-08T14:37:04.663Z"
   },
   {
-    "company": "The Contractor Guys",
-    "phone": "",
-    "website": "",
-    "address": "4.9",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "warehouse contractor",
-    "category": "General",
-    "rating": 4.9,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:37:04.663Z"
-  },
-  {
     "company": "Tradesmen International: Tempe Construction Staffing",
     "phone": "",
     "website": "",
@@ -28197,21 +27938,6 @@
     "keyword": "warehouse contractor",
     "category": "General",
     "rating": 3.7,
-    "reviews": 0,
-    "source": "google_maps",
-    "scrapedAt": "2026-03-08T14:37:04.663Z"
-  },
-  {
-    "company": "Commercial Construction Products",
-    "phone": "",
-    "website": "",
-    "address": "5.0",
-    "city": "Tempe",
-    "state": "AZ",
-    "country": "USA",
-    "keyword": "warehouse contractor",
-    "category": "General",
-    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-08T14:37:04.663Z"
