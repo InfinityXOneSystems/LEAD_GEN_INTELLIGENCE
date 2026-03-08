@@ -6,6 +6,8 @@ const fs = require("fs");
 const path = require("path");
 const { scrapeGoogleMaps } = require("./google_maps_scraper");
 const { scrapeBingMaps } = require("./bing_maps_scraper");
+const { scrapeYelp } = require("./yelp_scraper");
+const { scrapeAngi, scrapeHomeAdvisor } = require("./directory_scraper");
 const { upsertLeads } = require("../db/leadStore");
 const { initSchema } = require("../db/db");
 const {
@@ -134,6 +136,12 @@ async function runJob(source, keyword, city, state) {
       return scrapeGoogleMaps(keyword, city, state);
     case "bing_maps":
       return scrapeBingMaps(keyword, city, state);
+    case "yelp":
+      return scrapeYelp(keyword, city, state);
+    case "angi":
+      return scrapeAngi(keyword, city, state);
+    case "homeadvisor":
+      return scrapeHomeAdvisor(keyword, city, state);
     default:
       console.warn(`[engine] Unknown source: ${source}`);
       return [];
