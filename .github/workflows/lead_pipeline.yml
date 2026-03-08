@@ -216,16 +216,6 @@ jobs:
       - name: Normalize scored leads (canonical field names)
         run: node scripts/normalize_leads.js
 
-      - name: Copy scored leads to pages/data for GitHub Pages
-        run: |
-          mkdir -p pages/data
-          cp data/leads/scored_leads.json pages/data/scored_leads.json 2>/dev/null || true
-          cp data/leads/scoring_report.json pages/data/scoring_report.json 2>/dev/null || true
-          # Also copy to dashboard/public/data for Next.js build
-          mkdir -p dashboard/public/data
-          cp data/leads/scored_leads.json dashboard/public/data/scored_leads.json 2>/dev/null || true
-          cp data/leads/scoring_report.json dashboard/public/data/scoring_report.json 2>/dev/null || true
-
       - name: Print scoring summary
         run: |
           node -e "
@@ -243,7 +233,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add leads/ data/leads/scored_leads.json data/leads/scoring_report.json pages/data/ dashboard/public/data/ data/exports/ 2>/dev/null || true
+          git add leads/ data/leads/scored_leads.json data/leads/scoring_report.json data/exports/ 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No scoring changes to commit."
           else
@@ -320,9 +310,9 @@ jobs:
             done
           fi
 
-  # ── Stage 5: Update Docs & Dashboard ────────────────────────────────────────
+  # ── Stage 5: Update Docs ─────────────────────────────────────────────────────
   update-docs:
-    name: "Stage 5 — Update Docs & Dashboard"
+    name: "Stage 5 — Update Docs"
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [score]

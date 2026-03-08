@@ -16,6 +16,10 @@ data/leads/scored_leads.json
 data/leads/scoring_report.json
 data/leads/leads.json
 
+# Legacy frontend data directories (UI moved to xps-intelligence-frontend)
+dashboard/public/data/
+pages/data/
+
 # Build / cache artifacts
 dist/
 __pycache__/

@@ -8,8 +8,6 @@
  *
  *   leads/scored_leads.json                (primary — dedicated leads folder)
  *   leads/scoring_report.json
- *   dashboard/public/data/scored_leads.json
- *   dashboard/public/data/scoring_report.json
  *   data/leads/scored_leads.json           (backward-compatible copy)
  *   data/leads/scoring_report.json
  *
@@ -45,9 +43,6 @@ const SCORED_JSON = fs.existsSync(
   ? path.join(LEADS_DIR_PRIMARY, "scored_leads.json")
   : path.join(DATA_DIR, "scored_leads.json");
 
-const DASH_DATA_DIR = path.join(ROOT, "dashboard", "public", "data");
-const PAGES_DATA_DIR = path.join(ROOT, "pages", "data");
-
 const EXPORT_LIMIT = parseInt(process.env.EXPORT_LIMIT || "1000", 10);
 
 // ── helpers ─────────────────────────────────────────────────────────────────
@@ -64,11 +59,6 @@ function writeBoth(filename, data) {
   // Write to legacy data/leads/ folder
   ensureDir(DATA_DIR);
   fs.writeFileSync(path.join(DATA_DIR, filename), json);
-  // Write to dashboard and pages data directories
-  ensureDir(DASH_DATA_DIR);
-  fs.writeFileSync(path.join(DASH_DATA_DIR, filename), json);
-  ensureDir(PAGES_DATA_DIR);
-  fs.writeFileSync(path.join(PAGES_DATA_DIR, filename), json);
   console.log(`[export_snapshot] Wrote ${filename}`);
 }
 
