@@ -7,7 +7,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 
 const API_URL =
   typeof window !== "undefined"
-    ? (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000")
+    ? process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
     : "http://localhost:8000";
 
 const SUGGESTIONS = [
@@ -32,9 +32,7 @@ function MessageBubble({ msg }) {
         gap: "0.5rem",
       }}
     >
-      {!isUser && (
-        <div style={styles.avatar}>⚡</div>
-      )}
+      {!isUser && <div style={styles.avatar}>⚡</div>}
       <div
         style={{
           ...styles.bubble,
@@ -45,7 +43,14 @@ function MessageBubble({ msg }) {
           borderRadius: isUser ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
         }}
       >
-        <pre style={{ margin: 0, whiteSpace: "pre-wrap", fontFamily: "inherit", fontSize: "0.9rem" }}>
+        <pre
+          style={{
+            margin: 0,
+            whiteSpace: "pre-wrap",
+            fontFamily: "inherit",
+            fontSize: "0.9rem",
+          }}
+        >
           {msg.content}
         </pre>
         {msg.suggestions && msg.suggestions.length > 0 && (
@@ -63,7 +68,9 @@ function MessageBubble({ msg }) {
         )}
       </div>
       {isUser && (
-        <div style={{ ...styles.avatar, background: "#FFD700", color: "#000" }}>U</div>
+        <div style={{ ...styles.avatar, background: "#FFD700", color: "#000" }}>
+          U
+        </div>
       )}
     </div>
   );
@@ -81,7 +88,11 @@ export default function ChatPage() {
         "• Generate code and modify APIs\n" +
         "• Push changes to GitHub\n\n" +
         "Type `help` to see all commands, or just tell me what you need.",
-      suggestions: ["scrape epoxy contractors in Tampa FL", "status", "export leads"],
+      suggestions: [
+        "scrape epoxy contractors in Tampa FL",
+        "status",
+        "export leads",
+      ],
     },
   ]);
   const [input, setInput] = useState("");
@@ -134,7 +145,10 @@ export default function ChatPage() {
                 streamMsgIdx = next.length;
                 next.push({ role: "assistant", content: streamedText });
               } else {
-                next[streamMsgIdx] = { role: "assistant", content: streamedText };
+                next[streamMsgIdx] = {
+                  role: "assistant",
+                  content: streamedText,
+                };
               }
               return next;
             });
@@ -156,7 +170,7 @@ export default function ChatPage() {
         fallbackSend(msg);
       }
     },
-    [input, loading]
+    [input, loading],
   );
 
   const fallbackSend = async (msg) => {
@@ -179,7 +193,10 @@ export default function ChatPage() {
     } catch (err) {
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: `❌ Connection error: ${err.message}\n\nMake sure the backend is running on ${API_URL}` },
+        {
+          role: "assistant",
+          content: `❌ Connection error: ${err.message}\n\nMake sure the backend is running on ${API_URL}`,
+        },
       ]);
     } finally {
       setLoading(false);
@@ -199,10 +216,18 @@ export default function ChatPage() {
       <div style={styles.header}>
         <span style={styles.logo}>⚡ XPS Intelligence</span>
         <div style={styles.headerLinks}>
-          <a href="/" style={styles.navLink}>Home</a>
-          <a href="/leads" style={styles.navLink}>Leads</a>
-          <a href="/analytics" style={styles.navLink}>Analytics</a>
-          <a href="/settings" style={styles.navLink}>Settings</a>
+          <a href="/" style={styles.navLink}>
+            Home
+          </a>
+          <a href="/leads" style={styles.navLink}>
+            Leads
+          </a>
+          <a href="/analytics" style={styles.navLink}>
+            Analytics
+          </a>
+          <a href="/settings" style={styles.navLink}>
+            Settings
+          </a>
         </div>
       </div>
 
@@ -218,9 +243,21 @@ export default function ChatPage() {
           />
         ))}
         {loading && !streaming && (
-          <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: "0.75rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              marginBottom: "0.75rem",
+            }}
+          >
             <div style={styles.avatar}>⚡</div>
-            <div style={{ ...styles.bubble, background: "#111", border: "1px solid #222" }}>
+            <div
+              style={{
+                ...styles.bubble,
+                background: "#111",
+                border: "1px solid #222",
+              }}
+            >
               <span style={styles.typing}>●●●</span>
             </div>
           </div>
@@ -231,7 +268,11 @@ export default function ChatPage() {
       {/* Quick suggestions */}
       <div style={styles.quickSuggestions}>
         {SUGGESTIONS.map((s) => (
-          <button key={s} style={styles.suggestionChip} onClick={() => sendMessage(s)}>
+          <button
+            key={s}
+            style={styles.suggestionChip}
+            onClick={() => sendMessage(s)}
+          >
             {s}
           </button>
         ))}

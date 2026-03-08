@@ -64,7 +64,10 @@ function buildOpenApiSpec(routes) {
           description: "Success",
           content: {
             "application/json": {
-              schema: { type: "object", properties: { success: { type: "boolean" } } },
+              schema: {
+                type: "object",
+                properties: { success: { type: "boolean" } },
+              },
             },
           },
         },
@@ -120,11 +123,13 @@ function syncFrontendClient() {
   try {
     execSync(
       `npx --yes openapi-typescript ${JSON.stringify(OPENAPI_OUT)} --output ${JSON.stringify(TS_CLIENT_OUT)}`,
-      { stdio: "inherit", timeout: 60000, shell: false }
+      { stdio: "inherit", timeout: 60000, shell: false },
     );
     console.log("TypeScript client written to:", TS_CLIENT_OUT);
   } catch (err) {
-    console.warn("openapi-typescript not available – writing simple stub client");
+    console.warn(
+      "openapi-typescript not available – writing simple stub client",
+    );
     const stub = `// Auto-generated API client stub\n// Run: npx openapi-typescript openapi.json --output schema.d.ts\nexport type ApiSuccess = { success: boolean; data?: unknown };\n`;
     fs.writeFileSync(TS_CLIENT_OUT, stub);
   }

@@ -6,47 +6,112 @@ import React, { useState, useEffect } from "react";
 
 const API_URL =
   typeof window !== "undefined"
-    ? (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000")
+    ? process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
     : "http://localhost:8000";
 
 const SETTING_SECTIONS = [
   {
     title: "🤖 LLM Configuration",
     fields: [
-      { key: "ollama_base_url", label: "Ollama Base URL", type: "text", placeholder: "http://localhost:11434" },
-      { key: "ollama_model", label: "Default Model", type: "text", placeholder: "llama3.2" },
-      { key: "ollama_code_model", label: "Code Model", type: "text", placeholder: "codellama" },
+      {
+        key: "ollama_base_url",
+        label: "Ollama Base URL",
+        type: "text",
+        placeholder: "http://localhost:11434",
+      },
+      {
+        key: "ollama_model",
+        label: "Default Model",
+        type: "text",
+        placeholder: "llama3.2",
+      },
+      {
+        key: "ollama_code_model",
+        label: "Code Model",
+        type: "text",
+        placeholder: "codellama",
+      },
     ],
   },
   {
     title: "🔑 API Keys",
     fields: [
-      { key: "github_token", label: "GitHub Token", type: "password", placeholder: "ghp_..." },
-      { key: "google_api_key", label: "Google API Key", type: "password", placeholder: "AIza..." },
-      { key: "openai_api_key", label: "OpenAI API Key", type: "password", placeholder: "sk-..." },
+      {
+        key: "github_token",
+        label: "GitHub Token",
+        type: "password",
+        placeholder: "ghp_...",
+      },
+      {
+        key: "google_api_key",
+        label: "Google API Key",
+        type: "password",
+        placeholder: "AIza...",
+      },
+      {
+        key: "openai_api_key",
+        label: "OpenAI API Key",
+        type: "password",
+        placeholder: "sk-...",
+      },
     ],
   },
   {
     title: "🗄️ Infrastructure",
     fields: [
-      { key: "redis_url", label: "Redis URL", type: "text", placeholder: "redis://localhost:6379/0" },
-      { key: "qdrant_url", label: "Qdrant URL", type: "text", placeholder: "http://localhost:6333" },
-      { key: "database_url", label: "Database URL", type: "text", placeholder: "postgresql://localhost/xps" },
+      {
+        key: "redis_url",
+        label: "Redis URL",
+        type: "text",
+        placeholder: "redis://localhost:6379/0",
+      },
+      {
+        key: "qdrant_url",
+        label: "Qdrant URL",
+        type: "text",
+        placeholder: "http://localhost:6333",
+      },
+      {
+        key: "database_url",
+        label: "Database URL",
+        type: "text",
+        placeholder: "postgresql://localhost/xps",
+      },
     ],
   },
   {
     title: "🕷️ Scraping Configuration",
     fields: [
-      { key: "scraping_rate_limit", label: "Rate Limit (req/min)", type: "number", placeholder: "10" },
+      {
+        key: "scraping_rate_limit",
+        label: "Rate Limit (req/min)",
+        type: "number",
+        placeholder: "10",
+      },
       { key: "proxy_enabled", label: "Proxy Enabled", type: "checkbox" },
-      { key: "proxy_url", label: "Proxy URL", type: "text", placeholder: "http://proxy:8080" },
+      {
+        key: "proxy_url",
+        label: "Proxy URL",
+        type: "text",
+        placeholder: "http://proxy:8080",
+      },
     ],
   },
   {
     title: "⚙️ Workers",
     fields: [
-      { key: "max_workers", label: "Max Workers", type: "number", placeholder: "5" },
-      { key: "github_repo", label: "GitHub Repository", type: "text", placeholder: "org/repo" },
+      {
+        key: "max_workers",
+        label: "Max Workers",
+        type: "number",
+        placeholder: "5",
+      },
+      {
+        key: "github_repo",
+        label: "GitHub Repository",
+        type: "text",
+        placeholder: "org/repo",
+      },
     ],
   },
 ];
@@ -113,7 +178,9 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div style={styles.page}>
-        <div style={{ color: "#FFD700", fontSize: "1.5rem" }}>Loading settings…</div>
+        <div style={{ color: "#FFD700", fontSize: "1.5rem" }}>
+          Loading settings…
+        </div>
       </div>
     );
   }
@@ -124,9 +191,15 @@ export default function SettingsPage() {
       <div style={styles.header}>
         <span style={styles.logo}>⚡ XPS Intelligence</span>
         <div style={styles.headerLinks}>
-          <a href="/" style={styles.navLink}>Home</a>
-          <a href="/chat" style={styles.navLink}>Chat</a>
-          <a href="/leads" style={styles.navLink}>Leads</a>
+          <a href="/" style={styles.navLink}>
+            Home
+          </a>
+          <a href="/chat" style={styles.navLink}>
+            Chat
+          </a>
+          <a href="/leads" style={styles.navLink}>
+            Leads
+          </a>
         </div>
       </div>
 
@@ -138,10 +211,13 @@ export default function SettingsPage() {
           <div style={styles.statusBar}>
             {Object.entries(status).map(([k, v]) => (
               <span key={k} style={styles.statusChip}>
-                {k === "system_ready" ? "🟢 Online" :
-                  v === true ? `✅ ${k}` :
-                  v === false ? `❌ ${k}` :
-                  `${k}: ${v}`}
+                {k === "system_ready"
+                  ? "🟢 Online"
+                  : v === true
+                    ? `✅ ${k}`
+                    : v === false
+                      ? `❌ ${k}`
+                      : `${k}: ${v}`}
               </span>
             ))}
           </div>
@@ -181,7 +257,9 @@ export default function SettingsPage() {
         {/* Save button */}
         <div style={styles.actions}>
           {error && <div style={styles.errorMsg}>{error}</div>}
-          {saved && <div style={styles.successMsg}>✅ Settings saved successfully</div>}
+          {saved && (
+            <div style={styles.successMsg}>✅ Settings saved successfully</div>
+          )}
           <button style={styles.saveBtn} onClick={saveSettings}>
             💾 Save Settings
           </button>

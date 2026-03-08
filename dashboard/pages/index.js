@@ -3,17 +3,31 @@ import React from "react";
 import Link from "next/link";
 
 const LINKS = [
-  { href: "/chat", label: "💬 Chat Interface", desc: "Control the system with natural language" },
+  {
+    href: "/chat",
+    label: "💬 Chat Interface",
+    desc: "Control the system with natural language",
+  },
   { href: "/leads", label: "📋 Leads", desc: "View and manage scraped leads" },
-  { href: "/analytics", label: "📊 Analytics", desc: "Lead analytics and charts" },
-  { href: "/settings", label: "⚙️ Settings", desc: "Configure LLM, APIs, scraping" },
+  {
+    href: "/analytics",
+    label: "📊 Analytics",
+    desc: "Lead analytics and charts",
+  },
+  {
+    href: "/settings",
+    label: "⚙️ Settings",
+    desc: "Configure LLM, APIs, scraping",
+  },
 ];
 
 export default function Home() {
   return (
     <div style={styles.page}>
       <h1 style={styles.title}>⚡ XPS Intelligence Platform</h1>
-      <p style={styles.subtitle}>Autonomous Lead Generation &amp; AI Control System</p>
+      <p style={styles.subtitle}>
+        Autonomous Lead Generation &amp; AI Control System
+      </p>
 
       <div style={styles.grid}>
         {LINKS.map(({ href, label, desc }) => (
