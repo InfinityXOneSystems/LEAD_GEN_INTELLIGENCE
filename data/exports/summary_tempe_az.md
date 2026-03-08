@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-08
 
-**Total leads:** 306
+**Total leads:** 106
 
 | Tier | Count |
 |------|-------|
-| HOT  | 9  |
-| WARM | 70 |
-| COLD | 227 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -32,5 +32,5 @@
 | Ultimate Concrete Coatings & Epoxy Flooring |  |  | 55 |
 | Epoxy Strong Phoenix |  |  | 55 |
 | Marvelous Epoxy Flooring |  |  | 55 |
+| Epoxy Werx - Epoxy Garage Floors |  |  | 55 |
 | Brilliant Epoxy Flooring Inc |  |  | 55 |
-| Easy Epoxy |  |  | 55 |
