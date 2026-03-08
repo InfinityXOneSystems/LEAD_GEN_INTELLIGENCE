@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-08
 
-**Total leads:** 332
+**Total leads:** 105
 
 | Tier | Count |
 |------|-------|
-| HOT  | 9  |
-| WARM | 69 |
-| COLD | 254 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -25,12 +25,12 @@
 | Sun Devil Industrial Floors | (480) 555-1808 | https://sundevilfloors.com | 75 |
 | Tempe Flake & Chip Floor Systems | (480) 555-2010 | https://tempeflakefloors.com | 67 |
 | Two Brothers Epoxy Flooring |  |  | 55 |
-| Quality Epoxy |  |  | 55 |
 | Superior Epoxy Floors |  |  | 55 |
-| Arizona Valley Epoxy |  |  | 55 |
-| Marvelous Epoxy Flooring |  |  | 55 |
 | Clean Air Epoxy |  |  | 55 |
-| State 48 Epoxy |  |  | 55 |
-| MR Epoxy |  |  | 55 |
+| Arizona Valley Epoxy |  |  | 55 |
+| Quality Epoxy |  |  | 55 |
 | Sun Valley Epoxy - Residential Epoxy Flooring |  |  | 55 |
+| Epoxy Flooring Phoenix |  |  | 55 |
+| State 48 Epoxy |  |  | 55 |
+| Marvelous Epoxy Flooring |  |  | 55 |
 | Epoxy Werx - Epoxy Garage Floors |  |  | 55 |
