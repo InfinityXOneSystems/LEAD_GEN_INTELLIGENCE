@@ -1,1 +1,14 @@
-{\n  "services": {\n    "api-gateway": {\n      "type": "static",\n      "root": "public",\n      "buildCommand": "npm install && npm run build",\n      "startCommand": "npm start"\n    }\n  }\n}
+{
+  "services": {
+    "api-gateway": {
+      "type": "nodejs",
+      "startCommand": "node api/gateway.js",
+      "buildCommand": "npm install"
+    },
+    "worker": {
+      "type": "python",
+      "startCommand": "python -m task_queue.worker",
+      "buildCommand": "pip install -r requirements.txt"
+    }
+  }
+}

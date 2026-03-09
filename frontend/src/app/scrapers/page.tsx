@@ -2,19 +2,19 @@
 
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Play, XCircle, RefreshCw, Plus } from "lucide-react";
+import { Play, RefreshCw, Plus } from "lucide-react";
 import toast from "react-hot-toast";
-import { scrapersApi, type ScrapeJob } from "@/lib/api";
+import { scrapersApi, type ScraperLog } from "@/lib/api";
 
-function StatusBadge({ status }: { status: ScrapeJob["status"] }) {
-  const map: Record<ScrapeJob["status"], string> = {
-    pending: "badge-yellow",
+function StatusBadge({ status }: { status: ScraperLog["status"] }) {
+  const map: Record<ScraperLog["status"], string> = {
     running: "badge-blue",
     completed: "badge-green",
     failed: "badge-red",
-    cancelled: "badge-gray",
   };
-  return <span className={`badge ${map[status]}`}>{status}</span>;
+  return (
+    <span className={`badge ${map[status] ?? "badge-gray"}`}>{status}</span>
+  );
 }
 
 export default function ScrapersPage() {
@@ -26,36 +26,25 @@ export default function ScrapersPage() {
     industry: "",
   });
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["scrape-jobs"],
-    queryFn: () => scrapersApi.listJobs({ page_size: 50 }).then((r) => r.data),
+  const { data: logs, isLoading } = useQuery({
+    queryKey: ["scraper-logs"],
+    queryFn: () => scrapersApi.getLogs(50).then((r) => r.data),
     refetchInterval: 5000,
   });
 
-  const { data: statusData } = useQuery({
-    queryKey: ["scraper-status"],
-    queryFn: () => scrapersApi.status().then((r) => r.data),
-    refetchInterval: 5000,
-  });
-
-  const createMutation = useMutation({
-    mutationFn: scrapersApi.createJob,
-    onSuccess: () => {
-      toast.success("Scrape job created");
-      qc.invalidateQueries({ queryKey: ["scrape-jobs"] });
+  const runMutation = useMutation({
+    mutationFn: scrapersApi.run,
+    onSuccess: (r) => {
+      toast.success(`Scrape job started (ID: ${r.data.jobId})`);
+      qc.invalidateQueries({ queryKey: ["scraper-logs"] });
       setForm({ query: "", city: "", state: "", industry: "" });
     },
     onError: (e: Error) => toast.error(e.message),
   });
 
-  const cancelMutation = useMutation({
-    mutationFn: scrapersApi.cancelJob,
-    onSuccess: () => {
-      toast.success("Job cancelled");
-      qc.invalidateQueries({ queryKey: ["scrape-jobs"] });
-    },
-    onError: (e: Error) => toast.error(e.message),
-  });
+  const pending = logs?.filter((j) => j.status === "running").length ?? 0;
+  const completed = logs?.filter((j) => j.status === "completed").length ?? 0;
+  const failed = logs?.filter((j) => j.status === "failed").length ?? 0;
 
   return (
     <div className="p-8 space-y-6">
@@ -65,18 +54,26 @@ export default function ScrapersPage() {
       </div>
 
       {/* Status Cards */}
-      {statusData && (
-        <div className="grid grid-cols-4 gap-4">
-          {["pending", "running", "completed", "failed"].map((s) => (
-            <div key={s} className="card text-center">
-              <p className="text-2xl font-bold text-gray-900">
-                {(statusData as Record<string, number>)[s] ?? 0}
-              </p>
-              <p className="text-sm text-gray-500 capitalize">{s}</p>
-            </div>
-          ))}
+      <div className="grid grid-cols-4 gap-4">
+        <div className="card text-center">
+          <p className="text-2xl font-bold text-gray-900">{pending}</p>
+          <p className="text-sm text-gray-500">Running</p>
         </div>
-      )}
+        <div className="card text-center">
+          <p className="text-2xl font-bold text-gray-900">{completed}</p>
+          <p className="text-sm text-gray-500">Completed</p>
+        </div>
+        <div className="card text-center">
+          <p className="text-2xl font-bold text-gray-900">{failed}</p>
+          <p className="text-sm text-gray-500">Failed</p>
+        </div>
+        <div className="card text-center">
+          <p className="text-2xl font-bold text-gray-900">
+            {logs?.length ?? 0}
+          </p>
+          <p className="text-sm text-gray-500">Total Jobs</p>
+        </div>
+      </div>
 
       {/* New Job Form */}
       <div className="card">
@@ -109,21 +106,31 @@ export default function ScrapersPage() {
           ))}
         </div>
         <button
-          onClick={() => createMutation.mutate(form)}
-          disabled={createMutation.isPending || (!form.query && !form.industry)}
+          onClick={() =>
+            runMutation.mutate({
+              query: form.query || undefined,
+              city: form.city || undefined,
+              state: form.state || undefined,
+              industry: form.industry || undefined,
+            })
+          }
+          disabled={
+            runMutation.isPending ||
+            (!form.query && !form.industry && !form.city)
+          }
           className="btn-primary"
         >
           <Play className="w-4 h-4" />
-          {createMutation.isPending ? "Creating..." : "Start Scrape"}
+          {runMutation.isPending ? "Starting..." : "Start Scrape"}
         </button>
       </div>
 
-      {/* Job History */}
+      {/* Job Log */}
       <div className="card overflow-hidden p-0">
         <div className="p-4 border-b border-gray-100 flex items-center justify-between">
           <h2 className="text-sm font-semibold text-gray-700">Job History</h2>
           <button
-            onClick={() => qc.invalidateQueries({ queryKey: ["scrape-jobs"] })}
+            onClick={() => qc.invalidateQueries({ queryKey: ["scraper-logs"] })}
             className="btn-secondary py-1.5"
           >
             <RefreshCw className="w-3.5 h-3.5" />
@@ -134,14 +141,12 @@ export default function ScrapersPage() {
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
                 {[
-                  "Query",
+                  "ID",
+                  "Query / Category",
                   "Location",
-                  "Industry",
                   "Status",
-                  "Found",
-                  "Processed",
-                  "Created",
-                  "",
+                  "Message",
+                  "Timestamp",
                 ].map((h) => (
                   <th
                     key={h}
@@ -156,52 +161,43 @@ export default function ScrapersPage() {
               {isLoading ? (
                 <tr>
                   <td
-                    colSpan={8}
+                    colSpan={6}
                     className="px-4 py-8 text-center text-gray-400"
                   >
                     Loading...
                   </td>
                 </tr>
-              ) : data?.items.length === 0 ? (
+              ) : !logs?.length ? (
                 <tr>
                   <td
-                    colSpan={8}
+                    colSpan={6}
                     className="px-4 py-8 text-center text-gray-400"
                   >
                     No jobs yet
                   </td>
                 </tr>
               ) : (
-                data?.items.map((job: ScrapeJob) => (
+                logs.map((job: ScraperLog) => (
                   <tr key={job.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium text-gray-900 max-w-[160px] truncate">
-                      {job.query ?? "—"}
+                    <td className="px-4 py-3 font-mono text-xs text-gray-500 max-w-[90px] truncate">
+                      {job.id}
+                    </td>
+                    <td className="px-4 py-3 text-gray-900 max-w-[180px] truncate">
+                      {job.config?.query ?? job.config?.category ?? "—"}
                     </td>
                     <td className="px-4 py-3 text-gray-600">
-                      {[job.city, job.state].filter(Boolean).join(", ") || "—"}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {job.industry ?? "—"}
+                      {[job.config?.city, job.config?.state]
+                        .filter(Boolean)
+                        .join(", ") || "—"}
                     </td>
                     <td className="px-4 py-3">
                       <StatusBadge status={job.status} />
                     </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {job.total_found}
+                    <td className="px-4 py-3 text-gray-600 max-w-[200px] truncate">
+                      {job.message ?? "—"}
                     </td>
-                    <td className="px-4 py-3 text-gray-600">{job.processed}</td>
                     <td className="px-4 py-3 text-gray-500 text-xs">
-                      {new Date(job.created_at).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-3">
-                      {["pending", "running"].includes(job.status) && (
-                        <button
-                          onClick={() => cancelMutation.mutate(job.id)}
-                          className="p-1 text-gray-400 hover:text-red-500 transition-colors"
-                        >
-                          <XCircle className="w-4 h-4" />
-                        </button>
-                      )}
+                      {new Date(job.timestamp).toLocaleString()}
                     </td>
                   </tr>
                 ))

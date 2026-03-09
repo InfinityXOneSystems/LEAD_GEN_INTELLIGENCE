@@ -680,6 +680,103 @@ app.post("/api/outreach/send", async (req, res) => {
   }
 });
 
+// GET /api/outreach/stats
+app.get("/api/outreach/stats", (req, res) => {
+  try {
+    const logDir = path.join(DATA_DIR, "outreach");
+    const queueFile = path.join(logDir, "outreach_queue.json");
+    let queue = [];
+    if (fs.existsSync(queueFile)) {
+      try {
+        queue = readJson(queueFile);
+      } catch (_) {}
+    }
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now - 30 * 24 * 60 * 60 * 1000);
+    const last30 = queue.filter(
+      (e) => new Date(e.queuedAt) >= thirtyDaysAgo,
+    ).length;
+    const byChannel = [{ channel: "email", count: queue.length }];
+    return ok(res, {
+      total_sent: queue.length,
+      last_30_days: last30,
+      by_channel: byChannel,
+    });
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// GET /api/outreach/campaigns
+app.get("/api/outreach/campaigns", (req, res) => {
+  try {
+    const campaignsFile = path.join(DATA_DIR, "outreach", "campaigns.json");
+    let campaigns = [];
+    if (fs.existsSync(campaignsFile)) {
+      try {
+        campaigns = readJson(campaignsFile);
+      } catch (_) {}
+    }
+    return ok(res, { campaigns, total: campaigns.length });
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
+// POST /api/outreach/campaigns
+app.post("/api/outreach/campaigns", (req, res) => {
+  try {
+    const { name, industry, min_score, template } = req.body;
+    if (!name) return fail(res, "name required", 400);
+
+    const outreachDir = path.join(DATA_DIR, "outreach");
+    fs.mkdirSync(outreachDir, { recursive: true });
+    const campaignsFile = path.join(outreachDir, "campaigns.json");
+    let campaigns = [];
+    if (fs.existsSync(campaignsFile)) {
+      try {
+        campaigns = readJson(campaignsFile);
+      } catch (_) {}
+    }
+
+    // Count matching leads for target_count
+    const leads = loadLeads();
+    const list = Array.isArray(leads) ? leads : [];
+    const minScore = typeof min_score === "number" ? min_score : 0;
+    const industryLower = industry ? industry.toLowerCase() : null;
+    const targetLeads = list.filter((l) => {
+      const score = l.lead_score || l.score || 0;
+      if (score < minScore) return false;
+      if (
+        industryLower &&
+        l.industry &&
+        !l.industry.toLowerCase().includes(industryLower)
+      ) {
+        return false;
+      }
+      return true;
+    });
+
+    const campaign = {
+      id: generateId(),
+      name,
+      industry: industry || null,
+      min_score: minScore,
+      template: template || "default",
+      target_count: targetLeads.length,
+      sent_count: 0,
+      status: "active",
+      created_at: new Date().toISOString(),
+    };
+
+    campaigns.push(campaign);
+    fs.writeFileSync(campaignsFile, JSON.stringify(campaigns, null, 2));
+    return res.status(201).json(campaign);
+  } catch (err) {
+    return fail(res, err.message);
+  }
+});
+
 // GET /api/monitoring/health
 app.get("/api/monitoring/health", (req, res) => {
   try {

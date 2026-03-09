@@ -7,8 +7,8 @@ import Sidebar from "@/components/Sidebar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "LeadGen Intelligence",
-  description: "Enterprise-grade lead intelligence platform",
+  title: "XPS Intelligence",
+  description: "Autonomous contractor lead intelligence platform",
 };
 
 export default function RootLayout({

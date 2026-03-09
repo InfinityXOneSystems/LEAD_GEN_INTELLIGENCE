@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Mail, TrendingUp, Send, Users } from "lucide-react";
 import toast from "react-hot-toast";
-import { apiClient } from "@/lib/api";
+import { outreachApi, type OutreachCampaign } from "@/lib/api";
 
 export default function OutreachPage() {
+  const qc = useQueryClient();
   const [campaignForm, setCampaignForm] = useState({
     name: "",
     industry: "",
@@ -17,29 +18,28 @@ export default function OutreachPage() {
 
   const { data: statsData } = useQuery({
     queryKey: ["outreach-stats"],
-    queryFn: () => apiClient.get("/outreach/stats").then((r) => r.data),
+    queryFn: () => outreachApi.stats().then((r) => r.data),
     refetchInterval: 30000,
   });
 
   const { data: campaignsData, refetch } = useQuery({
     queryKey: ["outreach-campaigns"],
-    queryFn: () => apiClient.get("/outreach/campaigns").then((r) => r.data),
+    queryFn: () => outreachApi.listCampaigns().then((r) => r.data),
   });
 
   const handleCreateCampaign = async () => {
     if (!campaignForm.name) return toast.error("Campaign name required");
     setCreating(true);
     try {
-      await apiClient.post("/outreach/campaigns", null, {
-        params: {
-          name: campaignForm.name,
-          industry: campaignForm.industry || undefined,
-          min_score: parseFloat(campaignForm.min_score),
-          template: campaignForm.template,
-        },
+      await outreachApi.createCampaign({
+        name: campaignForm.name,
+        industry: campaignForm.industry || undefined,
+        min_score: parseFloat(campaignForm.min_score),
+        template: campaignForm.template,
       });
       toast.success("Campaign created");
       refetch();
+      qc.invalidateQueries({ queryKey: ["outreach-stats"] });
       setCampaignForm({
         name: "",
         industry: "",
@@ -210,42 +210,32 @@ export default function OutreachPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
-            {campaignsData?.campaigns?.length === 0 ? (
+            {!campaignsData?.campaigns?.length ? (
               <tr>
                 <td colSpan={7} className="px-4 py-8 text-center text-gray-400">
                   No campaigns yet
                 </td>
               </tr>
             ) : (
-              campaignsData?.campaigns?.map(
-                (c: Record<string, string | number>) => (
-                  <tr key={c.id as string} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium text-gray-900">
-                      {c.name as string}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {(c.industry as string) || "—"}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {c.min_score as number}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {c.target_count as number}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {c.sent_count as number}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="badge badge-blue">
-                        {c.status as string}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-gray-500 text-xs">
-                      {new Date(c.created_at as string).toLocaleString()}
-                    </td>
-                  </tr>
-                ),
-              )
+              campaignsData.campaigns.map((c: OutreachCampaign) => (
+                <tr key={c.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-3 font-medium text-gray-900">
+                    {c.name}
+                  </td>
+                  <td className="px-4 py-3 text-gray-600">
+                    {c.industry || "—"}
+                  </td>
+                  <td className="px-4 py-3 text-gray-600">{c.min_score}</td>
+                  <td className="px-4 py-3 text-gray-600">{c.target_count}</td>
+                  <td className="px-4 py-3 text-gray-600">{c.sent_count}</td>
+                  <td className="px-4 py-3">
+                    <span className="badge badge-blue">{c.status}</span>
+                  </td>
+                  <td className="px-4 py-3 text-gray-500 text-xs">
+                    {new Date(c.created_at).toLocaleString()}
+                  </td>
+                </tr>
+              ))
             )}
           </tbody>
         </table>
