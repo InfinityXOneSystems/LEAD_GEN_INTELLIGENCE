@@ -32,6 +32,7 @@ def execute_command(payload: CommandRequest, db: Session = Depends(get_db)):
 
         try:
             from app.celery_app import run_scrape_job
+
             run_scrape_job.delay(str(job.id))
         except Exception:
             pass

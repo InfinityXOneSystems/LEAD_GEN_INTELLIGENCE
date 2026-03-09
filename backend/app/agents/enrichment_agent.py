@@ -45,7 +45,9 @@ class EnrichmentAgent(BaseAgent):
 
                     contractor.lead_score = self.scorer.score(contractor)
                 except Exception as e:
-                    self.log(f"Failed to enrich {contractor.company_name}: {e}", "warning")
+                    self.log(
+                        f"Failed to enrich {contractor.company_name}: {e}", "warning"
+                    )
 
             db.commit()
             self.log(f"Enrichment complete for {len(needs_enrichment)} contractors")

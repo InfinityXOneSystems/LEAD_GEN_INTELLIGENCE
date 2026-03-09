@@ -14,8 +14,8 @@ class ScraperAgent(BaseAgent):
     def run(self) -> None:
         from app.database import SessionLocal
         from app.models.contractor import ScrapeJob
-        from app.scrapers.google_maps import GoogleMapsScraper
         from app.scrapers.directory import DirectoryScraper
+        from app.scrapers.google_maps import GoogleMapsScraper
 
         db = SessionLocal()
         try:

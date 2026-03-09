@@ -78,7 +78,10 @@ def send_outreach(
         results.append({"id": str(cid), "status": "sent", "email": contractor.email})
 
     db.commit()
-    return {"sent": len([r for r in results if r["status"] == "sent"]), "results": results}
+    return {
+        "sent": len([r for r in results if r["status"] == "sent"]),
+        "results": results,
+    }
 
 
 @router.get("/stats")
@@ -94,9 +97,11 @@ def outreach_stats(db: Session = Depends(get_db)):
         .group_by(OutreachLog.status)
         .all()
     )
-    recent_30d = db.query(func.count(OutreachLog.id)).filter(
-        OutreachLog.sent_at >= datetime.utcnow() - timedelta(days=30)
-    ).scalar()
+    recent_30d = (
+        db.query(func.count(OutreachLog.id))
+        .filter(OutreachLog.sent_at >= datetime.utcnow() - timedelta(days=30))
+        .scalar()
+    )
 
     return {
         "total_sent": total,

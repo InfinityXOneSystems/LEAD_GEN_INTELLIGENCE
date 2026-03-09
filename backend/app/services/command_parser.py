@@ -6,28 +6,84 @@ import structlog
 logger = structlog.get_logger()
 
 US_STATES = {
-    "alabama": "AL", "alaska": "AK", "arizona": "AZ", "arkansas": "AR",
-    "california": "CA", "colorado": "CO", "connecticut": "CT", "delaware": "DE",
-    "florida": "FL", "georgia": "GA", "hawaii": "HI", "idaho": "ID",
-    "illinois": "IL", "indiana": "IN", "iowa": "IA", "kansas": "KS",
-    "kentucky": "KY", "louisiana": "LA", "maine": "ME", "maryland": "MD",
-    "massachusetts": "MA", "michigan": "MI", "minnesota": "MN", "mississippi": "MS",
-    "missouri": "MO", "montana": "MT", "nebraska": "NE", "nevada": "NV",
-    "new hampshire": "NH", "new jersey": "NJ", "new mexico": "NM", "new york": "NY",
-    "north carolina": "NC", "north dakota": "ND", "ohio": "OH", "oklahoma": "OK",
-    "oregon": "OR", "pennsylvania": "PA", "rhode island": "RI", "south carolina": "SC",
-    "south dakota": "SD", "tennessee": "TN", "texas": "TX", "utah": "UT",
-    "vermont": "VT", "virginia": "VA", "washington": "WA", "west virginia": "WV",
-    "wisconsin": "WI", "wyoming": "WY",
+    "alabama": "AL",
+    "alaska": "AK",
+    "arizona": "AZ",
+    "arkansas": "AR",
+    "california": "CA",
+    "colorado": "CO",
+    "connecticut": "CT",
+    "delaware": "DE",
+    "florida": "FL",
+    "georgia": "GA",
+    "hawaii": "HI",
+    "idaho": "ID",
+    "illinois": "IL",
+    "indiana": "IN",
+    "iowa": "IA",
+    "kansas": "KS",
+    "kentucky": "KY",
+    "louisiana": "LA",
+    "maine": "ME",
+    "maryland": "MD",
+    "massachusetts": "MA",
+    "michigan": "MI",
+    "minnesota": "MN",
+    "mississippi": "MS",
+    "missouri": "MO",
+    "montana": "MT",
+    "nebraska": "NE",
+    "nevada": "NV",
+    "new hampshire": "NH",
+    "new jersey": "NJ",
+    "new mexico": "NM",
+    "new york": "NY",
+    "north carolina": "NC",
+    "north dakota": "ND",
+    "ohio": "OH",
+    "oklahoma": "OK",
+    "oregon": "OR",
+    "pennsylvania": "PA",
+    "rhode island": "RI",
+    "south carolina": "SC",
+    "south dakota": "SD",
+    "tennessee": "TN",
+    "texas": "TX",
+    "utah": "UT",
+    "vermont": "VT",
+    "virginia": "VA",
+    "washington": "WA",
+    "west virginia": "WV",
+    "wisconsin": "WI",
+    "wyoming": "WY",
 }
 
 STATE_ABBREVS = {v: v for v in US_STATES.values()}
 
 INDUSTRY_KEYWORDS = [
-    "epoxy", "flooring", "roofing", "plumbing", "electrical", "hvac",
-    "landscaping", "concrete", "painting", "fencing", "windows", "doors",
-    "contractor", "construction", "remodeling", "renovation", "insulation",
-    "solar", "paving", "masonry", "carpentry", "drywall", "siding",
+    "epoxy",
+    "flooring",
+    "roofing",
+    "plumbing",
+    "electrical",
+    "hvac",
+    "landscaping",
+    "concrete",
+    "painting",
+    "fencing",
+    "windows",
+    "doors",
+    "contractor",
+    "construction",
+    "remodeling",
+    "renovation",
+    "insulation",
+    "solar",
+    "paving",
+    "masonry",
+    "carpentry",
+    "drywall",
+    "siding",
 ]
 
 
@@ -100,12 +156,17 @@ class CommandParser:
                 params["city"] = candidate
 
         # Extract numeric count (e.g. "50 plumbing contractors" or "50 contractors")
-        count_match = re.search(r"\b(\d+)\s+(?:\w+\s+)*(?:leads?|results?|records?|contractors?)\b", command_lower)
+        count_match = re.search(
+            r"\b(\d+)\s+(?:\w+\s+)*(?:leads?|results?|records?|contractors?)\b",
+            command_lower,
+        )
         if count_match:
             params["count"] = int(count_match.group(1))
 
         # Extract min rating
-        rating_match = re.search(r"rating\s+(?:above|over|>|>=)?\s*(\d+(?:\.\d+)?)", command_lower)
+        rating_match = re.search(
+            r"rating\s+(?:above|over|>|>=)?\s*(\d+(?:\.\d+)?)", command_lower
+        )
         if rating_match:
             params["min_rating"] = float(rating_match.group(1))
 

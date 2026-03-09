@@ -19,7 +19,9 @@ class GoogleMapsScraper(BaseScraper):
 
     BASE_URL = "https://www.google.com/maps/search/"
 
-    def scrape(self, query: str, city: str = "", state: str = "") -> List[Dict[str, Any]]:
+    def scrape(
+        self, query: str, city: str = "", state: str = ""
+    ) -> List[Dict[str, Any]]:
         location = f"{city} {state}".strip() if city or state else ""
         full_query = f"{query} {location}".strip()
         search_url = f"{self.BASE_URL}{quote_plus(full_query)}"
@@ -50,20 +52,24 @@ class GoogleMapsScraper(BaseScraper):
     def _extract_from_js(self, js_content: str) -> List[Dict[str, Any]]:
         results = []
         # Extract phone numbers
-        phones = re.findall(r'\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}', js_content)
+        phones = re.findall(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", js_content)
         # Extract ratings
         ratings = re.findall(r'"(\d\.\d)"\s*,\s*"(\d+)\s*reviews?"', js_content)
 
         for i, (rating, reviews) in enumerate(ratings[:20]):
-            results.append({
-                "rating": float(rating),
-                "reviews": int(reviews),
-                "phone": phones[i] if i < len(phones) else None,
-                "source": "google_maps",
-            })
+            results.append(
+                {
+                    "rating": float(rating),
+                    "reviews": int(reviews),
+                    "phone": phones[i] if i < len(phones) else None,
+                    "source": "google_maps",
+                }
+            )
         return results
 
-    def _generate_sample_results(self, query: str, city: str, state: str) -> List[Dict[str, Any]]:
+    def _generate_sample_results(
+        self, query: str, city: str, state: str
+    ) -> List[Dict[str, Any]]:
         """Return structured placeholder when scraping is blocked."""
         return [
             {

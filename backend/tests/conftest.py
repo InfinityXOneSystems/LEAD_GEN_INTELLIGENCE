@@ -1,10 +1,11 @@
 import json
 import os
+
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine, String
+from sqlalchemy import String, create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.types import TypeDecorator, Text
+from sqlalchemy.types import Text, TypeDecorator
 
 # Set test DATABASE_URL BEFORE any app modules are imported so that
 # `settings` picks it up and database.py creates a SQLite engine.
@@ -20,6 +21,7 @@ from sqlalchemy.dialects import postgresql as _pg
 
 class _JSONArray(TypeDecorator):
     """Stores Python lists as JSON text in SQLite."""
+
     impl = Text
     cache_ok = True
 
@@ -36,6 +38,7 @@ class _JSONArray(TypeDecorator):
 
 class _StringUUID(TypeDecorator):
     """Stores UUIDs as plain strings in SQLite."""
+
     impl = String(36)
     cache_ok = True
 

@@ -52,7 +52,12 @@ def list_leads(
         )
 
     total = query.count()
-    items = query.order_by(Contractor.lead_score.desc()).offset((page - 1) * page_size).limit(page_size).all()
+    items = (
+        query.order_by(Contractor.lead_score.desc())
+        .offset((page - 1) * page_size)
+        .limit(page_size)
+        .all()
+    )
 
     return {
         "total": total,
@@ -81,18 +86,43 @@ def export_leads_csv(
 
     output = io.StringIO()
     writer = csv.writer(output)
-    writer.writerow([
-        "ID", "Company", "Owner", "Phone", "Email", "Website",
-        "City", "State", "Industry", "Rating", "Reviews",
-        "Lead Score", "Source", "Created At",
-    ])
+    writer.writerow(
+        [
+            "ID",
+            "Company",
+            "Owner",
+            "Phone",
+            "Email",
+            "Website",
+            "City",
+            "State",
+            "Industry",
+            "Rating",
+            "Reviews",
+            "Lead Score",
+            "Source",
+            "Created At",
+        ]
+    )
     for lead in leads:
-        writer.writerow([
-            str(lead.id), lead.company_name, lead.owner_name, lead.phone,
-            lead.email, lead.website, lead.city, lead.state,
-            lead.industry, lead.rating, lead.reviews,
-            lead.lead_score, lead.source, lead.created_at,
-        ])
+        writer.writerow(
+            [
+                str(lead.id),
+                lead.company_name,
+                lead.owner_name,
+                lead.phone,
+                lead.email,
+                lead.website,
+                lead.city,
+                lead.state,
+                lead.industry,
+                lead.rating,
+                lead.reviews,
+                lead.lead_score,
+                lead.source,
+                lead.created_at,
+            ]
+        )
 
     return Response(
         content=output.getvalue(),
@@ -121,7 +151,9 @@ def leads_stats(db: Session = Depends(get_db)):
         .all()
     )
     avg_score = db.query(func.avg(Contractor.lead_score)).scalar() or 0.0
-    high_value = db.query(func.count(Contractor.id)).filter(Contractor.lead_score >= 80).scalar()
+    high_value = (
+        db.query(func.count(Contractor.id)).filter(Contractor.lead_score >= 80).scalar()
+    )
 
     return {
         "total_leads": total,
@@ -151,7 +183,9 @@ def create_lead(payload: ContractorCreate, db: Session = Depends(get_db)):
 
 
 @router.put("/{lead_id}", response_model=ContractorResponse)
-def update_lead(lead_id: UUID, payload: ContractorUpdate, db: Session = Depends(get_db)):
+def update_lead(
+    lead_id: UUID, payload: ContractorUpdate, db: Session = Depends(get_db)
+):
     lead = db.query(Contractor).filter(Contractor.id == lead_id).first()
     if not lead:
         raise HTTPException(status_code=404, detail="Lead not found")
