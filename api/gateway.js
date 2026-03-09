@@ -747,7 +747,11 @@ app.post("/api/outreach/campaigns", (req, res) => {
     const targetLeads = list.filter((l) => {
       const score = l.lead_score || l.score || 0;
       if (score < minScore) return false;
-      if (industryLower && l.industry && !l.industry.toLowerCase().includes(industryLower)) {
+      if (
+        industryLower &&
+        l.industry &&
+        !l.industry.toLowerCase().includes(industryLower)
+      ) {
         return false;
       }
       return true;

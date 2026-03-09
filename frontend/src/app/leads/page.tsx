@@ -93,9 +93,7 @@ export default function LeadsPage() {
                   setFilters((f) => ({ ...f, [key]: e.target.value }));
                   setPage(1);
                 }}
-                placeholder={
-                  key === "minScore" ? "0" : `Filter by ${key}...`
-                }
+                placeholder={key === "minScore" ? "0" : `Filter by ${key}...`}
                 className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -150,8 +148,7 @@ export default function LeadsPage() {
                 </tr>
               ) : (
                 leads.map((lead: Lead, idx: number) => {
-                  const displayName =
-                    lead.company || lead.company_name || "—";
+                  const displayName = lead.company || lead.company_name || "—";
                   const score = lead.lead_score ?? lead.score ?? 0;
                   const leadId = String(lead.id ?? idx);
                   return (

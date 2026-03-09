@@ -12,7 +12,9 @@ function StatusBadge({ status }: { status: ScraperLog["status"] }) {
     completed: "badge-green",
     failed: "badge-red",
   };
-  return <span className={`badge ${map[status] ?? "badge-gray"}`}>{status}</span>;
+  return (
+    <span className={`badge ${map[status] ?? "badge-gray"}`}>{status}</span>
+  );
 }
 
 export default function ScrapersPage() {
@@ -66,7 +68,9 @@ export default function ScrapersPage() {
           <p className="text-sm text-gray-500">Failed</p>
         </div>
         <div className="card text-center">
-          <p className="text-2xl font-bold text-gray-900">{logs?.length ?? 0}</p>
+          <p className="text-2xl font-bold text-gray-900">
+            {logs?.length ?? 0}
+          </p>
           <p className="text-sm text-gray-500">Total Jobs</p>
         </div>
       </div>
@@ -111,7 +115,8 @@ export default function ScrapersPage() {
             })
           }
           disabled={
-            runMutation.isPending || (!form.query && !form.industry && !form.city)
+            runMutation.isPending ||
+            (!form.query && !form.industry && !form.city)
           }
           className="btn-primary"
         >
@@ -135,28 +140,39 @@ export default function ScrapersPage() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
-                {["ID", "Query / Category", "Location", "Status", "Message", "Timestamp"].map(
-                  (h) => (
-                    <th
-                      key={h}
-                      className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase"
-                    >
-                      {h}
-                    </th>
-                  ),
-                )}
+                {[
+                  "ID",
+                  "Query / Category",
+                  "Location",
+                  "Status",
+                  "Message",
+                  "Timestamp",
+                ].map((h) => (
+                  <th
+                    key={h}
+                    className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase"
+                  >
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {isLoading ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-gray-400">
+                  <td
+                    colSpan={6}
+                    className="px-4 py-8 text-center text-gray-400"
+                  >
                     Loading...
                   </td>
                 </tr>
               ) : !logs?.length ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-gray-400">
+                  <td
+                    colSpan={6}
+                    className="px-4 py-8 text-center text-gray-400"
+                  >
                     No jobs yet
                   </td>
                 </tr>

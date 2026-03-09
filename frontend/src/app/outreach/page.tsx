@@ -40,7 +40,12 @@ export default function OutreachPage() {
       toast.success("Campaign created");
       refetch();
       qc.invalidateQueries({ queryKey: ["outreach-stats"] });
-      setCampaignForm({ name: "", industry: "", min_score: "60", template: "default" });
+      setCampaignForm({
+        name: "",
+        industry: "",
+        min_score: "60",
+        template: "default",
+      });
     } catch (e: unknown) {
       const err = e as Error;
       toast.error(err.message || "Failed to create campaign");
@@ -186,16 +191,22 @@ export default function OutreachPage() {
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b border-gray-100">
             <tr>
-              {["Name", "Industry", "Min Score", "Targets", "Sent", "Status", "Created"].map(
-                (h) => (
-                  <th
-                    key={h}
-                    className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase"
-                  >
-                    {h}
-                  </th>
-                ),
-              )}
+              {[
+                "Name",
+                "Industry",
+                "Min Score",
+                "Targets",
+                "Sent",
+                "Status",
+                "Created",
+              ].map((h) => (
+                <th
+                  key={h}
+                  className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase"
+                >
+                  {h}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
