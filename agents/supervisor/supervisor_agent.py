@@ -144,6 +144,14 @@ class SupervisorAgent:
             from agents.simulation.simulation_agent import SimulationAgent
             return await SimulationAgent().run(command)
 
+        if task_type == "seo":
+            from agents.seo.seo_agent import SEOAgent
+            return await SEOAgent().run(command)
+
+        if task_type == "social":
+            from agents.social.social_agent import SocialAgent
+            return await SocialAgent().run(command)
+
         # Default: run full LangGraph pipeline
         from agent_core.langgraph_runtime import run_graph
         run_id = str(int(time.time() * 1000))

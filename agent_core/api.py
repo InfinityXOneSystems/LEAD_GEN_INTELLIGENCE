@@ -591,3 +591,82 @@ async def update_settings(request: SettingsRequest) -> Dict[str, Any]:
         return {"success": True, "message": "Settings updated"}
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+# ---------------------------------------------------------------------------
+# Runtime Controller endpoints
+# ---------------------------------------------------------------------------
+
+
+class RuntimeRequest(BaseModel):
+    """Input to POST /agent/execute."""
+
+    command: str
+    task_type: str | None = None
+    priority: int = 5
+    timeout: float = 120.0
+
+    @field_validator("command")
+    @classmethod
+    def command_not_empty(cls, v: str) -> str:
+        v = v.strip()
+        if not v:
+            raise ValueError("command must not be empty")
+        if len(v) > 2000:
+            raise ValueError("command must not exceed 2000 characters")
+        return v
+
+
+@app.post("/agent/execute")
+async def execute_via_runtime(request: RuntimeRequest) -> Dict[str, Any]:
+    """
+    Execute any command through the RuntimeController.
+
+    All LLM / agent commands from the frontend chat should call this
+    endpoint so they benefit from sandbox enforcement, circuit-breaking,
+    and observability.
+
+    Example::
+
+        {"command": "scrape epoxy contractors ohio", "priority": 3}
+    """
+    logger.info("runtime execute: command=%r", request.command)
+    try:
+        from runtime_controller import get_controller, ExecutionRequest as RC_Request
+
+        controller = get_controller()
+        rc_req = RC_Request(
+            command=request.command,
+            task_type=request.task_type,
+            priority=request.priority,
+            timeout=request.timeout,
+        )
+        response = await controller.execute(rc_req)
+        return response.to_dict()
+    except Exception as exc:
+        logger.error("RuntimeController execute error: %s", exc)
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.get("/agent/runtime/status")
+async def runtime_status() -> Dict[str, Any]:
+    """Return the current RuntimeController status (circuits, kernel, metrics)."""
+    try:
+        from runtime_controller import get_controller
+
+        controller = get_controller()
+        return {"success": True, **controller.status()}
+    except Exception as exc:
+        logger.warning("Runtime status error: %s", exc)
+        return {"success": False, "error": str(exc)}
+
+
+@app.get("/agent/observability")
+async def observability_snapshot() -> Dict[str, Any]:
+    """Return a snapshot of all platform metrics and recent trace spans."""
+    try:
+        from observability import get_metrics_snapshot
+
+        return {"success": True, "data": get_metrics_snapshot()}
+    except Exception as exc:
+        return {"success": False, "error": str(exc)}
