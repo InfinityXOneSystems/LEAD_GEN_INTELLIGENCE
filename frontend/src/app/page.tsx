@@ -1,9 +1,16 @@
-'use client';
+"use client";
 
-import { useQuery } from '@tanstack/react-query';
-import { Users, TrendingUp, Bot, Mail, BarChart2, Activity } from 'lucide-react';
-import { leadsApi, agentsApi, scrapersApi } from '@/lib/api';
-import CommandBar from '@/components/CommandBar';
+import { useQuery } from "@tanstack/react-query";
+import {
+  Users,
+  TrendingUp,
+  Bot,
+  Mail,
+  BarChart2,
+  Activity,
+} from "lucide-react";
+import { leadsApi, agentsApi, scrapersApi } from "@/lib/api";
+import CommandBar from "@/components/CommandBar";
 import {
   BarChart,
   Bar,
@@ -12,7 +19,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 function StatCard({
   title,
@@ -43,24 +50,25 @@ function StatCard({
 
 export default function DashboardPage() {
   const { data: stats } = useQuery({
-    queryKey: ['lead-stats'],
+    queryKey: ["lead-stats"],
     queryFn: () => leadsApi.stats().then((r) => r.data),
     refetchInterval: 30000,
   });
 
   const { data: agentsData } = useQuery({
-    queryKey: ['agents'],
+    queryKey: ["agents"],
     queryFn: () => agentsApi.list().then((r) => r.data),
     refetchInterval: 10000,
   });
 
   const { data: scraperStatus } = useQuery({
-    queryKey: ['scraper-status'],
+    queryKey: ["scraper-status"],
     queryFn: () => scrapersApi.status().then((r) => r.data),
     refetchInterval: 10000,
   });
 
-  const runningAgents = agentsData?.agents.filter((a) => a.status === 'running').length ?? 0;
+  const runningAgents =
+    agentsData?.agents.filter((a) => a.status === "running").length ?? 0;
   const totalAgents = agentsData?.agents.length ?? 5;
 
   return (
@@ -76,14 +84,14 @@ export default function DashboardPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Leads"
-          value={stats?.total_leads?.toLocaleString() ?? '—'}
+          value={stats?.total_leads?.toLocaleString() ?? "—"}
           icon={Users}
           color="bg-blue-500"
           sub={`Avg score: ${stats?.average_score ?? 0}`}
         />
         <StatCard
           title="High-Value Leads"
-          value={stats?.high_value_leads?.toLocaleString() ?? '—'}
+          value={stats?.high_value_leads?.toLocaleString() ?? "—"}
           icon={TrendingUp}
           color="bg-green-500"
           sub="Score ≥ 80"
@@ -97,7 +105,7 @@ export default function DashboardPage() {
         />
         <StatCard
           title="Pending Jobs"
-          value={scraperStatus?.pending ?? '—'}
+          value={scraperStatus?.pending ?? "—"}
           icon={Activity}
           color="bg-orange-500"
           sub={`${scraperStatus?.running ?? 0} running`}
@@ -159,18 +167,23 @@ export default function DashboardPage() {
         </h2>
         <div className="space-y-2">
           {agentsData?.agents.map((agent) => (
-            <div key={agent.name} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+            <div
+              key={agent.name}
+              className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0"
+            >
               <div>
-                <p className="text-sm font-medium text-gray-700">{agent.name.replace(/_/g, ' ').toUpperCase()}</p>
+                <p className="text-sm font-medium text-gray-700">
+                  {agent.name.replace(/_/g, " ").toUpperCase()}
+                </p>
                 <p className="text-xs text-gray-400">{agent.description}</p>
               </div>
               <span
                 className={`badge ${
-                  agent.status === 'running'
-                    ? 'badge-green'
-                    : agent.status === 'error'
-                    ? 'badge-red'
-                    : 'badge-gray'
+                  agent.status === "running"
+                    ? "badge-green"
+                    : agent.status === "error"
+                      ? "badge-red"
+                      : "badge-gray"
                 }`}
               >
                 {agent.status}

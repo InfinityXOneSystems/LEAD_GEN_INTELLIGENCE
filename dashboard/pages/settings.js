@@ -253,38 +253,42 @@ export default function SettingsPage() {
           <div key={section.title} style={styles.section}>
             <h2 style={styles.sectionTitle}>{section.title}</h2>
             <div style={styles.fieldGrid}>
-              {section.fields.map(({ key, label, type, placeholder, options }) => (
-                <div key={key} style={styles.fieldRow}>
-                  <label style={styles.label}>{label}</label>
-                  {type === "checkbox" ? (
-                    <input
-                      type="checkbox"
-                      checked={Boolean(settings[key])}
-                      onChange={(e) => updateField(key, e.target.checked)}
-                      style={styles.checkbox}
-                    />
-                  ) : type === "select" ? (
-                    <select
-                      value={settings[key] ?? (options && options[0]) ?? ""}
-                      onChange={(e) => updateField(key, e.target.value)}
-                      style={{ ...styles.input, cursor: "pointer" }}
-                    >
-                      {(options || []).map((opt) => (
-                        <option key={opt} value={opt}>{opt}</option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      type={type}
-                      value={settings[key] ?? ""}
-                      onChange={(e) => updateField(key, e.target.value)}
-                      placeholder={placeholder}
-                      style={styles.input}
-                      autoComplete="off"
-                    />
-                  )}
-                </div>
-              ))}
+              {section.fields.map(
+                ({ key, label, type, placeholder, options }) => (
+                  <div key={key} style={styles.fieldRow}>
+                    <label style={styles.label}>{label}</label>
+                    {type === "checkbox" ? (
+                      <input
+                        type="checkbox"
+                        checked={Boolean(settings[key])}
+                        onChange={(e) => updateField(key, e.target.checked)}
+                        style={styles.checkbox}
+                      />
+                    ) : type === "select" ? (
+                      <select
+                        value={settings[key] ?? (options && options[0]) ?? ""}
+                        onChange={(e) => updateField(key, e.target.value)}
+                        style={{ ...styles.input, cursor: "pointer" }}
+                      >
+                        {(options || []).map((opt) => (
+                          <option key={opt} value={opt}>
+                            {opt}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        type={type}
+                        value={settings[key] ?? ""}
+                        onChange={(e) => updateField(key, e.target.value)}
+                        placeholder={placeholder}
+                        style={styles.input}
+                        autoComplete="off"
+                      />
+                    )}
+                  </div>
+                ),
+              )}
             </div>
           </div>
         ))}

@@ -29,9 +29,7 @@ function getArg(name, fallback) {
 const INPUT_PATH = path.resolve(
   getArg("--input", "data/leads/scored_leads.json"),
 );
-const OUTPUT_PATH = path.resolve(
-  getArg("--output", INPUT_PATH),
-);
+const OUTPUT_PATH = path.resolve(getArg("--output", INPUT_PATH));
 
 // ── Normalise a single lead ──────────────────────────────────────────────────
 function normalizeLead(l, index) {
@@ -45,8 +43,7 @@ function normalizeLead(l, index) {
   }
 
   // Derive tier from score
-  const tier =
-    score >= 75 ? "HOT" : score >= 50 ? "WARM" : "COLD";
+  const tier = score >= 75 ? "HOT" : score >= 50 ? "WARM" : "COLD";
 
   return {
     id: l.id || index + 1,

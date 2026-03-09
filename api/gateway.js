@@ -110,10 +110,7 @@ app.get("/api/leads/metrics", (req, res) => {
     const avgScore = scores.length
       ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
       : 0;
-    const revenuePipeline = list.reduce(
-      (s, l) => s + (l.revenue || 0),
-      0,
-    );
+    const revenuePipeline = list.reduce((s, l) => s + (l.revenue || 0), 0);
     return res.json({
       totalLeads: total,
       aPlusOpportunities,
@@ -196,8 +193,7 @@ app.put("/api/leads/:id", (req, res) => {
     const leads = loadLeads();
     const list = Array.isArray(leads) ? leads : [];
     const idx = list.findIndex(
-      (l) =>
-        String(l.id) === req.params.id || l.place_id === req.params.id,
+      (l) => String(l.id) === req.params.id || l.place_id === req.params.id,
     );
     if (idx === -1) return fail(res, "Lead not found", 404);
     list[idx] = {
@@ -219,8 +215,7 @@ app.delete("/api/leads/:id", (req, res) => {
     const leads = loadLeads();
     const list = Array.isArray(leads) ? leads : [];
     const filtered = list.filter(
-      (l) =>
-        String(l.id) !== req.params.id && l.place_id !== req.params.id,
+      (l) => String(l.id) !== req.params.id && l.place_id !== req.params.id,
     );
     if (filtered.length === list.length)
       return fail(res, "Lead not found", 404);
@@ -237,8 +232,7 @@ app.post("/api/leads/:id/assign", (req, res) => {
     const leads = loadLeads();
     const list = Array.isArray(leads) ? leads : [];
     const idx = list.findIndex(
-      (l) =>
-        String(l.id) === req.params.id || l.place_id === req.params.id,
+      (l) => String(l.id) === req.params.id || l.place_id === req.params.id,
     );
     if (idx === -1) return fail(res, "Lead not found", 404);
     const { repId, repName, repInitials } = req.body;
@@ -261,8 +255,7 @@ app.put("/api/leads/:id/status", (req, res) => {
     const leads = loadLeads();
     const list = Array.isArray(leads) ? leads : [];
     const idx = list.findIndex(
-      (l) =>
-        String(l.id) === req.params.id || l.place_id === req.params.id,
+      (l) => String(l.id) === req.params.id || l.place_id === req.params.id,
     );
     if (idx === -1) return fail(res, "Lead not found", 404);
     list[idx] = {
@@ -283,8 +276,7 @@ app.post("/api/leads/:id/notes", (req, res) => {
     const leads = loadLeads();
     const list = Array.isArray(leads) ? leads : [];
     const idx = list.findIndex(
-      (l) =>
-        String(l.id) === req.params.id || l.place_id === req.params.id,
+      (l) => String(l.id) === req.params.id || l.place_id === req.params.id,
     );
     if (idx === -1) return fail(res, "Lead not found", 404);
     const existing = list[idx].notes || "";
@@ -380,8 +372,7 @@ app.post("/api/scraper/results", (req, res) => {
     results.forEach((r) => {
       const exists = list.find(
         (l) =>
-          l.phone === r.phone ||
-          (l.company === r.company && l.city === r.city),
+          l.phone === r.phone || (l.company === r.company && l.city === r.city),
       );
       if (!exists) {
         list.push({
@@ -456,8 +447,7 @@ app.post("/api/agent/plans", async (req, res) => {
     plans.push(plan);
     fs.writeFileSync(plansFile, JSON.stringify(plans, null, 2));
     // Forward to FastAPI agent core if available
-    const agentUrl =
-      process.env.AGENT_CORE_URL || "http://localhost:8000";
+    const agentUrl = process.env.AGENT_CORE_URL || "http://localhost:8000";
     try {
       const resp = await axios.post(
         `${agentUrl}/chat`,

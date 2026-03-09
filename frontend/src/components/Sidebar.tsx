@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Users,
@@ -10,15 +10,15 @@ import {
   Mail,
   Code2,
   Zap,
-} from 'lucide-react';
+} from "lucide-react";
 
 const navItems = [
-  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/leads', label: 'Leads', icon: Users },
-  { href: '/scrapers', label: 'Scrapers', icon: Search },
-  { href: '/agents', label: 'Agents', icon: Bot },
-  { href: '/outreach', label: 'Outreach', icon: Mail },
-  { href: '/editor', label: 'Editor', icon: Code2 },
+  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/leads", label: "Leads", icon: Users },
+  { href: "/scrapers", label: "Scrapers", icon: Search },
+  { href: "/agents", label: "Agents", icon: Bot },
+  { href: "/outreach", label: "Outreach", icon: Mail },
+  { href: "/editor", label: "Editor", icon: Code2 },
 ];
 
 export default function Sidebar() {
@@ -47,8 +47,8 @@ export default function Sidebar() {
               href={href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 active
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                  ? "bg-blue-600 text-white"
+                  : "text-gray-300 hover:bg-gray-800 hover:text-white"
               }`}
             >
               <Icon className="w-4 h-4" />

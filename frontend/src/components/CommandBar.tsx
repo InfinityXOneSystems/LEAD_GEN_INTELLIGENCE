@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Terminal, Loader2, ArrowRight } from 'lucide-react';
-import toast from 'react-hot-toast';
-import { commandsApi } from '@/lib/api';
+import { useState } from "react";
+import { Terminal, Loader2, ArrowRight } from "lucide-react";
+import toast from "react-hot-toast";
+import { commandsApi } from "@/lib/api";
 
 export default function CommandBar() {
-  const [command, setCommand] = useState('');
+  const [command, setCommand] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -17,9 +17,9 @@ export default function CommandBar() {
     try {
       const { data } = await commandsApi.execute(command.trim());
       toast.success(`${data.action}: ${data.message}`);
-      setCommand('');
+      setCommand("");
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Command failed';
+      const message = err instanceof Error ? err.message : "Command failed";
       toast.error(message);
     } finally {
       setLoading(false);
@@ -45,7 +45,11 @@ export default function CommandBar() {
         disabled={loading || !command.trim()}
         className="shrink-0 p-1.5 text-blue-400 hover:text-blue-300 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
-        {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
+        {loading ? (
+          <Loader2 className="w-4 h-4 animate-spin" />
+        ) : (
+          <ArrowRight className="w-4 h-4" />
+        )}
       </button>
     </form>
   );
