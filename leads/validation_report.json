@@ -1,16 +1,237 @@
 {
   "summary": {
-    "total": 1852,
-    "valid": 1852,
+    "total": 2534,
+    "valid": 2534,
     "invalid": 0,
-    "unique": 1852,
-    "duplicates": 0,
-    "generated_at": "2026-03-09T20:47:55.517Z"
+    "unique": 2523,
+    "duplicates": 11,
+    "generated_at": "2026-03-09T22:22:59.020Z"
   },
   "invalid_count": 0,
-  "duplicate_count": 0,
+  "duplicate_count": 11,
   "samples": {
     "invalid": [],
-    "duplicates": []
+    "duplicates": [
+      {
+        "company": "Rockville Epoxy Pros",
+        "phone": "(815) 555-0101",
+        "email": "info@rockvilleepoxypros.com",
+        "website": "https://rockvilleepoxypros.com",
+        "address": "412 N Main St, Rockville, IL 61101",
+        "city": "Rockville",
+        "state": "IL",
+        "country": "USA",
+        "keyword": "epoxy flooring contractor",
+        "category": "Epoxy",
+        "rating": 4.8,
+        "reviews": 47,
+        "source": "google_maps",
+        "scrapedAt": "2026-03-07T10:12:42.953Z",
+        "_validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": [],
+          "score": 100
+        }
+      },
+      {
+        "company": "Prairie State Concrete & Coating",
+        "phone": "(815) 555-0202",
+        "email": "hello@prairiestatecoating.com",
+        "website": "https://prairiestatecoating.com",
+        "address": "829 E State St, Rockville, IL 61104",
+        "city": "Rockville",
+        "state": "IL",
+        "country": "USA",
+        "keyword": "concrete polishing contractor",
+        "category": "Concrete",
+        "rating": 4.6,
+        "reviews": 31,
+        "source": "google_maps",
+        "scrapedAt": "2026-03-07T10:13:12.953Z",
+        "_validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": [],
+          "score": 100
+        }
+      },
+      {
+        "company": "RockTown Floor Systems",
+        "phone": "(815) 555-0303",
+        "email": "contact@rocktownfloors.com",
+        "website": "https://rocktownfloors.com",
+        "address": "1540 Charles St, Rockville, IL 61104",
+        "city": "Rockville",
+        "state": "IL",
+        "country": "USA",
+        "keyword": "garage epoxy installer",
+        "category": "Epoxy",
+        "rating": 4.9,
+        "reviews": 62,
+        "source": "google_maps",
+        "scrapedAt": "2026-03-07T10:13:42.953Z",
+        "_validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": [],
+          "score": 100
+        }
+      },
+      {
+        "company": "Midwest Surface Solutions",
+        "phone": "(815) 555-0404",
+        "email": "sales@midwestsurface.com",
+        "website": "https://midwestsurface.com",
+        "address": "2003 11th St, Rockville, IL 61109",
+        "city": "Rockville",
+        "state": "IL",
+        "country": "USA",
+        "keyword": "surface preparation contractor",
+        "category": "SurfacePrep",
+        "rating": 4.4,
+        "reviews": 19,
+        "source": "yelp",
+        "scrapedAt": "2026-03-07T10:14:12.953Z",
+        "_validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": [],
+          "score": 100
+        }
+      },
+      {
+        "company": "Illini Polyaspartic Floors",
+        "phone": "(815) 555-0505",
+        "email": "quote@illinifloors.com",
+        "website": "https://illinifloors.com",
+        "address": "705 Ridge Ave, Rockville, IL 61102",
+        "city": "Rockville",
+        "state": "IL",
+        "country": "USA",
+        "keyword": "polyaspartic flooring",
+        "category": "Epoxy",
+        "rating": 4.7,
+        "reviews": 28,
+        "source": "google_maps",
+        "scrapedAt": "2026-03-07T10:14:42.953Z",
+        "_validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": [],
+          "score": 100
+        }
+      },
+      {
+        "company": "Rock River Flooring & Restoration",
+        "phone": "(815) 555-0606",
+        "email": "info@rockriverflooring.com",
+        "website": "https://rockriverflooring.com",
+        "address": "3310 Auburn St, Rockville, IL 61101",
+        "city": "Rockville",
+        "state": "IL",
+        "country": "USA",
+        "keyword": "commercial epoxy flooring",
+        "category": "Epoxy",
+        "rating": 4.5,
+        "reviews": 14,
+        "source": "yelp",
+        "scrapedAt": "2026-03-07T10:15:12.953Z",
+        "_validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": [],
+          "score": 100
+        }
+      },
+      {
+        "company": "Stateline Concrete Specialists",
+        "phone": "(815) 555-0707",
+        "email": "service@statelineconcrete.com",
+        "website": "https://statelineconcrete.com",
+        "address": "4120 Brendenwood Rd, Rockville, IL 61107",
+        "city": "Rockville",
+        "state": "IL",
+        "country": "USA",
+        "keyword": "concrete resurfacing contractor",
+        "category": "Concrete",
+        "rating": 4.3,
+        "reviews": 22,
+        "source": "google_maps",
+        "scrapedAt": "2026-03-07T10:15:42.953Z",
+        "_validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": [],
+          "score": 100
+        }
+      },
+      {
+        "company": "Forest City Industrial Coatings",
+        "phone": "(815) 555-0808",
+        "email": "bids@forestcitycoatings.com",
+        "website": "https://forestcitycoatings.com",
+        "address": "600 Seventh St, Rockville, IL 61104",
+        "city": "Rockville",
+        "state": "IL",
+        "country": "USA",
+        "keyword": "industrial epoxy flooring",
+        "category": "Epoxy",
+        "rating": 4.6,
+        "reviews": 35,
+        "source": "google_maps",
+        "scrapedAt": "2026-03-07T10:16:12.953Z",
+        "_validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": [],
+          "score": 100
+        }
+      },
+      {
+        "company": "Rockville Decorative Concrete Co.",
+        "phone": "(815) 555-0909",
+        "email": "info@rockvilledecorative.com",
+        "website": "https://rockvilledecorative.com",
+        "address": "1200 Kishwaukee St, Rockville, IL 61104",
+        "city": "Rockville",
+        "state": "IL",
+        "country": "USA",
+        "keyword": "decorative concrete contractor",
+        "category": "Concrete",
+        "rating": 4.7,
+        "reviews": 41,
+        "source": "yelp",
+        "scrapedAt": "2026-03-07T10:16:42.953Z",
+        "_validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": [],
+          "score": 100
+        }
+      },
+      {
+        "company": "Northern IL Floor Prep & Grind",
+        "phone": "(815) 555-1010",
+        "email": "estimate@nilfloorprep.com",
+        "website": "https://nilfloorprep.com",
+        "address": "2788 McFarland Rd, Rockville, IL 61107",
+        "city": "Rockville",
+        "state": "IL",
+        "country": "USA",
+        "keyword": "concrete grinding contractor",
+        "category": "Concrete",
+        "rating": 4.2,
+        "reviews": 11,
+        "source": "google_maps",
+        "scrapedAt": "2026-03-07T10:17:12.953Z",
+        "_validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": [],
+          "score": 100
+        }
+      }
+    ]
   }
 }

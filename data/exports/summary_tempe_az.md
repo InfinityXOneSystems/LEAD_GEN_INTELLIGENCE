@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-09
 
-**Total leads:** 322
+**Total leads:** 88
 
 | Tier | Count |
 |------|-------|
-| HOT  | 9  |
-| WARM | 65 |
-| COLD | 248 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -26,11 +26,11 @@
 | Tempe Flake & Chip Floor Systems | (480) 555-2010 | https://tempeflakefloors.com | 67 |
 | Superior Epoxy Floors |  |  | 55 |
 | Clean Air Epoxy |  |  | 55 |
-| Two Brothers Epoxy Flooring |  |  | 55 |
-| Epoxy Flooring Phoenix |  |  | 55 |
+| Elite Epoxy |  |  | 55 |
+| Easy Epoxy |  |  | 55 |
 | Quality Epoxy |  |  | 55 |
-| Ultimate Concrete Coatings & Epoxy Flooring |  |  | 55 |
-| Marvelous Epoxy Flooring |  |  | 55 |
-| Brilliant Epoxy Flooring Inc |  |  | 55 |
-| Epoxy Strong Phoenix |  |  | 55 |
-| Factory 1 AZ Epoxy Floor Coatings & Supplies |  |  | 55 |
+| Arizona Valley Epoxy |  |  | 55 |
+| Sun Valley Epoxy - Residential Epoxy Flooring |  |  | 55 |
+| Epoxy Flooring Phoenix |  |  | 55 |
+| State 48 Epoxy |  |  | 55 |
+| Two Brothers Epoxy Flooring |  |  | 55 |
