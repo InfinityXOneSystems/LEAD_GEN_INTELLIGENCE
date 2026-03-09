@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Terminal, Loader2, ArrowRight } from "lucide-react";
 import toast from "react-hot-toast";
-import { commandsApi } from "@/lib/api";
+import { agentApi } from "@/lib/api";
 
 export default function CommandBar() {
   const [command, setCommand] = useState("");
@@ -15,8 +15,8 @@ export default function CommandBar() {
 
     setLoading(true);
     try {
-      const { data } = await commandsApi.execute(command.trim());
-      toast.success(`${data.action}: ${data.message}`);
+      const { data } = await agentApi.execute(command.trim());
+      toast.success(`Plan ${data.id}: ${data.status}`);
       setCommand("");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Command failed";

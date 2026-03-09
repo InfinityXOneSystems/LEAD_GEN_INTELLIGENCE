@@ -32,8 +32,8 @@ export default function Sidebar() {
             <Zap className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="font-bold text-sm">LeadGen</p>
-            <p className="text-xs text-gray-400">Intelligence Platform</p>
+            <p className="font-bold text-sm">XPS Intelligence</p>
+            <p className="text-xs text-gray-400">Lead Intelligence Platform</p>
           </div>
         </div>
       </div>

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  Download,
   Plus,
   Trash2,
   ExternalLink,
@@ -11,13 +10,15 @@ import {
   ChevronRight,
 } from "lucide-react";
 import toast from "react-hot-toast";
-import { leadsApi, type Contractor } from "@/lib/api";
+import { leadsApi, type Lead } from "@/lib/api";
 
 function ScoreBadge({ score }: { score: number }) {
   const cls =
     score >= 80 ? "badge-green" : score >= 50 ? "badge-yellow" : "badge-red";
   return <span className={`badge ${cls}`}>{score.toFixed(0)}</span>;
 }
+
+const PAGE_SIZE = 50;
 
 export default function LeadsPage() {
   const qc = useQueryClient();
@@ -26,7 +27,7 @@ export default function LeadsPage() {
     industry: "",
     city: "",
     state: "",
-    min_score: "",
+    minScore: "",
   });
 
   const { data, isLoading } = useQuery({
@@ -34,11 +35,11 @@ export default function LeadsPage() {
     queryFn: () =>
       leadsApi
         .list({
-          page,
-          page_size: 50,
-          ...Object.fromEntries(
-            Object.entries(filters).filter(([, v]) => v !== ""),
-          ),
+          offset: (page - 1) * PAGE_SIZE,
+          limit: PAGE_SIZE,
+          ...(filters.city ? { city: filters.city } : {}),
+          ...(filters.state ? { state: filters.state } : {}),
+          ...(filters.minScore ? { minScore: filters.minScore } : {}),
         })
         .then((r) => r.data),
   });
@@ -49,26 +50,12 @@ export default function LeadsPage() {
       toast.success("Lead deleted");
       qc.invalidateQueries({ queryKey: ["leads"] });
     },
+    onError: (e: Error) => toast.error(e.message),
   });
 
-  const handleExport = async () => {
-    try {
-      const { data: blob } = await leadsApi.exportCsv(
-        Object.fromEntries(Object.entries(filters).filter(([, v]) => v !== "")),
-      );
-      const url = window.URL.createObjectURL(blob as Blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "leads.csv";
-      a.click();
-      window.URL.revokeObjectURL(url);
-      toast.success("Export started");
-    } catch {
-      toast.error("Export failed");
-    }
-  };
-
-  const totalPages = Math.ceil((data?.total ?? 0) / 50);
+  const leads = data?.leads ?? [];
+  const total = data?.total ?? 0;
+  const totalPages = Math.ceil(total / PAGE_SIZE);
 
   return (
     <div className="p-8 space-y-6">
@@ -76,33 +63,39 @@ export default function LeadsPage() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Lead Database</h1>
           <p className="text-gray-500 text-sm mt-1">
-            {data?.total?.toLocaleString() ?? 0} total leads
+            {total.toLocaleString()} total leads
           </p>
         </div>
         <div className="flex gap-3">
-          <button onClick={handleExport} className="btn-secondary">
-            <Download className="w-4 h-4" />
-            Export CSV
-          </button>
+          <a
+            href="/api/leads?limit=10000"
+            download="leads.json"
+            className="btn-secondary"
+          >
+            <Plus className="w-4 h-4" />
+            Export JSON
+          </a>
         </div>
       </div>
 
       {/* Filters */}
       <div className="card">
         <div className="grid grid-cols-4 gap-4">
-          {(["industry", "city", "state", "min_score"] as const).map((key) => (
+          {(["industry", "city", "state", "minScore"] as const).map((key) => (
             <div key={key}>
               <label className="block text-xs font-medium text-gray-600 mb-1 capitalize">
-                {key.replace("_", " ")}
+                {key === "minScore" ? "Min Score" : key}
               </label>
               <input
-                type={key === "min_score" ? "number" : "text"}
+                type={key === "minScore" ? "number" : "text"}
                 value={filters[key]}
                 onChange={(e) => {
                   setFilters((f) => ({ ...f, [key]: e.target.value }));
                   setPage(1);
                 }}
-                placeholder={key === "min_score" ? "0" : `Filter by ${key}...`}
+                placeholder={
+                  key === "minScore" ? "0" : `Filter by ${key}...`
+                }
                 className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -118,7 +111,7 @@ export default function LeadsPage() {
               <tr>
                 {[
                   "Company",
-                  "Owner",
+                  "Contact",
                   "City",
                   "State",
                   "Industry",
@@ -146,7 +139,7 @@ export default function LeadsPage() {
                     Loading...
                   </td>
                 </tr>
-              ) : data?.items.length === 0 ? (
+              ) : leads.length === 0 ? (
                 <tr>
                   <td
                     colSpan={9}
@@ -156,66 +149,72 @@ export default function LeadsPage() {
                   </td>
                 </tr>
               ) : (
-                data?.items.map((lead: Contractor) => (
-                  <tr
-                    key={lead.id}
-                    className="hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="px-4 py-3 font-medium text-gray-900 max-w-[180px] truncate">
-                      {lead.company_name}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {lead.owner_name ?? "—"}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {lead.city ?? "—"}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {lead.state ?? "—"}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600 max-w-[120px] truncate">
-                      {lead.industry ?? "—"}
-                    </td>
-                    <td className="px-4 py-3">
-                      <ScoreBadge score={lead.lead_score} />
-                    </td>
-                    <td className="px-4 py-3 text-gray-600 max-w-[160px] truncate">
-                      {lead.email ? (
-                        <a
-                          href={`mailto:${lead.email}`}
-                          className="text-blue-600 hover:underline"
-                        >
-                          {lead.email}
-                        </a>
-                      ) : (
-                        "—"
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {lead.phone ?? "—"}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-1">
-                        {lead.website && (
+                leads.map((lead: Lead, idx: number) => {
+                  const displayName =
+                    lead.company || lead.company_name || "—";
+                  const score = lead.lead_score ?? lead.score ?? 0;
+                  const leadId = String(lead.id ?? idx);
+                  return (
+                    <tr
+                      key={leadId}
+                      className="hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="px-4 py-3 font-medium text-gray-900 max-w-[180px] truncate">
+                        {displayName}
+                      </td>
+                      <td className="px-4 py-3 text-gray-600">
+                        {lead.contact_name ?? "—"}
+                      </td>
+                      <td className="px-4 py-3 text-gray-600">
+                        {lead.city ?? "—"}
+                      </td>
+                      <td className="px-4 py-3 text-gray-600">
+                        {lead.state ?? "—"}
+                      </td>
+                      <td className="px-4 py-3 text-gray-600 max-w-[120px] truncate">
+                        {lead.industry ?? lead.category ?? "—"}
+                      </td>
+                      <td className="px-4 py-3">
+                        <ScoreBadge score={score} />
+                      </td>
+                      <td className="px-4 py-3 text-gray-600 max-w-[160px] truncate">
+                        {lead.email ? (
                           <a
-                            href={lead.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+                            href={`mailto:${lead.email}`}
+                            className="text-blue-600 hover:underline"
                           >
-                            <ExternalLink className="w-3.5 h-3.5" />
+                            {lead.email}
                           </a>
+                        ) : (
+                          "—"
                         )}
-                        <button
-                          onClick={() => deleteMutation.mutate(lead.id)}
-                          className="p-1 text-gray-400 hover:text-red-500 transition-colors"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                      </td>
+                      <td className="px-4 py-3 text-gray-600">
+                        {lead.phone ?? "—"}
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-1">
+                          {lead.website && (
+                            <a
+                              href={lead.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                          )}
+                          <button
+                            onClick={() => deleteMutation.mutate(leadId)}
+                            className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>
@@ -225,7 +224,7 @@ export default function LeadsPage() {
         {totalPages > 1 && (
           <div className="px-4 py-3 border-t border-gray-100 flex items-center justify-between">
             <p className="text-sm text-gray-500">
-              Page {page} of {totalPages}
+              Page {page} of {totalPages} ({total.toLocaleString()} leads)
             </p>
             <div className="flex gap-2">
               <button
