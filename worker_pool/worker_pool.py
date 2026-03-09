@@ -249,18 +249,22 @@ class WorkerPool:
     async def _handle_failure(self, task: Task, exc: Exception, span: Any) -> None:
         span.set_tag("error", str(exc))
         record_metric("worker_pool.task.failed")
+        # max_retries = number of *extra* attempts after the first;
+        # total attempts = max_retries + 1 (one initial + N retries)
+        total_attempts = task.max_retries + 1
         logger.warning(
             "WorkerPool: task %s failed (attempt %d/%d): %s",
             task.task_id,
             task.attempt,
-            task.max_retries + 1,
+            total_attempts,
             exc,
         )
-        if task.attempt <= task.max_retries:
-            # Requeue with a slight delay
+        if task.attempt < total_attempts:
+            # Requeue with exponential back-off (capped at 30 s)
+            delay = min(0.5 * (2 ** (task.attempt - 1)), 30.0)
             task.status = TaskStatus.PENDING
             task.error = None
-            await asyncio.sleep(0.5 * task.attempt)
+            await asyncio.sleep(delay)
             await self._queue.put((task.priority, task))
         else:
             task.status = TaskStatus.DEAD

@@ -106,6 +106,11 @@ class TaskDispatcher:
     def __init__(self) -> None:
         self._handlers: Dict[str, _Handler] = {}
         self._rate_limiters: Dict[str, _TokenBucket] = {}
+        # Pre-initialise the default fallback bucket once so every unknown type
+        # shares it (preserving cross-call rate limiting) rather than getting a
+        # fresh full bucket on every dispatch.
+        _default_rate, _default_burst = _DEFAULT_RATE_LIMITS["default"]
+        self._default_bucket = _TokenBucket(_default_rate, _default_burst)
         self._setup_default_handlers()
 
     def _setup_default_handlers(self) -> None:
@@ -153,9 +158,7 @@ class TaskDispatcher:
             start = time.monotonic()
 
             # Rate-limit check
-            bucket = self._rate_limiters.get(
-                task_type, self._rate_limiters.get("default", _TokenBucket(5.0, 50.0))
-            )
+            bucket = self._rate_limiters.get(task_type, self._default_bucket)
             if not bucket.consume():
                 record_metric("dispatcher.rate_limited", tags={"type": task_type})
                 logger.warning("TaskDispatcher: rate limit exceeded for '%s'", task_type)

@@ -52,7 +52,7 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, Optional
 
 from observability import get_observability, record_metric, start_span
-from fault_tolerance import CircuitBreaker, Bulkhead, fault_tolerant
+from fault_tolerance import CircuitBreaker, Bulkhead, BulkheadFullError, fault_tolerant
 from task_dispatcher import get_dispatcher, DispatchResult
 from kernel import get_kernel
 
@@ -222,6 +222,16 @@ class RuntimeController:
             try:
                 async with self._bulkhead:
                     dispatch_result = await self._dispatcher.dispatch(payload)
+            except BulkheadFullError as exc:
+                # Capacity rejection — don't count against circuit breaker
+                record_metric("runtime_controller.bulkhead_rejected", tags={"type": task_type})
+                return ExecutionResponse(
+                    success=False,
+                    correlation_id=cid,
+                    error=str(exc),
+                    task_type=task_type,
+                    duration_ms=(time.monotonic() - start) * 1000,
+                )
             except Exception as exc:
                 circuit.record_failure()
                 return ExecutionResponse(
@@ -258,21 +268,12 @@ class RuntimeController:
             )
 
     def execute_sync(self, request: ExecutionRequest) -> ExecutionResponse:
-        """Synchronous wrapper — runs execute() in the current or a new event loop."""
-        try:
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
-                future = asyncio.ensure_future(self.execute(request))
-                # Allow caller to await; for true sync callers use run_until_complete
-                import concurrent.futures
-                with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
-                    return pool.submit(asyncio.run, self.execute(request)).result(
-                        timeout=request.timeout + 10
-                    )
-            else:
-                return loop.run_until_complete(self.execute(request))
-        except RuntimeError:
-            return asyncio.run(self.execute(request))
+        """Synchronous wrapper — always runs execute() in a new thread to avoid event loop conflicts."""
+        import concurrent.futures
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+            return pool.submit(asyncio.run, self.execute(request)).result(
+                timeout=request.timeout + 10
+            )
 
     # ------------------------------------------------------------------
     # Helpers

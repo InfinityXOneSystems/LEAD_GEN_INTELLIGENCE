@@ -210,9 +210,13 @@ class TestRetryPolicy(unittest.TestCase):
 
     def test_raises_after_exhaustion(self):
         from fault_tolerance import RetryPolicy, RetryExhausted
+
+        def always_fails():
+            raise ValueError("always")
+
         rp = RetryPolicy(max_retries=2, base_delay=0)
         with self.assertRaises(RetryExhausted):
-            rp.execute(lambda: (_ for _ in ()).throw(ValueError("always")))
+            rp.execute(always_fails)
 
     def test_async_success(self):
         from fault_tolerance import RetryPolicy

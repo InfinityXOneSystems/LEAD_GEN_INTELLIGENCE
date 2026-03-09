@@ -104,6 +104,10 @@ def _has_viewport(html: str) -> bool:
     return bool(re.search(r'name="viewport"', html, re.IGNORECASE))
 
 
+_MAX_TITLE_LENGTH = 60
+_MAX_META_DESC_LENGTH = 160
+
+
 def analyse_html(url: str, html: str, keyword: str = "") -> Dict[str, Any]:
     """Run a lightweight SEO analysis on *html* fetched from *url*."""
     title = _extract_tag(html, "title") or ""
@@ -127,17 +131,17 @@ def analyse_html(url: str, html: str, keyword: str = "") -> Dict[str, Any]:
         score += _SEO_WEIGHTS["title_present"]
         if keyword and keyword.lower() in title.lower():
             score += _SEO_WEIGHTS["keywords_in_title"]
-        if len(title) > 60:
-            issues.append("Title too long (>60 chars)")
-            suggestions.append("Shorten title to 50–60 characters")
+        if len(title) > _MAX_TITLE_LENGTH:
+            issues.append(f"Title too long (>{_MAX_TITLE_LENGTH} chars)")
+            suggestions.append(f"Shorten title to 50–{_MAX_TITLE_LENGTH} characters")
     else:
         issues.append("Missing <title> tag")
         suggestions.append("Add a descriptive <title> tag with primary keyword")
 
     if meta_desc:
         score += _SEO_WEIGHTS["meta_description"]
-        if len(meta_desc) > 160:
-            issues.append("Meta description too long (>160 chars)")
+        if len(meta_desc) > _MAX_META_DESC_LENGTH:
+            issues.append(f"Meta description too long (>{_MAX_META_DESC_LENGTH} chars)")
     else:
         issues.append("Missing meta description")
         suggestions.append("Add a meta description (120–160 characters)")

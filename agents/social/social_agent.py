@@ -128,6 +128,12 @@ class SocialAgent(BaseAgent):
 
     agent_name = "social_agent"
 
+    # Maximum number of URLs / leads to process per execution to keep
+    # individual runs bounded and polite.
+    _MAX_URLS_PER_RUN: int = 10
+    _MAX_LEADS_PER_RUN: int = 20
+    _MAX_COMPANIES_PER_RUN: int = 20
+
     async def execute(
         self,
         task: Dict[str, Any],
@@ -165,7 +171,7 @@ class SocialAgent(BaseAgent):
     async def _discover_from_urls(self, urls: List[str]) -> Dict[str, Any]:
         """Fetch each URL and extract social profiles."""
         results = []
-        for url in urls[:10]:
+        for url in urls[:self._MAX_URLS_PER_RUN]:
             result = await self._scrape_profiles(url)
             results.append(result)
             await asyncio.sleep(0.3)
@@ -229,7 +235,7 @@ class SocialAgent(BaseAgent):
                 leads = json.load(f)
 
             enriched_count = 0
-            for lead in leads[:20]:  # cap enrichment run
+            for lead in leads[:self._MAX_LEADS_PER_RUN]:  # cap enrichment run
                 website = lead.get("website", "")
                 if not website or not website.startswith("http"):
                     continue
@@ -248,7 +254,7 @@ class SocialAgent(BaseAgent):
                 "success": True,
                 "mode": "enrich",
                 "keyword": keyword,
-                "leads_processed": min(20, len(leads)),
+                "leads_processed": min(self._MAX_LEADS_PER_RUN, len(leads)),
                 "leads_enriched": enriched_count,
             }
         except Exception as exc:
@@ -257,7 +263,7 @@ class SocialAgent(BaseAgent):
     def _build_search_links(self, companies: List[str]) -> Dict[str, Any]:
         """Build search links for companies across platforms."""
         links = []
-        for company in companies[:20]:
+        for company in companies[:self._MAX_COMPANIES_PER_RUN]:
             company_links = {
                 "company": company,
                 "search_urls": {
