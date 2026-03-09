@@ -14,3 +14,9 @@ dist/
 
 # Exclude local configuration files
 *.local.json
+
+# Exclude git directory
+.git/
+
+# Exclude macOS metadata
+.DS_Store

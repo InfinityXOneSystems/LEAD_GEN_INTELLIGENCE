@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node api/gateway.js",
+    "start:worker": "python -m task_queue.worker",
     "test": "node --test tests/*.test.js",
     "score": "node agents/scoring/scoring_pipeline.js",
     "export": "node tools/export_snapshot.js",
