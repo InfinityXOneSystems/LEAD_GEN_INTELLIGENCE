@@ -103,8 +103,14 @@ LEAD_GEN_INTELLIGENCE/
 │   │   ├── invoice_generator.js
 │   │   ├── proposal_generator.js
 │   │   └── sms_campaign.js
+│   ├── parallel
+│   │   ├── __init__.py
+│   │   └── parallel_executor.py
 │   ├── parser
 │   │   └── maps_parser.js
+│   ├── prediction
+│   │   ├── __init__.py
+│   │   └── prediction_agent.py
 │   ├── proxy
 │   │   └── proxy_rotation.js
 │   ├── rest_api
@@ -130,6 +136,9 @@ LEAD_GEN_INTELLIGENCE/
 │   ├── shadow
 │   │   ├── __init__.py
 │   │   └── shadow_agent.py
+│   ├── simulation
+│   │   ├── __init__.py
+│   │   └── simulation_agent.py
 │   ├── supervisor
 │   │   ├── __init__.py
 │   │   └── supervisor_agent.py
@@ -211,7 +220,9 @@ LEAD_GEN_INTELLIGENCE/
 │   ├── CHANGELOG.md
 │   ├── DATA_GOVERNANCE.md
 │   ├── DECISIONS.md
+│   ├── DEVELOPER_GUIDE.md
 │   ├── GLOSSARY.md
+│   ├── IMPLEMENTATION_STATUS.md
 │   ├── INVESTOR_DECK_OUTLINE.md
 │   ├── INVESTOR_OVERVIEW.md
 │   ├── OPERATIONS.md
