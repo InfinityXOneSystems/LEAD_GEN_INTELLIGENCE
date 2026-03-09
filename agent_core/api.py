@@ -104,6 +104,20 @@ app.add_middleware(
 _state_manager = StateManager()
 _executor = Executor(state_manager=_state_manager)
 
+# Lazily initialise the runtime controller (avoids import-time side-effects)
+_runtime_controller = None
+
+
+def _get_runtime_controller():
+    global _runtime_controller
+    if _runtime_controller is None:
+        try:
+            from runtime.runtime_controller import RuntimeController
+            _runtime_controller = RuntimeController()
+        except Exception as exc:
+            logger.warning("RuntimeController unavailable: %s", exc)
+    return _runtime_controller
+
 
 # ---------------------------------------------------------------------------
 # Request / Response models
@@ -331,6 +345,20 @@ async def chat(request: ChatRequest) -> Dict[str, Any]:
     """
     logger.info("chat: message=%r", request.message)
     try:
+        # Route through RuntimeController first (frontend LLM command interface)
+        rc = _get_runtime_controller()
+        if rc is not None:
+            runtime_result = await rc.handle_command(request.message)
+            # Build chat-style response envelope
+            return {
+                "session_id": getattr(request, "session_id", None),
+                "message_id": runtime_result.get("run_id"),
+                "response": runtime_result.get("message", "Command processed via runtime controller"),
+                "action_taken": runtime_result.get("routing", {}).get("type", "unknown"),
+                "result": runtime_result,
+                "suggestions": [],
+            }
+        # Fallback to ChatInterpreter when RuntimeController is unavailable
         from .chat_interpreter import ChatInterpreter
 
         ci = ChatInterpreter()
@@ -591,3 +619,101 @@ async def update_settings(request: SettingsRequest) -> Dict[str, Any]:
         return {"success": True, "message": "Settings updated"}
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+# ---------------------------------------------------------------------------
+# Runtime Controller endpoints
+# ---------------------------------------------------------------------------
+
+
+@app.post("/agent/runtime/command")
+async def runtime_command(request: RunRequest) -> Dict[str, Any]:
+    """
+    Route a frontend LLM command through the RuntimeController.
+
+    This is the primary entry point for the frontend command interface.
+    Commands are routed via the command router, dispatched through the
+    task dispatcher, and executed in the worker pool with circuit-breaker
+    protection and observability.
+    """
+    rc = _get_runtime_controller()
+    if rc is None:
+        raise HTTPException(status_code=503, detail="RuntimeController unavailable")
+    result = await rc.handle_command(request.command, run_id=request.run_id)
+    return result
+
+
+@app.get("/agent/runtime/health")
+async def runtime_health() -> Dict[str, Any]:
+    """Return the runtime controller health snapshot."""
+    rc = _get_runtime_controller()
+    if rc is None:
+        return {"status": "unavailable", "error": "RuntimeController not initialised"}
+    return rc.get_health()
+
+
+@app.get("/agent/runtime/metrics")
+async def runtime_metrics() -> Dict[str, Any]:
+    """Return runtime observability metrics (commands, latency, errors)."""
+    try:
+        from runtime.observability import get_metrics
+        return {"success": True, "metrics": get_metrics()}
+    except Exception as exc:
+        return {"success": False, "error": str(exc), "metrics": {}}
+
+
+@app.get("/agent/runtime/trace")
+async def runtime_trace(limit: int = 50) -> Dict[str, Any]:
+    """Return the last *limit* runtime trace events."""
+    try:
+        from runtime.observability import get_trace
+        return {"success": True, "events": get_trace(limit=limit)}
+    except Exception as exc:
+        return {"success": False, "error": str(exc), "events": []}
+
+
+class AgentLifecycleRequest(BaseModel):
+    name: str
+
+
+@app.post("/agent/runtime/start")
+async def runtime_start_agent(request: AgentLifecycleRequest) -> Dict[str, Any]:
+    """Start a named agent instance via the RuntimeController."""
+    rc = _get_runtime_controller()
+    if rc is None:
+        raise HTTPException(status_code=503, detail="RuntimeController unavailable")
+    return await rc.start_agent(request.name)
+
+
+@app.post("/agent/runtime/stop")
+async def runtime_stop_agent(request: AgentLifecycleRequest) -> Dict[str, Any]:
+    """Stop a named agent instance via the RuntimeController."""
+    rc = _get_runtime_controller()
+    if rc is None:
+        raise HTTPException(status_code=503, detail="RuntimeController unavailable")
+    return await rc.stop_agent(request.name)
+
+
+@app.get("/health")
+async def system_health() -> Dict[str, Any]:
+    """
+    Top-level system health endpoint.
+
+    Returns a condensed health snapshot combining the agent API status
+    and the runtime controller health.
+    """
+    try:
+        from runtime.observability import health_snapshot
+        obs_health = health_snapshot()
+    except Exception:
+        obs_health = {}
+
+    rc = _get_runtime_controller()
+    runtime_health_data = rc.get_health() if rc else {"status": "unavailable"}
+
+    return {
+        "status": runtime_health_data.get("status", "ok"),
+        "service": "xps-intelligence-platform",
+        "observability": obs_health,
+        "runtime": runtime_health_data,
+    }
