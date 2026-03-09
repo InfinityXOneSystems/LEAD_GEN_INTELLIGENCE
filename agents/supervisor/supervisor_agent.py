@@ -136,6 +136,14 @@ class SupervisorAgent:
             from agents.interpreter.interpreter_agent import InterpreterAgent
             return await InterpreterAgent().run(command)
 
+        if task_type == "predict" or task_type == "forecast":
+            from agents.prediction.prediction_agent import PredictionAgent
+            return await PredictionAgent().run(command)
+
+        if task_type == "simulate" or task_type == "scenario":
+            from agents.simulation.simulation_agent import SimulationAgent
+            return await SimulationAgent().run(command)
+
         # Default: run full LangGraph pipeline
         from agent_core.langgraph_runtime import run_graph
         run_id = str(int(time.time() * 1000))
