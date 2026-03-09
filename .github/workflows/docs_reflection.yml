@@ -61,8 +61,14 @@ jobs:
 
           Updated by docs_reflection workflow.
           Files: ${{ steps.changes.outputs.files }}"
-          git pull --rebase --autostash origin main || true
-          git push
+          for attempt in 1 2 3; do
+            git push && break || {
+              echo "Push attempt $attempt failed — syncing remote changes..."
+              git fetch origin main
+              git merge -X ours --no-edit origin/main 2>/dev/null || true
+              sleep $((attempt * 5))
+            }
+          done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

@@ -79,6 +79,12 @@ jobs:
             echo "No new leads or progress changes to commit."
           else
             git commit -m "chore: update scraped leads [skip ci]"
-            git pull --rebase --autostash origin main || true
-            git push
+            for attempt in 1 2 3; do
+              git push && break || {
+                echo "Push attempt $attempt failed — syncing remote changes..."
+                git fetch origin main
+                git merge -X ours --no-edit origin/main 2>/dev/null || true
+                sleep $((attempt * 5))
+              }
+            done
           fi

@@ -16,6 +16,10 @@ data/leads/scored_leads.json
 data/leads/scoring_report.json
 data/leads/leads.json
 
+# Legacy frontend data directories (UI moved to xps-intelligence-frontend)
+dashboard/public/data/
+pages/data/
+
 # Build / cache artifacts
 dist/
 __pycache__/
@@ -46,3 +50,77 @@ data/sales/reminders.json
 data/logs/
 logs/*.jsonl
 logs/*.log
+
+# User-specific runtime settings (keep defaults in config/settings.default.json)
+config/settings.json
+media/output/
+
+# Runtime-generated files that should never be committed
+services/new_service.py
+agents/memory/state.json
+**/validation_report.json
+||||||| 0563472d
+# Python
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+*.egg-info/
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+nosetests.xml
+test-results/
+# Node / Next.js
+out/
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.npm
+.eslintcache
+# Environment files
+.env.*.local
+*.env
+# Docker
+.dockerignore
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+# Secrets / credentials
+credentials.json
+service-account.json
+*.pem
+*.key
+*.p12
+*.pfx
+# Alembic
+alembic/versions/*.pyc
+# Celery
+celerybeat-schedule
+celerybeat.pid
+# Logs
+logs/
+# OS
+Thumbs.db
+.AppleDouble
+.LSOverride
+# Temporary
+tmp/
+temp/
+.tmp/
+backend/test.db

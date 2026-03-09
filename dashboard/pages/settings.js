@@ -14,6 +14,13 @@ const SETTING_SECTIONS = [
     title: "🤖 LLM Configuration",
     fields: [
       {
+        key: "llm_provider",
+        label: "LLM Provider",
+        type: "select",
+        options: ["auto", "groq", "ollama", "openai"],
+        placeholder: "auto",
+      },
+      {
         key: "ollama_base_url",
         label: "Ollama Base URL",
         type: "text",
@@ -31,6 +38,18 @@ const SETTING_SECTIONS = [
         type: "text",
         placeholder: "codellama",
       },
+      {
+        key: "groq_model",
+        label: "Groq Model",
+        type: "text",
+        placeholder: "llama3-8b-8192",
+      },
+      {
+        key: "openai_model",
+        label: "OpenAI Model",
+        type: "text",
+        placeholder: "gpt-4o-mini",
+      },
     ],
   },
   {
@@ -41,6 +60,12 @@ const SETTING_SECTIONS = [
         label: "GitHub Token",
         type: "password",
         placeholder: "ghp_...",
+      },
+      {
+        key: "groq_api_key",
+        label: "Groq API Key",
+        type: "password",
+        placeholder: "gsk_...",
       },
       {
         key: "google_api_key",
@@ -228,28 +253,42 @@ export default function SettingsPage() {
           <div key={section.title} style={styles.section}>
             <h2 style={styles.sectionTitle}>{section.title}</h2>
             <div style={styles.fieldGrid}>
-              {section.fields.map(({ key, label, type, placeholder }) => (
-                <div key={key} style={styles.fieldRow}>
-                  <label style={styles.label}>{label}</label>
-                  {type === "checkbox" ? (
-                    <input
-                      type="checkbox"
-                      checked={Boolean(settings[key])}
-                      onChange={(e) => updateField(key, e.target.checked)}
-                      style={styles.checkbox}
-                    />
-                  ) : (
-                    <input
-                      type={type}
-                      value={settings[key] ?? ""}
-                      onChange={(e) => updateField(key, e.target.value)}
-                      placeholder={placeholder}
-                      style={styles.input}
-                      autoComplete="off"
-                    />
-                  )}
-                </div>
-              ))}
+              {section.fields.map(
+                ({ key, label, type, placeholder, options }) => (
+                  <div key={key} style={styles.fieldRow}>
+                    <label style={styles.label}>{label}</label>
+                    {type === "checkbox" ? (
+                      <input
+                        type="checkbox"
+                        checked={Boolean(settings[key])}
+                        onChange={(e) => updateField(key, e.target.checked)}
+                        style={styles.checkbox}
+                      />
+                    ) : type === "select" ? (
+                      <select
+                        value={settings[key] ?? (options && options[0]) ?? ""}
+                        onChange={(e) => updateField(key, e.target.value)}
+                        style={{ ...styles.input, cursor: "pointer" }}
+                      >
+                        {(options || []).map((opt) => (
+                          <option key={opt} value={opt}>
+                            {opt}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        type={type}
+                        value={settings[key] ?? ""}
+                        onChange={(e) => updateField(key, e.target.value)}
+                        placeholder={placeholder}
+                        style={styles.input}
+                        autoComplete="off"
+                      />
+                    )}
+                  </div>
+                ),
+              )}
             </div>
           </div>
         ))}

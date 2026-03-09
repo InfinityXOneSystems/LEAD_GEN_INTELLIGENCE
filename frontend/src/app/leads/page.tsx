@@ -1,0 +1,251 @@
+"use client";
+
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  Download,
+  Plus,
+  Trash2,
+  ExternalLink,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import toast from "react-hot-toast";
+import { leadsApi, type Contractor } from "@/lib/api";
+
+function ScoreBadge({ score }: { score: number }) {
+  const cls =
+    score >= 80 ? "badge-green" : score >= 50 ? "badge-yellow" : "badge-red";
+  return <span className={`badge ${cls}`}>{score.toFixed(0)}</span>;
+}
+
+export default function LeadsPage() {
+  const qc = useQueryClient();
+  const [page, setPage] = useState(1);
+  const [filters, setFilters] = useState({
+    industry: "",
+    city: "",
+    state: "",
+    min_score: "",
+  });
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["leads", page, filters],
+    queryFn: () =>
+      leadsApi
+        .list({
+          page,
+          page_size: 50,
+          ...Object.fromEntries(
+            Object.entries(filters).filter(([, v]) => v !== ""),
+          ),
+        })
+        .then((r) => r.data),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => leadsApi.delete(id),
+    onSuccess: () => {
+      toast.success("Lead deleted");
+      qc.invalidateQueries({ queryKey: ["leads"] });
+    },
+  });
+
+  const handleExport = async () => {
+    try {
+      const { data: blob } = await leadsApi.exportCsv(
+        Object.fromEntries(Object.entries(filters).filter(([, v]) => v !== "")),
+      );
+      const url = window.URL.createObjectURL(blob as Blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "leads.csv";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      toast.success("Export started");
+    } catch {
+      toast.error("Export failed");
+    }
+  };
+
+  const totalPages = Math.ceil((data?.total ?? 0) / 50);
+
+  return (
+    <div className="p-8 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Lead Database</h1>
+          <p className="text-gray-500 text-sm mt-1">
+            {data?.total?.toLocaleString() ?? 0} total leads
+          </p>
+        </div>
+        <div className="flex gap-3">
+          <button onClick={handleExport} className="btn-secondary">
+            <Download className="w-4 h-4" />
+            Export CSV
+          </button>
+        </div>
+      </div>
+
+      {/* Filters */}
+      <div className="card">
+        <div className="grid grid-cols-4 gap-4">
+          {(["industry", "city", "state", "min_score"] as const).map((key) => (
+            <div key={key}>
+              <label className="block text-xs font-medium text-gray-600 mb-1 capitalize">
+                {key.replace("_", " ")}
+              </label>
+              <input
+                type={key === "min_score" ? "number" : "text"}
+                value={filters[key]}
+                onChange={(e) => {
+                  setFilters((f) => ({ ...f, [key]: e.target.value }));
+                  setPage(1);
+                }}
+                placeholder={key === "min_score" ? "0" : `Filter by ${key}...`}
+                className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="card overflow-hidden p-0">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 border-b border-gray-100">
+              <tr>
+                {[
+                  "Company",
+                  "Owner",
+                  "City",
+                  "State",
+                  "Industry",
+                  "Score",
+                  "Email",
+                  "Phone",
+                  "",
+                ].map((h) => (
+                  <th
+                    key={h}
+                    className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {isLoading ? (
+                <tr>
+                  <td
+                    colSpan={9}
+                    className="px-4 py-8 text-center text-gray-400"
+                  >
+                    Loading...
+                  </td>
+                </tr>
+              ) : data?.items.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={9}
+                    className="px-4 py-8 text-center text-gray-400"
+                  >
+                    No leads found. Start a scrape job to collect leads.
+                  </td>
+                </tr>
+              ) : (
+                data?.items.map((lead: Contractor) => (
+                  <tr
+                    key={lead.id}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
+                    <td className="px-4 py-3 font-medium text-gray-900 max-w-[180px] truncate">
+                      {lead.company_name}
+                    </td>
+                    <td className="px-4 py-3 text-gray-600">
+                      {lead.owner_name ?? "—"}
+                    </td>
+                    <td className="px-4 py-3 text-gray-600">
+                      {lead.city ?? "—"}
+                    </td>
+                    <td className="px-4 py-3 text-gray-600">
+                      {lead.state ?? "—"}
+                    </td>
+                    <td className="px-4 py-3 text-gray-600 max-w-[120px] truncate">
+                      {lead.industry ?? "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      <ScoreBadge score={lead.lead_score} />
+                    </td>
+                    <td className="px-4 py-3 text-gray-600 max-w-[160px] truncate">
+                      {lead.email ? (
+                        <a
+                          href={`mailto:${lead.email}`}
+                          className="text-blue-600 hover:underline"
+                        >
+                          {lead.email}
+                        </a>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-gray-600">
+                      {lead.phone ?? "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-1">
+                        {lead.website && (
+                          <a
+                            href={lead.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                        <button
+                          onClick={() => deleteMutation.mutate(lead.id)}
+                          className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="px-4 py-3 border-t border-gray-100 flex items-center justify-between">
+            <p className="text-sm text-gray-500">
+              Page {page} of {totalPages}
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="btn-secondary py-1.5 px-2"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className="btn-secondary py-1.5 px-2"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
