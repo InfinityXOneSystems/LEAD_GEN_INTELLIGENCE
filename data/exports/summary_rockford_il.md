@@ -1,14 +1,14 @@
 # Lead Export — Rockford, IL
 
-> Generated: 2026-03-08
+> Generated: 2026-03-09
 
-**Total leads:** 453
+**Total leads:** 337
 
 | Tier | Count |
 |------|-------|
-| HOT  | 4  |
-| WARM | 95 |
-| COLD | 354 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
