@@ -89,6 +89,13 @@ class BrowserAgentHandler:
     ) -> Dict[str, Any]:
         """Extract structured data using CSS selectors."""
         selector = parameters.get("selector", "body")
+        # Validate selector to prevent overly complex/malicious inputs
+        if not isinstance(selector, str) or len(selector) > 200:
+            return {
+                "success": False,
+                "error": "Invalid selector: must be a non-empty string ≤ 200 characters",
+                "task_id": task_id,
+            }
         try:
             resp = requests.get(
                 url, timeout=15, headers={"User-Agent": "XPS-Browser/1.0"}

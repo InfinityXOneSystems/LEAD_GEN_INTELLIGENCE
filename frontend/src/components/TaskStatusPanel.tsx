@@ -47,42 +47,46 @@ export default function TaskStatusPanel({
 
     let active = true;
 
-    const fetchStatus = async () => {
+    const fetchStatus = async (): Promise<boolean> => {
       try {
         const data = await getTaskStatus(taskId);
-        if (!active) return;
+        if (!active) return false;
         setTask(data);
         setError(null);
 
-        if (data.status === "completed" || data.status === "failed") {
+        const isTerminal = data.status === "completed" || data.status === "failed";
+        if (isTerminal) {
           onComplete?.(data);
         }
+        return isTerminal;
       } catch (err: unknown) {
-        if (!active) return;
+        if (!active) return false;
         setError(err instanceof Error ? err.message : "Failed to fetch status");
+        return false;
       }
     };
 
     // Initial fetch
     fetchStatus();
 
-    // Poll until terminal state
+    // Poll until terminal state — use a recursive timeout to always check fresh status
     if (pollIntervalMs <= 0) return;
 
-    const timer = setInterval(async () => {
-      if (!active) return;
-      await fetchStatus();
-      // Stop polling on terminal state
-      if (task?.status === "completed" || task?.status === "failed") {
-        clearInterval(timer);
-      }
-    }, pollIntervalMs);
+    let timeoutId: ReturnType<typeof setTimeout>;
+    const scheduleNext = () => {
+      timeoutId = setTimeout(async () => {
+        if (!active) return;
+        const done = await fetchStatus();
+        if (!done) scheduleNext(); // reschedule only if not terminal
+      }, pollIntervalMs);
+    };
+    scheduleNext();
 
     return () => {
       active = false;
-      clearInterval(timer);
+      clearTimeout(timeoutId);
     };
-  }, [taskId, pollIntervalMs, onComplete, task?.status]);
+  }, [taskId, pollIntervalMs, onComplete]);
 
   if (error) {
     return (

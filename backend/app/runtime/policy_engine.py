@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 
 # Rate limiting: max commands per minute per "client" (IP or identifier)
 DEFAULT_RATE_LIMIT = 60  # per minute
+MAX_PARAMETERS_SIZE = 65536  # 64 KB — prevents oversized request payloads
 _rate_store: Dict[str, list] = {}
 _rate_lock = threading.Lock()
 
@@ -73,7 +74,7 @@ def enforce(
         import json
 
         raw = json.dumps(parameters)
-        if len(raw) > 65536:
+        if len(raw) > MAX_PARAMETERS_SIZE:
             raise PolicyViolation(
                 "parameters payload exceeds maximum allowed size (64 KB)"
             )

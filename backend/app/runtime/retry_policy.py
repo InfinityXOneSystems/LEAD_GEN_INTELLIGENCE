@@ -59,6 +59,8 @@ def retry(
             last_exc = exc
             if attempt >= max_retries:
                 break
+            # Apply ±10% jitter to avoid thundering herd
+            # Generates a value in [-0.1 * delay, +0.1 * delay]
             jitter = delay * 0.1 * (2 * (hash(str(exc)) % 10) / 10 - 1)
             sleep_time = min(delay + jitter, max_delay)
             logger.warning(

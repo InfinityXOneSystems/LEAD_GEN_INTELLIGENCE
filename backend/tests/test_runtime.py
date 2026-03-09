@@ -236,7 +236,7 @@ def test_sandbox_executor_timeout():
     executor = SandboxExecutor(task_id="test-sandbox-timeout")
 
     def slow_fn(**kwargs):
-        time.sleep(60)
+        time.sleep(10)  # Much longer than timeout=1; no need for 60s
         return {}
 
     with pytest.raises(SandboxTimeoutError):

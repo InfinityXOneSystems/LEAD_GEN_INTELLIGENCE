@@ -7,11 +7,11 @@ Monitors worker health and restarts dead workers.
 import logging
 import threading
 import time
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
-_supervisor_thread: threading.Thread = None  # type: ignore[assignment]
+_supervisor_thread: Optional[threading.Thread] = None
 _stop_event = threading.Event()
 _worker_stats: List[Dict[str, Any]] = []
 _stats_lock = threading.Lock()

@@ -6,8 +6,10 @@ Thread-safe in-memory task state store with optional Redis persistence.
 
 import threading
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
+
+MAX_LOGS = 500
 
 
 class TaskState:
@@ -31,19 +33,19 @@ class TaskState:
         self.logs: List[str] = []
         self.result: Optional[Dict[str, Any]] = None
         self.error: Optional[str] = None
-        self.created_at = datetime.utcnow().isoformat()
+        self.created_at = datetime.now(timezone.utc).isoformat()
         self.updated_at = self.created_at
 
     def add_log(self, message: str) -> None:
-        entry = f"[{datetime.utcnow().isoformat()}] {message}"
+        entry = f"[{datetime.now(timezone.utc).isoformat()}] {message}"
         self.logs.append(entry)
-        if len(self.logs) > 500:
-            self.logs = self.logs[-500:]
-        self.updated_at = datetime.utcnow().isoformat()
+        if len(self.logs) > MAX_LOGS:
+            self.logs = self.logs[-MAX_LOGS:]
+        self.updated_at = datetime.now(timezone.utc).isoformat()
 
     def set_status(self, status: str) -> None:
         self.status = status
-        self.updated_at = datetime.utcnow().isoformat()
+        self.updated_at = datetime.now(timezone.utc).isoformat()
 
     def to_dict(self) -> Dict[str, Any]:
         return {

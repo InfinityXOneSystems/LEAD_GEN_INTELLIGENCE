@@ -11,22 +11,13 @@ from typing import Any, Dict, List
 def _check_database() -> Dict[str, Any]:
     """Check database connectivity."""
     try:
+        from sqlalchemy import text
+
         from app.database import engine
 
         with engine.connect() as conn:
-            conn.execute(
-                engine.dialect.statement_compiler(engine.dialect, None).visit_text(
-                    "SELECT 1"
-                )
-            )
+            conn.execute(text("SELECT 1"))
         return {"name": "database", "status": "healthy"}
-    except Exception:
-        pass
-    # Fallback: just import check
-    try:
-        from app.database import engine  # noqa: F811
-
-        return {"name": "database", "status": "healthy", "note": "import ok"}
     except Exception as exc:
         return {"name": "database", "status": "unhealthy", "error": str(exc)}
 
