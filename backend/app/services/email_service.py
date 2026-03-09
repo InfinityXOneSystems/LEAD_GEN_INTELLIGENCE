@@ -1,5 +1,6 @@
+from typing import List
+
 import structlog
-from typing import List, Optional
 
 logger = structlog.get_logger()
 
@@ -37,6 +38,7 @@ The LeadGen Team
 class EmailService:
     def __init__(self):
         from app.config import settings
+
         self.api_key = settings.SENDGRID_API_KEY
         self.from_email = "outreach@leadgen.io"
         self.from_name = "LeadGen Intelligence"
@@ -78,7 +80,7 @@ class EmailService:
     def _send(self, to_email: str, to_name: str, subject: str, body: str) -> bool:
         try:
             import sendgrid
-            from sendgrid.helpers.mail import Mail, Email, To, Content
+            from sendgrid.helpers.mail import Content, Email, Mail, To
 
             sg = sendgrid.SendGridAPIClient(api_key=self.api_key)
             message = Mail(

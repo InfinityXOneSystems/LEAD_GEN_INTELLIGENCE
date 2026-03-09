@@ -2,10 +2,10 @@ from datetime import datetime
 from typing import List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, EmailStr, Field, field_validator
-
+from pydantic import BaseModel, Field
 
 # ─── Contractor ────────────────────────────────────────────────────────────────
+
 
 class ContractorBase(BaseModel):
     company_name: str = Field(..., min_length=1, max_length=255)
@@ -56,6 +56,7 @@ class ContractorResponse(ContractorBase):
 
 # ─── Contact ───────────────────────────────────────────────────────────────────
 
+
 class ContactCreate(BaseModel):
     contractor_id: UUID
     name: Optional[str] = None
@@ -74,6 +75,7 @@ class ContactResponse(ContactCreate):
 
 # ─── Industry ──────────────────────────────────────────────────────────────────
 
+
 class IndustryCreate(BaseModel):
     name: str
     slug: str
@@ -88,6 +90,7 @@ class IndustryResponse(IndustryCreate):
 
 
 # ─── ScrapeJob ─────────────────────────────────────────────────────────────────
+
 
 class ScrapeJobCreate(BaseModel):
     query: Optional[str] = None
@@ -111,6 +114,7 @@ class ScrapeJobResponse(ScrapeJobCreate):
 
 # ─── OutreachLog ───────────────────────────────────────────────────────────────
 
+
 class OutreachLogCreate(BaseModel):
     contractor_id: UUID
     channel: str
@@ -129,6 +133,7 @@ class OutreachLogResponse(OutreachLogCreate):
 
 # ─── LeadScore ─────────────────────────────────────────────────────────────────
 
+
 class LeadScoreResponse(BaseModel):
     id: UUID
     contractor_id: UUID
@@ -141,6 +146,7 @@ class LeadScoreResponse(BaseModel):
 
 # ─── Pagination ────────────────────────────────────────────────────────────────
 
+
 class PaginatedResponse(BaseModel):
     total: int
     page: int
@@ -149,6 +155,7 @@ class PaginatedResponse(BaseModel):
 
 
 # ─── Command ───────────────────────────────────────────────────────────────────
+
 
 class CommandRequest(BaseModel):
     command: str = Field(..., min_length=1, max_length=1000)

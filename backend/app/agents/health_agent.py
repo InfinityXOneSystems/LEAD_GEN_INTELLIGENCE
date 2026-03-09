@@ -32,6 +32,7 @@ class HealthAgent(BaseAgent):
     def _check_database(self) -> dict:
         try:
             from app.database import SessionLocal
+
             db = SessionLocal()
             db.execute(__import__("sqlalchemy").text("SELECT 1"))
             db.close()
@@ -41,8 +42,10 @@ class HealthAgent(BaseAgent):
 
     def _check_redis(self) -> dict:
         try:
-            from app.config import settings
             import redis as redis_lib
+
+            from app.config import settings
+
             r = redis_lib.from_url(settings.REDIS_URL)
             r.ping()
             return {"healthy": True, "message": "Connected"}
@@ -53,12 +56,9 @@ class HealthAgent(BaseAgent):
         try:
             from app.database import SessionLocal
             from app.models.contractor import ScrapeJob
+
             db = SessionLocal()
-            stuck = (
-                db.query(ScrapeJob)
-                .filter(ScrapeJob.status == "running")
-                .count()
-            )
+            stuck = db.query(ScrapeJob).filter(ScrapeJob.status == "running").count()
             db.close()
             return {"healthy": True, "running_jobs": stuck}
         except Exception as e:
@@ -66,6 +66,7 @@ class HealthAgent(BaseAgent):
 
     def _open_github_issue(self, health: dict) -> None:
         import httpx
+
         from app.config import settings
 
         issues = [k for k, v in health.items() if not v.get("healthy")]

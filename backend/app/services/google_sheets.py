@@ -1,5 +1,6 @@
+from typing import Any, List
+
 import structlog
-from typing import List, Any
 
 logger = structlog.get_logger()
 
@@ -7,6 +8,7 @@ logger = structlog.get_logger()
 class GoogleSheetsService:
     def __init__(self):
         from app.config import settings
+
         self.credentials_path = settings.GOOGLE_SHEETS_CREDENTIALS
         self._service = None
 
@@ -31,18 +33,39 @@ class GoogleSheetsService:
         try:
             service = self._get_service()
             headers = [
-                "Company", "Owner", "Phone", "Email", "Website",
-                "City", "State", "Industry", "Rating", "Reviews",
-                "Lead Score", "Source", "Created At",
+                "Company",
+                "Owner",
+                "Phone",
+                "Email",
+                "Website",
+                "City",
+                "State",
+                "Industry",
+                "Rating",
+                "Reviews",
+                "Lead Score",
+                "Source",
+                "Created At",
             ]
             rows = [headers]
             for lead in leads:
-                rows.append([
-                    lead.company_name, lead.owner_name, lead.phone,
-                    lead.email, lead.website, lead.city, lead.state,
-                    lead.industry, lead.rating, lead.reviews,
-                    lead.lead_score, lead.source, str(lead.created_at),
-                ])
+                rows.append(
+                    [
+                        lead.company_name,
+                        lead.owner_name,
+                        lead.phone,
+                        lead.email,
+                        lead.website,
+                        lead.city,
+                        lead.state,
+                        lead.industry,
+                        lead.rating,
+                        lead.reviews,
+                        lead.lead_score,
+                        lead.source,
+                        str(lead.created_at),
+                    ]
+                )
 
             service.spreadsheets().values().update(
                 spreadsheetId=sheet_id,
@@ -59,9 +82,12 @@ class GoogleSheetsService:
     def sync_updates(self, sheet_id: str, db) -> int:
         try:
             service = self._get_service()
-            result = service.spreadsheets().values().get(
-                spreadsheetId=sheet_id, range="Sheet1!A2:M"
-            ).execute()
+            result = (
+                service.spreadsheets()
+                .values()
+                .get(spreadsheetId=sheet_id, range="Sheet1!A2:M")
+                .execute()
+            )
             rows = result.get("values", [])
             logger.info("sheets_sync", rows=len(rows))
             return len(rows)

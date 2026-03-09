@@ -1,6 +1,3 @@
-import pytest
-from unittest.mock import patch, MagicMock
-
 from app.scrapers.base import BaseScraper
 from app.scrapers.website import WebsiteCrawler
 from app.services.lead_scorer import LeadScorer
@@ -52,6 +49,7 @@ def test_website_crawler_extract_phones():
 
 def test_website_crawler_extract_owner_name():
     from bs4 import BeautifulSoup
+
     crawler = WebsiteCrawler()
     html = "<p>Owner: John Smith runs this business</p>"
     soup = BeautifulSoup(html, "html.parser")

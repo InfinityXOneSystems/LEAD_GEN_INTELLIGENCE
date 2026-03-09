@@ -14,9 +14,9 @@ class OutreachAgent(BaseAgent):
         super().__init__("outreach_agent")
 
     def run(self) -> None:
+        from app.config import settings
         from app.database import SessionLocal
         from app.models.contractor import Contractor, OutreachLog
-        from app.config import settings
 
         if not settings.SENDGRID_API_KEY:
             self.log("SendGrid API key not configured, skipping outreach", "warning")
@@ -32,7 +32,9 @@ class OutreachAgent(BaseAgent):
             )
 
             if sent_today >= DAILY_SEND_LIMIT:
-                self.log(f"Daily limit reached ({sent_today}/{DAILY_SEND_LIMIT})", "warning")
+                self.log(
+                    f"Daily limit reached ({sent_today}/{DAILY_SEND_LIMIT})", "warning"
+                )
                 return
 
             remaining = DAILY_SEND_LIMIT - sent_today
@@ -53,6 +55,7 @@ class OutreachAgent(BaseAgent):
             self.log(f"Found {len(candidates)} candidates for outreach")
 
             from app.services.email_service import EmailService
+
             email_svc = EmailService()
 
             sent = 0

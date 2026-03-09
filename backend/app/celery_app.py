@@ -1,5 +1,4 @@
 from celery import Celery
-from celery.schedules import crontab
 
 from app.config import settings
 
@@ -66,30 +65,35 @@ def run_scrape_job(self, job_id: str):
 @celery_app.task(name="app.celery_app.run_scraper_agent")
 def run_scraper_agent():
     from app.agents.scraper_agent import ScraperAgent
+
     ScraperAgent().run()
 
 
 @celery_app.task(name="app.celery_app.run_enrichment_agent")
 def run_enrichment_agent():
     from app.agents.enrichment_agent import EnrichmentAgent
+
     EnrichmentAgent().run()
 
 
 @celery_app.task(name="app.celery_app.run_database_agent")
 def run_database_agent():
     from app.agents.database_agent import DatabaseAgent
+
     DatabaseAgent().run()
 
 
 @celery_app.task(name="app.celery_app.run_outreach_agent")
 def run_outreach_agent():
     from app.agents.outreach_agent import OutreachAgent
+
     OutreachAgent().run()
 
 
 @celery_app.task(name="app.celery_app.run_health_agent")
 def run_health_agent():
     from app.agents.health_agent import HealthAgent
+
     HealthAgent().run()
 
 

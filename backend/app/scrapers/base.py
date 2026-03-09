@@ -46,15 +46,21 @@ class BaseScraper(abc.ABC):
         wait=wait_exponential(multiplier=1, min=2, max=10),
         reraise=True,
     )
-    def fetch(self, url: str, params: Optional[Dict] = None, timeout: int = 30) -> httpx.Response:
-        with httpx.Client(headers=self.get_headers(), follow_redirects=True, timeout=timeout) as client:
+    def fetch(
+        self, url: str, params: Optional[Dict] = None, timeout: int = 30
+    ) -> httpx.Response:
+        with httpx.Client(
+            headers=self.get_headers(), follow_redirects=True, timeout=timeout
+        ) as client:
             self.random_delay()
             response = client.get(url, params=params)
             response.raise_for_status()
             return response
 
     @abc.abstractmethod
-    def scrape(self, query: str, city: str = "", state: str = "") -> List[Dict[str, Any]]:
+    def scrape(
+        self, query: str, city: str = "", state: str = ""
+    ) -> List[Dict[str, Any]]:
         pass
 
     @abc.abstractmethod
@@ -89,7 +95,9 @@ class BaseScraper(abc.ABC):
                 existing.lead_score = scorer.score(existing)
                 continue
 
-            contractor = Contractor(**{k: v for k, v in item.items() if hasattr(Contractor, k)})
+            contractor = Contractor(
+                **{k: v for k, v in item.items() if hasattr(Contractor, k)}
+            )
             contractor.lead_score = scorer.score(contractor)
             db_session.add(contractor)
             saved += 1

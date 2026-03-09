@@ -1,4 +1,5 @@
 import pytest
+
 from app.services.command_parser import CommandParser
 
 

@@ -1,8 +1,8 @@
+from app.models.contractor import Industry  # noqa: F401
 from app.models.contractor import (  # noqa: F401
-    Contractor,
     Contact,
-    Industry,
+    Contractor,
     LeadScore,
-    ScrapeJob,
     OutreachLog,
+    ScrapeJob,
 )

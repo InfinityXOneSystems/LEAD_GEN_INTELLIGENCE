@@ -1,6 +1,5 @@
 import re
 from typing import Any, Dict, List
-from urllib.parse import quote_plus
 
 import structlog
 from bs4 import BeautifulSoup
@@ -15,9 +14,13 @@ class DirectoryScraper(BaseScraper):
 
     YELLOWPAGES_URL = "https://www.yellowpages.com/search"
 
-    def scrape(self, query: str, city: str = "", state: str = "") -> List[Dict[str, Any]]:
+    def scrape(
+        self, query: str, city: str = "", state: str = ""
+    ) -> List[Dict[str, Any]]:
         location = f"{city}, {state}" if city and state else state or city
-        self.logger.info("scraping_directory", source="yellowpages", query=query, location=location)
+        self.logger.info(
+            "scraping_directory", source="yellowpages", query=query, location=location
+        )
 
         try:
             params = {"search_terms": query, "geo_location_terms": location}
@@ -31,13 +34,19 @@ class DirectoryScraper(BaseScraper):
         soup = BeautifulSoup(raw_content, "html.parser")
         results = []
 
-        listings = soup.find_all("div", class_=re.compile(r"result|listing|business", re.I))
+        listings = soup.find_all(
+            "div", class_=re.compile(r"result|listing|business", re.I)
+        )
         for listing in listings[:50]:
             try:
-                name_el = listing.find(["h2", "h3", "a"], class_=re.compile(r"name|title|business", re.I))
+                name_el = listing.find(
+                    ["h2", "h3", "a"], class_=re.compile(r"name|title|business", re.I)
+                )
                 phone_el = listing.find(class_=re.compile(r"phone|tel", re.I))
                 addr_el = listing.find(class_=re.compile(r"address|location", re.I))
-                website_el = listing.find("a", href=re.compile(r"^https?://(?!www\.yellowpages)", re.I))
+                website_el = listing.find(
+                    "a", href=re.compile(r"^https?://(?!www\.yellowpages)", re.I)
+                )
 
                 if not name_el:
                     continue
