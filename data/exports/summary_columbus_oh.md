@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-09
 
-**Total leads:** 224
+**Total leads:** 322
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
-| COLD | 0 |
+| HOT  | 9  |
+| WARM | 59 |
+| COLD | 254 |
 
 ## Top Leads
 
@@ -33,4 +33,4 @@
 | Global Epoxy LLC |  |  | 55 |
 | Ideal Garage Floor Coatings |  |  | 55 |
 | Infinite Designs Epoxy Solutions of North Columbus |  |  | 55 |
-| Hitchcock Surface Prep |  |  | 53 |
+| J&G Epoxy Coatings |  |  | 55 |
