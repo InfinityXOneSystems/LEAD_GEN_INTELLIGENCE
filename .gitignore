@@ -59,7 +59,7 @@ media/output/
 services/new_service.py
 agents/memory/state.json
 **/validation_report.json
-||||||| 0563472d
+
 # Python
 *.py[cod]
 *$py.class
@@ -83,6 +83,7 @@ coverage.xml
 *.cover
 nosetests.xml
 test-results/
+
 # Node / Next.js
 out/
 yarn-debug.log*
@@ -90,17 +91,21 @@ yarn-error.log*
 .pnpm-debug.log*
 .npm
 .eslintcache
+
 # Environment files
 .env.*.local
 *.env
+
 # Docker
 .dockerignore
+
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
+
 # Secrets / credentials
 credentials.json
 service-account.json
@@ -108,21 +113,28 @@ service-account.json
 *.key
 *.p12
 *.pfx
+
 # Alembic
 alembic/versions/*.pyc
+
 # Celery
 celerybeat-schedule
 celerybeat.pid
+
 # Logs
 logs/
+
 # OS
 Thumbs.db
 .AppleDouble
 .LSOverride
+
 # Temporary
 tmp/
 temp/
 .tmp/
+
+# Backend test databases
 backend/test.db
 backend/test_admin.db
 backend/test*.db
