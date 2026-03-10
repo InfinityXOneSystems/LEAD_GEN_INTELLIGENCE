@@ -100,6 +100,23 @@ _ROUTES: list[dict[str, Any]] = [
         "agent": "social",
         "type": "social",
     },
+        "keywords": ["seo", "analyse website", "analyze website", "website analysis",
+                     "meta tags", "page title", "contact info", "website seo"],
+        "agent": "seo_agent",
+        "type": "seo",
+    },
+    {
+        "keywords": ["social media", "facebook", "instagram", "linkedin", "twitter",
+                     "social profile", "find profile", "social presence"],
+        "agent": "social_media_agent",
+        "type": "social",
+    },
+    {
+        "keywords": ["browser", "automate browser", "screenshot", "fill form", "type text",
+                     "click button", "navigate to", "scroll page", "extract page"],
+        "agent": "browser_automation_agent",
+        "type": "browser",
+    },
 ]
 
 # ---------------------------------------------------------------------------

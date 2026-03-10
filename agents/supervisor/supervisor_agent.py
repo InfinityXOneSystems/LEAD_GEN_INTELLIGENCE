@@ -151,6 +151,12 @@ class SupervisorAgent:
         if task_type == "social":
             from agents.social.social_agent import SocialAgent
             return await SocialAgent().run(command)
+            from agents.social.social_media_agent import SocialMediaAgent
+            return await SocialMediaAgent().run(command)
+
+        if task_type in ("browser", "automation"):
+            from agents.browser.browser_automation_agent import BrowserAutomationAgent
+            return await BrowserAutomationAgent().run(command)
 
         # Default: run full LangGraph pipeline
         from agent_core.langgraph_runtime import run_graph
