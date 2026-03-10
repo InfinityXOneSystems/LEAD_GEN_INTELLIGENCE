@@ -1,21 +1,12 @@
 {
-  "generated": "2026-03-09T19:09:29.299Z",
-  "total": 2,
+  "generated": "2026-03-10T01:52:54.085Z",
+  "total": 1,
   "summary": {
-    "HIGH": 1,
+    "HIGH": 0,
     "MEDIUM": 1,
     "LOW": 0
   },
   "recommendations": [
-    {
-      "id": "SR-001",
-      "severity": "HIGH",
-      "category": "pipeline",
-      "title": "No leads in pipeline",
-      "description": "data/leads/scored_leads.json is empty or missing. The scraper pipeline has not produced results.",
-      "action": "Run the lead scraper pipeline: trigger `.github/workflows/lead_scraper.yml` or run `npm run score` locally.",
-      "fingerprint": "sr-no-leads-in-pipeline"
-    },
     {
       "id": "SR-003",
       "severity": "MEDIUM",
