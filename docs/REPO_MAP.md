@@ -280,8 +280,6 @@ LEAD_GEN_INTELLIGENCE/
 │   │   ├── duplicates.json
 │   │   ├── invalid_leads.json
 │   │   ├── leads.json
-│   │   ├── scored_leads.json
-│   │   ├── scoring_report.json
 │   │   ├── validated_leads.json
 │   │   └── validation_report.json
 │   ├── national

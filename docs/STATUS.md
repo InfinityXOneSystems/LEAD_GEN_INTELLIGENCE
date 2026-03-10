@@ -16,9 +16,7 @@
 
 | Tier | Count |
 |---|---|
-| HOT | 25 |
-| WARM | 239 |
-| COLD | 2280 |
+| _No data_ | — |
 
 ---
 

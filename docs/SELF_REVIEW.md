@@ -10,12 +10,12 @@
 
 | Metric | Value |
 |---|---|
-| Total recommendations | 1 |
-| HIGH severity | 0 |
+| Total recommendations | 2 |
+| HIGH severity | 1 |
 | MEDIUM severity | 1 |
 | LOW severity | 0 |
 | Open TODO items | 5 |
-| Leads in pipeline | 2544 |
+| Leads in pipeline | 0 |
 
 ---
 
@@ -23,7 +23,11 @@
 
 ### HIGH Severity
 
-_None found._ ✅
+#### SR-001: No leads in pipeline
+
+**Category:** pipeline  
+**Description:** data/leads/scored_leads.json is empty or missing. The scraper pipeline has not produced results.  
+**Recommended action:** Run the lead scraper pipeline: trigger `.github/workflows/lead_scraper.yml` or run `npm run score` locally.
 
 
 ### MEDIUM Severity
