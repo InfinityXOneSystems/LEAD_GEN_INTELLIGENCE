@@ -50,16 +50,14 @@ def trace(operation: str, **tags: Any) -> Generator[str, None, None]:
     }
     try:
         yield trace_id
-        span["completed_at"] = datetime.now(timezone.utc).isoformat()
-        span["duration_ms"] = (
-            datetime.now(timezone.utc) - start
-        ).total_seconds() * 1000
+        end = datetime.now(timezone.utc)
+        span["completed_at"] = end.isoformat()
+        span["duration_ms"] = (end - start).total_seconds() * 1000
     except Exception as exc:
         span["error"] = str(exc)
-        span["completed_at"] = datetime.now(timezone.utc).isoformat()
-        span["duration_ms"] = (
-            datetime.now(timezone.utc) - start
-        ).total_seconds() * 1000
+        end = datetime.now(timezone.utc)
+        span["completed_at"] = end.isoformat()
+        span["duration_ms"] = (end - start).total_seconds() * 1000
         raise
     finally:
         _local.trace_id = None

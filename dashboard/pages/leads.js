@@ -20,10 +20,6 @@ export default function LeadsPage() {
   const [page, setPage] = useState(0);
   const PAGE_SIZE = 50;
 
-  useEffect(() => {
-    fetchLeads();
-  }, [page, cityFilter, minScore]); // eslint-disable-line react-hooks/exhaustive-deps
-
   const fetchLeads = useCallback(async () => {
     setLoading(true);
     try {
@@ -43,7 +39,11 @@ export default function LeadsPage() {
     } finally {
       setLoading(false);
     }
-  }, [page, cityFilter, minScore]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [page, cityFilter, minScore]);
+
+  useEffect(() => {
+    fetchLeads();
+  }, [fetchLeads]);
 
   const filtered = search
     ? leads.filter(

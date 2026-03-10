@@ -32,6 +32,10 @@ _BLOCKED_PATTERNS: List[re.Pattern] = [
     re.compile(r"__import__", re.I),
     re.compile(r"\beval\s*\(", re.I),
     re.compile(r"\bexec\s*\(", re.I),
+    re.compile(r"\bcompile\s*\(", re.I),
+    re.compile(r"\bglobals\s*\(", re.I),
+    re.compile(r"\blocals\s*\(", re.I),
+    re.compile(r"\bvars\s*\(", re.I),
     re.compile(r"\bos\.system\b", re.I),
     re.compile(r"\bsubprocess\b", re.I),
 ]
