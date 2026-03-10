@@ -20,24 +20,104 @@ import random
 from datetime import datetime
 from typing import Any
 
+try:
+    from agents.base_agent import BaseAgent
+except ImportError:
+    import abc
+
+    class BaseAgent(abc.ABC):  # type: ignore[no-redef]
+        agent_name: str = "base_agent"
+        max_retries: int = 2
+        retry_delay: float = 1.0
+
+        def __init__(self) -> None:
+            self._run_id = None
+            self._queue = None
+
+        @abc.abstractmethod
+        async def execute(self, task: dict, context: dict | None = None) -> dict: ...
+
+        def emit_event(self, *_: Any, **__: Any) -> None: ...
+        def capabilities(self) -> list[str]: return []
+        def health(self) -> dict: return {"agent": self.agent_name, "status": "ok"}
+
 logger = logging.getLogger(__name__)
 
 
-class SimulationAgent:
+class SimulationAgent(BaseAgent):
     """
-    Simulation agent for business scenario modeling and what-if analysis.
+    Simulation Agent — runs lightweight market and business simulations.
+
+    Extends :class:`BaseAgent` with an :meth:`execute` interface while keeping
+    the original command dispatch logic intact via :meth:`_dispatch`.
+
+    Simulations:
+    - market_demand:       estimates demand based on industry/region
+    - pricing_optimizer:   finds optimal price point
+    - startup_success:     scores startup idea probability
+    - market_expansion:    models expansion to new states/markets
+    - outreach_campaign:   projects outreach performance
+    - team_scaling:        models hiring impacts
 
     Example::
 
         agent = SimulationAgent()
-        result = await agent.run("simulate market expansion to 3 new states")
-        scenario = await agent.run("what if we double our outreach rate")
+        result = await agent.execute({"command": "simulate market demand"}, {"industry": "flooring"})
+        result = await agent.execute({"command": "optimize pricing"}, {"current_price": 500})
     """
 
-    def __init__(self):
+    agent_name = "simulation_agent"
+
+    def __init__(self) -> None:
+        super().__init__()
         self.name = "SimulationAgent"
 
-    async def run(self, command: str) -> dict[str, Any]:
+    # ------------------------------------------------------------------
+    # BaseAgent interface
+    # ------------------------------------------------------------------
+
+    async def execute(
+        self,
+        task: dict[str, Any],
+        context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Route *task* to the appropriate simulation model."""
+        command = task.get("command") or ""
+        ctx = context or {}
+
+        self.emit_event("simulation.execute", {"command": command})
+
+        # Map high-level BaseAgent commands to internal dispatch vocabulary
+        command_lower = command.lower()
+        if "market demand" in command_lower:
+            full_command = f"simulate market expansion {ctx.get('region', 'new market')}"
+        elif "optimize pricing" in command_lower or "pricing" in command_lower:
+            full_command = f"pricing strategy {ctx.get('product', 'lead data')}"
+        elif "simulate startup" in command_lower or "startup" in command_lower:
+            full_command = f"what if we start {ctx.get('startup_name', 'new venture')}"
+        else:
+            full_command = f"{command} {' '.join(str(v) for v in ctx.values())}".strip()
+
+        result = await self._dispatch(full_command)
+        result.setdefault("success", True)
+        return result
+
+    def capabilities(self) -> list[str]:
+        return [
+            "simulate market demand",
+            "optimize pricing",
+            "simulate startup",
+            "simulate market expansion",
+            "simulate outreach campaign",
+            "simulate team scaling",
+            "simulate competitive scenario",
+        ]
+
+    # ------------------------------------------------------------------
+    # Original dispatch logic (preserved, renamed from ``run``)
+    # ------------------------------------------------------------------
+
+    async def _dispatch(self, command: str) -> dict[str, Any]:
         """
         Execute a simulation based on the command.
 
@@ -72,7 +152,7 @@ class SimulationAgent:
                 "agent": self.name
             }
 
-    async def execute(self, task_type: str, params: dict[str, Any]) -> dict[str, Any]:
+    async def execute_typed(self, task_type: str, params: dict[str, Any]) -> dict[str, Any]:
         """
         Execute a specific simulation task type with parameters.
 

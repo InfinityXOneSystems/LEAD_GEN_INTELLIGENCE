@@ -138,3 +138,8 @@ temp/
 backend/test.db
 backend/test_admin.db
 backend/test*.db
+# Root-level test databases
+test.db
+test_admin.db
+test*.db
+*.test.db

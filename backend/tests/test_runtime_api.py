@@ -7,9 +7,6 @@ POST /api/v1/runtime/command  — submit command, verify task_id returned
 GET  /runtime/task/{task_id}  — poll task, verify status response
 """
 
-import pytest
-
-
 # ---------------------------------------------------------------------------
 # POST /api/v1/runtime/command
 # ---------------------------------------------------------------------------
@@ -95,3 +92,96 @@ def test_get_task_not_found(client):
     """Unknown task_id returns 404."""
     resp = client.get("/api/v1/runtime/task/nonexistent-task-id")
     assert resp.status_code == 404
+
+
+# ---------------------------------------------------------------------------
+# POST /api/v1/runtime/parallel
+# ---------------------------------------------------------------------------
+
+
+def test_parallel_commands_returns_multiple_tasks(client):
+    """Parallel endpoint dispatches multiple commands and returns one task per command."""
+    resp = client.post(
+        "/api/v1/runtime/parallel",
+        json={
+            "commands": [
+                {"command": "scrape epoxy contractors in Miami FL", "priority": 5},
+                {"command": "scrape flooring contractors in Tampa FL", "priority": 5},
+            ]
+        },
+    )
+    assert resp.status_code == 202, resp.text
+    data = resp.json()
+    assert data["total"] == 2
+    assert len(data["tasks"]) == 2
+    for task in data["tasks"]:
+        assert "task_id" in task
+        assert task["status"] in ("queued", "pending", "running", "completed")
+
+
+def test_parallel_commands_too_many_rejected(client):
+    """More than 8 commands should be rejected."""
+    resp = client.post(
+        "/api/v1/runtime/parallel",
+        json={"commands": [{"command": f"scrape cmd {i}"} for i in range(9)]},
+    )
+    assert resp.status_code == 422, resp.text
+
+
+# ---------------------------------------------------------------------------
+# GET /api/v1/runtime/file  and  POST /api/v1/runtime/file
+# ---------------------------------------------------------------------------
+
+
+def test_file_read_outside_allowed_roots_rejected(client):
+    """Attempting to read files outside allowed roots returns 403 or 400."""
+    resp = client.get("/api/v1/runtime/file?path=../backend/app/config.py")
+    assert resp.status_code in (400, 403, 404), resp.text
+
+
+def test_file_read_traversal_rejected(client):
+    """Absolute paths are rejected."""
+    resp = client.get("/api/v1/runtime/file?path=/etc/passwd")
+    assert resp.status_code in (400, 403), resp.text
+
+
+def test_file_write_traversal_rejected(client):
+    """Write with '..' traversal is rejected."""
+    resp = client.post(
+        "/api/v1/runtime/file",
+        json={"path": "../backend/injected.py", "content": "malicious"},
+    )
+    assert resp.status_code in (400, 403), resp.text
+
+
+# ---------------------------------------------------------------------------
+# GET /api/v1/runtime/shadow/status
+# ---------------------------------------------------------------------------
+
+
+def test_shadow_status_returns_structure(client):
+    """Shadow status endpoint returns task summary structure."""
+    resp = client.get("/api/v1/runtime/shadow/status")
+    assert resp.status_code == 200, resp.text
+    data = resp.json()
+    assert "total" in data
+    assert "running" in data
+    assert "completed" in data
+    assert "failed" in data
+    assert "tasks" in data
+    assert isinstance(data["tasks"], list)
+
+
+# ---------------------------------------------------------------------------
+# POST /api/v1/runtime/agents/run-all
+# ---------------------------------------------------------------------------
+
+
+def test_run_all_agents_returns_dispatched_list(client):
+    """run-all endpoint returns a list of dispatched agent tasks."""
+    resp = client.post("/api/v1/runtime/agents/run-all")
+    assert resp.status_code == 202, resp.text
+    data = resp.json()
+    assert "dispatched" in data
+    assert "total" in data
+    assert isinstance(data["dispatched"], list)

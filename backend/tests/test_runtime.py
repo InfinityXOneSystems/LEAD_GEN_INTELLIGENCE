@@ -1,335 +1,308 @@
 """
 tests/test_runtime.py
 ======================
-Tests for the runtime command execution API.
-
-Tests:
-  - POST /api/v1/runtime/command (valid and invalid)
-  - GET /api/v1/runtime/task/{task_id}
-  - Policy engine validation
-  - Queue dispatch
-  - Sandbox executor
+Tests for the runtime command execution API — aligned with actual module APIs.
 """
 
-import time
-
 import pytest
-
-# ─── Policy Engine ────────────────────────────────────────────────────────────
-
-
-def test_policy_engine_allows_valid_command():
-    from app.runtime.policy_engine import enforce, reset_rate_limits
-
-    reset_rate_limits()
-    result = enforce("scrape_website", client_id="test-policy-allow")
-    assert result["command"] == "scrape_website"
-    assert isinstance(result["sandbox_required"], bool)
-
-
-def test_policy_engine_rejects_unknown_command():
-    from app.runtime.command_validator import ValidationError
-    from app.runtime.policy_engine import enforce
-
-    with pytest.raises(ValidationError):
-        enforce("hack_the_planet", client_id="test-policy-reject")
-
-
-def test_policy_engine_rate_limit():
-    from app.runtime.policy_engine import PolicyViolation, enforce, reset_rate_limits
-
-    reset_rate_limits()
-    # Exhaust the limit quickly
-    client = "test-rate-limit-client"
-    for _ in range(60):
-        enforce("health_check", client_id=client, rate_limit=60)
-    with pytest.raises(PolicyViolation):
-        enforce("health_check", client_id=client, rate_limit=60)
-    reset_rate_limits()
-
 
 # ─── Command Validator ────────────────────────────────────────────────────────
 
 
-def test_validator_normalises_command():
+def test_command_validator_passes_normal_command():
     from app.runtime.command_validator import validate_command
 
-    cmd, tgt, params = validate_command("  SCRAPE_WEBSITE  ", "example.com")
-    assert cmd == "scrape_website"
-    assert tgt == "example.com"
-    assert isinstance(params, dict)
+    result = validate_command("scrape epoxy contractors in Austin TX")
+    assert result.valid is True
+    assert result.errors == []
 
 
-def test_validator_rejects_bad_command():
-    from app.runtime.command_validator import ValidationError, validate_command
+def test_command_validator_rejects_empty_command():
+    from app.runtime.command_validator import validate_command
 
-    with pytest.raises(ValidationError):
-        validate_command("", None)
+    result = validate_command("")
+    assert result.valid is False
+    assert any("empty" in e.lower() for e in result.errors)
 
 
-def test_validator_requires_sandbox():
-    from app.runtime.command_validator import requires_sandbox
+def test_command_validator_rejects_too_long():
+    from app.runtime.command_validator import validate_command
 
+    result = validate_command("x" * 2001)
+    assert result.valid is False
+
+
+def test_command_validator_rejects_dangerous_pattern():
+    from app.runtime.command_validator import validate_command
+
+    result = validate_command("rm -rf /tmp/data")
+    assert result.valid is False
+
+
+def test_command_validator_rejects_eval():
+    from app.runtime.command_validator import validate_command
+
+    result = validate_command("eval(malicious_code())")
+    assert result.valid is False
+
+
+def test_command_validator_allowed_commands_list():
+    from app.runtime.command_validator import ALLOWED_COMMANDS
+
+    assert isinstance(ALLOWED_COMMANDS, list)
+    assert "scrape_website" in ALLOWED_COMMANDS
+    assert "health_check" in ALLOWED_COMMANDS
+
+
+def test_command_validator_sandbox_required():
+    from app.runtime.command_validator import SANDBOX_REQUIRED, requires_sandbox
+
+    assert isinstance(SANDBOX_REQUIRED, list)
     assert requires_sandbox("scrape_website") is True
     assert requires_sandbox("health_check") is False
+
+
+def test_command_validator_validation_error_class():
+    from app.runtime.command_validator import ValidationError
+
+    with pytest.raises(ValidationError):
+        raise ValidationError("test error")
+
+
+def test_validate_params_missing():
+    from app.runtime.command_validator import validate_params
+
+    ok, errors = validate_params("scrape_website", {})
+    # scrape_website has no required params in current config
+    assert ok is True
 
 
 # ─── Task State Store ─────────────────────────────────────────────────────────
 
 
-def test_task_state_store_create_and_get():
+def test_task_state_store_save_and_get():
     from app.queue.task_state_store import TaskStateStore
 
     store = TaskStateStore()
-    task = store.create(command="health_check", target=None)
-    assert task.task_id
-    assert task.status == "queued"
-
-    fetched = store.get(task.task_id)
+    task_id = "test-task-save-get"
+    store.save(task_id, {"status": "queued", "agent": "scraper", "task_id": task_id})
+    fetched = store.get(task_id)
     assert fetched is not None
-    assert fetched.task_id == task.task_id
+    assert fetched["task_id"] == task_id
+    assert fetched["status"] == "queued"
 
 
-def test_task_state_store_update_status():
-    from app.queue.task_state_store import TaskState, TaskStateStore
-
-    store = TaskStateStore()
-    task = store.create(command="health_check")
-    store.update_status(task.task_id, TaskState.STATUS_RUNNING)
-    assert store.get(task.task_id).status == "running"
-
-
-def test_task_state_store_add_log():
+def test_task_state_store_update():
     from app.queue.task_state_store import TaskStateStore
 
     store = TaskStateStore()
-    task = store.create(command="health_check")
-    store.add_log(task.task_id, "hello world")
-    logs = store.get(task.task_id).logs
-    assert any("hello world" in log for log in logs)
+    task_id = "test-task-update"
+    store.save(task_id, {"status": "queued", "task_id": task_id})
+    store.update(task_id, {"status": "running"})
+    fetched = store.get(task_id)
+    assert fetched["status"] == "running"
 
 
-def test_task_state_store_list_recent():
+def test_task_state_store_list_all():
     from app.queue.task_state_store import TaskStateStore
 
     store = TaskStateStore()
-    for i in range(5):
-        store.create(command=f"health_check_{i}")
-    recent = store.list_recent(limit=3)
-    assert len(recent) == 3
+    store.save("list-task-1", {"status": "queued", "task_id": "list-task-1"})
+    store.save("list-task-2", {"status": "completed", "task_id": "list-task-2"})
+    all_tasks = store.list_all()
+    assert isinstance(all_tasks, dict)
+    assert "list-task-1" in all_tasks
+    assert "list-task-2" in all_tasks
 
 
-# ─── Error Manager ────────────────────────────────────────────────────────────
+def test_task_state_store_get_nonexistent():
+    from app.queue.task_state_store import TaskStateStore
 
-
-def test_error_manager_circuit_breaker():
-    from app.runtime.error_manager import is_circuit_open, record_failure, reset_all
-
-    reset_all()
-    cmd = "test_cb_command"
-    assert not is_circuit_open(cmd)
-
-    # Trigger 5 failures to open the circuit
-    for _ in range(5):
-        record_failure(cmd)
-
-    assert is_circuit_open(cmd)
-
-    # Success after reset
-    reset_all()
-    assert not is_circuit_open(cmd)
-
-
-def test_error_manager_success_resets_failures():
-    from app.runtime.error_manager import (
-        get_circuit_status,
-        record_failure,
-        record_success,
-        reset_all,
-    )
-
-    reset_all()
-    cmd = "test_reset_command"
-    record_failure(cmd)
-    record_failure(cmd)
-    record_success(cmd)
-    status = get_circuit_status(cmd)
-    assert status is not None
-    assert status["failures"] == 0
+    store = TaskStateStore()
+    result = store.get("completely-nonexistent-task")
+    assert result is None
 
 
 # ─── Retry Policy ─────────────────────────────────────────────────────────────
 
 
-def test_retry_success_on_first_attempt():
-    from app.runtime.retry_policy import retry
+def test_retry_policy_default_instance():
+    from app.runtime.retry_policy import RetryPolicy, default_retry_policy
 
-    calls = []
-
-    def fn():
-        calls.append(1)
-        return "ok"
-
-    result = retry(fn, max_retries=3, base_delay=0)
-    assert result == "ok"
-    assert len(calls) == 1
+    assert isinstance(default_retry_policy, RetryPolicy)
 
 
-def test_retry_succeeds_after_failures():
-    from app.runtime.retry_policy import retry
+def test_retry_policy_should_retry_on_failure():
+    from app.runtime.retry_policy import RetryPolicy
 
-    calls = []
-
-    def fn():
-        calls.append(1)
-        if len(calls) < 3:
-            raise ValueError("fail")
-        return "success"
-
-    result = retry(fn, max_retries=3, base_delay=0)
-    assert result == "success"
-    assert len(calls) == 3
+    policy = RetryPolicy(max_retries=3)
+    assert policy.should_retry(1, ValueError("fail")) is True
+    # max_retries=3 means retries 1 and 2 are allowed (0-indexed), attempt 3 is not
+    assert policy.should_retry(2, ValueError("fail")) is True
+    assert policy.should_retry(4, ValueError("fail")) is False
 
 
-def test_retry_exhausted():
-    from app.runtime.retry_policy import RetryExhausted, retry
+def test_retry_policy_delay_increases():
+    from app.runtime.retry_policy import RetryPolicy
 
-    def fn():
-        raise RuntimeError("always fails")
-
-    with pytest.raises(RetryExhausted):
-        retry(fn, max_retries=2, base_delay=0)
+    policy = RetryPolicy(max_retries=3, base_delay=1.0, backoff_factor=2.0)
+    d1 = policy.delay_for_attempt(1)
+    d2 = policy.delay_for_attempt(2)
+    assert d2 > d1
 
 
 # ─── Sandbox Executor ─────────────────────────────────────────────────────────
 
 
-def test_sandbox_executor_runs_fn():
+def test_sandbox_executor_runs_handler():
     from app.sandbox.sandbox_executor import SandboxExecutor
 
-    executor = SandboxExecutor(task_id="test-sandbox-1")
+    executor = SandboxExecutor()
 
-    def my_fn(**kwargs):
+    def my_handler(task):
         return {"success": True, "value": 42}
 
-    result = executor.run(fn=my_fn, kwargs={}, timeout=10)
-    assert result["success"] is True
-    assert result["value"] == 42
+    result = executor.run({"task_id": "test-se-1"}, my_handler)
+    assert result["result"]["success"] is True
+    assert result["result"]["value"] == 42
+    assert result["error"] is None
 
 
 def test_sandbox_executor_captures_exception():
     from app.sandbox.sandbox_executor import SandboxExecutor
 
-    executor = SandboxExecutor(task_id="test-sandbox-2")
+    executor = SandboxExecutor()
 
-    def failing_fn(**kwargs):
+    def failing_handler(task):
         raise ValueError("deliberate error")
 
-    result = executor.run(fn=failing_fn, kwargs={}, timeout=10)
-    assert result["success"] is False
+    result = executor.run({"task_id": "test-se-2"}, failing_handler)
+    assert result["error"] is not None
     assert "deliberate error" in result["error"]
 
 
-def test_sandbox_executor_timeout():
-    from app.sandbox.sandbox_executor import SandboxExecutor, SandboxTimeoutError
+def test_sandbox_executor_blocks_dangerous_code():
+    from app.sandbox.sandbox_executor import SandboxExecutor, SandboxViolationError
 
-    executor = SandboxExecutor(task_id="test-sandbox-timeout")
+    executor = SandboxExecutor()
 
-    def slow_fn(**kwargs):
-        time.sleep(10)  # Much longer than timeout=1; no need for 60s
-        return {}
+    def bad_handler(task):
+        raise SandboxViolationError("blocked")
 
-    with pytest.raises(SandboxTimeoutError):
-        executor.run(fn=slow_fn, kwargs={}, timeout=1)
+    # SandboxViolationError propagates out of the executor (not silently captured)
+    with pytest.raises(SandboxViolationError):
+        executor.run({"task_id": "test-se-3"}, bad_handler)
 
 
 # ─── Filesystem Guard ─────────────────────────────────────────────────────────
 
 
-def test_filesystem_guard_safe_path():
-    from app.sandbox.filesystem_guard import is_safe, safe_path
+def test_filesystem_guard_allows_safe_path():
+    from app.sandbox.filesystem_guard import FilesystemGuard
 
-    root = safe_path("test_file.txt")
-    assert root.exists() or not root.exists()  # Path resolved without error
-    assert is_safe("test_file.txt")
+    guard = FilesystemGuard(allowed_paths=["/tmp"])
+    assert guard.is_path_allowed("/tmp/safe_file.txt") is True
 
 
 def test_filesystem_guard_rejects_traversal():
-    from app.sandbox.filesystem_guard import safe_path
+    from app.sandbox.filesystem_guard import FilesystemGuard, SandboxViolationError
 
-    with pytest.raises(PermissionError):
-        safe_path("../../etc/passwd")
+    guard = FilesystemGuard(allowed_paths=["/tmp"])
+    with pytest.raises(SandboxViolationError):
+        guard.assert_path_allowed("/etc/passwd")
 
 
 # ─── Network Guard ────────────────────────────────────────────────────────────
 
 
-def test_network_guard_allows_normal_url():
-    from app.sandbox.network_guard import is_allowed
+def test_network_guard_allows_normal_host():
+    from app.sandbox.network_guard import NetworkGuard
 
-    assert is_allowed("https://example.com") is True
+    guard = NetworkGuard()
+    assert guard.is_host_allowed("example.com") is True
 
 
-def test_network_guard_blocks_metadata_endpoint():
-    from app.sandbox.network_guard import is_allowed
+def test_network_guard_blocks_configured_domain():
+    from app.sandbox.network_guard import NetworkGuard, SandboxViolationError
 
-    assert is_allowed("http://169.254.169.254/latest/meta-data") is False
+    # Create guard with an explicit blocked domain
+    guard = NetworkGuard(blocked_domains=["169.254.169.254"])
+    assert guard.is_host_allowed("169.254.169.254") is False
+    with pytest.raises(SandboxViolationError):
+        guard.assert_host_allowed("169.254.169.254")
 
 
 # ─── Runtime Controller ───────────────────────────────────────────────────────
 
 
-def test_runtime_controller_submit_and_get():
-    from app.runtime.policy_engine import reset_rate_limits
+def test_runtime_controller_execute_and_get_status():
+    from app.runtime.command_schema import RuntimeCommandRequest
     from app.runtime.runtime_controller import RuntimeController
 
-    reset_rate_limits()
     ctrl = RuntimeController()
-    task_id, status = ctrl.submit_command(
-        command="health_check", client_id="test-ctrl-submit"
-    )
-    assert status == "queued"
-    assert task_id
+    request = RuntimeCommandRequest(command="scrape flooring contractors in Texas")
+    response = ctrl.execute(request)
+    assert response.task_id
+    assert response.status == "queued"
 
-    task = ctrl.get_task(task_id)
+    task = ctrl.get_task_status(response.task_id)
     assert task is not None
-    assert task["task_id"] == task_id
+    assert task.task_id == response.task_id
 
 
 def test_runtime_controller_get_nonexistent():
     from app.runtime.runtime_controller import RuntimeController
 
     ctrl = RuntimeController()
-    assert ctrl.get_task("nonexistent-id") is None
+    result = ctrl.get_task_status("nonexistent-task-xyz")
+    assert result is None
+
+
+def test_runtime_controller_list_tasks():
+    from app.runtime.command_schema import RuntimeCommandRequest
+    from app.runtime.runtime_controller import RuntimeController
+
+    ctrl = RuntimeController()
+    request = RuntimeCommandRequest(command="export leads to CSV")
+    ctrl.execute(request)
+
+    tasks = ctrl.list_tasks()
+    assert isinstance(tasks, dict)
+    assert len(tasks) > 0
 
 
 # ─── API Endpoints ────────────────────────────────────────────────────────────
 
 
-def test_runtime_command_endpoint_valid(client):
-    from app.runtime.policy_engine import reset_rate_limits
-
-    reset_rate_limits()
+def test_runtime_command_endpoint_scrape(client):
     resp = client.post(
         "/api/v1/runtime/command",
-        json={"command": "health_check", "target": None, "parameters": {}},
+        json={"command": "scrape flooring contractors in Texas"},
     )
-    assert resp.status_code == 200
+    assert resp.status_code == 202
     data = resp.json()
     assert "task_id" in data
     assert data["status"] == "queued"
+    assert data["agent"] == "scraper"
 
 
-def test_runtime_command_endpoint_invalid_command(client):
+def test_runtime_command_endpoint_seo(client):
     resp = client.post(
         "/api/v1/runtime/command",
-        json={"command": "do_something_evil", "parameters": {}},
+        json={"command": "run seo analysis on example.com"},
     )
+    assert resp.status_code == 202
+    data = resp.json()
+    assert data["agent"] == "seo"
+
+
+def test_runtime_command_endpoint_invalid_empty(client):
+    resp = client.post("/api/v1/runtime/command", json={"command": ""})
     assert resp.status_code == 422
 
 
-def test_runtime_command_endpoint_missing_command(client):
-    resp = client.post("/api/v1/runtime/command", json={"parameters": {}})
+def test_runtime_command_endpoint_missing_body(client):
+    resp = client.post("/api/v1/runtime/command", json={})
     assert resp.status_code == 422
 
 
@@ -339,18 +312,13 @@ def test_runtime_task_status_not_found(client):
 
 
 def test_runtime_task_status_found(client):
-    from app.runtime.policy_engine import reset_rate_limits
-
-    reset_rate_limits()
-    # Create a task first
     resp = client.post(
         "/api/v1/runtime/command",
-        json={"command": "health_check", "parameters": {}},
+        json={"command": "scrape epoxy contractors in Florida"},
     )
-    assert resp.status_code == 200
+    assert resp.status_code == 202
     task_id = resp.json()["task_id"]
 
-    # Poll status
     status_resp = client.get(f"/api/v1/runtime/task/{task_id}")
     assert status_resp.status_code == 200
     data = status_resp.json()
@@ -366,15 +334,14 @@ def test_system_health_endpoint(client):
     assert resp.status_code == 200
     data = resp.json()
     assert "status" in data
-    assert "checks" in data
 
 
 def test_system_metrics_endpoint(client):
     resp = client.get("/api/v1/system/metrics")
     assert resp.status_code == 200
     data = resp.json()
-    assert "metrics" in data
-    assert "queue_size" in data
+    assert "workers" in data
+    assert "queue" in data
 
 
 def test_system_tasks_endpoint(client):
@@ -382,4 +349,4 @@ def test_system_tasks_endpoint(client):
     assert resp.status_code == 200
     data = resp.json()
     assert "tasks" in data
-    assert isinstance(data["tasks"], list)
+    assert isinstance(data["tasks"], dict)

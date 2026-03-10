@@ -59,11 +59,12 @@ _pg.ARRAY = lambda *a, **kw: _JSONArray()
 _pg.UUID = lambda *a, **kw: _StringUUID()
 _pg.JSONB = lambda *a, **kw: Text()
 
-from app.database import Base, get_db  # noqa: E402
-from app.main import app  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 from sqlalchemy import create_engine  # noqa: E402
 from sqlalchemy.orm import sessionmaker  # noqa: E402
+
+from app.database import Base, get_db  # noqa: E402
+from app.main import app  # noqa: E402
 
 ADMIN_HEADERS = {"X-Admin-Token": "test-admin-secret"}
 
