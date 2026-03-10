@@ -78,7 +78,16 @@ def metrics():
 
 # Include routers
 from app.api.v1 import outreach  # noqa: E402
-from app.api.v1 import admin, agents, commands, leads, runtime, scrapers, system  # noqa: E402
+from app.api.v1 import (  # noqa: E402
+    admin,
+    agents,
+    commands,
+    connectors,
+    leads,
+    runtime,
+    scrapers,
+    system,
+)
 
 app.include_router(leads.router, prefix="/api/v1")
 app.include_router(scrapers.router, prefix="/api/v1")
@@ -88,3 +97,4 @@ app.include_router(commands.router, prefix="/api/v1")
 app.include_router(runtime.router, prefix="/api/v1")
 app.include_router(system.router, prefix="/api/v1")
 app.include_router(admin.router, prefix="/api/v1")
+app.include_router(connectors.router, prefix="/api/v1")
