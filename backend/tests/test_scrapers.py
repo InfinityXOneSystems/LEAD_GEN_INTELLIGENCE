@@ -1,7 +1,3 @@
-from unittest.mock import MagicMock, patch
-
-import pytest
-
 from app.scrapers.base import BaseScraper
 from app.scrapers.website import WebsiteCrawler
 from app.services.lead_scorer import LeadScorer

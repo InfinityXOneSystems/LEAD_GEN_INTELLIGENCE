@@ -100,6 +100,7 @@ _ROUTES: list[dict[str, Any]] = [
         "agent": "social",
         "type": "social",
     },
+    {
         "keywords": ["seo", "analyse website", "analyze website", "website analysis",
                      "meta tags", "page title", "contact info", "website seo"],
         "agent": "seo_agent",

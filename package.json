@@ -49,6 +49,7 @@
   },
   "homepage": "https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM#readme",
   "dependencies": {
+    "@playwright/test": "^1.58.2",
     "axios": "^1.13.6",
     "better-sqlite3": "^12.6.2",
     "cheerio": "^1.2.0",

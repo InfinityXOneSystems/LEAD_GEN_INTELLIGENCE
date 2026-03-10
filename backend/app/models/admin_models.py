@@ -17,10 +17,11 @@ from __future__ import annotations
 
 import uuid
 
-from app.database import Base
 from sqlalchemy import Boolean, Column, DateTime, Float, Integer, String, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
+
+from app.database import Base
 
 
 class AdminUser(Base):

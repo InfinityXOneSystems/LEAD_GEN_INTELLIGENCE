@@ -21,24 +21,96 @@ import statistics
 from datetime import datetime, timedelta
 from typing import Any
 
+try:
+    from agents.base_agent import BaseAgent
+except ImportError:
+    import abc
+
+    class BaseAgent(abc.ABC):  # type: ignore[no-redef]
+        agent_name: str = "base_agent"
+        max_retries: int = 2
+        retry_delay: float = 1.0
+
+        def __init__(self) -> None:
+            self._run_id = None
+            self._queue = None
+
+        @abc.abstractmethod
+        async def execute(self, task: dict, context: dict | None = None) -> dict: ...
+
+        def emit_event(self, *_: Any, **__: Any) -> None: ...
+        def capabilities(self) -> list[str]: return []
+        def health(self) -> dict: return {"agent": self.agent_name, "status": "ok"}
+
 logger = logging.getLogger(__name__)
 
 
-class PredictionAgent:
+class PredictionAgent(BaseAgent):
     """
-    Prediction agent for market forecasting and trend analysis.
+    Prediction Agent — forecasts market conditions and business outcomes.
+
+    Extends :class:`BaseAgent` with an :meth:`execute` interface while keeping
+    the original command dispatch logic intact via :meth:`_dispatch`.
+
+    Models:
+    - Industry growth trajectories
+    - Niche opportunity timing
+    - Financial projections (rough estimates)
+    - Success probability scoring
 
     Example::
 
         agent = PredictionAgent()
-        forecast = await agent.run("predict revenue for next quarter")
-        trends = await agent.run("analyze market trends in epoxy flooring")
+        result = await agent.execute({"command": "predict industry growth"})
+        result = await agent.execute({"command": "forecast niche"}, {"niche": "epoxy flooring"})
     """
 
-    def __init__(self):
+    agent_name = "prediction_agent"
+
+    def __init__(self) -> None:
+        super().__init__()
         self.name = "PredictionAgent"
 
-    async def run(self, command: str) -> dict[str, Any]:
+    # ------------------------------------------------------------------
+    # BaseAgent interface
+    # ------------------------------------------------------------------
+
+    async def execute(
+        self,
+        task: dict[str, Any],
+        context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Route *task* to the appropriate prediction model."""
+        command = task.get("command") or ""
+        ctx = context or {}
+
+        self.emit_event("prediction.execute", {"command": command})
+
+        # Merge context values into the command for natural language routing
+        niche = ctx.get("niche", "")
+        industry = ctx.get("industry", "flooring")
+        full_command = f"{command} {niche} {industry}".strip()
+
+        result = await self._dispatch(full_command)
+        result.setdefault("success", True)
+        return result
+
+    def capabilities(self) -> list[str]:
+        return [
+            "predict industry growth",
+            "forecast niche",
+            "success probability",
+            "predict revenue",
+            "analyze market trends",
+            "predict conversion probability",
+            "analyze seasonality",
+        ]
+
+    # ------------------------------------------------------------------
+    # Original dispatch logic (preserved, renamed from ``run``)
+    # ------------------------------------------------------------------
+
+    async def _dispatch(self, command: str) -> dict[str, Any]:
         """
         Execute a prediction task based on the command.
 
@@ -71,7 +143,7 @@ class PredictionAgent:
                 "agent": self.name
             }
 
-    async def execute(self, task_type: str, params: dict[str, Any]) -> dict[str, Any]:
+    async def execute_typed(self, task_type: str, params: dict[str, Any]) -> dict[str, Any]:
         """
         Execute a specific prediction task type with parameters.
 

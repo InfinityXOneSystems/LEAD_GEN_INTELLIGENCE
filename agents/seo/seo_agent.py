@@ -453,14 +453,15 @@ class SEOAgent(BaseAgent):
         """
         command = task.get("command", "")
         url = task.get("url") or _extract_url(command)
-        keyword = task.get("keyword", "")
+        keyword = task.get("keyword", self._extract_keyword(command))
+        mode = task.get("mode", "analyze")
 
-        if not url:
-            return {
-                "success": False,
-                "error": "No URL provided or extractable from command",
-                "agent": self.agent_name,
-            }
+        # Keyword-only mode: no URL needed
+        if not url or mode == "keywords":
+            return self._keyword_report(keyword)
+
+        logger.info("[SEOAgent] Analysing URL: %s", url)
+        self.emit_event("seo.start", {"url": url, "keyword": keyword})
 
         logger.info("[SEOAgent] Analysing URL: %s", url)
         self.emit_event("seo.start", {"url": url, "keyword": keyword})
@@ -483,6 +484,52 @@ class SEOAgent(BaseAgent):
                 "error": str(exc),
                 "agent": self.agent_name,
             }
+
+    # ------------------------------------------------------------------
+    # Keyword helpers (no URL required)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _extract_keyword(command: str) -> str:
+        """Extract an industry keyword from a natural-language command."""
+        industries = [
+            "epoxy", "flooring", "roofing", "concrete", "tile", "carpet",
+            "painting", "plumbing", "electrical", "hvac", "construction",
+            "remodeling", "landscaping",
+        ]
+        lower = command.lower()
+        for ind in industries:
+            if ind in lower:
+                return ind
+        m = re.search(r"(?:seo|analyze|audit|keywords?)\s+(?:for\s+)?([a-z]+)", lower)
+        return m.group(1) if m else "contractor"
+
+    def _keyword_report(self, keyword: str) -> dict[str, Any]:
+        """Return a keyword research report for *keyword*."""
+        long_tail = [
+            f"{keyword} near me",
+            f"best {keyword} contractor",
+            f"affordable {keyword} services",
+            f"local {keyword} company",
+            f"{keyword} installation cost",
+        ]
+        local_tips = [
+            f"Include '{keyword}' in title tags and H1",
+            "Add Google Business Profile with correct NAP",
+            "Embed Google Maps on contact page",
+            f"Target '{keyword} [city]' phrases in content",
+            "Collect and display customer reviews",
+        ]
+        return {
+            "success": True,
+            "mode": "keywords",
+            "primary_keyword": keyword,
+            "long_tail_suggestions": long_tail,
+            "local_seo_tips": local_tips,
+            "estimated_monthly_searches": "1k-10k",
+            "competition": "medium",
+            "agent": self.agent_name,
+        }
 
 
 # ---------------------------------------------------------------------------

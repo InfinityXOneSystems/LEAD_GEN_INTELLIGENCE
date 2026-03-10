@@ -1,6 +1,7 @@
 // dashboard/pages/settings.js
 // ============================
 // XPS Intelligence – Settings Control Panel
+// Full integration config: LLM, API keys, scraping, outreach, CRM, Vercel, GitHub, Google Workspace, Docker MCP
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -19,25 +20,6 @@ const SETTING_SECTIONS = [
         label: "LLM Provider",
         type: "select",
         options: ["auto", "groq", "ollama", "openai"],
-        placeholder: "auto",
-      },
-      {
-        key: "ollama_base_url",
-        label: "Ollama Base URL",
-        type: "text",
-        placeholder: "http://localhost:11434",
-      },
-      {
-        key: "ollama_model",
-        label: "Default Model",
-        type: "text",
-        placeholder: "llama3.2",
-      },
-      {
-        key: "ollama_code_model",
-        label: "Code Model",
-        type: "text",
-        placeholder: "codellama",
       },
       {
         key: "groq_model",
@@ -51,34 +33,302 @@ const SETTING_SECTIONS = [
         type: "text",
         placeholder: "gpt-4o-mini",
       },
+      {
+        key: "ollama_base_url",
+        label: "Ollama Base URL",
+        type: "text",
+        placeholder: "http://localhost:11434",
+      },
+      {
+        key: "ollama_model",
+        label: "Ollama Default Model",
+        type: "text",
+        placeholder: "llama3.2",
+      },
+      {
+        key: "ollama_code_model",
+        label: "Ollama Code Model",
+        type: "text",
+        placeholder: "codellama",
+      },
     ],
   },
   {
     title: "🔑 API Keys",
     fields: [
       {
-        key: "github_token",
-        label: "GitHub Token",
-        type: "password",
-        placeholder: "ghp_...",
-      },
-      {
         key: "groq_api_key",
         label: "Groq API Key",
         type: "password",
-        placeholder: "gsk_...",
-      },
-      {
-        key: "google_api_key",
-        label: "Google API Key",
-        type: "password",
-        placeholder: "AIza...",
+        placeholder: "gsk_…",
       },
       {
         key: "openai_api_key",
         label: "OpenAI API Key",
         type: "password",
-        placeholder: "sk-...",
+        placeholder: "sk-…",
+      },
+      {
+        key: "google_api_key",
+        label: "Google API Key",
+        type: "password",
+        placeholder: "AIza…",
+      },
+      {
+        key: "anthropic_api_key",
+        label: "Anthropic API Key",
+        type: "password",
+        placeholder: "sk-ant-…",
+      },
+    ],
+  },
+  {
+    title: "🐙 GitHub Integration",
+    fields: [
+      {
+        key: "github_token",
+        label: "GitHub Personal Access Token",
+        type: "password",
+        placeholder: "ghp_…",
+      },
+      {
+        key: "github_leads_repo",
+        label: "Leads Repo",
+        type: "text",
+        placeholder: "InfinityXOneSystems/LEADS",
+      },
+      {
+        key: "github_system_repo",
+        label: "System Repo",
+        type: "text",
+        placeholder: "InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM",
+      },
+      {
+        key: "github_sandbox_branch",
+        label: "Sandbox Branch",
+        type: "text",
+        placeholder: "copilot/sandbox",
+      },
+    ],
+  },
+  {
+    title: "▲ Vercel Deployment",
+    fields: [
+      {
+        key: "vercel_token",
+        label: "Vercel Token",
+        type: "password",
+        placeholder: "vt_…",
+      },
+      {
+        key: "vercel_project_id",
+        label: "Project ID",
+        type: "text",
+        placeholder: "prj_eNK90PC48eWsMW3O6aHHRWsM4wwI",
+      },
+      {
+        key: "vercel_webhook_url",
+        label: "Deploy Webhook URL",
+        type: "text",
+        placeholder: "https://api.vercel.com/v1/integrations/deploy/…",
+      },
+      {
+        key: "vercel_frontend_url",
+        label: "Frontend URL",
+        type: "text",
+        placeholder: "https://xps-intelligence.vercel.app",
+      },
+    ],
+  },
+  {
+    title: "🔵 Google Workspace",
+    fields: [
+      {
+        key: "google_service_account_json",
+        label: "Service Account JSON",
+        type: "password",
+        placeholder: '{"type":"service_account","project_id":"…"}',
+      },
+      {
+        key: "google_workspace_domain",
+        label: "Workspace Domain",
+        type: "text",
+        placeholder: "infinityxonesystems.com",
+      },
+      {
+        key: "gmail_address",
+        label: "Gmail Address",
+        type: "text",
+        placeholder: "info@infinityxonesystems.com",
+      },
+      {
+        key: "gmail_app_password",
+        label: "Gmail App Password",
+        type: "password",
+        placeholder: "xxxx xxxx xxxx xxxx",
+      },
+      {
+        key: "google_drive_folder_id",
+        label: "Drive Leads Folder ID",
+        type: "text",
+        placeholder: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms",
+      },
+      {
+        key: "google_sheet_id",
+        label: "Leads Sheet ID",
+        type: "text",
+        placeholder: "1BxiMVs0XRA5nFMdKvBdBZjgm…",
+      },
+    ],
+  },
+  {
+    title: "📧 Email & Outreach",
+    fields: [
+      {
+        key: "leads_email_to",
+        label: "Lead Report Email",
+        type: "text",
+        placeholder: "info@infinityxonesystems.com",
+      },
+      {
+        key: "smtp_host",
+        label: "SMTP Host",
+        type: "text",
+        placeholder: "smtp.gmail.com",
+      },
+      {
+        key: "smtp_port",
+        label: "SMTP Port",
+        type: "number",
+        placeholder: "465",
+      },
+      {
+        key: "sendgrid_api_key",
+        label: "SendGrid API Key",
+        type: "password",
+        placeholder: "SG.…",
+      },
+      {
+        key: "mailgun_api_key",
+        label: "Mailgun API Key",
+        type: "password",
+        placeholder: "key-…",
+      },
+    ],
+  },
+  {
+    title: "💬 SMS Configuration",
+    fields: [
+      {
+        key: "twilio_account_sid",
+        label: "Twilio Account SID",
+        type: "password",
+        placeholder: "AC…",
+      },
+      {
+        key: "twilio_auth_token",
+        label: "Twilio Auth Token",
+        type: "password",
+        placeholder: "…",
+      },
+      {
+        key: "twilio_from_number",
+        label: "Twilio From Number",
+        type: "text",
+        placeholder: "+19545551234",
+      },
+    ],
+  },
+  {
+    title: "📞 AI Voice (Outbound Calls)",
+    fields: [
+      {
+        key: "retell_api_key",
+        label: "Retell AI API Key",
+        type: "password",
+        placeholder: "key_…",
+      },
+      {
+        key: "bland_api_key",
+        label: "Bland.ai API Key",
+        type: "password",
+        placeholder: "…",
+      },
+      {
+        key: "elevenlabs_api_key",
+        label: "ElevenLabs API Key",
+        type: "password",
+        placeholder: "sk_…",
+      },
+      {
+        key: "voice_agent_phone",
+        label: "AI Agent Phone Number",
+        type: "text",
+        placeholder: "+19545551234",
+      },
+    ],
+  },
+  {
+    title: "🐋 Docker MCP",
+    fields: [
+      {
+        key: "docker_host",
+        label: "Docker Host",
+        type: "text",
+        placeholder: "unix:///var/run/docker.sock",
+      },
+      {
+        key: "docker_registry",
+        label: "Container Registry",
+        type: "text",
+        placeholder: "ghcr.io/infinityxonesystems",
+      },
+    ],
+  },
+  {
+    title: "💻 Local Machine MCP",
+    fields: [
+      {
+        key: "local_mcp_secret",
+        label: "Local MCP Secret",
+        type: "password",
+        placeholder: "…",
+      },
+      {
+        key: "local_mcp_url",
+        label: "Local Bridge URL",
+        type: "text",
+        placeholder: "ws://localhost:9000/mcp",
+      },
+    ],
+  },
+  {
+    title: "🕷️ Scraping & Pipeline",
+    fields: [
+      {
+        key: "scraping_rate_limit",
+        label: "Rate Limit (req/min)",
+        type: "number",
+        placeholder: "10",
+      },
+      {
+        key: "pipeline_cron",
+        label: "Pipeline Cron (2hr default)",
+        type: "text",
+        placeholder: "0 */2 * * *",
+      },
+      {
+        key: "scraper_targets",
+        label: "Custom Targets (JSON)",
+        type: "text",
+        placeholder: '[{"city":"Miami","state":"FL","keyword":"epoxy"}]',
+      },
+      { key: "proxy_enabled", label: "Proxy Enabled", type: "checkbox" },
+      {
+        key: "proxy_url",
+        label: "Proxy URL",
+        type: "text",
+        placeholder: "http://proxy:8080",
       },
     ],
   },
@@ -92,51 +342,22 @@ const SETTING_SECTIONS = [
         placeholder: "redis://localhost:6379/0",
       },
       {
+        key: "database_url",
+        label: "Database URL",
+        type: "text",
+        placeholder: "postgresql://localhost/xps",
+      },
+      {
         key: "qdrant_url",
         label: "Qdrant URL",
         type: "text",
         placeholder: "http://localhost:6333",
       },
       {
-        key: "database_url",
-        label: "Database URL",
-        type: "text",
-        placeholder: "postgresql://localhost/xps",
-      },
-    ],
-  },
-  {
-    title: "🕷️ Scraping Configuration",
-    fields: [
-      {
-        key: "scraping_rate_limit",
-        label: "Rate Limit (req/min)",
-        type: "number",
-        placeholder: "10",
-      },
-      { key: "proxy_enabled", label: "Proxy Enabled", type: "checkbox" },
-      {
-        key: "proxy_url",
-        label: "Proxy URL",
-        type: "text",
-        placeholder: "http://proxy:8080",
-      },
-    ],
-  },
-  {
-    title: "⚙️ Workers",
-    fields: [
-      {
         key: "max_workers",
         label: "Max Workers",
         type: "number",
         placeholder: "5",
-      },
-      {
-        key: "github_repo",
-        label: "GitHub Repository",
-        type: "text",
-        placeholder: "org/repo",
       },
     ],
   },

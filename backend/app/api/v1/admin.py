@@ -39,6 +39,10 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import structlog
+from fastapi import APIRouter, Depends, Header, HTTPException, Request, status
+from pydantic import BaseModel, Field
+from sqlalchemy.orm import Session
+
 from app.database import get_db
 from app.models.admin_models import (
     AdminUser,
@@ -51,9 +55,6 @@ from app.models.admin_models import (
     Promotion,
     Setting,
 )
-from fastapi import APIRouter, Depends, Header, HTTPException, Request, status
-from pydantic import BaseModel, Field
-from sqlalchemy.orm import Session
 
 logger = structlog.get_logger()
 router = APIRouter(prefix="/admin/hidden", tags=["admin"])
@@ -62,8 +63,8 @@ router = APIRouter(prefix="/admin/hidden", tags=["admin"])
 # Auth helper — constant-time token comparison to prevent timing attacks.
 # In production replace with JWT / session-based auth restricted to owner email.
 # ---------------------------------------------------------------------------
-ADMIN_SECRET = os.getenv("ADMIN_SECRET", "")
-if not ADMIN_SECRET:
+_ADMIN_SECRET_AT_LOAD = os.getenv("ADMIN_SECRET", "")
+if not _ADMIN_SECRET_AT_LOAD:
     import warnings
 
     warnings.warn(
@@ -77,6 +78,9 @@ COPILOT_PROMPT_PATH = REPO_ROOT / "COPILOT_PROMPT.md"
 
 def require_admin(x_admin_token: str = Header(default="")) -> None:
     import secrets
+
+    # Read the secret from env at request time so test overrides via os.environ work.
+    ADMIN_SECRET = os.getenv("ADMIN_SECRET", "") or _ADMIN_SECRET_AT_LOAD
 
     if not ADMIN_SECRET or not secrets.compare_digest(x_admin_token, ADMIN_SECRET):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
