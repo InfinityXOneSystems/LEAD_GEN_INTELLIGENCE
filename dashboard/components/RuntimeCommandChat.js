@@ -77,6 +77,42 @@ const CAPABILITY_GROUPS = [
       "read current workspace.js source",
     ],
   },
+  {
+    label: "🧠 Intelligence",
+    cmds: [
+      "run vision cortex intelligence scrape",
+      "generate daily briefing report",
+      "scan market trends in AI",
+      "detect niches in flooring industry",
+    ],
+  },
+  {
+    label: "🔬 Invention",
+    cmds: [
+      "run invention pipeline for construction industry",
+      "generate hypothesis: AI automation for small contractors",
+      "design experiment for pricing optimization",
+      "generate 5 business ideas for flooring market",
+    ],
+  },
+  {
+    label: "📈 Predictions",
+    cmds: [
+      "predict growth for AI sector",
+      "model industry growth for construction",
+      "score niche opportunity: epoxy flooring in Miami",
+      "run discovery scan for emerging markets",
+    ],
+  },
+  {
+    label: "🛡️ Guardian",
+    cmds: [
+      "run system health check",
+      "check anomalies",
+      "get system status",
+      "watchdog scan",
+    ],
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -252,6 +288,10 @@ export default function RuntimeCommandChat({ suggestions = [] }) {
       "  🤖  Autonomous orchestration — multi-step pipelines\n" +
       "  💻  Live coding — generate/edit frontend & backend files\n" +
       "  📝  Live site editing — every page editable in real-time\n" +
+      "  🧠  Vision Cortex — 30-source intelligence ingestion\n" +
+      "  🔬  Invention Lab — idea generation, scoring, experiment design\n" +
+      "  📈  Predictions — market, niche, and industry forecasting\n" +
+      "  🛡️  System Guardian — health monitoring and auto-repair\n" +
       "  🐙  GitHub — branches, commits, PRs, Actions\n" +
       "  📧  Gmail, Google Sheets, Vercel deploy, Docker MCP\n\n" +
       "Type any command below or pick one from the suggestions ↓",
@@ -470,22 +510,46 @@ export default function RuntimeCommandChat({ suggestions = [] }) {
         content: [
           "🤖 XPS Agent Commands:",
           "",
+          "── Scraping & Pipelines ──",
           "scrape <type> in <city> <state>",
           "run full pipeline",
           "run parallel 4-agent scrape across FL cities",
           "orchestrate all agents",
+          "",
+          "── Intelligence & Research ──",
+          "run vision cortex intelligence scrape",
+          "generate daily briefing report",
+          "scan market trends in <category>",
+          "detect niches in <industry>",
+          "predict growth for <sector>",
+          "generate hypothesis: <observation>",
+          "design experiment for <hypothesis>",
+          "run invention pipeline for <industry>",
+          "generate 5 business ideas for <market>",
+          "",
+          "── Analytics & Discovery ──",
           "run seo analysis on <url>",
+          "run discovery scan for emerging markets",
+          "model industry growth for <industry>",
+          "",
+          "── System ──",
+          "run system health check",
+          "get system status",
+          "watchdog scan",
           "export leads",
+          "",
+          "── Coding & Editing ──",
           "generate <component/script>",
-          "read file <path>          — show a dashboard file",
-          "edit file <path>          — open live editor",
+          "read file <path>",
+          "edit file <path>",
+          "",
+          "── Accounts ──",
           "send email via gmail",
-          "create sheet in google sheets",
           "trigger vercel deploy",
           "push to github <branch>",
           "docker list containers",
-          "status",
-          "help",
+          "",
+          "status  |  help",
         ].join("\n"),
       }]);
       setLoading(false);
@@ -613,6 +677,147 @@ export default function RuntimeCommandChat({ suggestions = [] }) {
         setMessages((prev) => [...prev, { role: "assistant", content: `🐋 Docker: ${d.message || JSON.stringify(d)}` }]);
       } catch (e) {
         setMessages((prev) => [...prev, { role: "assistant", content: `❌ Docker MCP error: ${e.message}` }]);
+      }
+      setLoading(false);
+      return;
+    }
+
+    // ── Intelligence / Vision Cortex ─────────────────────────────────
+    if (msg.toLowerCase().includes("vision cortex") || msg.toLowerCase().includes("intelligence scrape")) {
+      try {
+        const r = await fetch(`${apiBase}/api/v1/intelligence/vision-cortex/run`, { method: "POST" });
+        const d = r.ok ? await r.json() : null;
+        setMessages((prev) => [...prev, {
+          role: "assistant",
+          content: d
+            ? `🧠 Vision Cortex\n\nStatus: ${d.status}\nSources queued: ${d.sources_queued || "N/A"}\n\n${d.message || "Intelligence scrape triggered."}`
+            : "❌ Could not trigger intelligence scrape.",
+        }]);
+      } catch (e) {
+        setMessages((prev) => [...prev, { role: "assistant", content: `❌ Intelligence error: ${e.message}` }]);
+      }
+      setLoading(false);
+      return;
+    }
+
+    // ── Daily Briefing ───────────────────────────────────────────────
+    if (msg.toLowerCase().includes("daily briefing") || msg.toLowerCase().includes("briefing report")) {
+      try {
+        const r = await fetch(`${apiBase}/api/v1/intelligence/briefing`);
+        const d = r.ok ? await r.json() : null;
+        setMessages((prev) => [...prev, {
+          role: "assistant",
+          content: d?.briefing_markdown
+            ? `📊 Daily Briefing\n\n${d.briefing_markdown.slice(0, 2000)}`
+            : `📊 Daily Briefing\n\n${d ? JSON.stringify(d, null, 2).slice(0, 1200) : "❌ Briefing unavailable."}`,
+        }]);
+      } catch (e) {
+        setMessages((prev) => [...prev, { role: "assistant", content: `❌ Briefing error: ${e.message}` }]);
+      }
+      setLoading(false);
+      return;
+    }
+
+    // ── Market Scan / Trends ─────────────────────────────────────────
+    if (msg.toLowerCase().includes("scan market") || msg.toLowerCase().includes("market trends") || msg.toLowerCase().includes("detect niches")) {
+      try {
+        const [trendsResp, nichesResp] = await Promise.all([
+          fetch(`${apiBase}/api/v1/intelligence/trends`).then((r) => r.json()).catch(() => null),
+          fetch(`${apiBase}/api/v1/intelligence/niches`).then((r) => r.json()).catch(() => null),
+        ]);
+        const trends = trendsResp?.trends || [];
+        const niches = nichesResp?.niches || [];
+        const trendStr = trends.slice(0, 5).map((t) => `  📈 ${t.name || t.trend} (${t.category || "—"})`).join("\n") || "  No trends found.";
+        const nicheStr = niches.slice(0, 5).map((n) => `  🎯 ${n.niche || n.name} — score: ${n.opportunity_score ?? n.score ?? "—"}`).join("\n") || "  No niches found.";
+        setMessages((prev) => [...prev, {
+          role: "assistant",
+          content: `📊 Market Intelligence\n\nTop Trends:\n${trendStr}\n\nTop Niches:\n${nicheStr}\n\nVisit /trends for full view`,
+        }]);
+      } catch (e) {
+        setMessages((prev) => [...prev, { role: "assistant", content: `❌ Market scan error: ${e.message}` }]);
+      }
+      setLoading(false);
+      return;
+    }
+
+    // ── Invention Pipeline ───────────────────────────────────────────
+    if (msg.toLowerCase().includes("invention pipeline") || msg.toLowerCase().includes("generate") && msg.toLowerCase().includes("ideas")) {
+      const industry = msg.match(/for\s+(\w[\w\s]+?)(?:\s+market|\s+industry|$)/i)?.[1]?.trim() || "construction";
+      try {
+        const r = await fetch(`${apiBase}/api/v1/intelligence/invention/run`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ industry, count: 3 }),
+        });
+        const d = r.ok ? await r.json() : null;
+        setMessages((prev) => [...prev, {
+          role: "assistant",
+          content: d?.report_preview
+            ? `🔬 Invention Pipeline — ${industry}\n\n${d.report_preview.slice(0, 2000)}`
+            : `🔬 Invention Pipeline — ${industry}\n\n${d ? `Generated ${d.ideas_generated || 0} ideas` : "❌ Pipeline failed."}`,
+        }]);
+      } catch (e) {
+        setMessages((prev) => [...prev, { role: "assistant", content: `❌ Invention error: ${e.message}` }]);
+      }
+      setLoading(false);
+      return;
+    }
+
+    // ── Predictions ──────────────────────────────────────────────────
+    if (msg.toLowerCase().includes("predict") || msg.toLowerCase().includes("forecast") || msg.toLowerCase().includes("growth model")) {
+      const sector = msg.match(/(?:for|in)\s+(\w[\w\s]+?)(?:\s+sector|\s+industry|$)/i)?.[1]?.trim() || "technology";
+      try {
+        const r = await fetch(`${apiBase}/api/v1/intelligence/predictions/${encodeURIComponent(sector)}`);
+        const d = r.ok ? await r.json() : null;
+        setMessages((prev) => [...prev, {
+          role: "assistant",
+          content: d
+            ? `📈 Prediction — ${sector}\n\nGrowth: ${d.growth_prediction ?? "—"}%\nConfidence: ${Math.round((d.confidence ?? 0) * 100)}%\nRecommendation: ${d.recommendation ?? "—"}\n\nBullish signals:\n${(d.bullish_signals || []).slice(0, 3).map((s) => `  • ${s}`).join("\n")}`
+            : `❌ Prediction unavailable for sector: ${sector}`,
+        }]);
+      } catch (e) {
+        setMessages((prev) => [...prev, { role: "assistant", content: `❌ Prediction error: ${e.message}` }]);
+      }
+      setLoading(false);
+      return;
+    }
+
+    // ── System Health / Guardian ─────────────────────────────────────
+    if (msg.toLowerCase().includes("health check") || msg.toLowerCase().includes("system status") || msg.toLowerCase().includes("watchdog") || msg.toLowerCase().includes("anomalies")) {
+      try {
+        const [healthResp, metricsResp] = await Promise.all([
+          fetch(`${apiBase}/api/v1/system/health`).then((r) => r.json()).catch(() => null),
+          fetch(`${apiBase}/api/v1/system/metrics`).then((r) => r.json()).catch(() => null),
+        ]);
+        const subsystems = healthResp?.checks || {};
+        const lines = Object.entries(subsystems).map(([k, v]) =>
+          `  ${v?.status === "ok" || v === true ? "✅" : v?.status === "degraded" ? "⚠️" : "❌"} ${k}: ${v?.status || String(v)}`
+        );
+        setMessages((prev) => [...prev, {
+          role: "assistant",
+          content: `🛡️ System Guardian\n\nOverall: ${healthResp?.status ?? "unknown"}\n\nSubsystems:\n${lines.join("\n") || "  (no subsystem data)"}\n\nWorkers: ${metricsResp?.workers?.total_workers ?? "—"} total`,
+        }]);
+      } catch (e) {
+        setMessages((prev) => [...prev, { role: "assistant", content: `❌ Health check error: ${e.message}` }]);
+      }
+      setLoading(false);
+      return;
+    }
+
+    // ── Hypothesis Generator ─────────────────────────────────────────
+    if (msg.toLowerCase().includes("hypothesis")) {
+      const observation = msg.replace(/generate hypothesis[:\s]*/i, "").trim() || msg;
+      try {
+        const r = await fetch(`${apiBase}/api/v1/intelligence/hypotheses/generate?observation=${encodeURIComponent(observation)}`);
+        const d = r.ok ? await r.json() : null;
+        setMessages((prev) => [...prev, {
+          role: "assistant",
+          content: d?.hypothesis
+            ? `🔬 Hypothesis Generated\n\n"${d.hypothesis}"\n\nConfidence: ${Math.round((d.confidence ?? 0) * 100)}%\nCategory: ${d.category}\nTestability: ${d.testability}\n\nSuggested experiments:\n${(d.suggested_experiments || []).map((e) => `  • ${e}`).join("\n")}`
+            : "❌ Could not generate hypothesis.",
+        }]);
+      } catch (e) {
+        setMessages((prev) => [...prev, { role: "assistant", content: `❌ Hypothesis error: ${e.message}` }]);
       }
       setLoading(false);
       return;
