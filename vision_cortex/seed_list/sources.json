@@ -1,5 +1,93 @@
 [
   {
+    "id": "gc_flooring_contractors",
+    "name": "Google Maps — Flooring Contractors USA",
+    "type": "google_maps",
+    "queries": [
+      "flooring contractors near me",
+      "hardwood floor installation",
+      "tile installation contractors",
+      "carpet installation companies",
+      "epoxy flooring contractors"
+    ],
+    "regions": [
+      "New York, NY",
+      "Los Angeles, CA",
+      "Chicago, IL",
+      "Houston, TX",
+      "Phoenix, AZ",
+      "Philadelphia, PA",
+      "San Antonio, TX",
+      "San Diego, CA",
+      "Dallas, TX",
+      "San Jose, CA"
+    ],
+    "priority": "high",
+    "schedule": "daily",
+    "enabled": true
+  },
+  {
+    "id": "yelp_flooring",
+    "name": "Yelp — Flooring Services",
+    "type": "yelp",
+    "queries": ["flooring", "hardwood floors", "tile contractors"],
+    "regions": ["nationwide"],
+    "priority": "medium",
+    "schedule": "weekly",
+    "enabled": true
+  },
+  {
+    "id": "bing_construction",
+    "name": "Bing Maps — Construction Companies",
+    "type": "bing_maps",
+    "queries": [
+      "general contractors",
+      "commercial flooring",
+      "construction company"
+    ],
+    "regions": [
+      "nationwide"
+    ],
+    "priority": "medium",
+    "schedule": "weekly",
+    "enabled": true
+  },
+  {
+    "id": "directory_angi",
+    "name": "Angi / HomeAdvisor Directory",
+    "type": "directory",
+    "base_url": "https://www.angi.com",
+    "categories": ["flooring", "tile", "hardwood"],
+    "priority": "high",
+    "schedule": "daily",
+    "enabled": true
+  },
+  {
+    "id": "directory_houzz",
+    "name": "Houzz Pro Directory",
+    "type": "directory",
+    "base_url": "https://www.houzz.com",
+    "categories": ["flooring-contractors", "tile-contractors"],
+    "priority": "medium",
+    "schedule": "weekly",
+    "enabled": true
+  },
+  {
+    "id": "linkedin_companies",
+    "name": "LinkedIn — Flooring Company Pages",
+    "type": "linkedin",
+    "search_terms": [
+      "flooring company",
+      "hardwood flooring contractor",
+      "commercial flooring"
+    ],
+    "filters": {
+      "company_size": ["1-10", "11-50", "51-200"],
+      "location": "United States"
+    },
+    "priority": "low",
+    "schedule": "monthly",
+    "enabled": false
     "id": "arxiv_cs_ai",
     "name": "arXiv CS.AI",
     "url": "https://rss.arxiv.org/rss/cs.AI",
