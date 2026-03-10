@@ -11,6 +11,11 @@ GET  /intelligence/briefing/markdown      — get daily briefing (Markdown)
 GET  /intelligence/system/status          — system guardian status
 GET  /intelligence/vision-cortex/status   — vision cortex / scraper status
 POST /intelligence/vision-cortex/run      — trigger a scraping run
+GET  /intelligence/predictions/{sector}   — financial market prediction for a sector
+GET  /intelligence/industry/{industry}/growth  — industry growth model
+POST /intelligence/invention/run          — run invention pipeline
+GET  /intelligence/hypotheses/generate    — generate hypothesis from observation
+GET  /intelligence/experiment/design      — design experiment for a hypothesis
 """
 from __future__ import annotations
 
@@ -338,3 +343,172 @@ def trigger_vision_cortex_run(payload: VisionCortexRunRequest) -> Dict[str, Any]
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to enqueue scraping run: {exc}",
         ) from exc
+
+
+# ---------------------------------------------------------------------------
+# Phase 9 — Financial predictions
+# ---------------------------------------------------------------------------
+
+
+@router.get(
+    "/predictions/{sector}",
+    summary="Financial market prediction for a sector",
+    response_description="Growth forecast and signals for the requested sector",
+)
+def get_financial_prediction(
+    sector: str,
+    timeframe_months: int = Query(default=12, ge=1, le=60, description="Forecast horizon in months"),
+) -> Dict[str, Any]:
+    """Return a heuristic financial market forecast for *sector* over *timeframe_months*."""
+    try:
+        from predictions.financial_market_predictor import FinancialMarketPredictor
+
+        predictor = FinancialMarketPredictor()
+        return predictor.predict(sector=sector, timeframe_months=timeframe_months)
+    except Exception as exc:
+        logger.error("financial_prediction_error sector=%s: %s", sector, exc)
+        return {
+            "sector": sector,
+            "timeframe_months": timeframe_months,
+            "growth_prediction": 5.0,
+            "confidence": 0.55,
+            "bullish_signals": ["General economic expansion."],
+            "bearish_signals": ["Macroeconomic uncertainty."],
+            "recommendation": "watch",
+            "note": "demo_data",
+            "error": str(exc),
+        }
+
+
+@router.get(
+    "/industry/{industry}/growth",
+    summary="Industry growth model",
+    response_description="Historical context, projections, and growth drivers for the industry",
+)
+def get_industry_growth(industry: str) -> Dict[str, Any]:
+    """Return a growth model for the requested *industry*."""
+    try:
+        from predictions.industry_growth_model import IndustryGrowthModel
+
+        model = IndustryGrowthModel()
+        return model.model(industry=industry)
+    except Exception as exc:
+        logger.error("industry_growth_error industry=%s: %s", industry, exc)
+        return {
+            "industry": industry,
+            "description": f"Growth model for {industry}.",
+            "historical_cagr_pct": 5.0,
+            "current_market_size_bn": 10.0,
+            "projected_market_size_bn": 12.8,
+            "projection_years": 5,
+            "annual_projections": [],
+            "growth_drivers": ["General economic expansion."],
+            "headwinds": ["Macroeconomic uncertainty."],
+            "growth_potential_score": 55,
+            "note": "demo_data",
+            "error": str(exc),
+        }
+
+
+# ---------------------------------------------------------------------------
+# Phase 7 — Invention pipeline
+# ---------------------------------------------------------------------------
+
+
+class InventionPipelineRequest(BaseModel):
+    """Payload for the invention pipeline endpoint."""
+
+    industry: str = "flooring"
+    count: int = 5
+
+
+@router.post(
+    "/invention/run",
+    summary="Run the invention pipeline",
+    status_code=status.HTTP_200_OK,
+    response_description="Full invention report with scored and ranked ideas",
+)
+def run_invention(payload: InventionPipelineRequest) -> Dict[str, Any]:
+    """Generate, score, and rank business ideas for the requested industry.
+
+    Returns a full report dict including a Markdown ``markdown_report`` field.
+    """
+    try:
+        from invention_factory.invention_pipeline import run_invention_pipeline
+
+        return run_invention_pipeline(industry=payload.industry, count=payload.count)
+    except Exception as exc:
+        logger.error("invention_pipeline_error industry=%s: %s", payload.industry, exc)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Invention pipeline failed: {exc}",
+        ) from exc
+
+
+# ---------------------------------------------------------------------------
+# Phase 5 — Meta-cognition: hypotheses and experiment design
+# ---------------------------------------------------------------------------
+
+
+@router.get(
+    "/hypotheses/generate",
+    summary="Generate a hypothesis from a market observation",
+    response_description="Structured hypothesis dict with confidence and suggested experiments",
+)
+def generate_hypothesis(
+    observation: str = Query(..., description="Free-text market observation to convert into a hypothesis"),
+) -> Dict[str, Any]:
+    """Convert a market *observation* into a testable hypothesis with metadata."""
+    try:
+        from research.hypotheses.hypothesis_generator import HypothesisGenerator
+
+        generator = HypothesisGenerator()
+        return generator.generate_from_observation(observation)
+    except Exception as exc:
+        logger.error("hypothesis_generation_error: %s", exc)
+        return {
+            "hypothesis": f"The observation '{observation[:60]}...' warrants further investigation.",
+            "confidence": 0.5,
+            "category": "market",
+            "testability": "medium",
+            "suggested_experiments": ["Conduct a targeted market survey."],
+            "note": "demo_data",
+            "error": str(exc),
+        }
+
+
+@router.get(
+    "/experiment/design",
+    summary="Design an experiment for a hypothesis",
+    response_description="Structured experiment plan with type, metrics, duration and risk factors",
+)
+def design_experiment(
+    hypothesis: str = Query(..., description="Hypothesis statement to design an experiment for"),
+    metrics: Optional[str] = Query(default=None, description="Comma-separated list of evaluation metrics"),
+) -> Dict[str, Any]:
+    """Return a structured experiment plan for the given *hypothesis*.
+
+    Supply an optional comma-separated *metrics* list to override the defaults.
+    """
+    try:
+        from research.experiment_design import ExperimentDesigner
+
+        designer = ExperimentDesigner()
+        metric_list: Optional[List[str]] = (
+            [m.strip() for m in metrics.split(",") if m.strip()] if metrics else None
+        )
+        return designer.design(hypothesis=hypothesis, metrics=metric_list)
+    except Exception as exc:
+        logger.error("experiment_design_error: %s", exc)
+        return {
+            "hypothesis": hypothesis,
+            "experiment_type": "analysis",
+            "proposed_experiment": "Conduct a structured market analysis.",
+            "evaluation_metrics": ["growth_rate", "market_size"],
+            "estimated_duration": "1 week",
+            "resources_needed": ["market data sources"],
+            "success_criteria": "Data supports hypothesis at ≥ 70 % confidence.",
+            "risk_factors": ["Incomplete data coverage."],
+            "note": "demo_data",
+            "error": str(exc),
+        }
