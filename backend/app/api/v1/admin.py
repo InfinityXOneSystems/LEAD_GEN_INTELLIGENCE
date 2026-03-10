@@ -71,7 +71,7 @@ if not ADMIN_SECRET:
         RuntimeWarning,
         stacklevel=2,
     )
-REPO_ROOT = Path(__file__).resolve().parents[5]
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 COPILOT_PROMPT_PATH = REPO_ROOT / "COPILOT_PROMPT.md"
 
 
