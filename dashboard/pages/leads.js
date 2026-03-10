@@ -2,7 +2,8 @@
 // =========================
 // XPS Intelligence – Leads Viewer
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 
 const GATEWAY_URL =
   typeof window !== "undefined"
@@ -21,9 +22,9 @@ export default function LeadsPage() {
 
   useEffect(() => {
     fetchLeads();
-  }, [page, cityFilter, minScore]);
+  }, [page, cityFilter, minScore]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const fetchLeads = async () => {
+  const fetchLeads = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
@@ -42,7 +43,7 @@ export default function LeadsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, cityFilter, minScore]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const filtered = search
     ? leads.filter(
@@ -83,18 +84,18 @@ export default function LeadsPage() {
       <div style={styles.header}>
         <span style={styles.logo}>⚡ XPS Intelligence</span>
         <div style={styles.headerLinks}>
-          <a href="/" style={styles.navLink}>
+          <Link href="/" style={styles.navLink}>
             Home
-          </a>
-          <a href="/chat" style={styles.navLink}>
+          </Link>
+          <Link href="/chat" style={styles.navLink}>
             Chat
-          </a>
-          <a href="/analytics" style={styles.navLink}>
+          </Link>
+          <Link href="/analytics" style={styles.navLink}>
             Analytics
-          </a>
-          <a href="/settings" style={styles.navLink}>
+          </Link>
+          <Link href="/settings" style={styles.navLink}>
             Settings
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -215,9 +216,9 @@ export default function LeadsPage() {
                       }}
                     >
                       No leads found. Try scraping some leads via the{" "}
-                      <a href="/chat" style={{ color: "#FFD700" }}>
+                      <Link href="/chat" style={{ color: "#FFD700" }}>
                         Chat interface
-                      </a>
+                      </Link>
                       .
                     </td>
                   </tr>
