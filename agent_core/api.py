@@ -656,9 +656,13 @@ async def runtime_status() -> Dict[str, Any]:
 
         controller = get_controller()
         return {"success": True, **controller.status()}
-    except Exception as exc:
-        logger.warning("Runtime status error: %s", exc)
-        return {"success": False, "error": str(exc)}
+    except Exception:
+        # Log full exception details server-side without exposing them to the client.
+        logger.exception("Runtime status error")
+        return {
+            "success": False,
+            "error": "Failed to fetch runtime status",
+        }
 
 
 @app.get("/agent/observability")
@@ -668,5 +672,10 @@ async def observability_snapshot() -> Dict[str, Any]:
         from observability import get_metrics_snapshot
 
         return {"success": True, "data": get_metrics_snapshot()}
-    except Exception as exc:
-        return {"success": False, "error": str(exc)}
+    except Exception:
+        # Log full exception details server-side without exposing them to the client.
+        logger.exception("Observability snapshot error")
+        return {
+            "success": False,
+            "error": "Failed to fetch observability snapshot",
+        }
