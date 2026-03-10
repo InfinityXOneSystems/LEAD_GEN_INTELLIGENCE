@@ -9,16 +9,6 @@ Automates:
   - Sitemap generation hints
   - SEO scoring per lead website
   - Competitor keyword gap analysis
-
-Usage::
-
-    from agents.seo.seo_agent import SEOAgent
-
-    agent = SEOAgent()
-    result = await agent.run("analyze seo for flooring contractors in ohio")
-SEO Agent – analyses websites and extracts SEO signals for lead scoring.
-
-Capabilities:
   - Page title, meta description, headings extraction
   - Structured data (JSON-LD, schema.org) parsing
   - Contact information extraction (phone, email, address)
@@ -28,9 +18,11 @@ Capabilities:
 
 Usage::
 
+    from agents.seo.seo_agent import SEOAgent
+
     agent = SEOAgent()
+    result = await agent.run("analyze seo for flooring contractors in ohio")
     result = await agent.execute({"command": "analyse https://example.com"})
-    result = await agent.run("analyse https://example.com flooring")
 """
 
 from __future__ import annotations
