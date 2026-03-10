@@ -124,3 +124,5 @@ tmp/
 temp/
 .tmp/
 backend/test.db
+backend/test_admin.db
+backend/test*.db
