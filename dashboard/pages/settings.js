@@ -3,6 +3,7 @@
 // XPS Intelligence – Settings Control Panel
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 const API_URL =
   typeof window !== "undefined"
@@ -216,15 +217,15 @@ export default function SettingsPage() {
       <div style={styles.header}>
         <span style={styles.logo}>⚡ XPS Intelligence</span>
         <div style={styles.headerLinks}>
-          <a href="/" style={styles.navLink}>
+          <Link href="/" style={styles.navLink}>
             Home
-          </a>
-          <a href="/chat" style={styles.navLink}>
+          </Link>
+          <Link href="/chat" style={styles.navLink}>
             Chat
-          </a>
-          <a href="/leads" style={styles.navLink}>
+          </Link>
+          <Link href="/leads" style={styles.navLink}>
             Leads
-          </a>
+          </Link>
         </div>
       </div>
 

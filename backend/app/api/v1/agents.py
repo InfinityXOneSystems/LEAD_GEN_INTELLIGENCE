@@ -1,27 +1,45 @@
+from typing import Any, Dict
+
 import structlog
 from fastapi import APIRouter, HTTPException
-from typing import Dict, Any
 
 logger = structlog.get_logger()
 router = APIRouter(prefix="/agents", tags=["agents"])
 
 # In-memory agent registry - in production, use Redis
 _agent_registry: Dict[str, Dict[str, Any]] = {
-    "scraper_agent": {"status": "idle", "logs": [], "description": "Processes pending scrape jobs"},
-    "enrichment_agent": {"status": "idle", "logs": [], "description": "Enriches leads with missing data"},
-    "database_agent": {"status": "idle", "logs": [], "description": "Nightly DB cleanup and dedup"},
-    "outreach_agent": {"status": "idle", "logs": [], "description": "Sends outreach to high-score leads"},
-    "health_agent": {"status": "idle", "logs": [], "description": "System health monitoring"},
+    "scraper_agent": {
+        "status": "idle",
+        "logs": [],
+        "description": "Processes pending scrape jobs",
+    },
+    "enrichment_agent": {
+        "status": "idle",
+        "logs": [],
+        "description": "Enriches leads with missing data",
+    },
+    "database_agent": {
+        "status": "idle",
+        "logs": [],
+        "description": "Nightly DB cleanup and dedup",
+    },
+    "outreach_agent": {
+        "status": "idle",
+        "logs": [],
+        "description": "Sends outreach to high-score leads",
+    },
+    "health_agent": {
+        "status": "idle",
+        "logs": [],
+        "description": "System health monitoring",
+    },
 }
 
 
 @router.get("")
 def list_agents():
     return {
-        "agents": [
-            {"name": name, **info}
-            for name, info in _agent_registry.items()
-        ]
+        "agents": [{"name": name, **info} for name, info in _agent_registry.items()]
     }
 
 
@@ -31,13 +49,16 @@ def start_agent(name: str):
         raise HTTPException(status_code=404, detail=f"Agent '{name}' not found")
     agent = _agent_registry[name]
     if agent["status"] == "running":
-        raise HTTPException(status_code=400, detail=f"Agent '{name}' is already running")
+        raise HTTPException(
+            status_code=400, detail=f"Agent '{name}' is already running"
+        )
     agent["status"] = "running"
     agent["logs"].append(f"Agent {name} started manually")
     logger.info("agent_started", agent=name)
 
     try:
         from app.celery_app import trigger_agent
+
         trigger_agent.delay(name)
     except Exception as e:
         logger.warning("celery_unavailable", error=str(e))
