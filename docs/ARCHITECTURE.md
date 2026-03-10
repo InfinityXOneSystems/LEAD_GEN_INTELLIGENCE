@@ -1,6 +1,8 @@
 # Technical Architecture — XPS Lead Intelligence Platform
 
-> **Last updated:** _auto-updated by evolve_docs.js_
+> **Last updated:** 2026-03-10 — Updated by Copilot governance system
+> **Build:** [![CI](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/ci.yml/badge.svg)](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM/actions/workflows/ci.yml)
+> **Deployment:** Railway (backend) · Vercel / GitHub Pages (frontend)
 
 ---
 
@@ -43,35 +45,129 @@
 
 ## Current State vs. Target State
 
-### Current State (Phase 6 Complete)
+### Current State (Phase 7 — Governance System Active)
 
 ```
-✅ Lead scoring engine        agents/scoring/
-✅ Scraper framework          scrapers/
-✅ Outreach engine            outreach/
-✅ PostgreSQL schema          db/
-✅ Next.js dashboard          dashboard/
-✅ Static HTML dashboard      pages/
-✅ GPT Actions server         agents/gpt_actions/
-✅ Orchestrator               agents/orchestrator/
-✅ National discovery         .github/workflows/national_discovery.yml
-✅ GitHub Actions pipelines   .github/workflows/
-✅ PWA support                dashboard/public/, pages/
-✅ Unit tests                 tests/
+✅ Lead scoring engine             agents/scoring/
+✅ Scraper framework               scrapers/
+✅ Outreach engine                 outreach/
+✅ PostgreSQL schema               db/
+✅ Next.js dashboard               dashboard/
+✅ Static HTML dashboard           pages/
+✅ GPT Actions server              agents/gpt_actions/
+✅ Orchestrator                    agents/orchestrator/
+✅ National discovery              .github/workflows/national_discovery.yml
+✅ GitHub Actions pipelines        .github/workflows/
+✅ PWA support                     dashboard/public/, pages/
+✅ Unit tests                      tests/
+✅ FastAPI backend                 backend/
+✅ Hidden admin panel              dashboard/pages/admin/hidden/
+✅ Admin governance API            backend/app/api/v1/admin.py
+✅ Admin DB models                 backend/app/models/admin_models.py
+✅ Multi-agent spawner             /admin/hidden/copilot
+✅ Universal API connector         /admin/hidden/integrations
+✅ Quality gate CI workflow        .github/workflows/ci.yml
 ```
 
-### Target State (Phase 7–8)
+### Target State (Phase 8–12 — Full Enterprise Platform)
 
 ```
-🔲 Redis task queue integration        (BullMQ wiring)
-🔲 Real email delivery (Nodemailer)    (currently simulated)
-🔲 LinkedIn enrichment                 (agents/email/)
-🔲 Full PostgreSQL production setup    (db/ + cloud hosting)
-🔲 Nationwide auto-discovery           (automated pipeline)
-🔲 Live self-review + issue creation   (.github/workflows/docs_reflection.yml)
-🔲 AI-powered lead analysis            (OpenAI integration)
-🔲 Multi-tenant support                (per-client campaigns)
+Phase 8  — Sales Staff Portal (Auth + role-based lead dashboard)
+Phase 9  — Epoxy Domain LLM (fine-tuned industry advisor)
+Phase 10 — Social Media Agent (multi-platform post orchestrator)
+Phase 11 — Mobile Showroom (React Native + offline-first)
+Phase 12 — AI Phone Coach (Twilio + real-time objection rebuttal)
 ```
+
+---
+
+## Project Phases Roadmap
+
+| Phase | Name | Status | Key Deliverables |
+|-------|------|--------|-----------------|
+| 1 | System Architecture | ✅ Done | Repo structure, DB schema, CI |
+| 2 | Scrapers | ✅ Done | Google Maps, Bing, Yelp, Directory |
+| 3 | Validation + Enrichment | ✅ Done | Dedup, validation, email discovery |
+| 4 | Lead Scoring | ✅ Done | Scoring engine, tiers, industry detection |
+| 5 | Outreach Automation | ✅ Done | Nodemailer integration, follow-up scheduler |
+| 6 | Dashboard + PWA | ✅ Done | Next.js, GitHub Pages, service worker |
+| 7 | Autonomous Orchestration | ✅ Done | GitHub Actions cron pipelines |
+| 8 | Admin Governance System | ✅ Done | Hidden admin, multi-agent spawn, API connector |
+| 9 | Sales Staff Portal | 🔄 Next | Auth, role-based dashboards, lead assignment |
+| 10 | Industry LLM | 🔄 Planned | Epoxy domain expert chat, RAG, lead enrichment |
+| 11 | Social Media Agent | 🔄 Planned | Multi-platform posts, scheduling, ad creation |
+| 12 | Mobile Showroom | 🔄 Planned | React Native, offline-first, AR gallery |
+| 13 | AI Phone Coach | 🔄 Planned | Twilio, real-time transcription, rebuttal UI |
+| 14 | Nationwide Discovery | 🔄 Active | Multi-source aggregation, progress tracking |
+
+---
+
+## TODO List
+
+### High Priority (Next Sprint)
+- [ ] **Sales Staff Portal** — NextAuth.js + Prisma, role hierarchy (owner/manager/sales/viewer)
+- [ ] **Lead Assignment** — Assign leads to specific sales reps via admin panel
+- [ ] **Stripe Integration** — Webhook handler, subscription upgrade/downgrade
+- [ ] **Twilio Integration** — Voice call routing, SMS notifications
+- [ ] **Admin Token Rotation** — Implement session-based hash rotation for admin URL
+- [ ] **Rate Limiting** — Add slowapi middleware to backend (100 req/min per IP)
+- [ ] **CORS Hardening** — Restrict origins to authorized domains only
+
+### Medium Priority
+- [ ] **Epoxy Domain LLM** — GPT-4 custom instructions + Pinecone RAG for industry knowledge
+- [ ] **Social Media Scheduler** — Celery/BullMQ job for Instagram/Facebook/TikTok posts
+- [ ] **Email Templates** — Industry-specific outreach templates for decorative concrete
+- [ ] **Lead Deduplication** — Cross-source fingerprint matching
+- [ ] **Analytics Pipeline** — Daily cron to populate analytics_daily table
+- [ ] **Health Monitor Cron** — Periodic health snapshots to health_monitor table
+
+### Low Priority / Future
+- [ ] **Mobile Showroom** — React Native + Expo, offline-first, AR floor overlay
+- [ ] **AI Phone Coach** — Live transcription + objection classification
+- [ ] **AR Integration** — Place epoxy floor overlays in customer's space
+- [ ] **Video Auto-Gen** — Mux + ffmpeg for short-form social content
+
+---
+
+## Copilot Orchestration Commands
+
+```bash
+# Deploy backend to Railway
+railway up
+
+# Deploy frontend to Vercel
+vercel --prod
+
+# Spawn 4 parallel agents for a feature
+curl -X POST https://your-api.railway.app/api/v1/admin/hidden/copilot/spawn \
+  -H "X-Admin-Token: $ADMIN_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{"task": "Build Stripe webhook handler", "agent_count": 4}'
+
+# Run full CI locally
+cd backend && pytest tests/ -v --cov=app --cov-report=term-missing
+cd dashboard && npm run lint && npm run build
+
+# Update COPILOT_PROMPT.md via API
+curl -X PUT https://your-api.railway.app/api/v1/admin/hidden/copilot/prompt \
+  -H "X-Admin-Token: $ADMIN_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{"content": "...", "commit_message": "Update orchestration prompt"}'
+```
+
+---
+
+## Health Dashboard
+
+| Metric | Target | Monitor |
+|--------|--------|---------|
+| API Uptime | > 99.9% | /admin/hidden/health |
+| P50 Latency | < 100ms | /admin/hidden/health |
+| P95 Latency | < 500ms | /admin/hidden/health |
+| Error Rate | < 0.1% | /admin/hidden/health |
+| Test Coverage | > 80% | CI badge |
+| Lead Scrape Rate | > 300/min | Prometheus metrics |
+| Lighthouse Score | > 90 | CI lighthouse audit |
 
 ---
 
