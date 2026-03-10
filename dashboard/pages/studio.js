@@ -6,16 +6,24 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
-const API = typeof window !== "undefined"
-  ? process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
-  : "http://localhost:8000";
+const API =
+  typeof window !== "undefined"
+    ? process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+    : "http://localhost:8000";
 
 const TEMPLATE_CATEGORIES = [
   {
     id: "proposal",
     label: "📋 Business Proposal",
     icon: "📋",
-    fields: ["Company Name", "Client Name", "Project Title", "Budget", "Timeline", "Services"],
+    fields: [
+      "Company Name",
+      "Client Name",
+      "Project Title",
+      "Budget",
+      "Timeline",
+      "Services",
+    ],
     preview: (vals) => `
 <!DOCTYPE html><html><head><style>
 body{font-family:system-ui,sans-serif;max-width:800px;margin:0 auto;padding:2rem;background:#fff;color:#111}
@@ -42,7 +50,14 @@ td,th{padding:.5rem;border:1px solid #eee;text-align:left}th{background:#f9f9f9}
     id: "invoice",
     label: "🧾 Invoice",
     icon: "🧾",
-    fields: ["Your Business", "Client Name", "Invoice #", "Date", "Item Description", "Amount"],
+    fields: [
+      "Your Business",
+      "Client Name",
+      "Invoice #",
+      "Date",
+      "Item Description",
+      "Amount",
+    ],
     preview: (vals) => `
 <!DOCTYPE html><html><head><style>
 body{font-family:system-ui,sans-serif;max-width:700px;margin:0 auto;padding:2rem;background:#fff}
@@ -67,7 +82,14 @@ h1{color:#FFD700;background:#111;padding:1rem;margin:0}
     id: "email",
     label: "📧 Cold Email",
     icon: "📧",
-    fields: ["Your Name", "Company", "Recipient", "Industry", "Value Proposition", "CTA"],
+    fields: [
+      "Your Name",
+      "Company",
+      "Recipient",
+      "Industry",
+      "Value Proposition",
+      "CTA",
+    ],
     preview: (vals) => `
 <!DOCTYPE html><html><head><style>
 body{font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:2rem;background:#fff;color:#333}
@@ -87,7 +109,14 @@ p{line-height:1.7}
     id: "report",
     label: "📊 Lead Report",
     icon: "📊",
-    fields: ["Report Title", "Date Range", "Total Leads", "Hot Leads", "Conversion Rate", "Top City"],
+    fields: [
+      "Report Title",
+      "Date Range",
+      "Total Leads",
+      "Hot Leads",
+      "Conversion Rate",
+      "Top City",
+    ],
     preview: (vals) => `
 <!DOCTYPE html><html><head><style>
 body{font-family:system-ui,sans-serif;max-width:800px;margin:0 auto;padding:2rem;background:#000;color:#fff}
@@ -120,7 +149,9 @@ export default function StudioPage() {
   const [videoPrompt, setVideoPrompt] = useState("");
   const [videoResult, setVideoResult] = useState(null);
   const [generatingVideo, setGeneratingVideo] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState(TEMPLATE_CATEGORIES[0]);
+  const [selectedTemplate, setSelectedTemplate] = useState(
+    TEMPLATE_CATEGORIES[0],
+  );
   const [templateVals, setTemplateVals] = useState({});
   const [templateHtml, setTemplateHtml] = useState(null);
 
@@ -148,12 +179,23 @@ export default function StudioPage() {
         const poll = await fetch(`${API}/api/v1/runtime/task/${data.task_id}`);
         const pd = await poll.json();
         if (pd.status === "completed") {
-          setImageResult({ taskId: data.task_id, prompt: imagePrompt, status: "completed" });
+          setImageResult({
+            taskId: data.task_id,
+            prompt: imagePrompt,
+            status: "completed",
+          });
           break;
         }
       }
-      if (!imageResult) setImageResult({ taskId: data.task_id, prompt: imagePrompt, status: "completed" });
-    } catch (e) { setImageResult({ error: e.message }); }
+      if (!imageResult)
+        setImageResult({
+          taskId: data.task_id,
+          prompt: imagePrompt,
+          status: "completed",
+        });
+    } catch (e) {
+      setImageResult({ error: e.message });
+    }
     setGenerating(false);
   };
 
@@ -169,8 +211,17 @@ export default function StudioPage() {
       });
       const data = await res.json();
       await new Promise((r) => setTimeout(r, 2000));
-      setVideoResult({ taskId: data.task_id, prompt: videoPrompt, status: "completed", frames: 60, duration: "4s", resolution: "1280x720" });
-    } catch (e) { setVideoResult({ error: e.message }); }
+      setVideoResult({
+        taskId: data.task_id,
+        prompt: videoPrompt,
+        status: "completed",
+        frames: 60,
+        duration: "4s",
+        resolution: "1280x720",
+      });
+    } catch (e) {
+      setVideoResult({ error: e.message });
+    }
     setGeneratingVideo(false);
   };
 
@@ -193,15 +244,27 @@ export default function StudioPage() {
       <div style={S.header}>
         <span style={S.logo}>⚡ XPS Studio</span>
         <div style={S.links}>
-          <Link href="/" style={S.link}>Home</Link>
-          <Link href="/workspace" style={S.link}>Workspace</Link>
-          <Link href="/connectors" style={S.link}>Connectors</Link>
+          <Link href="/" style={S.link}>
+            Home
+          </Link>
+          <Link href="/workspace" style={S.link}>
+            Workspace
+          </Link>
+          <Link href="/connectors" style={S.link}>
+            Connectors
+          </Link>
         </div>
       </div>
 
       <div style={S.tabBar}>
         {tabs.map((t) => (
-          <button key={t.id} style={{ ...S.tab, ...(activeTab === t.id ? S.tabActive : {}) }} onClick={() => setActiveTab(t.id)}>{t.label}</button>
+          <button
+            key={t.id}
+            style={{ ...S.tab, ...(activeTab === t.id ? S.tabActive : {}) }}
+            onClick={() => setActiveTab(t.id)}
+          >
+            {t.label}
+          </button>
         ))}
       </div>
 
@@ -209,24 +272,60 @@ export default function StudioPage() {
       {activeTab === "image" && (
         <div style={S.panel}>
           <h2 style={S.heading}>🎨 AI Image Creator</h2>
-          <p style={S.desc}>Generate images, graphics, logos and UI mockups using AI</p>
+          <p style={S.desc}>
+            Generate images, graphics, logos and UI mockups using AI
+          </p>
           <div style={S.form}>
-            <input style={S.input} value={imagePrompt} onChange={(e) => setImagePrompt(e.target.value)} placeholder="Describe the image to create…" onKeyDown={(e) => e.key === "Enter" && generateImage()} />
-            <button style={S.btn} onClick={generateImage} disabled={generating}>{generating ? "⏳ Generating…" : "✨ Generate"}</button>
+            <input
+              style={S.input}
+              value={imagePrompt}
+              onChange={(e) => setImagePrompt(e.target.value)}
+              placeholder="Describe the image to create…"
+              onKeyDown={(e) => e.key === "Enter" && generateImage()}
+            />
+            <button style={S.btn} onClick={generateImage} disabled={generating}>
+              {generating ? "⏳ Generating…" : "✨ Generate"}
+            </button>
           </div>
           <div style={S.presets}>
-            {["epoxy floor company logo", "lead generation dashboard mockup", "flooring contractor hero banner", "dark mode UI card"].map((p) => (
-              <button key={p} style={S.chip} onClick={() => setImagePrompt(p)}>{p}</button>
+            {[
+              "epoxy floor company logo",
+              "lead generation dashboard mockup",
+              "flooring contractor hero banner",
+              "dark mode UI card",
+            ].map((p) => (
+              <button key={p} style={S.chip} onClick={() => setImagePrompt(p)}>
+                {p}
+              </button>
             ))}
           </div>
           {imageResult && !imageResult.error && (
             <div style={S.result}>
-              <div style={S.resultLabel}>✅ Generated: <em>{imageResult.prompt}</em> | Task: <code>{imageResult.taskId?.slice(0, 8)}</code></div>
+              <div style={S.resultLabel}>
+                ✅ Generated: <em>{imageResult.prompt}</em> | Task:{" "}
+                <code>{imageResult.taskId?.slice(0, 8)}</code>
+              </div>
               <div style={S.imagePlaceholder}>
                 <div style={S.imagePH}>
                   <div style={{ fontSize: "3rem" }}>🎨</div>
-                  <div style={{ color: "#FFD700", fontWeight: 700, marginTop: "0.5rem" }}>AI Image: {imageResult.prompt}</div>
-                  <div style={{ color: "#555", fontSize: "0.8rem", marginTop: "0.25rem" }}>Rendered by XPS Builder Agent — Status: COMPLETED</div>
+                  <div
+                    style={{
+                      color: "#FFD700",
+                      fontWeight: 700,
+                      marginTop: "0.5rem",
+                    }}
+                  >
+                    AI Image: {imageResult.prompt}
+                  </div>
+                  <div
+                    style={{
+                      color: "#555",
+                      fontSize: "0.8rem",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    Rendered by XPS Builder Agent — Status: COMPLETED
+                  </div>
                 </div>
               </div>
             </div>
@@ -238,27 +337,61 @@ export default function StudioPage() {
       {activeTab === "video" && (
         <div style={S.panel}>
           <h2 style={S.heading}>🎬 AI Video Creator</h2>
-          <p style={S.desc}>Generate promotional videos, slideshows, and marketing content</p>
+          <p style={S.desc}>
+            Generate promotional videos, slideshows, and marketing content
+          </p>
           <div style={S.form}>
-            <input style={S.input} value={videoPrompt} onChange={(e) => setVideoPrompt(e.target.value)} placeholder="Describe the video to create…" onKeyDown={(e) => e.key === "Enter" && generateVideo()} />
-            <button style={S.btn} onClick={generateVideo} disabled={generatingVideo}>{generatingVideo ? "⏳ Generating…" : "🎬 Generate"}</button>
+            <input
+              style={S.input}
+              value={videoPrompt}
+              onChange={(e) => setVideoPrompt(e.target.value)}
+              placeholder="Describe the video to create…"
+              onKeyDown={(e) => e.key === "Enter" && generateVideo()}
+            />
+            <button
+              style={S.btn}
+              onClick={generateVideo}
+              disabled={generatingVideo}
+            >
+              {generatingVideo ? "⏳ Generating…" : "🎬 Generate"}
+            </button>
           </div>
           <div style={S.presets}>
-            {["30-second epoxy floor promo", "lead generation explainer", "flooring company intro", "before/after transformation"].map((p) => (
-              <button key={p} style={S.chip} onClick={() => setVideoPrompt(p)}>{p}</button>
+            {[
+              "30-second epoxy floor promo",
+              "lead generation explainer",
+              "flooring company intro",
+              "before/after transformation",
+            ].map((p) => (
+              <button key={p} style={S.chip} onClick={() => setVideoPrompt(p)}>
+                {p}
+              </button>
             ))}
           </div>
           {videoResult && !videoResult.error && (
             <div style={S.result}>
-              <div style={S.resultLabel}>✅ Generated: <em>{videoResult.prompt}</em></div>
+              <div style={S.resultLabel}>
+                ✅ Generated: <em>{videoResult.prompt}</em>
+              </div>
               <div style={S.videoPlayer}>
                 <div style={S.videoPH}>
                   <div style={{ fontSize: "3rem" }}>🎬</div>
-                  <div style={{ color: "#FFD700", fontWeight: 700 }}>AI Video: {videoResult.prompt}</div>
-                  <div style={{ color: "#4ade80", marginTop: "0.5rem" }}>
-                    {videoResult.duration} · {videoResult.resolution} · {videoResult.frames} frames
+                  <div style={{ color: "#FFD700", fontWeight: 700 }}>
+                    AI Video: {videoResult.prompt}
                   </div>
-                  <div style={{ color: "#555", fontSize: "0.75rem", marginTop: "0.25rem" }}>Task: {videoResult.taskId}</div>
+                  <div style={{ color: "#4ade80", marginTop: "0.5rem" }}>
+                    {videoResult.duration} · {videoResult.resolution} ·{" "}
+                    {videoResult.frames} frames
+                  </div>
+                  <div
+                    style={{
+                      color: "#555",
+                      fontSize: "0.75rem",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    Task: {videoResult.taskId}
+                  </div>
                 </div>
               </div>
             </div>
@@ -272,7 +405,18 @@ export default function StudioPage() {
           <div style={S.templateSidebar}>
             <div style={S.sidebarTitle}>Templates</div>
             {TEMPLATE_CATEGORIES.map((t) => (
-              <button key={t.id} style={{ ...S.tmplBtn, ...(selectedTemplate.id === t.id ? S.tmplActive : {}) }} onClick={() => { setSelectedTemplate(t); setTemplateVals({}); setTemplateHtml(null); }}>
+              <button
+                key={t.id}
+                style={{
+                  ...S.tmplBtn,
+                  ...(selectedTemplate.id === t.id ? S.tmplActive : {}),
+                }}
+                onClick={() => {
+                  setSelectedTemplate(t);
+                  setTemplateVals({});
+                  setTemplateHtml(null);
+                }}
+              >
                 {t.label}
               </button>
             ))}
@@ -283,19 +427,43 @@ export default function StudioPage() {
               {selectedTemplate.fields.map((f) => (
                 <div key={f} style={S.fieldRow}>
                   <label style={S.fieldLabel}>{f}</label>
-                  <input style={S.fieldInput} value={templateVals[f] || ""} onChange={(e) => setTemplateVals((prev) => ({ ...prev, [f]: e.target.value }))} placeholder={f} />
+                  <input
+                    style={S.fieldInput}
+                    value={templateVals[f] || ""}
+                    onChange={(e) =>
+                      setTemplateVals((prev) => ({
+                        ...prev,
+                        [f]: e.target.value,
+                      }))
+                    }
+                    placeholder={f}
+                  />
                 </div>
               ))}
             </div>
             <div style={{ display: "flex", gap: "0.75rem", marginTop: "1rem" }}>
-              <button style={S.btn} onClick={buildTemplate}>👁️ Preview</button>
-              {templateHtml && <button style={{ ...S.btn, background: "#4ade80", color: "#000" }} onClick={exportTemplate}>⬇️ Export HTML</button>}
+              <button style={S.btn} onClick={buildTemplate}>
+                👁️ Preview
+              </button>
+              {templateHtml && (
+                <button
+                  style={{ ...S.btn, background: "#4ade80", color: "#000" }}
+                  onClick={exportTemplate}
+                >
+                  ⬇️ Export HTML
+                </button>
+              )}
             </div>
           </div>
           {templateHtml && (
             <div style={S.templatePreview}>
               <div style={S.sidebarTitle}>Preview</div>
-              <iframe srcDoc={templateHtml} style={S.previewFrame} title="Template Preview" sandbox="allow-scripts" />
+              <iframe
+                srcDoc={templateHtml}
+                style={S.previewFrame}
+                title="Template Preview"
+                sandbox="allow-scripts"
+              />
             </div>
           )}
         </div>
@@ -305,18 +473,37 @@ export default function StudioPage() {
       {activeTab === "ui" && (
         <div style={S.panel}>
           <h2 style={S.heading}>🖊️ UI Component Library</h2>
-          <p style={S.desc}>Pre-built UI components ready to copy into your frontend</p>
+          <p style={S.desc}>
+            Pre-built UI components ready to copy into your frontend
+          </p>
           <div style={S.compGrid}>
             {[
-              { name: "Lead Card", code: `<div class="card"><h3>South Florida Epoxy</h3><p>⭐ 4.8 | 127 reviews</p><p>📞 (954) 781-2200</p><span class="badge HOT">HOT</span></div>` },
-              { name: "Stats Bar", code: `<div class="stats"><div class="stat"><span class="val">127</span><span class="lbl">Leads</span></div></div>` },
-              { name: "Command Input", code: `<div class="cmd"><input placeholder="Enter AI command…"/><button>Send</button></div>` },
-              { name: "Status Badge", code: `<span class="badge completed">✅ Completed</span>` },
+              {
+                name: "Lead Card",
+                code: `<div class="card"><h3>South Florida Epoxy</h3><p>⭐ 4.8 | 127 reviews</p><p>📞 (954) 781-2200</p><span class="badge HOT">HOT</span></div>`,
+              },
+              {
+                name: "Stats Bar",
+                code: `<div class="stats"><div class="stat"><span class="val">127</span><span class="lbl">Leads</span></div></div>`,
+              },
+              {
+                name: "Command Input",
+                code: `<div class="cmd"><input placeholder="Enter AI command…"/><button>Send</button></div>`,
+              },
+              {
+                name: "Status Badge",
+                code: `<span class="badge completed">✅ Completed</span>`,
+              },
             ].map((comp) => (
               <div key={comp.name} style={S.compCard}>
                 <div style={S.compName}>{comp.name}</div>
                 <pre style={S.compCode}>{comp.code}</pre>
-                <button style={S.copyBtn} onClick={() => navigator.clipboard.writeText(comp.code)}>📋 Copy</button>
+                <button
+                  style={S.copyBtn}
+                  onClick={() => navigator.clipboard.writeText(comp.code)}
+                >
+                  📋 Copy
+                </button>
               </div>
             ))}
           </div>
@@ -327,44 +514,207 @@ export default function StudioPage() {
 }
 
 const S = {
-  page: { background: "#000", minHeight: "100vh", color: "#fff", fontFamily: "'Segoe UI',system-ui,sans-serif", display: "flex", flexDirection: "column" },
-  header: { background: "#0a0a0a", borderBottom: "1px solid #1a1a1a", padding: "0.65rem 1.5rem", display: "flex", alignItems: "center", justifyContent: "space-between" },
+  page: {
+    background: "#000",
+    minHeight: "100vh",
+    color: "#fff",
+    fontFamily: "'Segoe UI',system-ui,sans-serif",
+    display: "flex",
+    flexDirection: "column",
+  },
+  header: {
+    background: "#0a0a0a",
+    borderBottom: "1px solid #1a1a1a",
+    padding: "0.65rem 1.5rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   logo: { color: "#FFD700", fontWeight: 700 },
   links: { display: "flex", gap: "1.25rem" },
   link: { color: "#888", textDecoration: "none", fontSize: "0.875rem" },
-  tabBar: { display: "flex", borderBottom: "1px solid #1a1a1a", background: "#0a0a0a", padding: "0 1rem" },
-  tab: { background: "transparent", border: "none", color: "#666", padding: "0.65rem 1rem", cursor: "pointer", fontSize: "0.85rem", borderBottom: "2px solid transparent" },
+  tabBar: {
+    display: "flex",
+    borderBottom: "1px solid #1a1a1a",
+    background: "#0a0a0a",
+    padding: "0 1rem",
+  },
+  tab: {
+    background: "transparent",
+    border: "none",
+    color: "#666",
+    padding: "0.65rem 1rem",
+    cursor: "pointer",
+    fontSize: "0.85rem",
+    borderBottom: "2px solid transparent",
+  },
   tabActive: { color: "#FFD700", borderBottom: "2px solid #FFD700" },
   panel: { flex: 1, padding: "1.5rem 2rem" },
   heading: { color: "#FFD700", fontSize: "1.4rem", margin: "0 0 0.4rem" },
   desc: { color: "#666", marginBottom: "1.25rem" },
   form: { display: "flex", gap: "0.75rem", marginBottom: "0.75rem" },
-  input: { flex: 1, background: "#111", border: "1px solid #333", color: "#fff", padding: "0.65rem 1rem", borderRadius: "8px", fontSize: "0.95rem" },
-  btn: { background: "#FFD700", color: "#000", border: "none", padding: "0.65rem 1.5rem", borderRadius: "8px", cursor: "pointer", fontWeight: 700, fontSize: "0.9rem" },
-  presets: { display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.25rem" },
-  chip: { background: "#111", border: "1px solid #222", color: "#888", padding: "0.3rem 0.75rem", borderRadius: "16px", cursor: "pointer", fontSize: "0.8rem" },
-  result: { background: "#0a0a0a", border: "1px solid #FFD700", borderRadius: "8px", padding: "1rem" },
+  input: {
+    flex: 1,
+    background: "#111",
+    border: "1px solid #333",
+    color: "#fff",
+    padding: "0.65rem 1rem",
+    borderRadius: "8px",
+    fontSize: "0.95rem",
+  },
+  btn: {
+    background: "#FFD700",
+    color: "#000",
+    border: "none",
+    padding: "0.65rem 1.5rem",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontWeight: 700,
+    fontSize: "0.9rem",
+  },
+  presets: {
+    display: "flex",
+    gap: "0.5rem",
+    flexWrap: "wrap",
+    marginBottom: "1.25rem",
+  },
+  chip: {
+    background: "#111",
+    border: "1px solid #222",
+    color: "#888",
+    padding: "0.3rem 0.75rem",
+    borderRadius: "16px",
+    cursor: "pointer",
+    fontSize: "0.8rem",
+  },
+  result: {
+    background: "#0a0a0a",
+    border: "1px solid #FFD700",
+    borderRadius: "8px",
+    padding: "1rem",
+  },
   resultLabel: { color: "#888", fontSize: "0.8rem", marginBottom: "0.75rem" },
-  imagePlaceholder: { background: "#111", borderRadius: "8px", overflow: "hidden" },
-  imagePH: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "4rem 2rem", textAlign: "center" },
+  imagePlaceholder: {
+    background: "#111",
+    borderRadius: "8px",
+    overflow: "hidden",
+  },
+  imagePH: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "4rem 2rem",
+    textAlign: "center",
+  },
   videoPlayer: { background: "#111", borderRadius: "8px", overflow: "hidden" },
-  videoPH: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "4rem 2rem", textAlign: "center" },
-  splitPanel: { flex: 1, display: "grid", gridTemplateColumns: "200px 1fr 1fr", gap: "0", overflow: "hidden" },
-  templateSidebar: { borderRight: "1px solid #1a1a1a", padding: "1rem", display: "flex", flexDirection: "column", gap: "0.5rem" },
-  sidebarTitle: { color: "#555", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" },
-  tmplBtn: { background: "transparent", border: "1px solid #1a1a1a", color: "#888", padding: "0.5rem 0.75rem", borderRadius: "6px", cursor: "pointer", textAlign: "left", fontSize: "0.85rem" },
-  tmplActive: { background: "#1a1a1a", color: "#FFD700", borderColor: "#FFD700" },
-  templateEditor: { padding: "1.25rem", borderRight: "1px solid #1a1a1a", overflow: "auto" },
-  formTitle: { color: "#FFD700", fontWeight: 700, fontSize: "1.1rem", marginBottom: "1rem" },
+  videoPH: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "4rem 2rem",
+    textAlign: "center",
+  },
+  splitPanel: {
+    flex: 1,
+    display: "grid",
+    gridTemplateColumns: "200px 1fr 1fr",
+    gap: "0",
+    overflow: "hidden",
+  },
+  templateSidebar: {
+    borderRight: "1px solid #1a1a1a",
+    padding: "1rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+  },
+  sidebarTitle: {
+    color: "#555",
+    fontSize: "0.75rem",
+    textTransform: "uppercase",
+    letterSpacing: "0.05em",
+    marginBottom: "0.5rem",
+  },
+  tmplBtn: {
+    background: "transparent",
+    border: "1px solid #1a1a1a",
+    color: "#888",
+    padding: "0.5rem 0.75rem",
+    borderRadius: "6px",
+    cursor: "pointer",
+    textAlign: "left",
+    fontSize: "0.85rem",
+  },
+  tmplActive: {
+    background: "#1a1a1a",
+    color: "#FFD700",
+    borderColor: "#FFD700",
+  },
+  templateEditor: {
+    padding: "1.25rem",
+    borderRight: "1px solid #1a1a1a",
+    overflow: "auto",
+  },
+  formTitle: {
+    color: "#FFD700",
+    fontWeight: 700,
+    fontSize: "1.1rem",
+    marginBottom: "1rem",
+  },
   fieldGrid: { display: "flex", flexDirection: "column", gap: "0.75rem" },
   fieldRow: { display: "flex", flexDirection: "column", gap: "0.25rem" },
   fieldLabel: { color: "#666", fontSize: "0.8rem" },
-  fieldInput: { background: "#111", border: "1px solid #222", color: "#fff", padding: "0.4rem 0.75rem", borderRadius: "6px", fontSize: "0.85rem" },
-  templatePreview: { padding: "1rem", display: "flex", flexDirection: "column" },
-  previewFrame: { flex: 1, border: "none", borderRadius: "6px", background: "#fff", minHeight: "calc(100vh - 200px)" },
-  compGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: "1rem" },
-  compCard: { background: "#0a0a0a", border: "1px solid #1a1a1a", borderRadius: "8px", padding: "1rem" },
+  fieldInput: {
+    background: "#111",
+    border: "1px solid #222",
+    color: "#fff",
+    padding: "0.4rem 0.75rem",
+    borderRadius: "6px",
+    fontSize: "0.85rem",
+  },
+  templatePreview: {
+    padding: "1rem",
+    display: "flex",
+    flexDirection: "column",
+  },
+  previewFrame: {
+    flex: 1,
+    border: "none",
+    borderRadius: "6px",
+    background: "#fff",
+    minHeight: "calc(100vh - 200px)",
+  },
+  compGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))",
+    gap: "1rem",
+  },
+  compCard: {
+    background: "#0a0a0a",
+    border: "1px solid #1a1a1a",
+    borderRadius: "8px",
+    padding: "1rem",
+  },
   compName: { color: "#FFD700", fontWeight: 700, marginBottom: "0.75rem" },
-  compCode: { background: "#111", padding: "0.75rem", borderRadius: "6px", color: "#7dd3fc", fontSize: "0.75rem", overflow: "auto", marginBottom: "0.75rem", whiteSpace: "pre-wrap" },
-  copyBtn: { background: "#1a1a1a", border: "1px solid #333", color: "#aaa", padding: "0.3rem 0.75rem", borderRadius: "6px", cursor: "pointer", fontSize: "0.8rem" },
+  compCode: {
+    background: "#111",
+    padding: "0.75rem",
+    borderRadius: "6px",
+    color: "#7dd3fc",
+    fontSize: "0.75rem",
+    overflow: "auto",
+    marginBottom: "0.75rem",
+    whiteSpace: "pre-wrap",
+  },
+  copyBtn: {
+    background: "#1a1a1a",
+    border: "1px solid #333",
+    color: "#aaa",
+    padding: "0.3rem 0.75rem",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontSize: "0.8rem",
+  },
 };

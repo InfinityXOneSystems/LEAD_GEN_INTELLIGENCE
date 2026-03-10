@@ -57,7 +57,12 @@ test.describe("Backend API Proof", () => {
     const body = await r.json();
     expect(body).toHaveProperty("workers");
     expect(body).toHaveProperty("queue");
-    console.log("✅ Workers alive:", body.workers?.alive, "| Queue total:", body.queue?.total);
+    console.log(
+      "✅ Workers alive:",
+      body.workers?.alive,
+      "| Queue total:",
+      body.queue?.total,
+    );
   });
 
   test("System tasks endpoint returns task list", async ({ request }) => {
@@ -76,7 +81,9 @@ test.describe("Backend API Proof", () => {
 test.describe("Scraper — Pompano Beach FL Epoxy Leads", () => {
   let scrapedTaskId;
 
-  test("POST /api/v1/runtime/command with Pompano Beach scrape", async ({ request }) => {
+  test("POST /api/v1/runtime/command with Pompano Beach scrape", async ({
+    request,
+  }) => {
     const r = await request.post(`${BACKEND}/api/v1/runtime/command`, {
       data: { command: "scrape epoxy floor contractors in Pompano Beach FL" },
       headers: { "Content-Type": "application/json" },
@@ -99,16 +106,22 @@ test.describe("Scraper — Pompano Beach FL Epoxy Leads", () => {
     let result;
     for (let i = 0; i < 8; i++) {
       await new Promise((res) => setTimeout(res, 500));
-      const poll = await request.get(`${BACKEND}/api/v1/runtime/task/${task_id}`);
+      const poll = await request.get(
+        `${BACKEND}/api/v1/runtime/task/${task_id}`,
+      );
       result = await poll.json();
       if (result.status === "completed") break;
     }
     expect(result.status).toBe("completed");
-    console.log("✅ Scrape completed. Result:", JSON.stringify(result.result).slice(0, 100));
+    console.log(
+      "✅ Scrape completed. Result:",
+      JSON.stringify(result.result).slice(0, 100),
+    );
   });
 
   test("Leads JSON file contains Pompano Beach epoxy data", async () => {
-    const leadsPath = "/home/runner/work/XPS_INTELLIGENCE_SYSTEM/XPS_INTELLIGENCE_SYSTEM/leads/pompano_beach_epoxy.json";
+    const leadsPath =
+      "/home/runner/work/XPS_INTELLIGENCE_SYSTEM/XPS_INTELLIGENCE_SYSTEM/leads/pompano_beach_epoxy.json";
     expect(fs.existsSync(leadsPath)).toBe(true);
     const leads = JSON.parse(fs.readFileSync(leadsPath, "utf8"));
     expect(leads.length).toBeGreaterThanOrEqual(5);
@@ -119,10 +132,14 @@ test.describe("Scraper — Pompano Beach FL Epoxy Leads", () => {
     expect(first.state).toBe("FL");
     expect(first.lead_score).toBeGreaterThan(0);
     console.log(`✅ ${leads.length} Pompano Beach epoxy leads in file`);
-    console.log(`   Top lead: ${first.company_name} | Score: ${first.lead_score} | Phone: ${first.phone}`);
+    console.log(
+      `   Top lead: ${first.company_name} | Score: ${first.lead_score} | Phone: ${first.phone}`,
+    );
     // Print all leads
     leads.forEach((l, i) => {
-      console.log(`   [${i+1}] ${l.company_name} | ${l.phone} | Rating: ${l.rating} | Score: ${l.lead_score}`);
+      console.log(
+        `   [${i + 1}] ${l.company_name} | ${l.phone} | Rating: ${l.rating} | Score: ${l.lead_score}`,
+      );
     });
   });
 });
@@ -132,7 +149,9 @@ test.describe("Scraper — Pompano Beach FL Epoxy Leads", () => {
 // ═══════════════════════════════════════════════════════════════════
 
 test.describe("Parallel Execution Proof", () => {
-  test("launch 4 commands simultaneously and all return task IDs", async ({ request }) => {
+  test("launch 4 commands simultaneously and all return task IDs", async ({
+    request,
+  }) => {
     const commands = [
       "scrape epoxy contractors in Miami FL",
       "scrape flooring contractors in Orlando FL",
@@ -143,11 +162,13 @@ test.describe("Parallel Execution Proof", () => {
     const start = Date.now();
     const results = await Promise.all(
       commands.map((cmd) =>
-        request.post(`${BACKEND}/api/v1/runtime/command`, {
-          data: { command: cmd },
-          headers: { "Content-Type": "application/json" },
-        }).then((r) => r.json())
-      )
+        request
+          .post(`${BACKEND}/api/v1/runtime/command`, {
+            data: { command: cmd },
+            headers: { "Content-Type": "application/json" },
+          })
+          .then((r) => r.json()),
+      ),
     );
     const elapsed = Date.now() - start;
 
@@ -158,7 +179,11 @@ test.describe("Parallel Execution Proof", () => {
     }
 
     console.log(`✅ 4 parallel tasks launched in ${elapsed}ms`);
-    results.forEach((r, i) => console.log(`   [${i+1}] ${r.task_id?.slice(0,8)} → Agent: ${r.agent}`));
+    results.forEach((r, i) =>
+      console.log(
+        `   [${i + 1}] ${r.task_id?.slice(0, 8)} → Agent: ${r.agent}`,
+      ),
+    );
   });
 
   test("all parallel tasks complete successfully", async ({ request }) => {
@@ -171,8 +196,10 @@ test.describe("Parallel Execution Proof", () => {
 
     const submitted = await Promise.all(
       commands.map((cmd) =>
-        request.post(`${BACKEND}/api/v1/runtime/command`, { data: { command: cmd } }).then((r) => r.json())
-      )
+        request
+          .post(`${BACKEND}/api/v1/runtime/command`, { data: { command: cmd } })
+          .then((r) => r.json()),
+      ),
     );
 
     // Poll all tasks until complete
@@ -180,18 +207,22 @@ test.describe("Parallel Execution Proof", () => {
       submitted.map(async ({ task_id }) => {
         for (let i = 0; i < 8; i++) {
           await new Promise((res) => setTimeout(res, 600));
-          const poll = await request.get(`${BACKEND}/api/v1/runtime/task/${task_id}`);
+          const poll = await request.get(
+            `${BACKEND}/api/v1/runtime/task/${task_id}`,
+          );
           const data = await poll.json();
           if (data.status === "completed") return data;
         }
         return { task_id, status: "completed" }; // assume completed
-      })
+      }),
     );
 
     const allDone = completed.every((t) => t.status === "completed");
     expect(allDone).toBe(true);
     console.log(`✅ All 4 parallel tasks completed`);
-    completed.forEach((t, i) => console.log(`   [${i+1}] ${t.task_id?.slice(0,8)} → ${t.status}`));
+    completed.forEach((t, i) =>
+      console.log(`   [${i + 1}] ${t.task_id?.slice(0, 8)} → ${t.status}`),
+    );
   });
 });
 
@@ -203,7 +234,9 @@ test.describe("Homepage — Every Link & Button", () => {
   test("loads with title and all 5 nav cards", async ({ page }) => {
     await page.goto(FRONTEND);
     await page.waitForLoadState("networkidle");
-    await expect(page.locator("h1").first()).toContainText("XPS Intelligence Platform");
+    await expect(page.locator("h1").first()).toContainText(
+      "XPS Intelligence Platform",
+    );
     await expect(page.locator("text=💬 Chat Interface")).toBeVisible();
     await expect(page.locator("text=📋 Leads")).toBeVisible();
     await expect(page.locator("text=📊 Analytics")).toBeVisible();
@@ -279,7 +312,14 @@ test.describe("Chat / LLM Page — Buttons & Autonomous Orchestration", () => {
     await page.goto(`${FRONTEND}/chat`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(1000);
-    const chips = ["scrape epoxy contractors in Orlando FL", "run seo analysis", "export leads", "run outreach campaign", "status", "help"];
+    const chips = [
+      "scrape epoxy contractors in Orlando FL",
+      "run seo analysis",
+      "export leads",
+      "run outreach campaign",
+      "status",
+      "help",
+    ];
     for (const chip of chips) {
       const btn = page.locator(`button:has-text("${chip}")`).first();
       const visible = await btn.isVisible();
@@ -290,11 +330,15 @@ test.describe("Chat / LLM Page — Buttons & Autonomous Orchestration", () => {
     await shot(page, "09-chat-suggestion-chips");
   });
 
-  test("clicking scrape suggestion dispatches command to scraper agent", async ({ page }) => {
+  test("clicking scrape suggestion dispatches command to scraper agent", async ({
+    page,
+  }) => {
     await page.goto(`${FRONTEND}/chat`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(1000);
-    const chip = page.locator("button:has-text('scrape epoxy contractors')").first();
+    const chip = page
+      .locator("button:has-text('scrape epoxy contractors')")
+      .first();
     await chip.click();
     await page.waitForTimeout(2500);
     await expect(page.locator("text=scraper").first()).toBeVisible();
@@ -313,7 +357,9 @@ test.describe("Chat / LLM Page — Buttons & Autonomous Orchestration", () => {
     await shot(page, "11-chat-seo-agent-response");
   });
 
-  test("clicking outreach suggestion dispatches to outreach agent", async ({ page }) => {
+  test("clicking outreach suggestion dispatches to outreach agent", async ({
+    page,
+  }) => {
     await page.goto(`${FRONTEND}/chat`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(800);
@@ -324,20 +370,28 @@ test.describe("Chat / LLM Page — Buttons & Autonomous Orchestration", () => {
     await shot(page, "12-chat-outreach-agent-response");
   });
 
-  test("manual text input + send button dispatches Pompano Beach scrape", async ({ page }) => {
+  test("manual text input + send button dispatches Pompano Beach scrape", async ({
+    page,
+  }) => {
     await page.goto(`${FRONTEND}/chat`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(1000);
     const input = page.locator("input, textarea").first();
     await input.fill("scrape epoxy floor contractors in Pompano Beach FL");
-    const sendBtn = page.locator("button[type=submit], button:has-text('➤'), button:has-text('Send')").first();
+    const sendBtn = page
+      .locator(
+        "button[type=submit], button:has-text('➤'), button:has-text('Send')",
+      )
+      .first();
     await sendBtn.click();
     await page.waitForTimeout(3000);
     await shot(page, "13-chat-pompano-beach-scrape");
     console.log("✅ Pompano Beach scrape dispatched via manual input");
   });
 
-  test("autonomous orchestration: multiple sequential commands executed", async ({ page }) => {
+  test("autonomous orchestration: multiple sequential commands executed", async ({
+    page,
+  }) => {
     await page.goto(`${FRONTEND}/chat`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(1000);
@@ -352,7 +406,11 @@ test.describe("Chat / LLM Page — Buttons & Autonomous Orchestration", () => {
     const input = page.locator("input, textarea").first();
     for (const cmd of autonomousCommands) {
       await input.fill(cmd);
-      const sendBtn = page.locator("button[type=submit], button:has-text('➤'), button:has-text('Send')").first();
+      const sendBtn = page
+        .locator(
+          "button[type=submit], button:has-text('➤'), button:has-text('Send')",
+        )
+        .first();
       await sendBtn.click();
       await page.waitForTimeout(1800);
     }
@@ -422,7 +480,9 @@ test.describe("Leads Page — Every Button", () => {
     await page.goto(`${FRONTEND}/leads`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(800);
-    const csvBtn = page.locator("button:has-text('CSV'), button:has-text('Export')").first();
+    const csvBtn = page
+      .locator("button:has-text('CSV'), button:has-text('Export')")
+      .first();
     if (await csvBtn.isVisible()) {
       await csvBtn.click();
       await page.waitForTimeout(500);
@@ -435,8 +495,12 @@ test.describe("Leads Page — Every Button", () => {
     await page.goto(`${FRONTEND}/leads`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(800);
-    const prevBtn = page.locator("button:has-text('Prev'), button:has-text('←')").first();
-    const nextBtn = page.locator("button:has-text('Next'), button:has-text('→')").first();
+    const prevBtn = page
+      .locator("button:has-text('Prev'), button:has-text('←')")
+      .first();
+    const nextBtn = page
+      .locator("button:has-text('Next'), button:has-text('→')")
+      .first();
     if (await prevBtn.isVisible()) console.log("✅ Prev button present");
     if (await nextBtn.isVisible()) console.log("✅ Next button present");
     await shot(page, "21-leads-pagination");
@@ -461,7 +525,9 @@ test.describe("Analytics Page — Every Button", () => {
     await page.goto(`${FRONTEND}/analytics`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(1500);
-    const refreshBtn = page.locator("button:has-text('Refresh'), button:has-text('🔄')").first();
+    const refreshBtn = page
+      .locator("button:has-text('Refresh'), button:has-text('🔄')")
+      .first();
     if (await refreshBtn.isVisible()) {
       await refreshBtn.click();
       await page.waitForTimeout(1500);
@@ -536,7 +602,9 @@ test.describe("Settings Page — Every Field & Button", () => {
     await page.goto(`${FRONTEND}/settings`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(1200);
-    const ollamaField = page.locator("input[placeholder*='11434'], input[placeholder*='ollama']").first();
+    const ollamaField = page
+      .locator("input[placeholder*='11434'], input[placeholder*='ollama']")
+      .first();
     if (await ollamaField.isVisible()) {
       await ollamaField.fill("http://localhost:11434");
       await shot(page, "28-settings-ollama-url");
@@ -586,7 +654,9 @@ test.describe("Settings Page — Every Field & Button", () => {
     }
   });
 
-  test("Save Settings button is clickable and shows feedback", async ({ page }) => {
+  test("Save Settings button is clickable and shows feedback", async ({
+    page,
+  }) => {
     await page.goto(`${FRONTEND}/settings`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(1200);
@@ -627,7 +697,9 @@ test.describe("Workspace — Browser + Editor + UI Generation + Parallel + Auton
     console.log("✅ Workspace: all 5 tabs visible");
   });
 
-  test("Browser tab: iframe loads, URL bar and nav buttons work", async ({ page }) => {
+  test("Browser tab: iframe loads, URL bar and nav buttons work", async ({
+    page,
+  }) => {
     await page.goto(`${FRONTEND}/workspace`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(1500);
@@ -649,7 +721,9 @@ test.describe("Workspace — Browser + Editor + UI Generation + Parallel + Auton
     await mapsBtn.click();
     await page.waitForTimeout(500);
     await shot(page, "35-workspace-browser-tab");
-    console.log("✅ Browser tab: iframe, URL bar, Go, Yelp, Maps buttons all functional");
+    console.log(
+      "✅ Browser tab: iframe, URL bar, Go, Yelp, Maps buttons all functional",
+    );
   });
 
   test("Live Editor tab: code editor and preview work", async ({ page }) => {
@@ -661,7 +735,9 @@ test.describe("Workspace — Browser + Editor + UI Generation + Parallel + Auton
     const editor = page.locator("textarea").first();
     await expect(editor).toBeVisible();
     // Modify the HTML
-    await editor.fill("<html><body style='background:#000;color:#FFD700;padding:2rem'><h1>✅ XPS Live Edit Working</h1><p>HTML edited in real-time</p></body></html>");
+    await editor.fill(
+      "<html><body style='background:#000;color:#FFD700;padding:2rem'><h1>✅ XPS Live Edit Working</h1><p>HTML edited in real-time</p></body></html>",
+    );
     await page.waitForTimeout(500);
     await shot(page, "36-workspace-live-editor-modified");
     console.log("✅ Live Editor: code editor editable with live preview");
@@ -677,7 +753,9 @@ test.describe("Workspace — Browser + Editor + UI Generation + Parallel + Auton
     const cssEditor = textareas.nth(1);
     if (await cssEditor.isVisible()) {
       await cssEditor.fill("body { border: 3px solid #FFD700; }");
-      const injectBtn = page.locator("button:has-text('Inject CSS'), button:has-text('💉')").first();
+      const injectBtn = page
+        .locator("button:has-text('Inject CSS'), button:has-text('💉')")
+        .first();
       await injectBtn.click();
       await page.waitForTimeout(500);
       await shot(page, "37-workspace-css-injected");
@@ -706,7 +784,9 @@ test.describe("Workspace — Browser + Editor + UI Generation + Parallel + Auton
     }
   });
 
-  test("Image/UI Generation tab: generate button dispatches command", async ({ page }) => {
+  test("Image/UI Generation tab: generate button dispatches command", async ({
+    page,
+  }) => {
     await page.goto(`${FRONTEND}/workspace`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(1200);
@@ -714,7 +794,9 @@ test.describe("Workspace — Browser + Editor + UI Generation + Parallel + Auton
     await page.waitForTimeout(800);
     const genInput = page.locator("input").first();
     await genInput.fill("lead stats dashboard card");
-    const genBtn = page.locator("button:has-text('Generate'), button:has-text('✨')").first();
+    const genBtn = page
+      .locator("button:has-text('Generate'), button:has-text('✨')")
+      .first();
     await genBtn.click();
     await page.waitForTimeout(4000);
     await shot(page, "39-workspace-ui-generated");
@@ -736,13 +818,17 @@ test.describe("Workspace — Browser + Editor + UI Generation + Parallel + Auton
     }
   });
 
-  test("Parallel Instances tab: launches 4 workers simultaneously", async ({ page }) => {
+  test("Parallel Instances tab: launches 4 workers simultaneously", async ({
+    page,
+  }) => {
     await page.goto(`${FRONTEND}/workspace`);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(1200);
     await page.locator("button:has-text('⚡ Parallel Instances')").click();
     await page.waitForTimeout(800);
-    const launchBtn = page.locator("button:has-text('Launch'), button:has-text('🚀')").first();
+    const launchBtn = page
+      .locator("button:has-text('Launch'), button:has-text('🚀')")
+      .first();
     await launchBtn.click();
     await page.waitForTimeout(6000);
     // Should show 4 task cards
@@ -759,10 +845,14 @@ test.describe("Workspace — Browser + Editor + UI Generation + Parallel + Auton
     await page.waitForTimeout(1200);
     await page.locator("button:has-text('🤖 Autonomous')").click();
     await page.waitForTimeout(800);
-    const startBtn = page.locator("button:has-text('Start'), button:has-text('▶')").first();
+    const startBtn = page
+      .locator("button:has-text('Start'), button:has-text('▶')")
+      .first();
     await startBtn.click();
     await page.waitForTimeout(12000); // full pipeline runs
-    await expect(page.locator("text=Autonomous orchestration started").first()).toBeVisible();
+    await expect(
+      page.locator("text=Autonomous orchestration started").first(),
+    ).toBeVisible();
     await shot(page, "42-workspace-autonomous-pipeline");
     console.log("✅ Autonomous pipeline executed 4 steps");
   });
@@ -774,33 +864,51 @@ test.describe("Workspace — Browser + Editor + UI Generation + Parallel + Auton
 
 test.describe("Full System Operational Summary", () => {
   test("scraper results summary — Pompano Beach FL epoxy", async () => {
-    const leadsPath = "/home/runner/work/XPS_INTELLIGENCE_SYSTEM/XPS_INTELLIGENCE_SYSTEM/leads/pompano_beach_epoxy.json";
+    const leadsPath =
+      "/home/runner/work/XPS_INTELLIGENCE_SYSTEM/XPS_INTELLIGENCE_SYSTEM/leads/pompano_beach_epoxy.json";
     const leads = JSON.parse(fs.readFileSync(leadsPath, "utf8"));
 
     console.log("\n" + "=".repeat(60));
     console.log("🏆 SCRAPER RESULTS — Pompano Beach FL Epoxy Contractors");
     console.log("=".repeat(60));
     console.log(`Total Leads: ${leads.length}`);
-    console.log(`HOT (≥75):    ${leads.filter(l => l.lead_score >= 75).length}`);
-    console.log(`WARM (50-74): ${leads.filter(l => l.lead_score >= 50 && l.lead_score < 75).length}`);
-    console.log(`COLD (<50):   ${leads.filter(l => l.lead_score < 50).length}`);
+    console.log(
+      `HOT (≥75):    ${leads.filter((l) => l.lead_score >= 75).length}`,
+    );
+    console.log(
+      `WARM (50-74): ${leads.filter((l) => l.lead_score >= 50 && l.lead_score < 75).length}`,
+    );
+    console.log(
+      `COLD (<50):   ${leads.filter((l) => l.lead_score < 50).length}`,
+    );
     console.log("\nTop 5 Leads:");
-    leads.sort((a, b) => (b.lead_score || 0) - (a.lead_score || 0)).slice(0, 5).forEach((l, i) => {
-      console.log(`  ${i+1}. ${l.company_name}`);
-      console.log(`     Phone: ${l.phone || "N/A"} | Website: ${l.website || "N/A"}`);
-      console.log(`     Rating: ${l.rating || "N/A"} (${l.reviews || 0} reviews)`);
-      console.log(`     Address: ${l.address || "N/A"}`);
-      console.log(`     Category: ${l.category || "N/A"}`);
-      console.log(`     Lead Score: ${l.lead_score} | Tier: ${l.lead_score >= 75 ? "🔥 HOT" : l.lead_score >= 50 ? "🌡️ WARM" : "❄️ COLD"}`);
-    });
+    leads
+      .sort((a, b) => (b.lead_score || 0) - (a.lead_score || 0))
+      .slice(0, 5)
+      .forEach((l, i) => {
+        console.log(`  ${i + 1}. ${l.company_name}`);
+        console.log(
+          `     Phone: ${l.phone || "N/A"} | Website: ${l.website || "N/A"}`,
+        );
+        console.log(
+          `     Rating: ${l.rating || "N/A"} (${l.reviews || 0} reviews)`,
+        );
+        console.log(`     Address: ${l.address || "N/A"}`);
+        console.log(`     Category: ${l.category || "N/A"}`);
+        console.log(
+          `     Lead Score: ${l.lead_score} | Tier: ${l.lead_score >= 75 ? "🔥 HOT" : l.lead_score >= 50 ? "🌡️ WARM" : "❄️ COLD"}`,
+        );
+      });
     console.log("=".repeat(60));
 
     expect(leads.length).toBeGreaterThan(0);
-    expect(leads.every(l => l.city === "Pompano Beach")).toBe(true);
-    expect(leads.every(l => l.state === "FL")).toBe(true);
+    expect(leads.every((l) => l.city === "Pompano Beach")).toBe(true);
+    expect(leads.every((l) => l.state === "FL")).toBe(true);
   });
 
-  test("system-wide operational proof — all services running", async ({ request }) => {
+  test("system-wide operational proof — all services running", async ({
+    request,
+  }) => {
     // Backend health
     const health = await request.get(`${BACKEND}/health`);
     expect(health.status()).toBe(200);

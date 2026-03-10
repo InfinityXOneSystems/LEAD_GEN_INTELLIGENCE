@@ -9,9 +9,7 @@ module.exports = defineConfig({
   timeout: 30_000,
   retries: 1,
   workers: 1,
-  reporter: [
-    ["list"],
-  ],
+  reporter: [["list"]],
   outputDir: "/tmp/xps-screenshots",
   use: {
     baseURL: "http://127.0.0.1:3000",

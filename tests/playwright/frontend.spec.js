@@ -13,7 +13,8 @@ const BACKEND_URL = "http://127.0.0.1:8000";
 const SCREENSHOT_DIR = "/tmp/xps-screenshots";
 
 // Ensure screenshot dir exists
-if (!fs.existsSync(SCREENSHOT_DIR)) fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
+if (!fs.existsSync(SCREENSHOT_DIR))
+  fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
 
 async function saveScreenshot(page, name) {
   const filePath = path.join(SCREENSHOT_DIR, `${name}.png`);
@@ -48,7 +49,9 @@ test.describe("Backend API Health & Endpoints", () => {
     console.log("✅ Backend /metrics: accessible");
   });
 
-  test("POST /api/v1/runtime/command queues a scrape task", async ({ request }) => {
+  test("POST /api/v1/runtime/command queues a scrape task", async ({
+    request,
+  }) => {
     const resp = await request.post(`${BACKEND_URL}/api/v1/runtime/command`, {
       data: { command: "scrape flooring contractors in Austin TX" },
       headers: { "Content-Type": "application/json" },
@@ -60,14 +63,18 @@ test.describe("Backend API Health & Endpoints", () => {
     console.log("✅ Runtime command queued:", JSON.stringify(body));
 
     // Poll task status
-    const taskResp = await request.get(`${BACKEND_URL}/api/v1/runtime/task/${body.task_id}`);
+    const taskResp = await request.get(
+      `${BACKEND_URL}/api/v1/runtime/task/${body.task_id}`,
+    );
     expect(taskResp.status()).toBe(200);
     const taskBody = await taskResp.json();
     expect(taskBody).toHaveProperty("task_id");
     console.log("✅ Task status:", JSON.stringify(taskBody));
   });
 
-  test("POST /api/v1/runtime/command queues an LLM/chat task", async ({ request }) => {
+  test("POST /api/v1/runtime/command queues an LLM/chat task", async ({
+    request,
+  }) => {
     const resp = await request.post(`${BACKEND_URL}/api/v1/runtime/command`, {
       data: { command: "run seo analysis on example.com" },
       headers: { "Content-Type": "application/json" },
@@ -78,7 +85,9 @@ test.describe("Backend API Health & Endpoints", () => {
     console.log("✅ LLM/SEO command queued:", JSON.stringify(body));
   });
 
-  test("POST /api/v1/runtime/command rejects empty command", async ({ request }) => {
+  test("POST /api/v1/runtime/command rejects empty command", async ({
+    request,
+  }) => {
     const resp = await request.post(`${BACKEND_URL}/api/v1/runtime/command`, {
       data: { command: "" },
       headers: { "Content-Type": "application/json" },
@@ -87,13 +96,19 @@ test.describe("Backend API Health & Endpoints", () => {
     console.log("✅ Empty command correctly rejected with 422");
   });
 
-  test("GET /api/v1/runtime/task/nonexistent returns 404", async ({ request }) => {
-    const resp = await request.get(`${BACKEND_URL}/api/v1/runtime/task/nonexistent-task-id`);
+  test("GET /api/v1/runtime/task/nonexistent returns 404", async ({
+    request,
+  }) => {
+    const resp = await request.get(
+      `${BACKEND_URL}/api/v1/runtime/task/nonexistent-task-id`,
+    );
     expect(resp.status()).toBe(404);
     console.log("✅ Non-existent task correctly returns 404");
   });
 
-  test("POST /api/v1/runtime/command queues outreach task", async ({ request }) => {
+  test("POST /api/v1/runtime/command queues outreach task", async ({
+    request,
+  }) => {
     const resp = await request.post(`${BACKEND_URL}/api/v1/runtime/command`, {
       data: { command: "run outreach campaign to flooring leads" },
       headers: { "Content-Type": "application/json" },
@@ -170,7 +185,9 @@ test.describe("Frontend: Chat / LLM Interface", () => {
     await page.waitForTimeout(1000);
 
     // Click a suggestion chip if present
-    const suggestion = page.locator("text=scrape epoxy contractors in Orlando FL").first();
+    const suggestion = page
+      .locator("text=scrape epoxy contractors in Orlando FL")
+      .first();
     if (await suggestion.isVisible()) {
       await suggestion.click();
       await page.waitForTimeout(500);
@@ -193,7 +210,11 @@ test.describe("Frontend: Chat / LLM Interface", () => {
     await saveScreenshot(page, "06-chat-command-typed");
 
     // Submit via Enter or Send button
-    const sendBtn = page.locator("button[type=submit], button:has-text('Send'), button:has-text('Run')").first();
+    const sendBtn = page
+      .locator(
+        "button[type=submit], button:has-text('Send'), button:has-text('Run')",
+      )
+      .first();
     if (await sendBtn.isVisible()) {
       await sendBtn.click();
     } else {

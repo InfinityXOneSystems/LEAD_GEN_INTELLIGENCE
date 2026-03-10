@@ -23,12 +23,12 @@ function getApiBase() {
 }
 
 const MODES = [
-  { id: "browser",   label: "🌐 Browser",      desc: "Preview any URL" },
-  { id: "html",      label: "✏️ HTML Editor",   desc: "Live HTML/CSS/JS" },
-  { id: "ai-ui",     label: "🤖 AI UI Gen",     desc: "Prompt to UI" },
-  { id: "workers",   label: "⚙️ Workers",       desc: "Parallel instances" },
-  { id: "code",      label: "💻 Code",          desc: "Multi-language scratch" },
-  { id: "pipeline",  label: "🚀 Pipeline",      desc: "Autonomous lead pipeline" },
+  { id: "browser", label: "🌐 Browser", desc: "Preview any URL" },
+  { id: "html", label: "✏️ HTML Editor", desc: "Live HTML/CSS/JS" },
+  { id: "ai-ui", label: "🤖 AI UI Gen", desc: "Prompt to UI" },
+  { id: "workers", label: "⚙️ Workers", desc: "Parallel instances" },
+  { id: "code", label: "💻 Code", desc: "Multi-language scratch" },
+  { id: "pipeline", label: "🚀 Pipeline", desc: "Autonomous lead pipeline" },
 ];
 
 const DEFAULT_HTML = `<!DOCTYPE html>
@@ -82,8 +82,25 @@ function BrowserMode() {
   return (
     <div style={S.pane}>
       <div style={S.toolbar}>
-        <button style={S.tbBtn} onClick={() => { setInput("https://xps-intelligence.vercel.app"); setLoaded(false); setUrl("https://xps-intelligence.vercel.app"); }}>🏠</button>
-        <button style={S.tbBtn} onClick={() => { setLoaded(false); setUrl(url); }}>🔄</button>
+        <button
+          style={S.tbBtn}
+          onClick={() => {
+            setInput("https://xps-intelligence.vercel.app");
+            setLoaded(false);
+            setUrl("https://xps-intelligence.vercel.app");
+          }}
+        >
+          🏠
+        </button>
+        <button
+          style={S.tbBtn}
+          onClick={() => {
+            setLoaded(false);
+            setUrl(url);
+          }}
+        >
+          🔄
+        </button>
         <input
           style={S.urlBar}
           value={input}
@@ -91,7 +108,9 @@ function BrowserMode() {
           onKeyDown={(e) => e.key === "Enter" && navigate()}
           placeholder="Enter URL…"
         />
-        <button style={S.goBtn} onClick={navigate}>Go</button>
+        <button style={S.goBtn} onClick={navigate}>
+          Go
+        </button>
       </div>
       {!loaded && <div style={S.iframeLoading}>Loading…</div>}
       <iframe
@@ -162,7 +181,9 @@ function AiUiMode() {
       const res = await fetch(`${getApiBase()}/api/v1/runtime/command`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ command: `generate React UI component: ${prompt}` }),
+        body: JSON.stringify({
+          command: `generate React UI component: ${prompt}`,
+        }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
@@ -200,8 +221,17 @@ function AiUiMode() {
 
   return (
     <div style={S.pane}>
-      <div style={S.paneLabel}>🤖 AI UI Generator — prompt to live component</div>
-      <div style={{ display: "flex", gap: "0.5rem", padding: "0.75rem", background: "#111" }}>
+      <div style={S.paneLabel}>
+        🤖 AI UI Generator — prompt to live component
+      </div>
+      <div
+        style={{
+          display: "flex",
+          gap: "0.5rem",
+          padding: "0.75rem",
+          background: "#111",
+        }}
+      >
         <input
           style={S.aiInput}
           value={prompt}
@@ -209,13 +239,22 @@ function AiUiMode() {
           onKeyDown={(e) => e.key === "Enter" && !loading && generate()}
           placeholder="Describe the UI component you want… e.g. lead card with score badge"
         />
-        <button style={loading ? S.btnDisabled : S.goBtn} onClick={generate} disabled={loading}>
+        <button
+          style={loading ? S.btnDisabled : S.goBtn}
+          onClick={generate}
+          disabled={loading}
+        >
           {loading ? "⏳ Generating…" : "✨ Generate"}
         </button>
       </div>
 
       <div style={S.quickPrompts}>
-        {["Lead card with tier badge", "CRM Kanban column", "Stats dashboard row", "Email outreach form"].map((p) => (
+        {[
+          "Lead card with tier badge",
+          "CRM Kanban column",
+          "Stats dashboard row",
+          "Email outreach form",
+        ].map((p) => (
           <button key={p} style={S.chip} onClick={() => setPrompt(p)}>
             {p}
           </button>
@@ -230,19 +269,36 @@ function AiUiMode() {
       )}
       {error && <div style={S.errorBox}>❌ {error}</div>}
       {result && (
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+          }}
+        >
           <div style={S.resultTabs}>
-            <span style={{ color: "#aaa", fontSize: "0.75rem" }}>Generated Output</span>
+            <span style={{ color: "#aaa", fontSize: "0.75rem" }}>
+              Generated Output
+            </span>
           </div>
           {isHtml ? (
-            <iframe srcDoc={result} style={{ flex: 1, border: "none", background: "#fff" }} title="Generated UI" sandbox="allow-scripts" />
+            <iframe
+              srcDoc={result}
+              style={{ flex: 1, border: "none", background: "#fff" }}
+              title="Generated UI"
+              sandbox="allow-scripts"
+            />
           ) : (
             <pre style={S.resultPre}>{result}</pre>
           )}
         </div>
       )}
       {!loading && !result && !error && (
-        <div style={S.placeholder}>Enter a prompt above and click Generate to create a UI component using the LLM runtime.</div>
+        <div style={S.placeholder}>
+          Enter a prompt above and click Generate to create a UI component using
+          the LLM runtime.
+        </div>
       )}
     </div>
   );
@@ -256,7 +312,7 @@ function WorkersMode() {
       status: "idle",
       logs: [`[Worker ${i + 1}] Ready.`],
       taskId: null,
-    }))
+    })),
   );
   const [cmd, setCmd] = useState("scrape epoxy contractors in Miami FL");
   const pollRefs = useRef([]);
@@ -267,7 +323,13 @@ function WorkersMode() {
   };
 
   const dispatchAll = useCallback(async () => {
-    setWorkers((prev) => prev.map((w) => ({ ...w, status: "starting", logs: [`[Worker ${w.id}] Dispatching…`] })));
+    setWorkers((prev) =>
+      prev.map((w) => ({
+        ...w,
+        status: "starting",
+        logs: [`[Worker ${w.id}] Dispatching…`],
+      })),
+    );
 
     for (let i = 0; i < WORKER_COUNT; i++) {
       stopWorker(i);
@@ -284,13 +346,22 @@ function WorkersMode() {
 
         setWorkers((prev) =>
           prev.map((w, wi) =>
-            wi === idx ? { ...w, status: "running", taskId, logs: [...w.logs, `[Worker ${w.id}] Task ${taskId} queued.`] } : w
-          )
+            wi === idx
+              ? {
+                  ...w,
+                  status: "running",
+                  taskId,
+                  logs: [...w.logs, `[Worker ${w.id}] Task ${taskId} queued.`],
+                }
+              : w,
+          ),
         );
 
         pollRefs.current[idx] = setInterval(async () => {
           try {
-            const poll = await fetch(`${getApiBase()}/api/v1/runtime/task/${taskId}`);
+            const poll = await fetch(
+              `${getApiBase()}/api/v1/runtime/task/${taskId}`,
+            );
             const pd = await poll.json();
             setWorkers((prev) =>
               prev.map((w, wi) => {
@@ -298,55 +369,120 @@ function WorkersMode() {
                 const newLog = `[Worker ${w.id}] status: ${pd.status}`;
                 if (pd.status === "completed" || pd.status === "failed") {
                   stopWorker(idx);
-                  return { ...w, status: pd.status, logs: [...w.logs, newLog, `[Worker ${w.id}] ✅ Done.`] };
+                  return {
+                    ...w,
+                    status: pd.status,
+                    logs: [...w.logs, newLog, `[Worker ${w.id}] ✅ Done.`],
+                  };
                 }
                 return { ...w, logs: [...w.logs, newLog] };
-              })
+              }),
             );
           } catch {
             stopWorker(idx);
             setWorkers((prev) =>
               prev.map((w, wi) =>
-                wi === idx ? { ...w, status: "error", logs: [...w.logs, `[Worker ${w.id}] ❌ Poll error.`] } : w
-              )
+                wi === idx
+                  ? {
+                      ...w,
+                      status: "error",
+                      logs: [...w.logs, `[Worker ${w.id}] ❌ Poll error.`],
+                    }
+                  : w,
+              ),
             );
           }
         }, 2000);
       } catch (e) {
         setWorkers((prev) =>
           prev.map((w, wi) =>
-            wi === idx ? { ...w, status: "error", logs: [...w.logs, `[Worker ${w.id}] ❌ ${e.message}`] } : w
-          )
+            wi === idx
+              ? {
+                  ...w,
+                  status: "error",
+                  logs: [...w.logs, `[Worker ${w.id}] ❌ ${e.message}`],
+                }
+              : w,
+          ),
         );
       }
     }
   }, [cmd]);
 
-  useEffect(() => () => { for (let i = 0; i < WORKER_COUNT; i++) stopWorker(i); }, []);
+  useEffect(
+    () => () => {
+      for (let i = 0; i < WORKER_COUNT; i++) stopWorker(i);
+    },
+    [],
+  );
 
-  const statusColor = { idle: "#888", starting: "#f59e0b", running: "#60a5fa", completed: "#4ade80", failed: "#f87171", error: "#f87171" };
+  const statusColor = {
+    idle: "#888",
+    starting: "#f59e0b",
+    running: "#60a5fa",
+    completed: "#4ade80",
+    failed: "#f87171",
+    error: "#f87171",
+  };
 
   return (
     <div style={S.pane}>
       <div style={S.paneLabel}>⚙️ Parallel Worker Instances</div>
-      <div style={{ display: "flex", gap: "0.5rem", padding: "0.75rem", background: "#111" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "0.5rem",
+          padding: "0.75rem",
+          background: "#111",
+        }}
+      >
         <input
           style={S.aiInput}
           value={cmd}
           onChange={(e) => setCmd(e.target.value)}
           placeholder="Command to dispatch to all 4 workers…"
         />
-        <button style={S.goBtn} onClick={dispatchAll}>▶ Dispatch All</button>
+        <button style={S.goBtn} onClick={dispatchAll}>
+          ▶ Dispatch All
+        </button>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", padding: "0.5rem", flex: 1, overflow: "hidden" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "0.5rem",
+          padding: "0.5rem",
+          flex: 1,
+          overflow: "hidden",
+        }}
+      >
         {workers.map((w, i) => (
           <div key={w.id} style={S.workerBox}>
-            <div style={{ ...S.workerHeader, borderColor: statusColor[w.status] || "#444" }}>
-              <span style={{ color: statusColor[w.status], fontWeight: 700 }}>Worker {w.id}</span>
-              <span style={{ color: statusColor[w.status], fontSize: "0.7rem", textTransform: "uppercase" }}>{w.status}</span>
+            <div
+              style={{
+                ...S.workerHeader,
+                borderColor: statusColor[w.status] || "#444",
+              }}
+            >
+              <span style={{ color: statusColor[w.status], fontWeight: 700 }}>
+                Worker {w.id}
+              </span>
+              <span
+                style={{
+                  color: statusColor[w.status],
+                  fontSize: "0.7rem",
+                  textTransform: "uppercase",
+                }}
+              >
+                {w.status}
+              </span>
             </div>
             <div style={S.workerLog}>
-              {w.logs.map((l, li) => <div key={li} style={S.logLine}>{l}</div>)}
+              {w.logs.map((l, li) => (
+                <div key={li} style={S.logLine}>
+                  {l}
+                </div>
+              ))}
             </div>
           </div>
         ))}
@@ -371,20 +507,42 @@ function CodeMode() {
 
   return (
     <div style={{ ...S.pane, flexDirection: "column" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 0.75rem", background: "#111", borderBottom: "1px solid #222" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          padding: "0.5rem 0.75rem",
+          background: "#111",
+          borderBottom: "1px solid #222",
+        }}
+      >
         <span style={{ color: "#aaa", fontSize: "0.8rem" }}>Language:</span>
         {LANGS.map((l) => (
           <button
             key={l}
             style={l === lang ? S.langBtnActive : S.langBtn}
-            onClick={() => { setLang(l); setCode(STUBS[l]); setOutput(null); }}
+            onClick={() => {
+              setLang(l);
+              setCode(STUBS[l]);
+              setOutput(null);
+            }}
           >
             {l}
           </button>
         ))}
-        <span style={{ marginLeft: "auto", color: "#555", fontSize: "0.7rem" }}>Ctrl+Enter to run (browser-only for JS)</span>
+        <span style={{ marginLeft: "auto", color: "#555", fontSize: "0.7rem" }}>
+          Ctrl+Enter to run (browser-only for JS)
+        </span>
       </div>
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+        }}
+      >
         <textarea
           style={S.codeArea}
           value={code}
@@ -408,7 +566,18 @@ function CodeMode() {
           }}
         />
         {output && (
-          <div style={{ background: "#0a0a0a", padding: "0.5rem 0.75rem", borderTop: "1px solid #222", fontSize: "0.78rem", color: "#4ade80", fontFamily: "monospace", maxHeight: "8rem", overflow: "auto" }}>
+          <div
+            style={{
+              background: "#0a0a0a",
+              padding: "0.5rem 0.75rem",
+              borderTop: "1px solid #222",
+              fontSize: "0.78rem",
+              color: "#4ade80",
+              fontFamily: "monospace",
+              maxHeight: "8rem",
+              overflow: "auto",
+            }}
+          >
             <strong style={{ color: "#aaa" }}>Output:</strong>
             <pre style={{ margin: 0 }}>{output}</pre>
           </div>
@@ -425,7 +594,8 @@ function PipelineMode() {
   const pollRef = useRef(null);
   const logsEndRef = useRef(null);
 
-  const appendLog = (msg) => setLogs((prev) => [...prev, `${new Date().toLocaleTimeString()} ${msg}`]);
+  const appendLog = (msg) =>
+    setLogs((prev) => [...prev, `${new Date().toLocaleTimeString()} ${msg}`]);
 
   const stopPoll = () => {
     if (pollRef.current) clearInterval(pollRef.current);
@@ -449,7 +619,10 @@ function PipelineMode() {
       const res = await fetch(`${getApiBase()}/api/v1/runtime/command`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ command: "run full pipeline: scrape → validate → enrich → score → dedup → outreach" }),
+        body: JSON.stringify({
+          command:
+            "run full pipeline: scrape → validate → enrich → score → dedup → outreach",
+        }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
@@ -468,7 +641,8 @@ function PipelineMode() {
           if (pd.status === "completed") {
             stopPoll();
             appendLog("✅ Pipeline completed successfully.");
-            if (pd.result) appendLog(`Result: ${JSON.stringify(pd.result).slice(0, 200)}`);
+            if (pd.result)
+              appendLog(`Result: ${JSON.stringify(pd.result).slice(0, 200)}`);
             setRunning(false);
           } else if (pd.status === "failed") {
             stopPoll();
@@ -490,11 +664,11 @@ function PipelineMode() {
   }, [running]);
 
   const STAGES = [
-    { id: "scrape",   label: "Scrape",   icon: "🕷️" },
+    { id: "scrape", label: "Scrape", icon: "🕷️" },
     { id: "validate", label: "Validate", icon: "✅" },
-    { id: "enrich",   label: "Enrich",   icon: "🔍" },
-    { id: "score",    label: "Score",    icon: "⭐" },
-    { id: "dedup",    label: "Dedup",    icon: "🔧" },
+    { id: "enrich", label: "Enrich", icon: "🔍" },
+    { id: "score", label: "Score", icon: "⭐" },
+    { id: "dedup", label: "Dedup", icon: "🔧" },
     { id: "outreach", label: "Outreach", icon: "📧" },
   ];
 
@@ -502,8 +676,22 @@ function PipelineMode() {
     <div style={S.pane}>
       <div style={S.paneLabel}>🚀 Autonomous Lead Pipeline</div>
 
-      <div style={{ padding: "0.75rem", background: "#111", borderBottom: "1px solid #1a1a1a" }}>
-        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap", marginBottom: "0.5rem" }}>
+      <div
+        style={{
+          padding: "0.75rem",
+          background: "#111",
+          borderBottom: "1px solid #1a1a1a",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            gap: "0.5rem",
+            alignItems: "center",
+            flexWrap: "wrap",
+            marginBottom: "0.5rem",
+          }}
+        >
           {STAGES.map((st) => (
             <div key={st.id} style={S.stagePill}>
               {st.icon} {st.label}
@@ -511,17 +699,47 @@ function PipelineMode() {
           ))}
         </div>
         <div style={{ display: "flex", gap: "0.5rem" }}>
-          <button style={running ? S.btnDisabled : S.goBtn} onClick={runPipeline} disabled={running}>
+          <button
+            style={running ? S.btnDisabled : S.goBtn}
+            onClick={runPipeline}
+            disabled={running}
+          >
             {running ? "⏳ Running…" : "▶ Run Full Pipeline"}
           </button>
-          {taskId && <span style={{ color: "#888", fontSize: "0.75rem", alignSelf: "center" }}>Task: {taskId}</span>}
+          {taskId && (
+            <span
+              style={{
+                color: "#888",
+                fontSize: "0.75rem",
+                alignSelf: "center",
+              }}
+            >
+              Task: {taskId}
+            </span>
+          )}
         </div>
       </div>
 
       <div style={S.logBox}>
-        {logs.length === 0 && <div style={{ color: "#555", fontStyle: "italic" }}>Logs will appear here when you run the pipeline.</div>}
+        {logs.length === 0 && (
+          <div style={{ color: "#555", fontStyle: "italic" }}>
+            Logs will appear here when you run the pipeline.
+          </div>
+        )}
         {logs.map((l, i) => (
-          <div key={i} style={{ ...S.logLine, color: l.includes("✅") ? "#4ade80" : l.includes("❌") ? "#f87171" : l.includes("⚠️") ? "#f59e0b" : "#ccc" }}>
+          <div
+            key={i}
+            style={{
+              ...S.logLine,
+              color: l.includes("✅")
+                ? "#4ade80"
+                : l.includes("❌")
+                  ? "#f87171"
+                  : l.includes("⚠️")
+                    ? "#f59e0b"
+                    : "#ccc",
+            }}
+          >
             {l}
           </div>
         ))}
@@ -540,13 +758,20 @@ export default function WorkspacePage() {
 
   const renderMode = () => {
     switch (activeMode) {
-      case "browser":  return <BrowserMode />;
-      case "html":     return <HtmlMode />;
-      case "ai-ui":    return <AiUiMode />;
-      case "workers":  return <WorkersMode />;
-      case "code":     return <CodeMode />;
-      case "pipeline": return <PipelineMode />;
-      default:         return null;
+      case "browser":
+        return <BrowserMode />;
+      case "html":
+        return <HtmlMode />;
+      case "ai-ui":
+        return <AiUiMode />;
+      case "workers":
+        return <WorkersMode />;
+      case "code":
+        return <CodeMode />;
+      case "pipeline":
+        return <PipelineMode />;
+      default:
+        return null;
     }
   };
 
@@ -556,11 +781,21 @@ export default function WorkspacePage() {
       <div style={S.header}>
         <span style={S.logo}>⚡ XPS Intelligence</span>
         <div style={S.headerLinks}>
-          <Link href="/"          style={S.navLink}>Home</Link>
-          <Link href="/chat"      style={S.navLink}>Chat</Link>
-          <Link href="/leads"     style={S.navLink}>Leads</Link>
-          <Link href="/analytics" style={S.navLink}>Analytics</Link>
-          <Link href="/settings"  style={S.navLink}>Settings</Link>
+          <Link href="/" style={S.navLink}>
+            Home
+          </Link>
+          <Link href="/chat" style={S.navLink}>
+            Chat
+          </Link>
+          <Link href="/leads" style={S.navLink}>
+            Leads
+          </Link>
+          <Link href="/analytics" style={S.navLink}>
+            Analytics
+          </Link>
+          <Link href="/settings" style={S.navLink}>
+            Settings
+          </Link>
         </div>
       </div>
 
@@ -579,9 +814,7 @@ export default function WorkspacePage() {
       </div>
 
       {/* Editor area */}
-      <div style={S.editorArea}>
-        {renderMode()}
-      </div>
+      <div style={S.editorArea}>{renderMode()}</div>
     </div>
   );
 }
