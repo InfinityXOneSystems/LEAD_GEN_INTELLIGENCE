@@ -19,12 +19,12 @@ async def lifespan(app: FastAPI):
     try:
         from app.database import engine, Base
         from app.models import contractor  # noqa: F401 - register models
+        from app.models import admin_models  # noqa: F401 - register admin models
         Base.metadata.create_all(bind=engine)
         logger.info("database_tables_created")
     except Exception as e:
         logger.error("startup_failed", error=str(e))
     yield
-
 
 app = FastAPI(
     title="LEAD_GEN_INTELLIGENCE API",
@@ -60,9 +60,11 @@ def metrics():
 
 # Include routers
 from app.api.v1 import leads, scrapers, agents, outreach, commands  # noqa: E402
+from app.api.v1 import admin  # noqa: E402
 
 app.include_router(leads.router, prefix="/api/v1")
 app.include_router(scrapers.router, prefix="/api/v1")
 app.include_router(agents.router, prefix="/api/v1")
 app.include_router(outreach.router, prefix="/api/v1")
 app.include_router(commands.router, prefix="/api/v1")
+app.include_router(admin.router, prefix="/api/v1")

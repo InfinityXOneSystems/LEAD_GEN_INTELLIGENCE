@@ -6,6 +6,12 @@
     "unique": 1,
     "duplicates": 0,
     "generated_at": "2026-03-09T19:30:29.699Z"
+    "total": 2541,
+    "valid": 2541,
+    "invalid": 0,
+    "unique": 2530,
+    "duplicates": 11,
+    "generated_at": "2026-03-10T04:03:53.219Z"
   },
   "invalid_count": 0,
   "duplicate_count": 0,
