@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-10
 
-**Total leads:** 314
+**Total leads:** 199
 
 | Tier | Count |
 |------|-------|
-| HOT  | 9  |
-| WARM | 55 |
-| COLD | 250 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -33,4 +33,4 @@
 | Ideal Garage Floor Coatings |  |  | 55 |
 | Infinite Designs Epoxy Solutions of North Columbus |  |  | 55 |
 | Global Epoxy LLC |  |  | 55 |
-| Columbus Concrete Repair Crew |  |  | 55 |
+| Spaulding's Epoxy Floor Coating |  |  | 55 |
