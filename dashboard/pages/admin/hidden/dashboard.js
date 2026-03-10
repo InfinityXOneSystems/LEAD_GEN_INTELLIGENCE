@@ -9,21 +9,55 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 
-const API =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-const ADMIN_TOKEN =
-  process.env.NEXT_PUBLIC_ADMIN_TOKEN || "";
+const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const ADMIN_TOKEN = process.env.NEXT_PUBLIC_ADMIN_TOKEN || "";
 
 const PANELS = [
-  { href: "/admin/hidden/users", label: "👥 Users", desc: "CRUD, roles & permissions" },
-  { href: "/admin/hidden/features", label: "🔧 Features", desc: "Toggle platform features" },
-  { href: "/admin/hidden/settings", label: "⚙️ Settings", desc: "Global configuration" },
-  { href: "/admin/hidden/promotions", label: "🎟️ Promotions", desc: "Coupons & discounts" },
-  { href: "/admin/hidden/payments", label: "💳 Payments", desc: "Invoices & subscriptions" },
-  { href: "/admin/hidden/health", label: "🩺 Health", desc: "Uptime & latency" },
-  { href: "/admin/hidden/analytics", label: "📊 Analytics", desc: "DAU/MAU & growth" },
-  { href: "/admin/hidden/copilot", label: "🤖 Copilot", desc: "Prompt editor & spawn" },
-  { href: "/admin/hidden/integrations", label: "🔌 Integrations", desc: "API connectors" },
+  {
+    href: "/admin/hidden/users",
+    label: "👥 Users",
+    desc: "CRUD, roles & permissions",
+  },
+  {
+    href: "/admin/hidden/features",
+    label: "🔧 Features",
+    desc: "Toggle platform features",
+  },
+  {
+    href: "/admin/hidden/settings",
+    label: "⚙️ Settings",
+    desc: "Global configuration",
+  },
+  {
+    href: "/admin/hidden/promotions",
+    label: "🎟️ Promotions",
+    desc: "Coupons & discounts",
+  },
+  {
+    href: "/admin/hidden/payments",
+    label: "💳 Payments",
+    desc: "Invoices & subscriptions",
+  },
+  {
+    href: "/admin/hidden/health",
+    label: "🩺 Health",
+    desc: "Uptime & latency",
+  },
+  {
+    href: "/admin/hidden/analytics",
+    label: "📊 Analytics",
+    desc: "DAU/MAU & growth",
+  },
+  {
+    href: "/admin/hidden/copilot",
+    label: "🤖 Copilot",
+    desc: "Prompt editor & spawn",
+  },
+  {
+    href: "/admin/hidden/integrations",
+    label: "🔌 Integrations",
+    desc: "API connectors",
+  },
 ];
 
 export default function AdminDashboard() {
@@ -49,7 +83,9 @@ export default function AdminDashboard() {
       <div style={styles.page}>
         <div style={styles.header}>
           <h1 style={styles.title}>⚡ XPS Admin Command Center</h1>
-          <p style={styles.subtitle}>God-mode control panel · Owner access only</p>
+          <p style={styles.subtitle}>
+            God-mode control panel · Owner access only
+          </p>
         </div>
 
         {error && <div style={styles.error}>{error}</div>}
@@ -59,7 +95,10 @@ export default function AdminDashboard() {
             <Stat label="Total Users" value={analytics.users?.total ?? 0} />
             <Stat label="Active Users" value={analytics.users?.active ?? 0} />
             <Stat label="DAU" value={analytics.analytics?.dau ?? 0} />
-            <Stat label="Uptime" value={`${analytics.health?.uptime_pct ?? 100}%`} />
+            <Stat
+              label="Uptime"
+              value={`${analytics.health?.uptime_pct ?? 100}%`}
+            />
             <Stat
               label="Error Rate"
               value={`${((analytics.health?.error_rate ?? 0) * 100).toFixed(2)}%`}
