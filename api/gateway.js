@@ -19,18 +19,35 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 
-// CORS – allow configured origins; defaults to permissive for local dev
+// CORS – allow configured origins; defaults to permissive for local dev.
+// Supports exact-match origins and wildcard Vercel preview deployments
+// (e.g. https://xps-intelligence-*.vercel.app).
 const CORS_ORIGINS = process.env.CORS_ALLOWED_ORIGINS
   ? process.env.CORS_ALLOWED_ORIGINS.split(",").map((s) => s.trim())
   : null;
 
+// Returns true when `origin` matches an entry that may contain a '*' wildcard.
+function isCorsAllowed(origin) {
+  if (!origin) return true; // same-origin / server-to-server requests
+  if (!CORS_ORIGINS) return true; // no restriction in local dev
+  return CORS_ORIGINS.some((allowed) => {
+    if (!allowed.includes("*")) return allowed === origin;
+    // Escape all regex-special characters except '*', then convert '*' to '.*'
+    const escaped = allowed
+      .replace(/[.+?^${}()|[\]\\]/g, "\\$&")
+      .replace(/\*/g, ".*");
+    return new RegExp("^" + escaped + "$").test(origin);
+  });
+}
+
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  if (CORS_ORIGINS) {
-    if (CORS_ORIGINS.includes(origin)) {
-      res.setHeader("Access-Control-Allow-Origin", origin);
-    }
-  } else {
+  if (origin && isCorsAllowed(origin)) {
+    // Use the explicit origin (never "*") so browsers accept credentialed requests
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+  } else if (!origin && !CORS_ORIGINS) {
+    // No origin header + no allowlist configured = server-to-server / local dev
     res.setHeader("Access-Control-Allow-Origin", "*");
   }
   res.setHeader(
@@ -843,6 +860,11 @@ app.get("/api/heatmap", (req, res) => {
   }
 });
 
+// GET /health  – top-level health check (no auth; used by Railway, Vercel, and monitoring)
+app.get("/health", (req, res) => {
+  return res.json({ status: "OK", timestamp: new Date().toISOString() });
+});
+
 // GET /api  – root health check (used by frontend to verify connectivity)
 app.get("/api", (req, res) => {
   return res.json({
@@ -861,6 +883,9 @@ app.get("/api/status", (req, res) => {
   const list = Array.isArray(leads) ? leads : [];
   return res.json({
     success: true,
+    service: "XPS Intelligence Backend",
+    version: "1.0.0",
+    environment: process.env.NODE_ENV || "development",
     gateway: "running",
     uptime: process.uptime(),
     leads_available: list.length,
