@@ -2,7 +2,7 @@
 
 > Generated: 2026-03-10
 
-**Total leads:** 367
+**Total leads:** 368
 
 | Tier | Count |
 |------|-------|
