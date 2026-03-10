@@ -149,6 +149,8 @@ class SupervisorAgent:
             return await SEOAgent().run(command)
 
         if task_type == "social":
+            from agents.social.social_agent import SocialAgent
+            return await SocialAgent().run(command)
             from agents.social.social_media_agent import SocialMediaAgent
             return await SocialMediaAgent().run(command)
 
