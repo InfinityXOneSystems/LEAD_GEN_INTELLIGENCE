@@ -22,8 +22,8 @@ async def lifespan(app: FastAPI):
     logger.info("starting_application")
     try:
         from app.database import Base, engine
-        from app.models import contractor  # noqa: F401 - register models
         from app.models import admin_models  # noqa: F401 - register admin models
+        from app.models import contractor  # noqa: F401 - register models
 
         Base.metadata.create_all(bind=engine)
         logger.info("database_tables_created")

@@ -413,9 +413,13 @@ def _register_defaults() -> None:
     specialised agent implementation replaces it.
     """
     try:
-        from app.workers.worker_node import register_handler  # local import to avoid cycles
+        from app.workers.worker_node import (
+            register_handler,  # local import to avoid cycles
+        )
     except ImportError:
-        logger.warning("_register_defaults: could not import worker_node.register_handler")
+        logger.warning(
+            "_register_defaults: could not import worker_node.register_handler"
+        )
         return
 
     _agents: List[str] = [
@@ -439,4 +443,6 @@ def _register_defaults() -> None:
         register_handler(agent_name, handler)
         logger.debug("registered default handler for agent=%s", agent_name)
 
-    logger.info("_register_defaults: registered %d default agent handlers", len(_agents))
+    logger.info(
+        "_register_defaults: registered %d default agent handlers", len(_agents)
+    )

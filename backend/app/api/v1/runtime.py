@@ -15,8 +15,6 @@ POST /runtime/agents/run-all   — start every registered backend agent
 from __future__ import annotations
 
 import logging
-import os
-import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -94,7 +92,10 @@ class ParallelCommandItem(BaseModel):
 
 class ParallelCommandRequest(BaseModel):
     commands: List[ParallelCommandItem] = Field(
-        ..., min_length=1, max_length=8, description="1–8 commands to dispatch in parallel"
+        ...,
+        min_length=1,
+        max_length=8,
+        description="1–8 commands to dispatch in parallel",
     )
 
 
@@ -111,7 +112,9 @@ class FileReadResponse(BaseModel):
 
 
 class FileWriteRequest(BaseModel):
-    path: str = Field(..., description="Relative path inside dashboard/ or contracts/frontend/")
+    path: str = Field(
+        ..., description="Relative path inside dashboard/ or contracts/frontend/"
+    )
     content: str = Field(..., description="Full new file content")
     message: str = Field(default="agent: live edit via runtime API")
 
@@ -221,7 +224,9 @@ def post_parallel_commands(payload: ParallelCommandRequest) -> ParallelCommandRe
                 detail=format_error(exc),
             ) from exc
         except Exception as exc:
-            logger.exception("parallel_command_unexpected_error command=%r", item.command)
+            logger.exception(
+                "parallel_command_unexpected_error command=%r", item.command
+            )
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail=format_error(exc),
@@ -244,7 +249,11 @@ def post_parallel_commands(payload: ParallelCommandRequest) -> ParallelCommandRe
         "Absolute paths and '..' traversal are rejected."
     ),
 )
-def read_file(path: str = Query(..., description="Relative file path within dashboard/ or contracts/frontend/")) -> FileReadResponse:
+def read_file(
+    path: str = Query(
+        ..., description="Relative file path within dashboard/ or contracts/frontend/"
+    )
+) -> FileReadResponse:
     resolved = _resolve_safe_path(path)
     if not resolved.exists():
         raise HTTPException(
@@ -373,9 +382,18 @@ def run_all_agents() -> Dict[str, Any]:
         try:
             req = RuntimeCommandRequest(command=f"run agent {name}", priority=7)
             resp = controller.execute(req)
-            dispatched.append({"agent": name, "task_id": resp.task_id, "status": resp.status})
+            dispatched.append(
+                {"agent": name, "task_id": resp.task_id, "status": resp.status}
+            )
         except Exception as exc:
             logger.warning("run_all_agents: failed to dispatch %s: %s", name, exc)
-            dispatched.append({"agent": name, "task_id": None, "status": "dispatch_error", "error": str(exc)})
+            dispatched.append(
+                {
+                    "agent": name,
+                    "task_id": None,
+                    "status": "dispatch_error",
+                    "error": str(exc),
+                }
+            )
 
     return {"dispatched": dispatched, "total": len(dispatched)}

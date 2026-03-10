@@ -11,10 +11,8 @@ Covers:
 - GET /intelligence/system/status
 - POST /intelligence/vision-cortex/run
 """
+
 from __future__ import annotations
-
-import pytest
-
 
 # ---------------------------------------------------------------------------
 # Discovery endpoint
@@ -101,8 +99,16 @@ def test_briefing_json_structure(client):
     resp = client.get("/api/v1/intelligence/briefing")
     assert resp.status_code == 200
     data = resp.json()
-    for key in ("date", "generated_at", "total_leads", "financial_predictions",
-                "market_opportunities", "startup_signals", "top_leads", "system_health"):
+    for key in (
+        "date",
+        "generated_at",
+        "total_leads",
+        "financial_predictions",
+        "market_opportunities",
+        "startup_signals",
+        "top_leads",
+        "system_health",
+    ):
         assert key in data, f"Missing key: {key}"
 
 

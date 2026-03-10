@@ -7,9 +7,6 @@ POST /api/v1/runtime/command  — submit command, verify task_id returned
 GET  /runtime/task/{task_id}  — poll task, verify status response
 """
 
-import pytest
-
-
 # ---------------------------------------------------------------------------
 # POST /api/v1/runtime/command
 # ---------------------------------------------------------------------------

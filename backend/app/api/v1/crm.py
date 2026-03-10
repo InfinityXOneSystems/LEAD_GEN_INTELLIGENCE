@@ -14,7 +14,6 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -29,11 +28,28 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 LEADS_DIR = REPO_ROOT / "leads"
 CRM_FILE = LEADS_DIR / "crm_contacts.json"
 
-CRM_STAGES = ["new", "contacted", "interested", "proposal_sent", "negotiating", "closed_won", "closed_lost", "nurture"]
-OUTREACH_CHANNELS = ["email", "email_campaign", "sms", "voice_call", "follow_up", "manual"]
+CRM_STAGES = [
+    "new",
+    "contacted",
+    "interested",
+    "proposal_sent",
+    "negotiating",
+    "closed_won",
+    "closed_lost",
+    "nurture",
+]
+OUTREACH_CHANNELS = [
+    "email",
+    "email_campaign",
+    "sms",
+    "voice_call",
+    "follow_up",
+    "manual",
+]
 
 
 # ── In-memory cache ───────────────────────────────────────────────────────────
+
 
 def _load_crm() -> List[Dict]:
     LEADS_DIR.mkdir(parents=True, exist_ok=True)
@@ -59,11 +75,13 @@ def _find_contact(contacts: List[Dict], contact_id: str) -> Optional[int]:
 
 def _generate_id(name: str, city: str) -> str:
     import hashlib
+
     raw = f"{name.lower().strip()}:{city.lower().strip()}"
     return hashlib.sha1(raw.encode()).hexdigest()[:12]
 
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
+
 
 class ContactUpdate(BaseModel):
     crm_stage: Optional[str] = None
@@ -74,9 +92,11 @@ class ContactUpdate(BaseModel):
     tags: Optional[List[str]] = None
     notes: Optional[str] = None  # add a note
 
+
 class NoteCreate(BaseModel):
     text: str
     author: Optional[str] = "system"
+
 
 class OutreachRecord(BaseModel):
     channel: str
@@ -84,11 +104,14 @@ class OutreachRecord(BaseModel):
     body: Optional[str] = None
     outcome: Optional[str] = None
 
+
 class BulkStageUpdate(BaseModel):
     contact_ids: List[str]
     stage: str
 
+
 # ── Endpoints ─────────────────────────────────────────────────────────────────
+
 
 @router.get("/", summary="List all CRM contacts with filters")
 def list_contacts(
@@ -107,20 +130,26 @@ def list_contacts(
     if tier:
         contacts = [c for c in contacts if c.get("tier") == tier.upper()]
     if city:
-        contacts = [c for c in contacts if city.lower() in (c.get("city") or "").lower()]
+        contacts = [
+            c for c in contacts if city.lower() in (c.get("city") or "").lower()
+        ]
     if priority:
         contacts = [c for c in contacts if c.get("outreach_priority") == priority]
     if search:
         s = search.lower()
-        contacts = [c for c in contacts if (
-            s in (c.get("company_name") or "").lower()
-            or s in (c.get("phone") or "").lower()
-            or s in (c.get("email") or "").lower()
-        )]
+        contacts = [
+            c
+            for c in contacts
+            if (
+                s in (c.get("company_name") or "").lower()
+                or s in (c.get("phone") or "").lower()
+                or s in (c.get("email") or "").lower()
+            )
+        ]
 
     total = len(contacts)
     start = (page - 1) * per_page
-    paginated = contacts[start: start + per_page]
+    paginated = contacts[start : start + per_page]
 
     return {
         "contacts": paginated,
@@ -159,9 +188,15 @@ def crm_stats() -> Dict[str, Any]:
         "tiers": tier_counts,
         "channels": channel_counts,
         "priorities": priority_counts,
-        "pending_outreach": sum(1 for c in contacts if c.get("outreach_status") == "pending"),
-        "contacted": sum(1 for c in contacts if c.get("outreach_status") == "contacted"),
-        "follow_ups_due": sum(1 for c in contacts if c.get("outreach_status") == "follow_up_due"),
+        "pending_outreach": sum(
+            1 for c in contacts if c.get("outreach_status") == "pending"
+        ),
+        "contacted": sum(
+            1 for c in contacts if c.get("outreach_status") == "contacted"
+        ),
+        "follow_ups_due": sum(
+            1 for c in contacts if c.get("outreach_status") == "follow_up_due"
+        ),
     }
 
 
@@ -186,7 +221,9 @@ def update_contact(contact_id: str, update: ContactUpdate) -> Dict[str, Any]:
 
     if update.crm_stage:
         if update.crm_stage not in CRM_STAGES:
-            raise HTTPException(status_code=400, detail=f"Invalid stage. Valid: {CRM_STAGES}")
+            raise HTTPException(
+                status_code=400, detail=f"Invalid stage. Valid: {CRM_STAGES}"
+            )
         contact["crm_stage"] = update.crm_stage
     if update.outreach_status:
         contact["outreach_status"] = update.outreach_status
@@ -201,11 +238,13 @@ def update_contact(contact_id: str, update: ContactUpdate) -> Dict[str, Any]:
     if update.notes:
         if "notes" not in contact:
             contact["notes"] = []
-        contact["notes"].append({
-            "text": update.notes,
-            "created_at": now,
-            "author": "user",
-        })
+        contact["notes"].append(
+            {
+                "text": update.notes,
+                "created_at": now,
+                "author": "user",
+            }
+        )
 
     contact["updated_at"] = now
     contacts[idx] = contact
@@ -223,11 +262,13 @@ def add_note(contact_id: str, note: NoteCreate) -> Dict[str, Any]:
     now = datetime.now(timezone.utc).isoformat()
     if "notes" not in contacts[idx]:
         contacts[idx]["notes"] = []
-    contacts[idx]["notes"].append({
-        "text": note.text,
-        "author": note.author,
-        "created_at": now,
-    })
+    contacts[idx]["notes"].append(
+        {
+            "text": note.text,
+            "author": note.author,
+            "created_at": now,
+        }
+    )
     contacts[idx]["updated_at"] = now
     _save_crm(contacts)
     return {"success": True, "note_count": len(contacts[idx]["notes"])}
@@ -246,13 +287,15 @@ def log_outreach(contact_id: str, outreach: OutreachRecord) -> Dict[str, Any]:
     if "activity_log" not in contact:
         contact["activity_log"] = []
 
-    contact["activity_log"].append({
-        "type": "outreach",
-        "channel": outreach.channel,
-        "subject": outreach.subject,
-        "outcome": outreach.outcome,
-        "timestamp": now,
-    })
+    contact["activity_log"].append(
+        {
+            "type": "outreach",
+            "channel": outreach.channel,
+            "subject": outreach.subject,
+            "outcome": outreach.outcome,
+            "timestamp": now,
+        }
+    )
 
     contact["outreach_channel"] = outreach.channel
     contact["last_contact"] = now
@@ -296,8 +339,9 @@ def bulk_stage_update(req: BulkStageUpdate) -> Dict[str, Any]:
 
 @router.get("/export/csv", summary="Export CRM contacts as CSV")
 def export_crm_csv(stage: Optional[str] = None) -> Any:
-    import io
     import csv
+    import io
+
     from fastapi.responses import StreamingResponse
 
     contacts = _load_crm()
@@ -305,11 +349,27 @@ def export_crm_csv(stage: Optional[str] = None) -> Any:
         contacts = [c for c in contacts if c.get("crm_stage") == stage]
 
     columns = [
-        "company_name", "phone", "email", "website", "address",
-        "city", "state", "rating", "reviews", "tier", "lead_score",
-        "industry", "estimated_size", "outreach_priority",
-        "crm_stage", "outreach_status", "outreach_channel",
-        "follow_up_count", "last_contact", "assigned_to", "crm_added_at",
+        "company_name",
+        "phone",
+        "email",
+        "website",
+        "address",
+        "city",
+        "state",
+        "rating",
+        "reviews",
+        "tier",
+        "lead_score",
+        "industry",
+        "estimated_size",
+        "outreach_priority",
+        "crm_stage",
+        "outreach_status",
+        "outreach_channel",
+        "follow_up_count",
+        "last_contact",
+        "assigned_to",
+        "crm_added_at",
     ]
 
     buf = io.StringIO()

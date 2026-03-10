@@ -17,6 +17,7 @@ POST /intelligence/invention/run          — run invention pipeline
 GET  /intelligence/hypotheses/generate    — generate hypothesis from observation
 GET  /intelligence/experiment/design      — design experiment for a hypothesis
 """
+
 from __future__ import annotations
 
 import logging
@@ -89,7 +90,10 @@ def _try_import(module_path: str):
     response_description="Unified DISCOVERY_REPORT for the requested industry / region",
 )
 def get_discovery(
-    industry: str = Query(default="flooring", description="Target industry (e.g. epoxy, flooring, construction)"),
+    industry: str = Query(
+        default="flooring",
+        description="Target industry (e.g. epoxy, flooring, construction)",
+    ),
     region: str = Query(default="Texas", description="Target geographic region"),
 ) -> Dict[str, Any]:
     """Run the full discovery pipeline (market scan + trends + niches) and return
@@ -111,7 +115,13 @@ def get_discovery(
             "summary": f"Demo discovery report for {industry} / {region}.",
             "market_analysis": {"growth_rate": 8.0, "avg_competition": 45},
             "trends": [{"name": industry, "score": 80, "emerging": True}],
-            "niches": [{"niche": f"Premium {industry}", "opportunity_score": 80, "competition_score": 35}],
+            "niches": [
+                {
+                    "niche": f"Premium {industry}",
+                    "opportunity_score": 80,
+                    "competition_score": 35,
+                }
+            ],
             "note": "demo_data",
             "error": str(exc),
         }
@@ -134,8 +144,18 @@ def get_trends(
 
         analyzer = mod.TrendAnalyzer()
         demo_data = [
-            {"industry": industry, "region": region, "source": "api", "tags": [industry, "renovation"]},
-            {"industry": industry, "region": region, "source": "api", "tags": [industry, "commercial", "premium"]},
+            {
+                "industry": industry,
+                "region": region,
+                "source": "api",
+                "tags": [industry, "renovation"],
+            },
+            {
+                "industry": industry,
+                "region": region,
+                "source": "api",
+                "tags": [industry, "commercial", "premium"],
+            },
         ]
         trends = analyzer.analyze_trends(demo_data)
         emerging = analyzer.detect_emerging(demo_data)
@@ -187,7 +207,13 @@ def get_niches(
         return {
             "industry": industry,
             "region": region,
-            "niches": [{"niche": f"Premium {industry}", "opportunity_score": 80, "competition_score": 30}],
+            "niches": [
+                {
+                    "niche": f"Premium {industry}",
+                    "opportunity_score": 80,
+                    "competition_score": 30,
+                }
+            ],
             "total": 1,
             "note": "demo_data",
             "error": str(exc),
@@ -242,7 +268,10 @@ def get_briefing_markdown() -> Dict[str, Any]:
         return {"markdown": agent.generate()}
     except Exception as exc:
         logger.error("briefing_markdown_error: %s", exc)
-        return {"markdown": "# XPS Daily Briefing\n\n_Data unavailable._", "error": str(exc)}
+        return {
+            "markdown": "# XPS Daily Briefing\n\n_Data unavailable._",
+            "error": str(exc),
+        }
 
 
 @router.get(
@@ -286,7 +315,12 @@ def get_vision_cortex_status() -> Dict[str, Any]:
         }
     except Exception as exc:
         logger.error("vision_cortex_status_error: %s", exc)
-        return {"available": False, "scripts": [], "status": "unknown", "error": str(exc)}
+        return {
+            "available": False,
+            "scripts": [],
+            "status": "unknown",
+            "error": str(exc),
+        }
 
 
 @router.post(
@@ -357,7 +391,9 @@ def trigger_vision_cortex_run(payload: VisionCortexRunRequest) -> Dict[str, Any]
 )
 def get_financial_prediction(
     sector: str,
-    timeframe_months: int = Query(default=12, ge=1, le=60, description="Forecast horizon in months"),
+    timeframe_months: int = Query(
+        default=12, ge=1, le=60, description="Forecast horizon in months"
+    ),
 ) -> Dict[str, Any]:
     """Return a heuristic financial market forecast for *sector* over *timeframe_months*."""
     try:
@@ -456,7 +492,9 @@ def run_invention(payload: InventionPipelineRequest) -> Dict[str, Any]:
     response_description="Structured hypothesis dict with confidence and suggested experiments",
 )
 def generate_hypothesis(
-    observation: str = Query(..., description="Free-text market observation to convert into a hypothesis"),
+    observation: str = Query(
+        ..., description="Free-text market observation to convert into a hypothesis"
+    ),
 ) -> Dict[str, Any]:
     """Convert a market *observation* into a testable hypothesis with metadata."""
     try:
@@ -467,7 +505,7 @@ def generate_hypothesis(
     except Exception as exc:
         logger.error("hypothesis_generation_error: %s", exc)
         return {
-            "hypothesis": f"The observation '{observation[:60]}...' warrants further investigation.",
+            "hypothesis": f"The observation '{observation[:60]}...' warrants further investigation.",  # noqa: E501
             "confidence": 0.5,
             "category": "market",
             "testability": "medium",
@@ -483,8 +521,12 @@ def generate_hypothesis(
     response_description="Structured experiment plan with type, metrics, duration and risk factors",
 )
 def design_experiment(
-    hypothesis: str = Query(..., description="Hypothesis statement to design an experiment for"),
-    metrics: Optional[str] = Query(default=None, description="Comma-separated list of evaluation metrics"),
+    hypothesis: str = Query(
+        ..., description="Hypothesis statement to design an experiment for"
+    ),
+    metrics: Optional[str] = Query(
+        default=None, description="Comma-separated list of evaluation metrics"
+    ),
 ) -> Dict[str, Any]:
     """Return a structured experiment plan for the given *hypothesis*.
 

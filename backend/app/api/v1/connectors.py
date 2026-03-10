@@ -15,7 +15,7 @@ from __future__ import annotations
 import logging
 import os
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -32,7 +32,13 @@ _REGISTRY: Dict[str, Dict[str, Any]] = {
         "icon": "🐙",
         "category": "dev",
         "status": "unconfigured",
-        "capabilities": ["repo_read", "repo_write", "actions_trigger", "webhook", "sandbox"],
+        "capabilities": [
+            "repo_read",
+            "repo_write",
+            "actions_trigger",
+            "webhook",
+            "sandbox",
+        ],
         "token_key": "GITHUB_TOKEN",
         "configured_at": None,
     },
@@ -43,7 +49,10 @@ _REGISTRY: Dict[str, Dict[str, Any]] = {
         "category": "deploy",
         "status": "unconfigured",
         "capabilities": ["deploy", "webhook_trigger", "env_vars", "domains"],
-        "webhook_url": "https://api.vercel.com/v1/integrations/deploy/prj_eNK90PC48eWsMW3O6aHHRWsM4wwI/ugf4FE56k4",
+        "webhook_url": (  # noqa: E501
+            "https://api.vercel.com/v1/integrations/deploy/"
+            "prj_eNK90PC48eWsMW3O6aHHRWsM4wwI/ugf4FE56k4"
+        ),
         "token_key": "VERCEL_TOKEN",
         "configured_at": None,
     },
@@ -70,7 +79,13 @@ _REGISTRY: Dict[str, Dict[str, Any]] = {
         "icon": "🐋",
         "category": "infrastructure",
         "status": "unconfigured",
-        "capabilities": ["container_list", "container_run", "container_stop", "image_pull", "volume_mount"],
+        "capabilities": [
+            "container_list",
+            "container_run",
+            "container_stop",
+            "image_pull",
+            "volume_mount",
+        ],
         "socket_path": "/var/run/docker.sock",
         "token_key": "DOCKER_HOST",
         "configured_at": None,
@@ -81,7 +96,12 @@ _REGISTRY: Dict[str, Dict[str, Any]] = {
         "icon": "💻",
         "category": "infrastructure",
         "status": "unconfigured",
-        "capabilities": ["filesystem_read", "filesystem_write", "shell_exec", "process_list"],
+        "capabilities": [
+            "filesystem_read",
+            "filesystem_write",
+            "shell_exec",
+            "process_list",
+        ],
         "bridge_url": "ws://localhost:9000/mcp",
         "token_key": "LOCAL_MCP_SECRET",
         "configured_at": None,
@@ -103,7 +123,12 @@ _REGISTRY: Dict[str, Dict[str, Any]] = {
         "icon": "🤖",
         "category": "llm",
         "status": "unconfigured",
-        "capabilities": ["text_completion", "code_generation", "image_generation", "function_calling"],
+        "capabilities": [
+            "text_completion",
+            "code_generation",
+            "image_generation",
+            "function_calling",
+        ],
         "token_key": "OPENAI_API_KEY",
         "models": ["gpt-4o", "gpt-4o-mini", "dall-e-3"],
         "configured_at": None,
@@ -129,6 +154,7 @@ def _refresh_all_statuses() -> None:
 
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
+
 
 class ConnectorConfigRequest(BaseModel):
     connector_id: str
@@ -161,6 +187,7 @@ class DockerRequest(BaseModel):
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 
+
 @router.get("/", summary="List all connectors and their status")
 def list_connectors() -> Dict[str, Any]:
     _refresh_all_statuses()
@@ -176,7 +203,9 @@ def list_connectors() -> Dict[str, Any]:
 def get_connector(connector_id: str) -> Dict[str, Any]:
     conn = _REGISTRY.get(connector_id)
     if not conn:
-        raise HTTPException(status_code=404, detail=f"Connector '{connector_id}' not found")
+        raise HTTPException(
+            status_code=404, detail=f"Connector '{connector_id}' not found"
+        )
     conn["status"] = _check_connector_health(connector_id)
     return conn
 
@@ -185,7 +214,9 @@ def get_connector(connector_id: str) -> Dict[str, Any]:
 def configure_connector(req: ConnectorConfigRequest) -> Dict[str, Any]:
     conn = _REGISTRY.get(req.connector_id)
     if not conn:
-        raise HTTPException(status_code=404, detail=f"Connector '{req.connector_id}' not found")
+        raise HTTPException(
+            status_code=404, detail=f"Connector '{req.connector_id}' not found"
+        )
 
     if req.token:
         # Store in environment for this session
@@ -272,7 +303,12 @@ def trigger_github_action(req: GithubActionRequest) -> Dict[str, Any]:
     try:
         with urllib.request.urlopen(request, timeout=10):
             pass
-        return {"success": True, "repo": req.repo, "workflow": req.workflow_id, "ref": req.ref}
+        return {
+            "success": True,
+            "repo": req.repo,
+            "workflow": req.workflow_id,
+            "ref": req.ref,
+        }
     except urllib.error.HTTPError as e:
         body = e.read().decode()
         raise HTTPException(status_code=e.code, detail=body)
@@ -329,7 +365,9 @@ def docker_action(req: DockerRequest) -> Dict[str, Any]:
 
     if req.action in cmd_map:
         try:
-            result = subprocess.run(cmd_map[req.action], capture_output=True, text=True, timeout=10)
+            result = subprocess.run(
+                cmd_map[req.action], capture_output=True, text=True, timeout=10
+            )
             return {"success": True, "action": req.action, "output": result.stdout}
         except Exception as e:
             return {"success": False, "action": req.action, "error": str(e)}

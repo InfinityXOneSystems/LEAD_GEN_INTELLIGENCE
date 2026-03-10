@@ -20,11 +20,9 @@ Endpoints:
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
 import uuid
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, HTTPException
@@ -198,14 +196,12 @@ async def _dispatch_to_agent(
 
     # Try to call the runtime API
     try:
-        from app.runtime.runtime_controller import RuntimeController
         from app.runtime.command_schema import CommandRequest
+        from app.runtime.runtime_controller import RuntimeController
 
         controller = RuntimeController.get_instance()
         cmd = CommandRequest(command=user_message, priority=5)
-        result = await asyncio.wait_for(
-            controller.handle_command(cmd), timeout=30
-        )
+        result = await asyncio.wait_for(controller.handle_command(cmd), timeout=30)
         content = (
             f"✅ Task `{result.get('task_id', '')[:8]}` queued\n"
             f"Status: {result.get('status', 'queued')}\n"
@@ -237,80 +233,88 @@ def _generate_agent_response(agent: Dict, user_message: str) -> str:
 
     if aid == "orchestrator":
         return (
-            f"🧠 **Orchestrator** — Breaking down your request:\n\n"
+            "🧠 **Orchestrator** — Breaking down your request:\n\n"
             f"1. Parsing intent from: `{user_message[:60]}…`\n"
-            f"2. Routing sub-tasks to relevant agents\n"
-            f"3. Will aggregate results and report back\n\n"
-            f"_Dispatching to active agents…_"
+            "2. Routing sub-tasks to relevant agents\n"
+            "3. Will aggregate results and report back\n\n"
+            "_Dispatching to active agents…_"
         )
     if aid == "scraper":
         location = "the area"
-        for word in ["miami", "pompano", "fort lauderdale", "boca raton", "orlando", "fl", "florida"]:
+        for word in [
+            "miami",
+            "pompano",
+            "fort lauderdale",
+            "boca raton",
+            "orlando",
+            "fl",
+            "florida",
+        ]:
             if word in msg_lower:
                 location = word.title()
                 break
         return (
-            f"🕷️ **Scraper Agent** — Starting lead discovery\n\n"
+            "🕷️ **Scraper Agent** — Starting lead discovery\n\n"
             f"• Target: `{location}`\n"
-            f"• Sources: Google Maps, Yelp, directories\n"
-            f"• Mode: Parallel asyncio (8 concurrent targets)\n"
-            f"• Output: leads/crm_contacts.json + LEADS repo push\n\n"
+            "• Sources: Google Maps, Yelp, directories\n"
+            "• Mode: Parallel asyncio (8 concurrent targets)\n"
+            "• Output: leads/crm_contacts.json + LEADS repo push\n\n"
             f"_Run: `scrape epoxy contractors in {location}` to trigger_"
         )
     if aid == "code":
         return (
-            f"💻 **Code Agent** — Ready to generate code\n\n"
-            f"• Language: Auto-detected from context\n"
-            f"• Mode: Full-stack (frontend + backend)\n"
-            f"• Output will appear in the Universal Editor\n\n"
-            f"_Specify: language, framework, function signature_"
+            "💻 **Code Agent** — Ready to generate code\n\n"
+            "• Language: Auto-detected from context\n"
+            "• Mode: Full-stack (frontend + backend)\n"
+            "• Output will appear in the Universal Editor\n\n"
+            "_Specify: language, framework, function signature_"
         )
     if aid == "builder":
         return (
-            f"🏗️ **Builder Agent** — UI/backend modification ready\n\n"
-            f"• Can modify: Next.js pages, Python APIs, React components\n"
-            f"• Respects: existing patterns and conventions\n"
-            f"• Preview: Universal Editor → HTML Preview mode\n\n"
-            f"_Describe what you want built or changed_"
+            "🏗️ **Builder Agent** — UI/backend modification ready\n\n"
+            "• Can modify: Next.js pages, Python APIs, React components\n"
+            "• Respects: existing patterns and conventions\n"
+            "• Preview: Universal Editor → HTML Preview mode\n\n"
+            "_Describe what you want built or changed_"
         )
     if aid == "crm":
         return (
-            f"🗂️ **CRM Agent** — Lead pipeline active\n\n"
-            f"• CRM contacts: available at /api/v1/crm/\n"
-            f"• Stages: new → contacted → interested → proposal → won\n"
-            f"• Outreach: email, SMS, voice, follow-up\n\n"
-            f"_Commands: move to stage, log outreach, add note, export CSV_"
+            "🗂️ **CRM Agent** — Lead pipeline active\n\n"
+            "• CRM contacts: available at /api/v1/crm/\n"
+            "• Stages: new → contacted → interested → proposal → won\n"
+            "• Outreach: email, SMS, voice, follow-up\n\n"
+            "_Commands: move to stage, log outreach, add note, export CSV_"
         )
     if aid == "seo":
         return (
-            f"🔍 **SEO Agent** — Analysis ready\n\n"
-            f"• Capabilities: site audit, keyword research, backlinks\n"
-            f"• API: POST /api/v1/runtime/command with 'seo analysis'\n\n"
-            f"_Provide a URL or domain to analyse_"
+            "🔍 **SEO Agent** — Analysis ready\n\n"
+            "• Capabilities: site audit, keyword research, backlinks\n"
+            "• API: POST /api/v1/runtime/command with 'seo analysis'\n\n"
+            "_Provide a URL or domain to analyse_"
         )
     if aid == "media":
         return (
-            f"🎨 **Media Agent** — Creative suite ready\n\n"
-            f"• Image generation via AI prompts\n"
-            f"• Video storyboard creation\n"
-            f"• Social media content calendar\n\n"
-            f"_Describe what you want created_"
+            "🎨 **Media Agent** — Creative suite ready\n\n"
+            "• Image generation via AI prompts\n"
+            "• Video storyboard creation\n"
+            "• Social media content calendar\n\n"
+            "_Describe what you want created_"
         )
     if aid == "github":
         return (
-            f"🐙 **GitHub Agent** — Repository access ready\n\n"
-            f"• Can: create repos, dispatch workflows, commit code, open PRs\n"
-            f"• Repos: XPS_INTELLIGENCE_SYSTEM, LEADS, XPS-INTELLIGENCE-FRONTEND\n\n"
-            f"_Specify: repo, action, branch_"
+            "🐙 **GitHub Agent** — Repository access ready\n\n"
+            "• Can: create repos, dispatch workflows, commit code, open PRs\n"
+            "• Repos: XPS_INTELLIGENCE_SYSTEM, LEADS, XPS-INTELLIGENCE-FRONTEND\n\n"
+            "_Specify: repo, action, branch_"
         )
     if aid == "analytics":
         return (
-            f"📊 **Analytics Agent** — Metrics ready\n\n"
-            f"• Lead scoring distribution\n"
-            f"• Pipeline conversion rates\n"
-            f"• Outreach performance\n"
-            f"• Available at: /analytics\n\n"
-            f"_Ask for specific metrics or reports_"
+            "📊 **Analytics Agent** — Metrics ready\n\n"
+            "• Lead scoring distribution\n"
+            "• Pipeline conversion rates\n"
+            "• Outreach performance\n"
+            "• Available at: /analytics\n\n"
+            "_Ask for specific metrics or reports_"
         )
     return f"{agent['icon']} **{agent['name']}** — Processing: `{user_message[:80]}`"
 
@@ -330,9 +334,7 @@ def create_session(req: CreateSessionRequest) -> Dict[str, Any]:
     # Validate agent IDs
     invalid = [a for a in req.agents if a not in AGENT_BY_ID]
     if invalid:
-        raise HTTPException(
-            status_code=400, detail=f"Unknown agent IDs: {invalid}"
-        )
+        raise HTTPException(status_code=400, detail=f"Unknown agent IDs: {invalid}")
     session = _new_session(req.agents, req.title)
     _SESSIONS[session["id"]] = session
     return session
@@ -340,10 +342,7 @@ def create_session(req: CreateSessionRequest) -> Dict[str, Any]:
 
 @router.get("/sessions", summary="List all active sessions")
 def list_sessions() -> List[Dict[str, Any]]:
-    return [
-        {k: v for k, v in s.items() if k != "messages"}
-        for s in _SESSIONS.values()
-    ]
+    return [{k: v for k, v in s.items() if k != "messages"} for s in _SESSIONS.values()]
 
 
 @router.get("/sessions/{session_id}", summary="Get session with full message history")
@@ -354,9 +353,7 @@ def get_session(session_id: str) -> Dict[str, Any]:
 
 
 @router.post("/sessions/{session_id}/message", summary="Send a message to the session")
-async def send_message(
-    session_id: str, req: SendMessageRequest
-) -> Dict[str, Any]:
+async def send_message(session_id: str, req: SendMessageRequest) -> Dict[str, Any]:
     if session_id not in _SESSIONS:
         raise HTTPException(status_code=404, detail="Session not found")
 

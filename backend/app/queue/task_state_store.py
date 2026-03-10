@@ -102,7 +102,7 @@ class TaskStateStore:
                 for key in keys:
                     raw = r.get(key)
                     if raw:
-                        task_id = key.decode()[len(self.prefix):]
+                        task_id = key.decode()[len(self.prefix) :]
                         result[task_id] = json.loads(raw)
                 return result
             except Exception as exc:
