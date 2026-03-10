@@ -211,7 +211,7 @@ if _FASTAPI_AVAILABLE:
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=os.environ.get("MCP_CORS_ORIGINS", "*").split(","),
         allow_methods=["*"],
         allow_headers=["*"],
     )

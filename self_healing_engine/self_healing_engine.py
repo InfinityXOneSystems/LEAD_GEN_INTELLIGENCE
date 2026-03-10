@@ -151,6 +151,12 @@ class SelfHealingEngine:
             )
             return None
 
+        # Validate command is from the pre-approved list (not dynamic/injected)
+        if cmd[0] != "docker" or cmd[1] != "compose":
+            logger.error("[SelfHealingEngine] Unsafe command rejected for '%s'", service_name)
+            return HealingAction(service_name, "rejected", success=False,
+                                 message="Command failed safety validation")
+
         self._restart_counts[service_name] = attempts + 1
         self._last_restart[service_name] = now
 

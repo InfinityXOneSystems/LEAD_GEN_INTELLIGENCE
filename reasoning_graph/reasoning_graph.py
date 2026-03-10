@@ -29,7 +29,7 @@ import time
 import uuid
 from enum import Enum
 from pathlib import Path
-from threading import Lock
+from threading import Lock, RLock
 from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
@@ -104,7 +104,6 @@ class ReasoningGraph:
         self.graph_id = graph_id or str(uuid.uuid4())
         self._nodes: Dict[str, ReasoningNode] = {}
         self._roots: List[str] = []
-        from threading import RLock
         self._lock = RLock()  # Re-entrant: allows nested acquisition by same thread
         logger.info("[ReasoningGraph] Initialised — graph_id=%s", self.graph_id)
 

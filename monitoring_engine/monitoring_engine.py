@@ -104,6 +104,12 @@ class MonitoringEngine:
 
     def _check_service(self, svc: ServiceStatus) -> None:
         """HTTP health check for a single service."""
+        # Validate URL scheme to prevent SSRF
+        if not (svc.url.startswith("http://") or svc.url.startswith("https://")):
+            svc.healthy = False
+            svc.last_error = f"Invalid URL scheme: {svc.url}"
+            svc.last_check = time.time()
+            return
         try:
             import urllib.request
             start = time.time()
@@ -111,7 +117,7 @@ class MonitoringEngine:
                 svc.response_ms = (time.time() - start) * 1000
                 svc.healthy = resp.status == 200
                 svc.last_error = None
-        except Exception as exc:  # noqa: BLE001
+        except (OSError, ValueError) as exc:
             svc.healthy = False
             svc.last_error = str(exc)
             svc.response_ms = None
