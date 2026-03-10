@@ -17,9 +17,9 @@
  *   <RuntimeCommandChat />
  */
 
-import { useState, useRef, useEffect, useCallback } from 'react'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { toast } from 'sonner'
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   ArrowRight,
   CircleNotch,
@@ -31,11 +31,11 @@ import {
   Cpu,
   Lightning,
   WarningCircle,
-} from '@phosphor-icons/react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { cn } from '@/lib/utils'
+} from "@phosphor-icons/react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 import {
   submitRuntimeCommand,
   getTaskStatus,
@@ -45,43 +45,45 @@ import {
   type RuntimeCommandResponse,
   type TaskStatusResponse,
   type TaskStatus,
-} from '@/services/runtimeService'
+} from "@/services/runtimeService";
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
 interface ChatMessage {
-  id: string
-  role: 'user' | 'assistant'
-  content: string
-  timestamp: Date
-  taskId?: string
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: Date;
+  taskId?: string;
 }
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-const POLL_INTERVAL_MS = 1500
+const POLL_INTERVAL_MS = 1500;
 
 const STATUS_ICON: Record<TaskStatus, React.ReactNode> = {
   pending: <Clock size={12} className="text-white/40" />,
   queued: <Clock size={12} className="text-white/60" />,
-  running: <ArrowsClockwise size={12} className="animate-spin text-yellow-400" />,
+  running: (
+    <ArrowsClockwise size={12} className="animate-spin text-yellow-400" />
+  ),
   completed: <CheckCircle size={12} className="text-green-400" weight="fill" />,
   failed: <XCircle size={12} className="text-red-400" weight="fill" />,
   retrying: <CircleNotch size={12} className="animate-spin text-orange-400" />,
-}
+};
 
 const STATUS_COLOR: Record<TaskStatus, string> = {
-  pending: 'text-white/40',
-  queued: 'text-white/60',
-  running: 'text-yellow-400',
-  completed: 'text-green-400',
-  failed: 'text-red-400',
-  retrying: 'text-orange-400',
-}
+  pending: "text-white/40",
+  queued: "text-white/60",
+  running: "text-yellow-400",
+  completed: "text-green-400",
+  failed: "text-red-400",
+  retrying: "text-orange-400",
+};
 
 // ---------------------------------------------------------------------------
 // TaskStatusPanel
@@ -89,15 +91,15 @@ const STATUS_COLOR: Record<TaskStatus, string> = {
 
 function TaskStatusPanel({ taskId }: { taskId: string }) {
   const { data: task } = useQuery<TaskStatusResponse | null>({
-    queryKey: ['runtime-task', taskId],
+    queryKey: ["runtime-task", taskId],
     queryFn: () => getTaskStatus(taskId),
     refetchInterval: (query) => {
-      const data = query.state.data
-      if (!data) return POLL_INTERVAL_MS
-      return isTerminalStatus(data.status) ? false : POLL_INTERVAL_MS
+      const data = query.state.data;
+      if (!data) return POLL_INTERVAL_MS;
+      return isTerminalStatus(data.status) ? false : POLL_INTERVAL_MS;
     },
     staleTime: 0,
-  })
+  });
 
   if (!task) {
     return (
@@ -105,16 +107,16 @@ function TaskStatusPanel({ taskId }: { taskId: string }) {
         <CircleNotch size={11} className="animate-spin" />
         <span>Fetching task status…</span>
       </div>
-    )
+    );
   }
 
   return (
     <div
       className={cn(
-        'mt-2 rounded-lg border p-2.5 text-xs',
-        task.status === 'failed' ? 'border-red-400/20' : 'border-white/10',
+        "mt-2 rounded-lg border p-2.5 text-xs",
+        task.status === "failed" ? "border-red-400/20" : "border-white/10",
       )}
-      style={{ background: 'rgba(0,0,0,0.35)' }}
+      style={{ background: "rgba(0,0,0,0.35)" }}
     >
       {/* Header */}
       <div className="mb-2 flex items-center gap-1.5">
@@ -122,7 +124,7 @@ function TaskStatusPanel({ taskId }: { taskId: string }) {
         <span className="flex-1 truncate font-mono text-white/50">
           {task.task_id.slice(0, 8)}…
         </span>
-        <span className={cn('font-semibold', STATUS_COLOR[task.status])}>
+        <span className={cn("font-semibold", STATUS_COLOR[task.status])}>
           {task.status.toUpperCase()}
         </span>
         {STATUS_ICON[task.status]}
@@ -140,11 +142,12 @@ function TaskStatusPanel({ taskId }: { taskId: string }) {
 
       {/* Logs */}
       {task.logs.length > 0 && (
-        <div
-          className="mb-1.5 max-h-24 overflow-y-auto rounded border border-white/5 bg-black/40 p-1.5"
-        >
+        <div className="mb-1.5 max-h-24 overflow-y-auto rounded border border-white/5 bg-black/40 p-1.5">
           {task.logs.map((line, i) => (
-            <div key={i} className="flex gap-1 py-px font-mono text-[10px] text-white/50">
+            <div
+              key={i}
+              className="flex gap-1 py-px font-mono text-[10px] text-white/50"
+            >
               <Terminal size={9} className="mt-0.5 shrink-0 text-white/20" />
               <span>{line}</span>
             </div>
@@ -153,21 +156,23 @@ function TaskStatusPanel({ taskId }: { taskId: string }) {
       )}
 
       {/* Result */}
-      {task.status === 'completed' && task.result && (
+      {task.status === "completed" && task.result && (
         <pre className="mt-1 max-h-40 overflow-y-auto rounded border border-green-400/10 bg-black/40 p-1.5 font-mono text-[10px] leading-relaxed text-green-400/80">
-          {typeof task.result === 'string' ? task.result : JSON.stringify(task.result, null, 2)}
+          {typeof task.result === "string"
+            ? task.result
+            : JSON.stringify(task.result, null, 2)}
         </pre>
       )}
 
       {/* Error */}
-      {task.status === 'failed' && task.error && (
+      {task.status === "failed" && task.error && (
         <div className="mt-1 flex items-start gap-1 text-red-400/80">
           <WarningCircle size={11} className="mt-0.5 shrink-0" />
           <span>{task.error}</span>
         </div>
       )}
     </div>
-  )
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -175,30 +180,33 @@ function TaskStatusPanel({ taskId }: { taskId: string }) {
 // ---------------------------------------------------------------------------
 
 function MessageBubble({ msg }: { msg: ChatMessage }) {
-  const isUser = msg.role === 'user'
+  const isUser = msg.role === "user";
   return (
     <div
-      className={cn('flex items-end gap-2', isUser ? 'flex-row-reverse' : 'flex-row')}
+      className={cn(
+        "flex items-end gap-2",
+        isUser ? "flex-row-reverse" : "flex-row",
+      )}
     >
       {/* Avatar */}
       <div
         className={cn(
-          'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-bold',
+          "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-bold",
           isUser
-            ? 'border-yellow-400/50 bg-yellow-400 text-black'
-            : 'border-white/10 bg-black/60 text-yellow-400',
+            ? "border-yellow-400/50 bg-yellow-400 text-black"
+            : "border-white/10 bg-black/60 text-yellow-400",
         )}
       >
-        {isUser ? 'U' : '⚡'}
+        {isUser ? "U" : "⚡"}
       </div>
 
       {/* Bubble */}
       <div
         className={cn(
-          'max-w-[80%] rounded-2xl px-3.5 py-2.5',
+          "max-w-[80%] rounded-2xl px-3.5 py-2.5",
           isUser
-            ? 'rounded-br-sm bg-yellow-400 text-black'
-            : 'rounded-bl-sm border border-white/8 bg-black/50 text-white',
+            ? "rounded-br-sm bg-yellow-400 text-black"
+            : "rounded-bl-sm border border-white/8 bg-black/50 text-white",
         )}
       >
         <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">
@@ -207,15 +215,18 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
         {msg.taskId && <TaskStatusPanel taskId={msg.taskId} />}
         <span
           className={cn(
-            'mt-1 block text-[10px]',
-            isUser ? 'text-black/40 text-right' : 'text-white/25',
+            "mt-1 block text-[10px]",
+            isUser ? "text-black/40 text-right" : "text-white/25",
           )}
         >
-          {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          {msg.timestamp.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </span>
       </div>
     </div>
-  )
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -223,68 +234,74 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
 // ---------------------------------------------------------------------------
 
 const QUICK_COMMANDS = [
-  'scrape epoxy contractors in Orlando FL',
-  'run seo analysis on site.com',
-  'export leads to CSV',
-  'run outreach campaign',
-  'show system status',
-]
+  "scrape epoxy contractors in Orlando FL",
+  "run seo analysis on site.com",
+  "export leads to CSV",
+  "run outreach campaign",
+  "show system status",
+];
 
 export function RuntimeCommandChat() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      id: 'welcome',
-      role: 'assistant',
+      id: "welcome",
+      role: "assistant",
       content:
-        '👋 Hello! I\'m your XPS Runtime Agent.\n\n' +
-        'I\'m wired to the backend runtime API. Every command you send is:\n' +
-        '  1. Validated and routed to the right agent\n' +
-        '  2. Queued and executed asynchronously\n' +
-        '  3. Results streamed back here in real-time\n\n' +
-        'Try one of the quick commands below, or type anything naturally.',
+        "👋 Hello! I'm your XPS Runtime Agent.\n\n" +
+        "I'm wired to the backend runtime API. Every command you send is:\n" +
+        "  1. Validated and routed to the right agent\n" +
+        "  2. Queued and executed asynchronously\n" +
+        "  3. Results streamed back here in real-time\n\n" +
+        "Try one of the quick commands below, or type anything naturally.",
       timestamp: new Date(),
     },
-  ])
-  const [input, setInput] = useState('')
-  const bottomRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLTextAreaElement>(null)
+  ]);
+  const [input, setInput] = useState("");
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-  const sendMutation = useMutation<RuntimeCommandResponse, Error, RuntimeCommandRequest>({
+  const sendMutation = useMutation<
+    RuntimeCommandResponse,
+    Error,
+    RuntimeCommandRequest
+  >({
     mutationFn: submitRuntimeCommand,
     onMutate: () => {
       // Nothing — we handle optimistic UI manually below
     },
     onError: (err) => {
-      toast.error(`Command failed: ${err.message}`)
+      toast.error(`Command failed: ${err.message}`);
       setMessages((prev) => [
         ...prev,
         {
           id: crypto.randomUUID(),
-          role: 'assistant',
+          role: "assistant",
           content: `❌ ${err.message}`,
           timestamp: new Date(),
         },
-      ])
+      ]);
     },
     onSuccess: (data) => {
-      toast.success(`Queued: ${commandTypeLabel(data.command_type)}`, { duration: 2000 })
+      toast.success(`Queued: ${commandTypeLabel(data.command_type)}`, {
+        duration: 2000,
+      });
 
       // Prefetch initial task state
       queryClient.prefetchQuery({
-        queryKey: ['runtime-task', data.task_id],
+        queryKey: ["runtime-task", data.task_id],
         queryFn: () => getTaskStatus(data.task_id),
-      })
+      });
 
       setMessages((prev) => [
         ...prev,
         {
           id: crypto.randomUUID(),
-          role: 'assistant',
+          role: "assistant",
           content:
             `✅ Command accepted\n` +
             `Agent: ${data.agent}  •  Type: ${commandTypeLabel(data.command_type)}\n` +
@@ -292,39 +309,39 @@ export function RuntimeCommandChat() {
           timestamp: new Date(),
           taskId: data.task_id,
         },
-      ])
+      ]);
     },
-  })
+  });
 
   const sendCommand = useCallback(
     (text?: string) => {
-      const cmd = (text ?? input).trim()
-      if (!cmd || sendMutation.isPending) return
+      const cmd = (text ?? input).trim();
+      if (!cmd || sendMutation.isPending) return;
 
       setMessages((prev) => [
         ...prev,
         {
           id: crypto.randomUUID(),
-          role: 'user',
+          role: "user",
           content: cmd,
           timestamp: new Date(),
         },
-      ])
-      setInput('')
+      ]);
+      setInput("");
 
-      sendMutation.mutate({ command: cmd, priority: 5 })
+      sendMutation.mutate({ command: cmd, priority: 5 });
     },
     [input, sendMutation],
-  )
+  );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      sendCommand()
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendCommand();
     }
-  }
+  };
 
-  const isPending = sendMutation.isPending
+  const isPending = sendMutation.isPending;
 
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-xl border border-white/8 bg-black/40 backdrop-blur-sm">
@@ -334,7 +351,9 @@ export function RuntimeCommandChat() {
           <Lightning size={14} weight="fill" />
         </div>
         <div className="flex-1">
-          <p className="text-sm font-semibold text-white">Runtime Command Agent</p>
+          <p className="text-sm font-semibold text-white">
+            Runtime Command Agent
+          </p>
           <p className="text-[11px] text-white/40">
             Connected to Railway backend · POST /api/v1/runtime/command
           </p>
@@ -395,9 +414,9 @@ export function RuntimeCommandChat() {
           rows={2}
           disabled={isPending}
           className={cn(
-            'flex-1 resize-none rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/25',
-            'outline-none focus:border-yellow-400/40 focus:ring-0',
-            'disabled:cursor-not-allowed disabled:opacity-50',
+            "flex-1 resize-none rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/25",
+            "outline-none focus:border-yellow-400/40 focus:ring-0",
+            "disabled:cursor-not-allowed disabled:opacity-50",
           )}
         />
         <Button
@@ -414,5 +433,5 @@ export function RuntimeCommandChat() {
         </Button>
       </div>
     </div>
-  )
+  );
 }

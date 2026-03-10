@@ -94,7 +94,12 @@ function TaskStatusPanel({ task }) {
 function MessageBubble({ msg, onSuggestion }) {
   const isUser = msg.role === "user";
   return (
-    <div style={{ ...styles.messageRow, justifyContent: isUser ? "flex-end" : "flex-start" }}>
+    <div
+      style={{
+        ...styles.messageRow,
+        justifyContent: isUser ? "flex-end" : "flex-start",
+      }}
+    >
       {!isUser && <div style={styles.avatar}>⚡</div>}
       <div
         style={{
@@ -157,7 +162,11 @@ export default function RuntimeCommandChat({ suggestions = [] }) {
           if (next[msgIdx]) {
             next[msgIdx] = {
               ...next[msgIdx],
-              taskData: { ...next[msgIdx].taskData, status: "failed", error: "Polling timeout" },
+              taskData: {
+                ...next[msgIdx].taskData,
+                status: "failed",
+                error: "Polling timeout",
+              },
             };
           }
           return next;
@@ -218,7 +227,9 @@ export default function RuntimeCommandChat({ suggestions = [] }) {
         });
 
         if (!resp.ok) {
-          const err = await resp.json().catch(() => ({ detail: resp.statusText }));
+          const err = await resp
+            .json()
+            .catch(() => ({ detail: resp.statusText }));
           const errMsg =
             typeof err.detail === "string"
               ? err.detail
@@ -286,7 +297,13 @@ export default function RuntimeCommandChat({ suggestions = [] }) {
         {loading && (
           <div style={{ ...styles.messageRow, justifyContent: "flex-start" }}>
             <div style={styles.avatar}>⚡</div>
-            <div style={{ ...styles.bubble, background: "#111", border: "1px solid #222" }}>
+            <div
+              style={{
+                ...styles.bubble,
+                background: "#111",
+                border: "1px solid #222",
+              }}
+            >
               <span style={styles.typing}>●●●</span>
             </div>
           </div>
