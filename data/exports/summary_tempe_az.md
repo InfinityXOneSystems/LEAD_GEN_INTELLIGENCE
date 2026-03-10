@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-10
 
-**Total leads:** 306
+**Total leads:** 83
 
 | Tier | Count |
 |------|-------|
-| HOT  | 9  |
-| WARM | 60 |
-| COLD | 237 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -23,14 +23,14 @@
 | Cactus Concrete Resurfacing | (480) 555-1707 | https://cactusconcrete.com | 85 |
 | Southwest Concrete & Polish | (480) 555-1202 | https://swconcrete.com | 75 |
 | Sun Devil Industrial Floors | (480) 555-1808 | https://sundevilfloors.com | 75 |
+| Superior Epoxy Floors |  |  | 70 |
+| Two Brothers Epoxy Flooring |  |  | 70 |
+| Quality Epoxy |  |  | 70 |
+| Ultimate Concrete Coatings & Epoxy Flooring |  |  | 70 |
 | Tempe Flake & Chip Floor Systems | (480) 555-2010 | https://tempeflakefloors.com | 67 |
-| Superior Epoxy Floors |  |  | 55 |
-| Two Brothers Epoxy Flooring |  |  | 55 |
-| Clean Air Epoxy |  |  | 55 |
-| Quality Epoxy |  |  | 55 |
-| Epoxy Flooring Phoenix |  |  | 55 |
-| Ultimate Concrete Coatings & Epoxy Flooring |  |  | 55 |
-| Epoxy Strong Phoenix |  |  | 55 |
-| Brilliant Epoxy Flooring Inc |  |  | 55 |
-| Marvelous Epoxy Flooring |  |  | 55 |
-| Garage Floor Coating Direct |  |  | 55 |
+| Armor-Kote Garage Floors |  |  | 65 |
+| Guardian Garage Floors |  |  | 65 |
+| Precision Garage Works |  |  | 65 |
+| Clean Air Epoxy |  |  | 65 |
+| Garage Pros 1 |  |  | 65 |
+| GarageFloorCoating.com |  |  | 65 |
