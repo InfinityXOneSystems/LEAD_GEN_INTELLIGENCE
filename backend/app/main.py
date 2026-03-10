@@ -84,6 +84,7 @@ from app.api.v1 import (  # noqa: E402
     commands,
     connectors,
     crm,
+    intelligence,
     leads,
     multi_agent,
     runtime,
@@ -102,3 +103,4 @@ app.include_router(admin.router, prefix="/api/v1")
 app.include_router(connectors.router, prefix="/api/v1")
 app.include_router(crm.router, prefix="/api/v1")
 app.include_router(multi_agent.router, prefix="/api/v1")
+app.include_router(intelligence.router, prefix="/api/v1")
