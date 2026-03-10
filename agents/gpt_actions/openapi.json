@@ -913,6 +913,33 @@
         }
       }
     },
+    "/health": {
+      "get": {
+        "summary": "GET /health",
+        "operationId": "get__health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/api": {
       "get": {
         "summary": "GET /api",
