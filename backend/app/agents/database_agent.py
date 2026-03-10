@@ -12,6 +12,8 @@ class DatabaseAgent(BaseAgent):
         super().__init__("database_agent")
 
     def run(self) -> None:
+        from sqlalchemy import func
+
         from app.database import SessionLocal
         from app.models.contractor import Contractor, ScrapeJob
         from app.services.lead_scorer import LeadScorer

@@ -89,6 +89,17 @@ _ROUTES: list[dict[str, Any]] = [
         "type": "simulate",
     },
     {
+        "keywords": ["seo", "search engine", "meta tags", "keywords", "backlinks",
+                     "sitemap", "structured data", "on-page", "ranking"],
+        "agent": "seo",
+        "type": "seo",
+    },
+    {
+        "keywords": ["social media", "linkedin", "facebook", "instagram",
+                     "social profile", "social presence", "hashtag", "post"],
+        "agent": "social",
+        "type": "social",
+    },
         "keywords": ["seo", "analyse website", "analyze website", "website analysis",
                      "meta tags", "page title", "contact info", "website seo"],
         "agent": "seo_agent",

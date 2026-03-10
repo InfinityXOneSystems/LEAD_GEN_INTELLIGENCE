@@ -1,7 +1,3 @@
-import pytest
-from fastapi.testclient import TestClient
-
-
 def test_health_check(client):
     resp = client.get("/health")
     assert resp.status_code == 200
@@ -41,7 +37,12 @@ def test_create_lead(client):
 
 def test_get_lead(client):
     # Create first
-    payload = {"company_name": "Get Test Co", "city": "Dallas", "state": "TX", "source": "test"}
+    payload = {
+        "company_name": "Get Test Co",
+        "city": "Dallas",
+        "state": "TX",
+        "source": "test",
+    }
     create_resp = client.post("/api/v1/leads", json=payload)
     lead_id = create_resp.json()["id"]
 
@@ -56,11 +57,18 @@ def test_get_lead_not_found(client):
 
 
 def test_update_lead(client):
-    payload = {"company_name": "Update Test Co", "city": "Houston", "state": "TX", "source": "test"}
+    payload = {
+        "company_name": "Update Test Co",
+        "city": "Houston",
+        "state": "TX",
+        "source": "test",
+    }
     create_resp = client.post("/api/v1/leads", json=payload)
     lead_id = create_resp.json()["id"]
 
-    update_resp = client.put(f"/api/v1/leads/{lead_id}", json={"email": "updated@test.com"})
+    update_resp = client.put(
+        f"/api/v1/leads/{lead_id}", json={"email": "updated@test.com"}
+    )
     assert update_resp.status_code == 200
     assert update_resp.json()["email"] == "updated@test.com"
 

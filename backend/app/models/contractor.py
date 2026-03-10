@@ -1,8 +1,8 @@
 import uuid
-from datetime import datetime
 
 from sqlalchemy import (
     ARRAY,
+    JSON,
     Column,
     DateTime,
     Float,
@@ -10,7 +10,6 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
-    JSON,
 )
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
@@ -40,18 +39,30 @@ class Contractor(Base):
     last_scraped = Column(DateTime(timezone=True))
     last_contacted = Column(DateTime(timezone=True))
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    updated_at = Column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+    )
 
-    contacts = relationship("Contact", back_populates="contractor", cascade="all, delete-orphan")
-    lead_scores = relationship("LeadScore", back_populates="contractor", cascade="all, delete-orphan")
-    outreach_logs = relationship("OutreachLog", back_populates="contractor", cascade="all, delete-orphan")
+    contacts = relationship(
+        "Contact", back_populates="contractor", cascade="all, delete-orphan"
+    )
+    lead_scores = relationship(
+        "LeadScore", back_populates="contractor", cascade="all, delete-orphan"
+    )
+    outreach_logs = relationship(
+        "OutreachLog", back_populates="contractor", cascade="all, delete-orphan"
+    )
 
 
 class Contact(Base):
     __tablename__ = "contacts"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    contractor_id = Column(UUID(as_uuid=True), ForeignKey("contractors.id", ondelete="CASCADE"), nullable=False)
+    contractor_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("contractors.id", ondelete="CASCADE"),
+        nullable=False,
+    )
     name = Column(String(255))
     title = Column(String(255))
     email = Column(String(255))
@@ -76,7 +87,11 @@ class LeadScore(Base):
     __tablename__ = "lead_scores"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    contractor_id = Column(UUID(as_uuid=True), ForeignKey("contractors.id", ondelete="CASCADE"), nullable=False)
+    contractor_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("contractors.id", ondelete="CASCADE"),
+        nullable=False,
+    )
     score = Column(Float, nullable=False)
     factors = Column(JSON, default={})
     scored_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -92,7 +107,9 @@ class ScrapeJob(Base):
     city = Column(String(100))
     state = Column(String(50))
     industry = Column(String(100))
-    status = Column(String(20), default="pending", index=True)  # pending/running/completed/failed/cancelled
+    status = Column(
+        String(20), default="pending", index=True
+    )  # pending/running/completed/failed/cancelled
     total_found = Column(Integer, default=0)
     processed = Column(Integer, default=0)
     started_at = Column(DateTime(timezone=True))
@@ -105,7 +122,11 @@ class OutreachLog(Base):
     __tablename__ = "outreach_logs"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    contractor_id = Column(UUID(as_uuid=True), ForeignKey("contractors.id", ondelete="CASCADE"), nullable=False)
+    contractor_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("contractors.id", ondelete="CASCADE"),
+        nullable=False,
+    )
     channel = Column(String(50))  # email/phone/linkedin
     template_used = Column(String(255))
     sent_at = Column(DateTime(timezone=True), server_default=func.now())

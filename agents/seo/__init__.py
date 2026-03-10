@@ -1,4 +1,6 @@
-"""agents/seo/__init__.py"""
-from .seo_agent import SEOAgent
+"""agents.seo — SEO automation agent package."""
 
-__all__ = ["SEOAgent"]
+from .seo_agent import SEOAgent, analyse_html
+
+__all__ = ["SEOAgent", "analyse_html"]
+

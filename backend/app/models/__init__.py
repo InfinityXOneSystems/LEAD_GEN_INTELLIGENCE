@@ -1,8 +1,8 @@
 from app.models.contractor import (  # noqa: F401
-    Contractor,
     Contact,
+    Contractor,
     Industry,
     LeadScore,
-    ScrapeJob,
     OutreachLog,
+    ScrapeJob,
 )
