@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-10
 
-**Total leads:** 87
+**Total leads:** 314
 
 | Tier | Count |
 |------|-------|
-| HOT  | 0  |
-| WARM | 0 |
-| COLD | 0 |
+| HOT  | 9  |
+| WARM | 75 |
+| COLD | 230 |
 
 ## Top Leads
 
