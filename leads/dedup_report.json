@@ -1,14 +1,14 @@
 {
-  "total": 2637,
-  "unique": 1876,
-  "duplicates": 761,
-  "duplicateRate": 0.28858551384148656,
+  "total": 2636,
+  "unique": 1869,
+  "duplicates": 767,
+  "duplicateRate": 0.2909711684370258,
   "breakdown": {
     "exactCompanyCity": 2,
     "phone": 10,
     "email": 0,
     "website": 0,
-    "fuzzy": 749
+    "fuzzy": 755
   },
-  "generated_at": "2026-03-10T19:05:46.285Z"
+  "generated_at": "2026-03-10T20:47:11.529Z"
 }
