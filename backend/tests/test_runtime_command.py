@@ -14,7 +14,7 @@ import pytest
 def test_runtime_command_scrape(client):
     """Happy path: scrape command returns 202 with task_id."""
     resp = client.post(
-        "/runtime/command",
+        "/api/v1/runtime/command",
         json={"command": "scrape epoxy contractors in Texas"},
     )
     assert resp.status_code == 202
@@ -28,7 +28,7 @@ def test_runtime_command_scrape(client):
 
 def test_runtime_command_generate_code(client):
     resp = client.post(
-        "/runtime/command",
+        "/api/v1/runtime/command",
         json={"command": "generate code for a lead scoring function"},
     )
     assert resp.status_code == 202
@@ -39,7 +39,7 @@ def test_runtime_command_generate_code(client):
 
 def test_runtime_command_seo(client):
     resp = client.post(
-        "/runtime/command",
+        "/api/v1/runtime/command",
         json={"command": "run seo analysis on the website"},
     )
     assert resp.status_code == 202
@@ -49,7 +49,7 @@ def test_runtime_command_seo(client):
 
 def test_runtime_command_export(client):
     resp = client.post(
-        "/runtime/command",
+        "/api/v1/runtime/command",
         json={"command": "export leads to CSV"},
     )
     assert resp.status_code == 202
@@ -59,7 +59,7 @@ def test_runtime_command_export(client):
 
 def test_runtime_command_outreach(client):
     resp = client.post(
-        "/runtime/command",
+        "/api/v1/runtime/command",
         json={"command": "run outreach campaign"},
     )
     assert resp.status_code == 202
@@ -69,25 +69,25 @@ def test_runtime_command_outreach(client):
 
 def test_runtime_command_empty_fails(client):
     """Empty command should return 422."""
-    resp = client.post("/runtime/command", json={"command": "   "})
+    resp = client.post("/api/v1/runtime/command", json={"command": "   "})
     assert resp.status_code == 422
 
 
 def test_runtime_command_too_long_fails(client):
     """Command exceeding 2000 chars should fail validation."""
-    resp = client.post("/runtime/command", json={"command": "x" * 2001})
+    resp = client.post("/api/v1/runtime/command", json={"command": "x" * 2001})
     assert resp.status_code == 422
 
 
 def test_runtime_command_missing_body_fails(client):
-    resp = client.post("/runtime/command", json={})
+    resp = client.post("/api/v1/runtime/command", json={})
     assert resp.status_code == 422
 
 
 def test_runtime_command_explicit_type(client):
     """Caller can override auto-detected command type."""
     resp = client.post(
-        "/runtime/command",
+        "/api/v1/runtime/command",
         json={
             "command": "scrape contractors ohio",
             "command_type": "seo_analysis",
@@ -100,7 +100,7 @@ def test_runtime_command_explicit_type(client):
 
 def test_runtime_command_with_extra_params(client):
     resp = client.post(
-        "/runtime/command",
+        "/api/v1/runtime/command",
         json={
             "command": "scrape flooring contractors in Ohio",
             "params": {"max_results": 50},
@@ -114,7 +114,7 @@ def test_runtime_command_with_extra_params(client):
 def test_runtime_command_priority_range(client):
     """Priority must be 1-10."""
     resp = client.post(
-        "/runtime/command",
+        "/api/v1/runtime/command",
         json={"command": "scrape contractors", "priority": 11},
     )
     assert resp.status_code == 422
@@ -123,7 +123,7 @@ def test_runtime_command_priority_range(client):
 def test_runtime_command_blocked_pattern(client):
     """Commands with unsafe patterns should be rejected."""
     resp = client.post(
-        "/runtime/command",
+        "/api/v1/runtime/command",
         json={"command": "run rm -rf /etc now"},
     )
     assert resp.status_code == 422
@@ -135,20 +135,20 @@ def test_runtime_command_blocked_pattern(client):
 
 
 def test_get_task_not_found(client):
-    resp = client.get("/runtime/task/nonexistent-task-id")
+    resp = client.get("/api/v1/runtime/task/nonexistent-task-id")
     assert resp.status_code == 404
 
 
 def test_get_task_after_submit(client):
     """A submitted task should be retrievable by task_id."""
     post_resp = client.post(
-        "/runtime/command",
+        "/api/v1/runtime/command",
         json={"command": "scrape roofing contractors in Florida"},
     )
     assert post_resp.status_code == 202
     task_id = post_resp.json()["task_id"]
 
-    get_resp = client.get(f"/runtime/task/{task_id}")
+    get_resp = client.get(f"/api/v1/runtime/task/{task_id}")
     assert get_resp.status_code == 200
     data = get_resp.json()
     assert data["task_id"] == task_id
@@ -162,7 +162,7 @@ def test_get_task_after_submit(client):
 
 
 def test_system_health(client):
-    resp = client.get("/system/health")
+    resp = client.get("/api/v1/system/health")
     assert resp.status_code == 200
     data = resp.json()
     assert "status" in data
@@ -177,7 +177,7 @@ def test_system_health(client):
 
 
 def test_system_metrics(client):
-    resp = client.get("/system/metrics")
+    resp = client.get("/api/v1/system/metrics")
     assert resp.status_code == 200
     data = resp.json()
     assert "workers" in data
@@ -191,7 +191,7 @@ def test_system_metrics(client):
 
 
 def test_system_tasks(client):
-    resp = client.get("/system/tasks")
+    resp = client.get("/api/v1/system/tasks")
     assert resp.status_code == 200
     data = resp.json()
     assert "total" in data
@@ -202,12 +202,12 @@ def test_system_tasks(client):
 def test_system_tasks_includes_submitted(client):
     """A submitted task should appear in /system/tasks."""
     post_resp = client.post(
-        "/runtime/command",
+        "/api/v1/runtime/command",
         json={"command": "scrape contractors Texas"},
     )
     task_id = post_resp.json()["task_id"]
 
-    tasks_resp = client.get("/system/tasks")
+    tasks_resp = client.get("/api/v1/system/tasks")
     data = tasks_resp.json()
     assert task_id in data["tasks"]
 
