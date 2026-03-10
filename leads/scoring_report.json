@@ -1,180 +1,90 @@
 {
-  "generated_at": "2026-03-10T14:44:59.906Z",
-  "total_leads": 1000,
-  "average_score": 41,
+  "generated_at": "2026-03-10T15:04:04.395Z",
+  "total_leads": 2607,
+  "average_score": 34,
   "tiers": {
-    "HOT": 28,
-    "WARM": 381,
-    "COLD": 591
+    "HOT": 25,
+    "WARM": 243,
+    "COLD": 2339
   },
   "industries": {
-    "Epoxy": 225,
-    "Concrete": 173,
-    "Automotive": 155,
+    "Epoxy": 570,
+    "Concrete": 513,
+    "Automotive": 375,
     "SurfacePrep": 6,
-    "Unknown": 370,
-    "Industrial": 71
+    "Unknown": 849,
+    "Industrial": 294
   },
   "top_leads": [
     {
       "company": "Desert Epoxy Solutions",
-      "company_name": "Desert Epoxy Solutions",
-      "phone": "(480) 555-1101",
-      "email": "info@desertepoxy.com",
-      "website": "https://desertepoxy.com",
       "city": "Tempe",
-      "state": "AZ",
-      "industry": "Epoxy",
-      "rating": 4.9,
-      "reviews": 83,
       "lead_score": 95,
-      "score": 95,
-      "source": "google_maps",
-      "date_scraped": null
+      "tier": "HOT",
+      "industry": "Epoxy"
     },
     {
       "company": "Valley Metallic Epoxy Specialists",
-      "company_name": "Valley Metallic Epoxy Specialists",
-      "phone": "(480) 555-1505",
-      "email": "info@valleymetallic.com",
-      "website": "https://valleymetallic.com",
       "city": "Tempe",
-      "state": "AZ",
-      "industry": "Epoxy",
-      "rating": 4.9,
-      "reviews": 94,
       "lead_score": 95,
-      "score": 95,
-      "source": "google_maps",
-      "date_scraped": null
+      "tier": "HOT",
+      "industry": "Epoxy"
     },
     {
       "company": "Columbus Epoxy Flooring Co.",
-      "company_name": "Columbus Epoxy Flooring Co.",
-      "phone": "(614) 555-2101",
-      "email": "info@columbusepoxy.com",
-      "website": "https://columbusepoxy.com",
       "city": "Columbus",
-      "state": "OH",
-      "industry": "Epoxy",
-      "rating": 4.8,
-      "reviews": 77,
       "lead_score": 95,
-      "score": 95,
-      "source": "google_maps",
-      "date_scraped": null
+      "tier": "HOT",
+      "industry": "Epoxy"
     },
     {
       "company": "Rockford Epoxy Pros",
-      "company_name": "Rockford Epoxy Pros",
-      "phone": "(815) 555-0101",
-      "email": "info@rockfordepoxypros.com",
-      "website": "https://rockfordepoxypros.com",
       "city": "Rockford",
-      "state": "IL",
-      "industry": "Epoxy",
-      "rating": 4.8,
-      "reviews": 47,
       "lead_score": 90,
-      "score": 90,
-      "source": "google_maps",
-      "date_scraped": null
+      "tier": "HOT",
+      "industry": "Epoxy"
     },
     {
       "company": "Illini Polyaspartic Floors",
-      "company_name": "Illini Polyaspartic Floors",
-      "phone": "(815) 555-0505",
-      "email": "quote@illinifloors.com",
-      "website": "https://illinifloors.com",
       "city": "Rockford",
-      "state": "IL",
-      "industry": "Epoxy",
-      "rating": 4.7,
-      "reviews": 28,
       "lead_score": 90,
-      "score": 90,
-      "source": "google_maps",
-      "date_scraped": null
+      "tier": "HOT",
+      "industry": "Epoxy"
     },
     {
       "company": "Rockford Decorative Concrete Co.",
-      "company_name": "Rockford Decorative Concrete Co.",
-      "phone": "(815) 555-0909",
-      "email": "info@rockforddecorative.com",
-      "website": "https://rockforddecorative.com",
       "city": "Rockford",
-      "state": "IL",
-      "industry": "Concrete",
-      "rating": 4.7,
-      "reviews": 41,
       "lead_score": 90,
-      "score": 90,
-      "source": "yelp",
-      "date_scraped": null
+      "tier": "HOT",
+      "industry": "Concrete"
     },
     {
       "company": "Tempe Garage Coatings",
-      "company_name": "Tempe Garage Coatings",
-      "phone": "(480) 555-1303",
-      "email": "quote@tempegaragecoatings.com",
-      "website": "https://tempegaragecoatings.com",
       "city": "Tempe",
-      "state": "AZ",
-      "industry": "Automotive",
-      "rating": 4.8,
-      "reviews": 72,
       "lead_score": 90,
-      "score": 90,
-      "source": "yelp",
-      "date_scraped": null
+      "tier": "HOT",
+      "industry": "Automotive"
     },
     {
       "company": "AZ Polyurea Floor Coatings",
-      "company_name": "AZ Polyurea Floor Coatings",
-      "phone": "(480) 555-1606",
-      "email": "contact@azpolyurea.com",
-      "website": "https://azpolyurea.com",
       "city": "Tempe",
-      "state": "AZ",
-      "industry": "Epoxy",
-      "rating": 4.6,
-      "reviews": 38,
       "lead_score": 90,
-      "score": 90,
-      "source": "yelp",
-      "date_scraped": null
+      "tier": "HOT",
+      "industry": "Epoxy"
     },
     {
       "company": "Maricopa Decorative Concrete",
-      "company_name": "Maricopa Decorative Concrete",
-      "phone": "(480) 555-1909",
-      "email": "bids@maricopadecorative.com",
-      "website": "https://maricopadecorative.com",
       "city": "Tempe",
-      "state": "AZ",
-      "industry": "Concrete",
-      "rating": 4.7,
-      "reviews": 45,
       "lead_score": 90,
-      "score": 90,
-      "source": "yelp",
-      "date_scraped": null
+      "tier": "HOT",
+      "industry": "Concrete"
     },
     {
       "company": "Ohio Garage Transformations",
-      "company_name": "Ohio Garage Transformations",
-      "phone": "(614) 555-2303",
-      "email": "quote@ohiogaragetransform.com",
-      "website": "https://ohiogaragetransform.com",
       "city": "Columbus",
-      "state": "OH",
-      "industry": "Automotive",
-      "rating": 4.9,
-      "reviews": 98,
       "lead_score": 90,
-      "score": 90,
-      "source": "yelp",
-      "date_scraped": null
+      "tier": "HOT",
+      "industry": "Automotive"
     }
   ]
 }
