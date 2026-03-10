@@ -15,6 +15,11 @@ const LINKS = [
     desc: "Lead analytics and charts",
   },
   {
+    href: "/workspace",
+    label: "🖊️ Workspace",
+    desc: "Browser, live editor, UI generation, parallel & autonomous",
+  },
+  {
     href: "/settings",
     label: "⚙️ Settings",
     desc: "Configure LLM, APIs, scraping",
