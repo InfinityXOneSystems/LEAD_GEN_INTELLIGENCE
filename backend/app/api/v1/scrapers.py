@@ -31,6 +31,7 @@ def create_scrape_job(payload: ScrapeJobCreate, db: Session = Depends(get_db)):
     # Enqueue via Celery
     try:
         from app.celery_app import run_scrape_job
+
         run_scrape_job.delay(str(job.id))
     except Exception:
         pass  # Worker may not be running; job stays pending
@@ -50,7 +51,12 @@ def list_scrape_jobs(
         query = query.filter(ScrapeJob.status == status)
 
     total = query.count()
-    jobs = query.order_by(ScrapeJob.created_at.desc()).offset((page - 1) * page_size).limit(page_size).all()
+    jobs = (
+        query.order_by(ScrapeJob.created_at.desc())
+        .offset((page - 1) * page_size)
+        .limit(page_size)
+        .all()
+    )
 
     return {
         "total": total,
@@ -74,7 +80,9 @@ def cancel_scrape_job(job_id: UUID, db: Session = Depends(get_db)):
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
     if job.status not in ("pending", "running"):
-        raise HTTPException(status_code=400, detail=f"Cannot cancel job with status '{job.status}'")
+        raise HTTPException(
+            status_code=400, detail=f"Cannot cancel job with status '{job.status}'"
+        )
     job.status = "cancelled"
     job.completed_at = datetime.utcnow()
     db.commit()

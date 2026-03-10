@@ -9,14 +9,13 @@ from app.scrapers.base import BaseScraper
 
 logger = structlog.get_logger()
 
-EMAIL_PATTERN = re.compile(
-    r"\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b"
-)
-PHONE_PATTERN = re.compile(
-    r"(?:\+1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}"
-)
+EMAIL_PATTERN = re.compile(r"\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b")
+PHONE_PATTERN = re.compile(r"(?:\+1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}")
 NAME_PATTERNS = [
-    re.compile(r"(?:Owner|Founder|CEO|President|Principal)[:\s]+([A-Z][a-z]+\s+[A-Z][a-z]+)", re.I),
+    re.compile(
+        r"(?:Owner|Founder|CEO|President|Principal)[:\s]+([A-Z][a-z]+\s+[A-Z][a-z]+)",
+        re.I,
+    ),
     re.compile(r"([A-Z][a-z]+\s+[A-Z][a-z]+)\s*[,\-]?\s*(?:Owner|Founder|CEO)", re.I),
 ]
 
@@ -49,8 +48,12 @@ class WebsiteCrawler(BaseScraper):
                 try:
                     about_resp = self.fetch(about_url)
                     about_soup = BeautifulSoup(about_resp.text, "html.parser")
-                    result["emails"] = list(set(result["emails"] + self._extract_emails(about_resp.text)))
-                    result["phones"] = list(set(result["phones"] + self._extract_phones(about_resp.text)))
+                    result["emails"] = list(
+                        set(result["emails"] + self._extract_emails(about_resp.text))
+                    )
+                    result["phones"] = list(
+                        set(result["phones"] + self._extract_phones(about_resp.text))
+                    )
                     if not result["owner_name"]:
                         result["owner_name"] = self._extract_owner_name(about_soup)
                 except Exception:
@@ -65,8 +68,12 @@ class WebsiteCrawler(BaseScraper):
         found = EMAIL_PATTERN.findall(text)
         # Filter out common false positives
         return [
-            e for e in set(found)
-            if not any(skip in e for skip in ["example.", "domain.", "yoursite.", "sentry.", "w3.org"])
+            e
+            for e in set(found)
+            if not any(
+                skip in e
+                for skip in ["example.", "domain.", "yoursite.", "sentry.", "w3.org"]
+            )
         ]
 
     def _extract_phones(self, text: str) -> list:
@@ -84,6 +91,11 @@ class WebsiteCrawler(BaseScraper):
         for link in soup.find_all("a", href=True):
             href = link["href"].lower()
             text = link.get_text(strip=True).lower()
-            if "about" in href or "contact" in href or "about" in text or "contact" in text:
+            if (
+                "about" in href
+                or "contact" in href
+                or "about" in text
+                or "contact" in text
+            ):
                 return urljoin(base_url, link["href"])
         return None
