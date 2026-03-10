@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-10
 
-**Total leads:** 306
+**Total leads:** 349
 
 | Tier | Count |
 |------|-------|
 | HOT  | 9  |
-| WARM | 57 |
-| COLD | 240 |
+| WARM | 62 |
+| COLD | 278 |
 
 ## Top Leads
 
@@ -31,6 +31,6 @@
 | Epoxy Flooring Columbus |  |  | 55 |
 | Epoxy and Polished Floors of Columbus |  |  | 55 |
 | Ideal Garage Floor Coatings |  |  | 55 |
-| Infinite Designs Epoxy Solutions of North Columbus |  |  | 55 |
 | Global Epoxy LLC |  |  | 55 |
-| Spaulding's Epoxy Floor Coating |  |  | 55 |
+| Infinite Designs Epoxy Solutions of North Columbus |  |  | 55 |
+| Wyckoff Epoxy Flooring |  |  | 55 |
