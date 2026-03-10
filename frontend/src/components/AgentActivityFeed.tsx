@@ -39,11 +39,15 @@ function EntryRow({ entry }: { entry: AgentActivityEntry }) {
         <div className="flex items-center gap-2 text-xs">
           <span className="font-medium text-gray-500">{entry.agent}</span>
           {entry.task_id && (
-            <span className="font-mono text-gray-300">{entry.task_id.slice(0, 8)}</span>
+            <span className="font-mono text-gray-300">
+              {entry.task_id.slice(0, 8)}
+            </span>
           )}
           <span className="ml-auto text-gray-300 tabular-nums">{time}</span>
         </div>
-        <p className={`mt-0.5 text-xs ${textColour} break-words`}>{entry.message}</p>
+        <p className={`mt-0.5 text-xs ${textColour} break-words`}>
+          {entry.message}
+        </p>
       </div>
     </div>
   );
@@ -98,20 +102,26 @@ export default function AgentActivityFeed({
       <div className="flex items-center justify-between border-b border-gray-100 px-4 py-3">
         <div className="flex items-center gap-2">
           <Activity className="h-4 w-4 text-purple-500" />
-          <h2 className="text-sm font-semibold text-gray-700">Agent Activity</h2>
+          <h2 className="text-sm font-semibold text-gray-700">
+            Agent Activity
+          </h2>
         </div>
         {agentFilter && (
           <span className="rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-700">
             {agentFilter}
           </span>
         )}
-        <span className="ml-auto text-xs text-gray-400">{entries.length} entries</span>
+        <span className="ml-auto text-xs text-gray-400">
+          {entries.length} entries
+        </span>
       </div>
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto px-4 py-2">
         {loading && entries.length === 0 && (
-          <p className="text-center text-sm text-gray-400 py-8">Loading activity…</p>
+          <p className="text-center text-sm text-gray-400 py-8">
+            Loading activity…
+          </p>
         )}
         {error && (
           <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-600">

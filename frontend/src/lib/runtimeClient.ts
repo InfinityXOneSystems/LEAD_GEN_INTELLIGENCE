@@ -85,7 +85,9 @@ export async function sendCommand(
 /**
  * Poll the status of a task by its ID.
  */
-export async function getTaskStatus(taskId: string): Promise<TaskStatusResponse> {
+export async function getTaskStatus(
+  taskId: string,
+): Promise<TaskStatusResponse> {
   const response = await apiClient.get<TaskStatusResponse>(
     `/v1/runtime/task/${encodeURIComponent(taskId)}`,
   );
@@ -107,7 +109,8 @@ export async function getSystemHealth(): Promise<{
  * Fetch system runtime metrics.
  */
 export async function getSystemMetrics(): Promise<SystemMetricsResponse> {
-  const response = await apiClient.get<SystemMetricsResponse>("/v1/system/metrics");
+  const response =
+    await apiClient.get<SystemMetricsResponse>("/v1/system/metrics");
   return response.data;
 }
 

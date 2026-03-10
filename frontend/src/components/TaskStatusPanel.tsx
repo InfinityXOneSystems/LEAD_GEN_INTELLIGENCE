@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { CheckCircle, Clock, Loader2, XCircle } from "lucide-react";
-import { getTaskStatus, type TaskStatus, type TaskStatusResponse } from "@/lib/runtimeClient";
+import {
+  getTaskStatus,
+  type TaskStatus,
+  type TaskStatusResponse,
+} from "@/lib/runtimeClient";
 
 interface TaskStatusPanelProps {
   taskId: string;
@@ -54,7 +58,8 @@ export default function TaskStatusPanel({
         setTask(data);
         setError(null);
 
-        const isTerminal = data.status === "completed" || data.status === "failed";
+        const isTerminal =
+          data.status === "completed" || data.status === "failed";
         if (isTerminal) {
           onComplete?.(data);
         }
@@ -124,7 +129,9 @@ export default function TaskStatusPanel({
         <span className="text-sm font-medium text-gray-800">
           {STATUS_LABELS[task.status]}
         </span>
-        <span className="ml-auto font-mono text-xs text-gray-500">{task.task_id.slice(0, 8)}…</span>
+        <span className="ml-auto font-mono text-xs text-gray-500">
+          {task.task_id.slice(0, 8)}…
+        </span>
       </div>
 
       {/* Command / target */}
@@ -139,7 +146,9 @@ export default function TaskStatusPanel({
 
       {/* Error */}
       {task.error && (
-        <p className="mt-2 rounded bg-red-100 px-2 py-1 text-xs text-red-700">{task.error}</p>
+        <p className="mt-2 rounded bg-red-100 px-2 py-1 text-xs text-red-700">
+          {task.error}
+        </p>
       )}
 
       {/* Timestamps */}

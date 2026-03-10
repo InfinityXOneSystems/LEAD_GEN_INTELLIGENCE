@@ -23,8 +23,16 @@ interface ChatMessage {
 function parseCommand(input: string): RuntimeCommandRequest {
   const lower = input.toLowerCase().trim();
 
-  if (lower.includes("scrape") || lower.includes("find") || lower.includes("search")) {
-    return { command: "run_scraper", target: input, parameters: { query: input } };
+  if (
+    lower.includes("scrape") ||
+    lower.includes("find") ||
+    lower.includes("search")
+  ) {
+    return {
+      command: "run_scraper",
+      target: input,
+      parameters: { query: input },
+    };
   }
   if (lower.includes("seo") || lower.includes("audit")) {
     const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
@@ -34,7 +42,11 @@ function parseCommand(input: string): RuntimeCommandRequest {
       parameters: {},
     };
   }
-  if (lower.includes("social") || lower.includes("linkedin") || lower.includes("facebook")) {
+  if (
+    lower.includes("social") ||
+    lower.includes("linkedin") ||
+    lower.includes("facebook")
+  ) {
     const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
     return {
       command: "run_social_scan",
@@ -42,7 +54,11 @@ function parseCommand(input: string): RuntimeCommandRequest {
       parameters: {},
     };
   }
-  if (lower.includes("browse") || lower.includes("navigate") || lower.includes("visit")) {
+  if (
+    lower.includes("browse") ||
+    lower.includes("navigate") ||
+    lower.includes("visit")
+  ) {
     const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
     return {
       command: "run_browser",
@@ -79,7 +95,9 @@ function TaskCard({ task }: { task: TaskStatusResponse }) {
   return (
     <div className="mt-2 rounded-lg border border-gray-200 bg-gray-50 p-3 text-xs">
       <div className="flex items-center justify-between gap-2">
-        <span className="font-mono text-gray-500">{task.task_id.slice(0, 8)}…</span>
+        <span className="font-mono text-gray-500">
+          {task.task_id.slice(0, 8)}…
+        </span>
         <StatusBadge status={task.status} />
         <button
           onClick={() => setExpanded((v) => !v)}
@@ -88,9 +106,7 @@ function TaskCard({ task }: { task: TaskStatusResponse }) {
           {expanded ? <X size={12} /> : <span className="text-xs">logs</span>}
         </button>
       </div>
-      {task.error && (
-        <p className="mt-1 text-red-600">{task.error}</p>
-      )}
+      {task.error && <p className="mt-1 text-red-600">{task.error}</p>}
       {expanded && task.logs.length > 0 && (
         <pre className="mt-2 max-h-40 overflow-y-auto rounded bg-gray-900 p-2 text-green-400 text-[10px]">
           {task.logs.join("\n")}
@@ -121,12 +137,17 @@ export default function CommandChat() {
       timestamp: new Date(),
     };
     setMessages((prev) => [...prev, full]);
-    setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 50);
+    setTimeout(
+      () => bottomRef.current?.scrollIntoView({ behavior: "smooth" }),
+      50,
+    );
     return full.id;
   };
 
   const updateMessage = (id: string, patch: Partial<ChatMessage>) => {
-    setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, ...patch } : m)));
+    setMessages((prev) =>
+      prev.map((m) => (m.id === id ? { ...m, ...patch } : m)),
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -184,7 +205,9 @@ export default function CommandChat() {
       {/* Header */}
       <div className="flex items-center gap-2 border-b border-gray-100 px-4 py-3">
         <Bot className="h-4 w-4 text-blue-500" />
-        <h2 className="text-sm font-semibold text-gray-700">Runtime Command Chat</h2>
+        <h2 className="text-sm font-semibold text-gray-700">
+          Runtime Command Chat
+        </h2>
       </div>
 
       {/* Messages */}
@@ -220,7 +243,7 @@ export default function CommandChat() {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder='scrape epoxy contractors in Texas…'
+          placeholder="scrape epoxy contractors in Texas…"
           className="flex-1 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-800 placeholder-gray-400 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
           disabled={loading}
         />
@@ -229,7 +252,11 @@ export default function CommandChat() {
           disabled={loading || !input.trim()}
           className="flex items-center gap-1.5 rounded-lg bg-blue-500 px-3 py-2 text-sm font-medium text-white hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
-          {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+          {loading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Send className="h-4 w-4" />
+          )}
         </button>
       </form>
     </div>
