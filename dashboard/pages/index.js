@@ -3,13 +3,14 @@ import React from "react";
 import Link from "next/link";
 
 const LINKS = [
-  { href: "/chat", label: "💬 Chat Interface", desc: "Autonomous LLM agent — coding, scraping, orchestration" },
-  { href: "/leads", label: "📋 Leads", desc: "View and manage scraped leads" },
-  { href: "/analytics", label: "📊 Analytics", desc: "Lead analytics and charts" },
-  { href: "/workspace", label: "🖊️ Workspace", desc: "Browser, live editor, UI generation, parallel & autonomous" },
-  { href: "/studio", label: "🎨 Creative Studio", desc: "AI image creator, video creator, business templates, UI library" },
-  { href: "/connectors", label: "🔌 Connectors", desc: "GitHub, Google Workspace, Vercel, Docker MCP, local machine" },
-  { href: "/settings", label: "⚙️ Settings", desc: "Configure LLM, APIs, scraping, all integrations" },
+  { href: "/chat",       label: "💬 Chat Agent",        desc: "Autonomous LLM — coding, scraping, orchestration, all accounts" },
+  { href: "/leads",      label: "📋 Leads",              desc: "View and manage all scraped leads" },
+  { href: "/crm",        label: "🗂️ CRM",                desc: "Enterprise CRM — pipeline, outreach, follow-up, contacts" },
+  { href: "/analytics",  label: "📊 Analytics",          desc: "Lead analytics, pipeline charts, system health" },
+  { href: "/workspace",  label: "🖊️ Workspace",          desc: "Browser, live editor, UI generation, parallel & autonomous" },
+  { href: "/studio",     label: "🎨 Creative Studio",    desc: "AI image creator, video creator, business templates, UI library" },
+  { href: "/connectors", label: "🔌 Connectors",         desc: "GitHub, Google Workspace, Vercel, Docker MCP, local machine" },
+  { href: "/settings",   label: "⚙️ Settings",           desc: "LLM, APIs, scraping, outreach, CRM, all integrations" },
 ];
 
 export default function Home() {
