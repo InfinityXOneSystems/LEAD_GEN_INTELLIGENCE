@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import logging
 import re
-from typing import Any, Dict, List
+from typing import Any, Callable, Dict, List
 
 from app.runtime.command_schema import CommandType
 
@@ -385,3 +385,58 @@ def route(command: str) -> Dict[str, Any]:
             **location,
         },
     }
+
+
+# ---------------------------------------------------------------------------
+# Default handler registration
+# ---------------------------------------------------------------------------
+
+
+def _default_agent_handler(task: Dict[str, Any]) -> Dict[str, Any]:
+    """Generic fallback handler used by all default agent registrations."""
+    agent = task.get("agent", "unknown")
+    task_id = task.get("task_id", "unknown")
+    logger.info("default_agent_handler agent=%s task_id=%s", agent, task_id)
+    return {
+        "status": "acknowledged",
+        "task_id": task_id,
+        "agent": agent,
+        "message": f"Task received by {agent} agent (default handler)",
+    }
+
+
+def _register_defaults() -> None:
+    """Register default handlers for all known agents in the worker registry.
+
+    Called once at application startup so that every agent name produced by
+    :func:`route` has a handler in the worker node registry even before any
+    specialised agent implementation replaces it.
+    """
+    try:
+        from app.workers.worker_node import register_handler  # local import to avoid cycles
+    except ImportError:
+        logger.warning("_register_defaults: could not import worker_node.register_handler")
+        return
+
+    _agents: List[str] = [
+        "scraper",
+        "code",
+        "builder",
+        "github",
+        "supervisor",
+        "media",
+        "seo",
+        "planner",
+        "outreach",
+        "prediction",
+        "simulation",
+    ]
+
+    for agent_name in _agents:
+        handler: Callable[[Dict[str, Any]], Dict[str, Any]] = (
+            lambda task, _a=agent_name: _default_agent_handler({**task, "agent": _a})
+        )
+        register_handler(agent_name, handler)
+        logger.debug("registered default handler for agent=%s", agent_name)
+
+    logger.info("_register_defaults: registered %d default agent handlers", len(_agents))
