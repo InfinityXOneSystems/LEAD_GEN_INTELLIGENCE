@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-03-10T05:06:52.028Z",
+  "generated_at": "2026-03-10T05:13:34.499Z",
   "total_leads": 1000,
   "average_score": 41,
   "tiers": {
     "HOT": 28,
-    "WARM": 375,
-    "COLD": 597
+    "WARM": 379,
+    "COLD": 593
   },
   "industries": {
-    "Epoxy": 227,
-    "Concrete": 171,
-    "Automotive": 151,
-    "SurfacePrep": 4,
-    "Unknown": 377,
-    "Industrial": 70
+    "Epoxy": 235,
+    "Concrete": 167,
+    "Automotive": 147,
+    "SurfacePrep": 3,
+    "Unknown": 371,
+    "Industrial": 77
   },
   "top_leads": [
     {
