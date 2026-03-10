@@ -3,13 +3,12 @@ from datetime import datetime, timedelta
 from typing import List, Optional
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.contractor import Contractor, OutreachLog
-from app.schemas.contractor import OutreachLogCreate, OutreachLogResponse
 
 router = APIRouter(prefix="/outreach", tags=["outreach"])
 

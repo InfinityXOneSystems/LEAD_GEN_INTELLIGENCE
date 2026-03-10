@@ -29,6 +29,20 @@ async def lifespan(app: FastAPI):
         logger.info("database_tables_created")
     except Exception as e:
         logger.error("startup_failed", error=str(e))
+
+    # Start background worker pool for runtime command execution
+    try:
+        from app.runtime.command_router import _register_defaults
+        from app.workers.worker_runtime import start_worker_pool
+        from app.workers.worker_supervisor import start_supervisor
+
+        _register_defaults()
+        start_worker_pool(num_workers=2)
+        start_supervisor()
+        logger.info("worker_pool_started")
+    except Exception as e:
+        logger.error("worker_pool_start_failed", error=str(e))
+
     yield
 
 

@@ -15,8 +15,8 @@ os.environ.setdefault("DATABASE_URL", "sqlite:///./test.db")
 # Monkeypatch PostgreSQL-specific types so the SQLite test DB works.
 # These patches MUST happen before any app model module is imported.
 # ---------------------------------------------------------------------------
-import sqlalchemy
-from sqlalchemy.dialects import postgresql as _pg
+import sqlalchemy  # noqa: E402
+from sqlalchemy.dialects import postgresql as _pg  # noqa: E402
 
 
 class _JSONArray(TypeDecorator):

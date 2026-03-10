@@ -1,7 +1,3 @@
-from datetime import datetime, timedelta
-from typing import Any, Optional
-
-
 class LeadScorer:
     """
     Scores leads 0-100 based on data completeness and quality signals.

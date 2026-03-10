@@ -1,6 +1,5 @@
 import re
 from typing import Any, Dict, List
-from urllib.parse import quote_plus
 
 import structlog
 from bs4 import BeautifulSoup
