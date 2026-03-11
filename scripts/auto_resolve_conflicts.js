@@ -91,7 +91,9 @@ function main() {
   const filePath = args.find((a) => !a.startsWith("--"));
 
   if (!filePath) {
-    console.error("[resolver] Usage: auto_resolve_conflicts.js <file> [--dry-run]");
+    console.error(
+      "[resolver] Usage: auto_resolve_conflicts.js <file> [--dry-run]",
+    );
     process.exit(1);
   }
 

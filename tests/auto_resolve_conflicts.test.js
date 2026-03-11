@@ -12,7 +12,10 @@ const {
   resolveConflicts,
 } = require("../scripts/auto_resolve_conflicts");
 
-const RESOLVER = path.resolve(__dirname, "../scripts/auto_resolve_conflicts.js");
+const RESOLVER = path.resolve(
+  __dirname,
+  "../scripts/auto_resolve_conflicts.js",
+);
 
 // ---------------------------------------------------------------------------
 // hasConflicts
@@ -61,7 +64,8 @@ test("countConflicts - returns 2 for two conflict blocks", () => {
 // ---------------------------------------------------------------------------
 
 test("resolveConflicts - keeps ours side, drops theirs", () => {
-  const content = "before\n<<<<<<< HEAD\nours\n=======\ntheirs\n>>>>>>> branch\nafter";
+  const content =
+    "before\n<<<<<<< HEAD\nours\n=======\ntheirs\n>>>>>>> branch\nafter";
   const { resolved, count } = resolveConflicts(content);
   assert.equal(count, 1);
   assert.ok(resolved.includes("ours"), "resolved should contain ours");
@@ -126,14 +130,21 @@ function writeTmp(content) {
 }
 
 test("resolver: resolves a single conflict and writes result", () => {
-  const content = "start\n<<<<<<< HEAD\nours\n=======\ntheirs\n>>>>>>> branch\nend";
+  const content =
+    "start\n<<<<<<< HEAD\nours\n=======\ntheirs\n>>>>>>> branch\nend";
   const tmp = writeTmp(content);
   try {
     execFileSync(process.execPath, [RESOLVER, tmp], { encoding: "utf-8" });
     const result = fs.readFileSync(tmp, "utf-8");
-    assert.ok(result.includes("ours"), "file should contain ours after resolution");
+    assert.ok(
+      result.includes("ours"),
+      "file should contain ours after resolution",
+    );
     assert.ok(!result.includes("theirs"), "file should not contain theirs");
-    assert.ok(!result.includes("<<<<<<<"), "conflict markers should be removed");
+    assert.ok(
+      !result.includes("<<<<<<<"),
+      "conflict markers should be removed",
+    );
   } finally {
     fs.unlinkSync(tmp);
   }
@@ -172,11 +183,9 @@ test("resolver: dry-run does not modify files", () => {
   const content = "<<<<<<< HEAD\nours\n=======\ntheirs\n>>>>>>> branch";
   const tmp = writeTmp(content);
   try {
-    execFileSync(
-      process.execPath,
-      [RESOLVER, tmp, "--dry-run"],
-      { encoding: "utf-8" },
-    );
+    execFileSync(process.execPath, [RESOLVER, tmp, "--dry-run"], {
+      encoding: "utf-8",
+    });
     const after = fs.readFileSync(tmp, "utf-8");
     assert.equal(
       after,
@@ -209,10 +218,9 @@ test("resolver: clean file with no conflicts exits 0", () => {
   const content = "no conflict markers here\njust plain text\n";
   const tmp = writeTmp(content);
   try {
-    execSync(
-      `node ${JSON.stringify(RESOLVER)} ${JSON.stringify(tmp)}`,
-      { encoding: "utf-8" },
-    );
+    execSync(`node ${JSON.stringify(RESOLVER)} ${JSON.stringify(tmp)}`, {
+      encoding: "utf-8",
+    });
     const after = fs.readFileSync(tmp, "utf-8");
     assert.equal(after, content, "clean file must be unchanged");
   } finally {
