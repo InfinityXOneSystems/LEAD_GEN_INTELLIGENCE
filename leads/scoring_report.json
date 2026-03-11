@@ -1,90 +1,180 @@
 {
-  "generated_at": "2026-03-11T17:07:48.037Z",
-  "total_leads": 938,
+  "generated_at": "2026-03-11T18:44:35.003Z",
+  "total_leads": 865,
   "average_score": 38,
   "tiers": {
-    "HOT": 21,
-    "WARM": 180,
-    "COLD": 737
+    "HOT": 22,
+    "WARM": 223,
+    "COLD": 620
   },
   "industries": {
-    "Epoxy": 58,
-    "Automotive": 111,
-    "Concrete": 22,
-    "SurfacePrep": 4,
-    "Unknown": 695,
-    "Industrial": 48
+    "Epoxy": 59,
+    "Automotive": 113,
+    "Concrete": 21,
+    "SurfacePrep": 5,
+    "Unknown": 623,
+    "Industrial": 44
   },
   "top_leads": [
     {
       "company": "Desert Epoxy Solutions",
+      "company_name": "Desert Epoxy Solutions",
+      "phone": "(480) 555-1101",
+      "email": "info@desertepoxy.com",
+      "website": "https://desertepoxy.com",
       "city": "Tempe",
+      "state": "AZ",
+      "industry": "Epoxy",
+      "rating": 4.9,
+      "reviews": 83,
       "lead_score": 95,
-      "tier": "HOT",
-      "industry": "Epoxy"
+      "score": 95,
+      "source": "google_maps",
+      "date_scraped": null
     },
     {
       "company": "Valley Metallic Epoxy Specialists",
+      "company_name": "Valley Metallic Epoxy Specialists",
+      "phone": "(480) 555-1505",
+      "email": "info@valleymetallic.com",
+      "website": "https://valleymetallic.com",
       "city": "Tempe",
+      "state": "AZ",
+      "industry": "Epoxy",
+      "rating": 4.9,
+      "reviews": 94,
       "lead_score": 95,
-      "tier": "HOT",
-      "industry": "Epoxy"
+      "score": 95,
+      "source": "google_maps",
+      "date_scraped": null
     },
     {
       "company": "Columbus Epoxy Flooring Co.",
+      "company_name": "Columbus Epoxy Flooring Co.",
+      "phone": "(614) 555-2101",
+      "email": "info@columbusepoxy.com",
+      "website": "https://columbusepoxy.com",
       "city": "Columbus",
+      "state": "OH",
+      "industry": "Epoxy",
+      "rating": 4.8,
+      "reviews": 77,
       "lead_score": 95,
-      "tier": "HOT",
-      "industry": "Epoxy"
+      "score": 95,
+      "source": "google_maps",
+      "date_scraped": null
     },
     {
       "company": "Tempe Garage Coatings",
+      "company_name": "Tempe Garage Coatings",
+      "phone": "(480) 555-1303",
+      "email": "quote@tempegaragecoatings.com",
+      "website": "https://tempegaragecoatings.com",
       "city": "Tempe",
+      "state": "AZ",
+      "industry": "Automotive",
+      "rating": 4.8,
+      "reviews": 72,
       "lead_score": 90,
-      "tier": "HOT",
-      "industry": "Automotive"
+      "score": 90,
+      "source": "yelp",
+      "date_scraped": null
     },
     {
       "company": "AZ Polyurea Floor Coatings",
+      "company_name": "AZ Polyurea Floor Coatings",
+      "phone": "(480) 555-1606",
+      "email": "contact@azpolyurea.com",
+      "website": "https://azpolyurea.com",
       "city": "Tempe",
+      "state": "AZ",
+      "industry": "Epoxy",
+      "rating": 4.6,
+      "reviews": 38,
       "lead_score": 90,
-      "tier": "HOT",
-      "industry": "Epoxy"
+      "score": 90,
+      "source": "yelp",
+      "date_scraped": null
     },
     {
       "company": "Maricopa Decorative Concrete",
+      "company_name": "Maricopa Decorative Concrete",
+      "phone": "(480) 555-1909",
+      "email": "bids@maricopadecorative.com",
+      "website": "https://maricopadecorative.com",
       "city": "Tempe",
+      "state": "AZ",
+      "industry": "Concrete",
+      "rating": 4.7,
+      "reviews": 45,
       "lead_score": 90,
-      "tier": "HOT",
-      "industry": "Concrete"
+      "score": 90,
+      "source": "yelp",
+      "date_scraped": null
     },
     {
       "company": "Ohio Garage Transformations",
+      "company_name": "Ohio Garage Transformations",
+      "phone": "(614) 555-2303",
+      "email": "quote@ohiogaragetransform.com",
+      "website": "https://ohiogaragetransform.com",
       "city": "Columbus",
+      "state": "OH",
+      "industry": "Automotive",
+      "rating": 4.9,
+      "reviews": 98,
       "lead_score": 90,
-      "tier": "HOT",
-      "industry": "Automotive"
+      "score": 90,
+      "source": "yelp",
+      "date_scraped": null
     },
     {
       "company": "Arch City Decorative Concrete",
+      "company_name": "Arch City Decorative Concrete",
+      "phone": "(614) 555-2707",
+      "email": "contact@archcityconcrete.com",
+      "website": "https://archcityconcrete.com",
       "city": "Columbus",
+      "state": "OH",
+      "industry": "Concrete",
+      "rating": 4.5,
+      "reviews": 26,
       "lead_score": 90,
-      "tier": "HOT",
-      "industry": "Concrete"
+      "score": 90,
+      "source": "yelp",
+      "date_scraped": null
     },
     {
       "company": "Sonoran Surface Prep Inc.",
+      "company_name": "Sonoran Surface Prep Inc.",
+      "phone": "(480) 555-1404",
+      "email": "bids@sonoransurface.com",
+      "website": "https://sonoransurface.com",
       "city": "Tempe",
+      "state": "AZ",
+      "industry": "SurfacePrep",
+      "rating": 4.5,
+      "reviews": 29,
       "lead_score": 88,
-      "tier": "HOT",
-      "industry": "SurfacePrep"
+      "score": 88,
+      "source": "google_maps",
+      "date_scraped": null
     },
     {
       "company": "Heartland Surface Prep",
+      "company_name": "Heartland Surface Prep",
+      "phone": "(614) 555-2404",
+      "email": "bids@heartlandprep.com",
+      "website": "https://heartlandprep.com",
       "city": "Columbus",
+      "state": "OH",
+      "industry": "SurfacePrep",
+      "rating": 4.5,
+      "reviews": 34,
       "lead_score": 88,
-      "tier": "HOT",
-      "industry": "SurfacePrep"
+      "score": 88,
+      "source": "google_maps",
+      "date_scraped": null
     }
   ]
 }
