@@ -172,8 +172,9 @@ test("resolver: dry-run does not modify files", () => {
   const content = "<<<<<<< HEAD\nours\n=======\ntheirs\n>>>>>>> branch";
   const tmp = writeTmp(content);
   try {
-    execSync(
-      `node ${JSON.stringify(RESOLVER)} ${JSON.stringify(tmp)} --dry-run`,
+    execFileSync(
+      process.execPath,
+      [RESOLVER, tmp, "--dry-run"],
       { encoding: "utf-8" },
     );
     const after = fs.readFileSync(tmp, "utf-8");
