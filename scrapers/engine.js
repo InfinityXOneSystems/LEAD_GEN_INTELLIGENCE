@@ -9,6 +9,7 @@ const { scrapeGoogleMaps } = require("./google_maps_scraper");
 const { scrapeBingMaps } = require("./bing_maps_scraper");
 const { scrapeYelp } = require("./yelp_scraper");
 const { scrapeAngi, scrapeHomeAdvisor } = require("./directory_scraper");
+const { upsertLeads: upsertLeadsSupabase } = require("../db/supabaseLeadStore");
 // NOTE: PostgreSQL persistence removed — leads now route to Supabase via
 // scripts/supabase_lead_writer.py and the InfinityXOneSystems/LEADS repo.
 const {
@@ -223,6 +224,14 @@ async function runEngine(config = {}) {
   allLeads = dedupeLeads(allLeads);
   saveLeads(allLeads);
 
+  // Persist to PostgreSQL
+  // Persist to Supabase
+  try {
+    await upsertLeadsSupabase(allLeads);
+    console.log(`[engine] Persisted ${allLeads.length} leads to Supabase.`);
+  } catch (err) {
+    console.error(
+      `[engine] Supabase persistence failed (leads still saved to JSON): ${err.message}`,
   // Route leads to Supabase + InfinityXOneSystems/LEADS repo
   // (PostgreSQL persistence removed — all lead data goes to Supabase)
   try {
