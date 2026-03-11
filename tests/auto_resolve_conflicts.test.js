@@ -8,7 +8,7 @@
 
 const { test } = require("node:test");
 const assert = require("node:assert/strict");
-const { execSync } = require("child_process");
+const { execFileSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 const os = require("os");
@@ -27,11 +27,11 @@ function makeTempConflictFile(ext, content) {
 }
 
 function resolveFile(fp, strategy = null) {
-  const stratArg = strategy ? `--strategy ${strategy}` : "";
-  const result = execSync(
-    `${PYTHON} ${RESOLVER} --repo-root ${path.dirname(fp)} ${stratArg} 2>&1`,
-    { encoding: "utf8" }
-  );
+  const args = [RESOLVER, "--repo-root", path.dirname(fp)];
+  if (strategy) {
+    args.push("--strategy", strategy);
+  }
+  const result = execFileSync(PYTHON, args, { encoding: "utf8" });
   return { output: result, resolved: fs.readFileSync(fp, "utf8") };
 }
 
