@@ -2,7 +2,7 @@
 
 > Generated: 2026-03-11
 
-**Total leads:** 90
+**Total leads:** 87
 
 | Tier | Count |
 |------|-------|
@@ -27,8 +27,8 @@
 | Clean Air Epoxy |  |  | 55 |
 | Superior Epoxy Floors |  |  | 55 |
 | Quality Epoxy |  |  | 55 |
-| Epoxy Flooring Phoenix |  |  | 55 |
 | Two Brothers Epoxy Flooring |  |  | 55 |
+| Epoxy Flooring Phoenix |  |  | 55 |
 | Epoxy Strong Phoenix |  |  | 55 |
 | Marvelous Epoxy Flooring |  |  | 55 |
 | Brilliant Epoxy Flooring Inc |  |  | 55 |

@@ -1,21 +1,21 @@
 {
-  "generated_at": "2026-03-11T05:08:34.607Z",
+  "generated_at": "2026-03-11T05:15:57.383Z",
   "total_leads": 1000,
   "average_score": 42,
   "tiers": {
     "HOT": 36,
-    "WARM": 386,
-    "COLD": 578
+    "WARM": 392,
+    "COLD": 572
   },
   "industries": {
-    "Epoxy": 231,
-    "Concrete": 170,
-    "Automotive": 156,
+    "Epoxy": 237,
+    "Concrete": 169,
+    "Automotive": 157,
     "SurfacePrep": 6,
     "Epoxy & Concrete Coatings": 6,
-    "Unknown": 358,
+    "Unknown": 353,
     "Flooring": 1,
-    "Industrial": 72
+    "Industrial": 71
   },
   "top_leads": [
     {
