@@ -1,9 +1,16 @@
 name: Update Dependencies
 
+# GOVERNANCE: Tier 4 — Self-Healing (weekly schedule)
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+
 on:
   schedule:
     - cron: "0 9 * * 1"  # Every Monday at 9am UTC
   workflow_dispatch:
+
+concurrency:
+  group: update-deps
+  cancel-in-progress: false
 
 jobs:
   update-python-deps:

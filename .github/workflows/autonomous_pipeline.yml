@@ -1,9 +1,11 @@
 name: Autonomous Agent Pipeline
 
+# GOVERNANCE: Tier 4 — Self-Healing (dispatch-only)
+# Schedule removed to prevent duplicate runs with pipeline.yml and enterprise_lead_pipeline.yml.
+# Invoke via: workflow_dispatch or Tier 0 dispatcher.
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+
 on:
-  schedule:
-    # Run every 4 hours
-    - cron: "0 */4 * * *"
   workflow_dispatch:
     inputs:
       command:
@@ -21,6 +23,10 @@ on:
           - enrich
           - score
           - full_pipeline
+
+concurrency:
+  group: autonomous-pipeline
+  cancel-in-progress: false
 
 permissions:
   contents: write

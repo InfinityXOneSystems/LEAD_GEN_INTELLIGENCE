@@ -1,12 +1,11 @@
 name: Lead Generation Pipeline — Full Autonomous Run
 
-# Complete pipeline: Scrape → Validate → Enrich → Score → Store → Deploy
-# Runs every 4 hours and on manual dispatch.
+# GOVERNANCE: Tier 4 — Self-Healing (dispatch-only)
+# Schedule removed — was duplicating pipeline.yml and enterprise_lead_pipeline.yml every 2h.
+# Invoke via: workflow_dispatch or Tier 0 dispatcher.
+# See: .infinity/WORKFLOW_GOVERNANCE.md
 
 on:
-  schedule:
-    # Runs every 2 hours UTC
-    - cron: '0 */2 * * *'
   workflow_dispatch:
     inputs:
       batch_size:

@@ -1,5 +1,9 @@
 name: Headless Agent CI
 
+# GOVERNANCE: Tier 1 (path-gated) — only runs on relevant file changes.
+# Schedule removed — health checks run via Tier 0 nightly governance.
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+
 on:
   push:
     paths:
@@ -10,8 +14,10 @@ on:
       - 'agents/headless/**'
       - 'sandbox/**'
   workflow_dispatch:
-  schedule:
-    - cron: '0 */6 * * *'   # Health check every 6 hours
+
+concurrency:
+  group: headless-agent-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   headless-agent-test:

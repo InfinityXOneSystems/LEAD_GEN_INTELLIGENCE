@@ -28,6 +28,13 @@ on:
       - develop
       - "copilot/**"
   pull_request:
+  workflow_dispatch:
+
+# GOVERNANCE: Tier 1 — Quality Gates
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+concurrency:
+  group: system-validation-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
 

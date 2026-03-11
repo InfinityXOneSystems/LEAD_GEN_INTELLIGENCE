@@ -1,9 +1,9 @@
 name: Self-Edit — AI-Driven Repo Updates
 
-# This workflow enables the AI to make autonomous edits to the repository:
-# - Run via workflow_dispatch with a command
-# - Called from GPT Actions / Copilot Mobile via repository_dispatch
-# - Scheduled periodic self-improvement runs
+# GOVERNANCE: Tier 4 — Self-Healing (dispatch-only)
+# Schedule removed — self-improvement runs are now triggered via Tier 0 dispatcher
+# or explicit workflow_dispatch / repository_dispatch.
+# See: .infinity/WORKFLOW_GOVERNANCE.md
 
 on:
   workflow_dispatch:
@@ -18,9 +18,6 @@ on:
         default: 'all'
   repository_dispatch:
     types: [self-edit, ai-command, copilot-command]
-  schedule:
-    # Light self-improvement every 12 hours
-    - cron: '0 */12 * * *'
 
 permissions:
   contents: write
@@ -70,7 +67,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No doc changes."
           else
-            git commit -m "docs: auto-refresh living docs [self-edit $(date -u +%Y-%m-%dT%H:%MZ)]"
+            git commit -m "docs: auto-refresh living docs [skip ci] [self-edit $(date -u +%Y-%m-%dT%H:%MZ)]"
             git push
           fi
 
@@ -127,7 +124,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No data changes."
           else
-            git commit -m "data: auto-refresh lead snapshot [self-edit $(date -u +%Y-%m-%dT%H:%MZ)]"
+            git commit -m "data: auto-refresh lead snapshot [skip ci] [self-edit $(date -u +%Y-%m-%dT%H:%MZ)]"
             git push
           fi
 
@@ -172,7 +169,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No lint changes."
           else
-            git commit -m "style: auto-fix lint [self-edit $(date -u +%Y-%m-%dT%H:%MZ)]"
+            git commit -m "style: auto-fix lint [skip ci] [self-edit $(date -u +%Y-%m-%dT%H:%MZ)]"
             git push
           fi
 
