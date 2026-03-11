@@ -48,7 +48,7 @@ test("resolver: theirs strategy picks incoming changes", () => {
       "theirs line",
       ">>>>>>> feature-branch",
       "",
-    ].join("\n")
+    ].join("\n"),
   );
 
   const { resolved } = resolveFile(fp, "theirs");
@@ -72,12 +72,15 @@ test("resolver: ours strategy preserves current branch", () => {
       "incoming: value",
       ">>>>>>> main",
       "",
-    ].join("\n")
+    ].join("\n"),
   );
 
   const { resolved } = resolveFile(fp, "ours");
   assert.ok(resolved.includes("current: value"), "Should contain ours value");
-  assert.ok(!resolved.includes("incoming: value"), "Should NOT contain theirs value");
+  assert.ok(
+    !resolved.includes("incoming: value"),
+    "Should NOT contain theirs value",
+  );
   assert.ok(!resolved.includes("<<<<<<<"), "Should have no conflict markers");
 
   fs.rmSync(dir, { recursive: true, force: true });
@@ -98,13 +101,16 @@ test("resolver: union strategy keeps lines from both sides", () => {
       ">>>>>>> main",
       "*.log",
       "",
-    ].join("\n")
+    ].join("\n"),
   );
 
   const { resolved } = resolveFile(fp, "union");
   assert.ok(resolved.includes("dist/"), "Should contain ours pattern");
   assert.ok(resolved.includes("build/"), "Should contain theirs pattern");
-  assert.ok(resolved.includes("node_modules/"), "Should preserve surrounding lines");
+  assert.ok(
+    resolved.includes("node_modules/"),
+    "Should preserve surrounding lines",
+  );
   assert.ok(!resolved.includes("<<<<<<<"), "Should have no conflict markers");
 
   fs.rmSync(dir, { recursive: true, force: true });
@@ -123,7 +129,7 @@ test("resolver: json strategy deep-merges objects", () => {
       JSON.stringify({ version: "1.1.0", name: "xps", newField: "theirs" }),
       ">>>>>>> main",
       "",
-    ].join("\n")
+    ].join("\n"),
   );
 
   const { resolved } = resolveFile(fp, "json");
@@ -136,7 +142,11 @@ test("resolver: json strategy deep-merges objects", () => {
   // version: theirs wins on scalar conflict
   assert.equal(parsed.version, "1.1.0", "theirs version should win");
   assert.equal(parsed.name, "xps", "shared field should be preserved");
-  assert.equal(parsed.newField, "theirs", "theirs new field should be included");
+  assert.equal(
+    parsed.newField,
+    "theirs",
+    "theirs new field should be included",
+  );
   assert.ok(!resolved.includes("<<<<<<<"), "Should have no conflict markers");
 
   fs.rmSync(dir, { recursive: true, force: true });
@@ -163,7 +173,7 @@ test("resolver: handles multiple conflict blocks in one file", () => {
       ">>>>>>> main",
       "footer",
       "",
-    ].join("\n")
+    ].join("\n"),
   );
 
   const { resolved } = resolveFile(fp, "theirs");
@@ -195,7 +205,7 @@ test("resolver: dry-run does not modify files", () => {
   execFileSync(
     PYTHON,
     [RESOLVER, "--repo-root", path.dirname(fp), "--dry-run"],
-    { encoding: "utf8" }
+    { encoding: "utf8" },
   );
 
   const afterDryRun = fs.readFileSync(fp, "utf8");
@@ -212,11 +222,9 @@ test("resolver: clean file with no conflicts exits 0", () => {
 
   let exitCode = 0;
   try {
-    execFileSync(
-      PYTHON,
-      [RESOLVER, "--repo-root", path.dirname(fp)],
-      { encoding: "utf8" }
-    );
+    execFileSync(PYTHON, [RESOLVER, "--repo-root", path.dirname(fp)], {
+      encoding: "utf8",
+    });
   } catch (err) {
     exitCode = err.status;
   }
@@ -224,7 +232,7 @@ test("resolver: clean file with no conflicts exits 0", () => {
   assert.equal(
     fs.readFileSync(fp, "utf8"),
     'const x = "clean";\n',
-    "File should be unmodified"
+    "File should be unmodified",
   );
 
   fs.rmSync(dir, { recursive: true, force: true });

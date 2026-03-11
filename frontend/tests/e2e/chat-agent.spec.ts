@@ -39,16 +39,14 @@ test.describe("Chat Agent Page — XPS Intelligence", () => {
   test("command input is present", async ({ page }) => {
     // Production screenshot shows command input at bottom
     const input = page.locator(
-      "input[type='text'], textarea, [contenteditable='true']"
+      "input[type='text'], textarea, [contenteditable='true']",
     );
     await expect(input.first()).toBeVisible({ timeout: 10_000 });
   });
 
   test("agent list renders", async ({ page }) => {
     // Production screenshot shows agent list: Scraper, Enrichment, Scoring etc
-    const agentItems = page.locator(
-      "[class*='agent'], [class*='worker'], li"
-    );
+    const agentItems = page.locator("[class*='agent'], [class*='worker'], li");
     const count = await agentItems.count();
     expect(count).toBeGreaterThanOrEqual(1);
   });

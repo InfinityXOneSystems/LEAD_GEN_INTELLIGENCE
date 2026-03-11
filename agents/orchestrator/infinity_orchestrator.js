@@ -109,7 +109,7 @@ app.post(
     }
 
     const event = fromGateway ? req.body.event : req.headers["x-github-event"];
-    const payload = fromGateway ? (req.body.payload || {}) : req.body;
+    const payload = fromGateway ? req.body.payload || {} : req.body;
 
     console.log(`[Infinity Orchestrator] Received event: ${event}`);
 
@@ -150,7 +150,12 @@ app.post(
           console.log(`[Orchestrator] Push to main — running score + export`);
           await runPipelineStage("score");
           await runPipelineStage("export");
-          return res.json({ ok: true, event, branch, stages: ["score", "export"] });
+          return res.json({
+            ok: true,
+            event,
+            branch,
+            stages: ["score", "export"],
+          });
         }
       }
 
@@ -160,9 +165,7 @@ app.post(
         payload.workflow_run?.conclusion === "failure"
       ) {
         const name = payload.workflow_run.name;
-        console.warn(
-          `[Orchestrator] Workflow failed: ${name}`,
-        );
+        console.warn(`[Orchestrator] Workflow failed: ${name}`);
       }
 
       /* Supabase lead insert — trigger scoring pipeline */
@@ -174,7 +177,10 @@ app.post(
           try {
             await runPipelineStage("score");
           } catch (e) {
-            console.error("[Orchestrator] Score after Supabase insert failed:", e.message);
+            console.error(
+              "[Orchestrator] Score after Supabase insert failed:",
+              e.message,
+            );
           }
           return res.json({ ok: true, event, action: "score triggered" });
         }
