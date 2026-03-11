@@ -117,17 +117,20 @@ function requireAuth(req, res, next) {
   }
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ success: false, error: "Unauthorized: missing token" });
+    return res
+      .status(401)
+      .json({ success: false, error: "Unauthorized: missing token" });
   }
   const token = authHeader.slice(7);
   try {
     req.user = jwt.verify(token, secret);
     return next();
   } catch (err) {
-    return res.status(401).json({ success: false, error: "Unauthorized: invalid token" });
+    return res
+      .status(401)
+      .json({ success: false, error: "Unauthorized: invalid token" });
   }
 }
-
 
 // ── routes ───────────────────────────────────────────────────────────────────
 
