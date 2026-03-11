@@ -142,6 +142,12 @@ jobs:
           python scripts/auto_resolve_conflicts.py --repo-root . || RESOLVER_EXIT=$?
           echo "Resolver exit code: $RESOLVER_EXIT"
 
+          # Fail fast on unexpected resolver crash (not 0=success, not 1=conflicts-remain)
+          if [ "$RESOLVER_EXIT" -ne 0 ] && [ "$RESOLVER_EXIT" -ne 1 ]; then
+            echo "::error::Conflict resolver crashed with exit code $RESOLVER_EXIT"
+            exit "$RESOLVER_EXIT"
+          fi
+
           # Commit and push if anything changed
           git add -A
           if ! git diff --cached --quiet; then
