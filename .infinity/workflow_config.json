@@ -12,7 +12,12 @@
       "name": "Guardian (Central Dispatcher)",
       "description": "Single source of truth. Validates context, dispatches tier-based workflows.",
       "workflows": ["workflow_dispatcher.yml"],
-      "triggers": ["push:main", "pull_request:main", "workflow_dispatch", "schedule:nightly"],
+      "triggers": [
+        "push:main",
+        "pull_request:main",
+        "workflow_dispatch",
+        "schedule:nightly"
+      ],
       "max_duration_minutes": 10,
       "concurrency": "workflow-dispatcher-${{ github.ref }}"
     },
@@ -35,7 +40,12 @@
     "tier3": {
       "name": "Async Intelligence",
       "description": "Lead scraping, validation, and enrichment. Dispatch or scheduled (max once daily).",
-      "workflows": ["lead_scraper.yml", "lead_validation.yml", "social_scraper.yml", "national_discovery.yml"],
+      "workflows": [
+        "lead_scraper.yml",
+        "lead_validation.yml",
+        "social_scraper.yml",
+        "national_discovery.yml"
+      ],
       "triggers": ["workflow_dispatch", "schedule:daily_max"],
       "max_duration_minutes": 30,
       "expected_runs_per_month": 20
@@ -81,12 +91,21 @@
     {
       "rule": "no_auto_commit_without_skip_ci",
       "description": "All auto-commit steps must include [skip ci] in commit message",
-      "enforced_in": ["docs_reflection.yml", "lead_scraper.yml", "pipeline.yml", "autonomous_pipeline.yml"]
+      "enforced_in": [
+        "docs_reflection.yml",
+        "lead_scraper.yml",
+        "pipeline.yml",
+        "autonomous_pipeline.yml"
+      ]
     },
     {
       "rule": "no_push_trigger_on_self_healing",
       "description": "Self-healing workflows (tier4) must not trigger on push events",
-      "enforced_in": ["docs_reflection.yml", "repo_sync.yml", "autonomous_pipeline.yml"]
+      "enforced_in": [
+        "docs_reflection.yml",
+        "repo_sync.yml",
+        "autonomous_pipeline.yml"
+      ]
     },
     {
       "rule": "no_duplicate_schedulers",
