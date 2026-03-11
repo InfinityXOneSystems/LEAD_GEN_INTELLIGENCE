@@ -1,49 +1,16 @@
 {
   "summary": {
-    "total": 1870,
-    "valid": 1869,
-    "invalid": 1,
-    "unique": 1869,
+    "total": 1,
+    "valid": 1,
+    "invalid": 0,
+    "unique": 1,
     "duplicates": 0,
-    "generated_at": "2026-03-11T10:57:32.073Z"
+    "generated_at": "2026-03-11T12:21:35.293Z"
   },
-  "invalid_count": 1,
+  "invalid_count": 0,
   "duplicate_count": 0,
   "samples": {
-    "invalid": [
-      {
-        "company_name": "South Florida Epoxy Pros",
-        "phone": "(954) 781-2200",
-        "website": "https://www.sfepoxypros.com",
-        "email": "info@sfepoxypros.com",
-        "address": "1450 NE 48th St, Pompano Beach, FL 33064",
-        "city": "Pompano Beach",
-        "state": "FL",
-        "rating": 4.8,
-        "reviews": 127,
-        "category": "Epoxy Floor Coating",
-        "source": "google_maps",
-        "scraped_at": "2026-03-10T18:38:27.906906",
-        "lead_score": 100,
-        "_merged_from": [
-          "unknown",
-          "unknown",
-          "unknown",
-          "unknown",
-          "unknown",
-          "unknown",
-          "unknown"
-        ],
-        "_validation": {
-          "valid": false,
-          "errors": [
-            "Missing required field: company"
-          ],
-          "warnings": [],
-          "score": 80
-        }
-      }
-    ],
+    "invalid": [],
     "duplicates": []
   }
 }
