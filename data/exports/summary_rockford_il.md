@@ -7,8 +7,8 @@
 | Tier | Count |
 |------|-------|
 | HOT  | 0  |
-| WARM | 0 |
-| COLD | 0 |
+| WARM | 37 |
+| COLD | 233 |
 
 ## Top Leads
 
