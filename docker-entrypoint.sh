@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # docker-entrypoint.sh — Backend startup script for Railway / Docker
 # Runs Alembic migrations then starts the uvicorn server.
 # Called by CMD in Dockerfile.backend and by startCommand in railway.json.
