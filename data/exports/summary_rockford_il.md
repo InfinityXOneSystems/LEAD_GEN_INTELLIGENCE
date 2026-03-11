@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-11
 
-**Total leads:** 270
+**Total leads:** 310
 
 | Tier | Count |
 |------|-------|
 | HOT  | 0  |
-| WARM | 37 |
-| COLD | 233 |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -22,15 +22,15 @@
 | Deluxe Epoxy Flooring |  |  | 55 |
 | James Concrete Polishing |  |  | 55 |
 | Omega Grind LLC - Concrete Polishing and Epoxy Flooring |  |  | 55 |
-| Lifestyle-Garage Concrete Floor Coatings |  |  | 50 |
-| Superior Epoxy |  |  | 50 |
-| Bove's Auto Repair |  |  | 50 |
-| Andys Automotive Repair |  |  | 50 |
-| Gottman's Automotive Service |  |  | 50 |
-| "HyTech Automotive, Inc." |  |  | 50 |
-| Premier Auto Repairs |  |  | 50 |
-| Grote Automotive - Rockford |  |  | 50 |
-| Auto Body Specialists Inc |  |  | 50 |
-| Clendening Auto Body |  |  | 50 |
-| Leo's Auto Body |  |  | 50 |
-| P&L Auto Body Inc. |  |  | 50 |
+| Elegant Epoxy Flooring |  |  | 55 |
+| Miller’s Epoxy Solutions |  |  | 55 |
+| Route 84 Epoxy Floors |  |  | 55 |
+| Central Illinois Epoxy LLC |  |  | 55 |
+| Garage Floor Coating of Central Illinois |  |  | 55 |
+| Precision Epoxy |  |  | 55 |
+| PERFECT EPOXY FLOOR COATING LLC |  |  | 55 |
+| Chi Resin Custom Coatings |  |  | 55 |
+| ECM Epoxy Flooring |  |  | 55 |
+| Majestic Coatings - Epoxy Floors |  |  | 55 |
+| Flawless Epoxy Inc |  |  | 55 |
+| Diamond Finish Epoxy |  |  | 55 |
