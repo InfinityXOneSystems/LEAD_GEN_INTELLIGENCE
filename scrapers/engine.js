@@ -230,15 +230,22 @@ async function runEngine(config = {}) {
     if (allLeads.length > 0 && fs.existsSync(leadsFile)) {
       // Use 'python3' on Linux/Mac, 'python' on Windows
       const pythonCmd = process.platform === "win32" ? "python" : "python3";
-      execFileSync(pythonCmd, [
-        path.join(__dirname, "../scripts/supabase_lead_writer.py"),
-        "--input", leadsFile,
-      ], {
-        env: { ...process.env },
-        timeout: 60_000,
-        stdio: "inherit",
-      });
-      console.log(`[engine] Leads routed to Supabase + LEADS repo (${allLeads.length} leads).`);
+      execFileSync(
+        pythonCmd,
+        [
+          path.join(__dirname, "../scripts/supabase_lead_writer.py"),
+          "--input",
+          leadsFile,
+        ],
+        {
+          env: { ...process.env },
+          timeout: 60_000,
+          stdio: "inherit",
+        },
+      );
+      console.log(
+        `[engine] Leads routed to Supabase + LEADS repo (${allLeads.length} leads).`,
+      );
     }
   } catch (err) {
     console.error(

@@ -51,7 +51,7 @@ test.describe("Post-Deploy Smoke Test", () => {
 
     // Log but don't hard-fail on CDN/API errors — only local asset failures matter
     const localFails = failedRequests.filter(
-      (r) => !r.includes("railway.app") && !r.includes("api/")
+      (r) => !r.includes("railway.app") && !r.includes("api/"),
     );
     expect(localFails).toHaveLength(0);
   });

@@ -30,7 +30,7 @@ test.describe("Home Page — XPS Intelligence Platform", () => {
   test("renders navigation module cards", async ({ page }) => {
     // Production dashboard shows 12 module cards including Chat Agent, Leads, CRM etc
     const cards = page.locator(
-      "[class*='card'], [class*='module'], [role='link'], a[href]"
+      "[class*='card'], [class*='module'], [role='link'], a[href]",
     );
     await expect(cards.first()).toBeVisible({ timeout: VISIBLE_TIMEOUT });
     const count = await cards.count();
@@ -55,7 +55,7 @@ test.describe("Home Page — XPS Intelligence Platform", () => {
     await page.waitForLoadState("networkidle");
     // Filter out known benign errors (e.g. favicon 404)
     const criticalErrors = errors.filter(
-      (e) => !e.includes("favicon") && !e.includes("404")
+      (e) => !e.includes("favicon") && !e.includes("404"),
     );
     expect(criticalErrors).toHaveLength(0);
   });

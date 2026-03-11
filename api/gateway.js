@@ -928,7 +928,9 @@ const crypto = require("crypto");
 /** Capture raw body for HMAC verification on webhook routes */
 function rawBodyMiddleware(req, res, next) {
   const chunks = [];
-  req.on("data", (chunk) => { chunks.push(chunk); });
+  req.on("data", (chunk) => {
+    chunks.push(chunk);
+  });
   req.on("end", () => {
     req.rawBody = Buffer.concat(chunks);
     // Also parse as JSON so req.body is available on the route
@@ -1044,11 +1046,16 @@ app.post("/webhooks/github", webhookLimiter, rawBodyMiddleware, (req, res) => {
   if (event === "push") {
     const ref = payload.ref || "";
     const branch = ref.replace("refs/heads/", "");
-    console.log(`[Webhook] GitHub push to ${branch} — pipeline may be triggered`);
+    console.log(
+      `[Webhook] GitHub push to ${branch} — pipeline may be triggered`,
+    );
   }
 
   // workflow_run failure — log for monitoring
-  if (event === "workflow_run" && payload.workflow_run?.conclusion === "failure") {
+  if (
+    event === "workflow_run" &&
+    payload.workflow_run?.conclusion === "failure"
+  ) {
     const name = payload.workflow_run.name;
     console.warn(`[Webhook] GitHub workflow failed: ${name}`);
   }
@@ -1071,43 +1078,54 @@ app.post("/webhooks/github", webhookLimiter, rawBodyMiddleware, (req, res) => {
 //   Events: INSERT, UPDATE, DELETE
 //   URL:    <RAILWAY_BACKEND_URL>/webhooks/supabase
 //   HTTP Headers: Authorization: Bearer <SUPABASE_WEBHOOK_SECRET>
-app.post("/webhooks/supabase", webhookLimiter, rawBodyMiddleware, (req, res) => {
-  if (!verifySupabaseSecret(req)) {
-    console.warn("[Webhook] Supabase: invalid secret");
-    return res.status(401).json({ error: "Invalid Supabase webhook secret" });
-  }
-
-  const payload = req.body;
-  const table = payload.table || payload.schema?.name || "unknown";
-  const eventType = payload.type || payload.event || "unknown";
-  const record = payload.record || payload.new || null;
-  const oldRecord = payload.old_record || payload.old || null;
-
-  console.log(`[Webhook] Supabase: ${eventType} on ${table}`);
-
-  // Handle lead changes
-  if (table === "leads" || table === "public.leads") {
-    if (eventType === "INSERT" && record) {
-      console.log(`[Webhook] New lead: ${record.company_name || "unknown"} — ${record.city || ""}, ${record.state || ""}`);
+app.post(
+  "/webhooks/supabase",
+  webhookLimiter,
+  rawBodyMiddleware,
+  (req, res) => {
+    if (!verifySupabaseSecret(req)) {
+      console.warn("[Webhook] Supabase: invalid secret");
+      return res.status(401).json({ error: "Invalid Supabase webhook secret" });
     }
-    if (eventType === "UPDATE" && record) {
-      console.log(`[Webhook] Updated lead: ${record.company_name || "unknown"} score=${record.lead_score || 0}`);
-    }
-    if (eventType === "DELETE" && oldRecord) {
-      console.log(`[Webhook] Deleted lead: ${oldRecord.company_name || "unknown"}`);
-    }
-  }
 
-  // Forward to orchestrator (non-blocking)
-  forwardToOrchestrator(`supabase:${eventType}`, payload).catch(() => {});
+    const payload = req.body;
+    const table = payload.table || payload.schema?.name || "unknown";
+    const eventType = payload.type || payload.event || "unknown";
+    const record = payload.record || payload.new || null;
+    const oldRecord = payload.old_record || payload.old || null;
 
-  return res.json({
-    ok: true,
-    table,
-    event: eventType,
-    received: new Date().toISOString(),
-  });
-});
+    console.log(`[Webhook] Supabase: ${eventType} on ${table}`);
+
+    // Handle lead changes
+    if (table === "leads" || table === "public.leads") {
+      if (eventType === "INSERT" && record) {
+        console.log(
+          `[Webhook] New lead: ${record.company_name || "unknown"} — ${record.city || ""}, ${record.state || ""}`,
+        );
+      }
+      if (eventType === "UPDATE" && record) {
+        console.log(
+          `[Webhook] Updated lead: ${record.company_name || "unknown"} score=${record.lead_score || 0}`,
+        );
+      }
+      if (eventType === "DELETE" && oldRecord) {
+        console.log(
+          `[Webhook] Deleted lead: ${oldRecord.company_name || "unknown"}`,
+        );
+      }
+    }
+
+    // Forward to orchestrator (non-blocking)
+    forwardToOrchestrator(`supabase:${eventType}`, payload).catch(() => {});
+
+    return res.json({
+      ok: true,
+      table,
+      event: eventType,
+      received: new Date().toISOString(),
+    });
+  },
+);
 
 // ── POST /webhooks/vercel ─────────────────────────────────────────────────────
 // Vercel Deploy Webhooks — fires on deployment.succeeded, deployment.failed etc.
@@ -1204,7 +1222,8 @@ app.get("/webhooks/info", (req, res) => {
         // BEFORE configuring this webhook.
         prerequisite: {
           title: "Create the leads table in Supabase first",
-          reason: "The webhook schema dropdown only shows `public` after at least one user table exists in it. A fresh project only shows auth/realtime/storage/vault.",
+          reason:
+            "The webhook schema dropdown only shows `public` after at least one user table exists in it. A fresh project only shows auth/realtime/storage/vault.",
           steps: [
             "1. Open https://nxfbfbipjsfzoefpgrof.supabase.co/project/nxfbfbipjsfzoefpgrof/sql/new",
             "2. Click 'New query'",
@@ -1224,14 +1243,39 @@ app.get("/webhooks/info", (req, res) => {
           // You MUST choose "public" — the schema where the leads table lives.
           // Do NOT select auth / realtime / storage / vault.
           available_schemas: [
-            { schema: "auth",     system: true,  select: false, note: "Supabase built-in auth tables — do NOT select" },
-            { schema: "realtime", system: true,  select: false, note: "Supabase internal realtime tables — do NOT select" },
-            { schema: "storage",  system: true,  select: false, note: "Supabase file storage tables — do NOT select" },
-            { schema: "vault",    system: true,  select: false, note: "Supabase encrypted secrets store — do NOT select" },
-            { schema: "public",   system: false, select: true,  note: "Your application tables — SELECT THIS" },
+            {
+              schema: "auth",
+              system: true,
+              select: false,
+              note: "Supabase built-in auth tables — do NOT select",
+            },
+            {
+              schema: "realtime",
+              system: true,
+              select: false,
+              note: "Supabase internal realtime tables — do NOT select",
+            },
+            {
+              schema: "storage",
+              system: true,
+              select: false,
+              note: "Supabase file storage tables — do NOT select",
+            },
+            {
+              schema: "vault",
+              system: true,
+              select: false,
+              note: "Supabase encrypted secrets store — do NOT select",
+            },
+            {
+              schema: "public",
+              system: false,
+              select: true,
+              note: "Your application tables — SELECT THIS",
+            },
           ],
-          schema: "public",            // ← Select this in the Schema dropdown
-          table: "leads",              // ← Only 1 table per trigger; select "leads"
+          schema: "public", // ← Select this in the Schema dropdown
+          table: "leads", // ← Only 1 table per trigger; select "leads"
           events: ["INSERT", "UPDATE", "DELETE"],
           type: "HTTP Request",
           method: "POST",
@@ -1241,15 +1285,38 @@ app.get("/webhooks/info", (req, res) => {
             // Supabase pre-fills Content-Type — verify it is set to application/json
             { name: "Content-Type", value: "application/json" },
             // Custom auth header — set value to your SUPABASE_WEBHOOK_SECRET
-            { name: "Authorization", value: "Bearer <SUPABASE_WEBHOOK_SECRET>" },
+            {
+              name: "Authorization",
+              value: "Bearer <SUPABASE_WEBHOOK_SECRET>",
+            },
           ],
           http_parameters: [], // Leave empty — no query-string params needed
         },
         table_columns: [
-          "id", "company_name", "contact_name", "phone", "email", "website",
-          "address", "city", "state", "country", "industry", "category",
-          "keyword", "linkedin", "rating", "reviews", "lead_score", "tier",
-          "status", "source", "metadata", "date_scraped", "last_contacted", "updated_at",
+          "id",
+          "company_name",
+          "contact_name",
+          "phone",
+          "email",
+          "website",
+          "address",
+          "city",
+          "state",
+          "country",
+          "industry",
+          "category",
+          "keyword",
+          "linkedin",
+          "rating",
+          "reviews",
+          "lead_score",
+          "tier",
+          "status",
+          "source",
+          "metadata",
+          "date_scraped",
+          "last_contacted",
+          "updated_at",
         ],
         instructions: [
           "PREREQUISITE: Run db/supabase_migration.sql in Supabase SQL Editor BEFORE these steps",
@@ -1272,7 +1339,11 @@ app.get("/webhooks/info", (req, res) => {
         url: `${base}/webhooks/vercel`,
         secret_env: "VERCEL_WEBHOOK_SECRET",
         frontend_project: "xps-intelligence",
-        events: ["deployment.succeeded", "deployment.error", "deployment.cancelled"],
+        events: [
+          "deployment.succeeded",
+          "deployment.error",
+          "deployment.cancelled",
+        ],
         instructions: [
           "1. Go to Vercel Dashboard → Team Settings → Webhooks",
           "2. Click 'Add webhook'",
@@ -1284,10 +1355,13 @@ app.get("/webhooks/info", (req, res) => {
       },
     },
     required_env_vars: {
-      GITHUB_WEBHOOK_SECRET: "Shared secret for GitHub HMAC-SHA256 webhook signature",
-      SUPABASE_WEBHOOK_SECRET: "Bearer token sent by Supabase in Authorization header",
+      GITHUB_WEBHOOK_SECRET:
+        "Shared secret for GitHub HMAC-SHA256 webhook signature",
+      SUPABASE_WEBHOOK_SECRET:
+        "Bearer token sent by Supabase in Authorization header",
       VERCEL_WEBHOOK_SECRET: "Secret for Vercel X-Vercel-Signature header",
-      ORCHESTRATOR_URL: "URL of Infinity Orchestrator service (optional, e.g. http://localhost:3300)",
+      ORCHESTRATOR_URL:
+        "URL of Infinity Orchestrator service (optional, e.g. http://localhost:3300)",
     },
     status: {
       github_secret_configured: !!process.env.GITHUB_WEBHOOK_SECRET,

@@ -23,7 +23,11 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI
-    ? [["github"], ["list"], ["html", { outputFolder: "playwright-report", open: "never" }]]
+    ? [
+        ["github"],
+        ["list"],
+        ["html", { outputFolder: "playwright-report", open: "never" }],
+      ]
     : [["list"], ["html", { open: "on-failure" }]],
 
   use: {
