@@ -82,7 +82,11 @@ async function request<T>(
   }
 
   if (!res.ok) {
-    throw new ApiError(res.status, `API error ${res.status}: ${res.statusText}`, data);
+    throw new ApiError(
+      res.status,
+      `API error ${res.status}: ${res.statusText}`,
+      data,
+    );
   }
 
   return { data, status: res.status, ok: res.ok };
