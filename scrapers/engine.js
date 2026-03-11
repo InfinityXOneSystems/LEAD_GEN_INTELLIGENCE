@@ -8,8 +8,7 @@ const { scrapeGoogleMaps } = require("./google_maps_scraper");
 const { scrapeBingMaps } = require("./bing_maps_scraper");
 const { scrapeYelp } = require("./yelp_scraper");
 const { scrapeAngi, scrapeHomeAdvisor } = require("./directory_scraper");
-const { upsertLeads } = require("../db/leadStore");
-const { initSchema } = require("../db/db");
+const { upsertLeads: upsertLeadsSupabase } = require("../db/supabaseLeadStore");
 const {
   DeduplicationEngine,
 } = require("../agents/dedupe/deduplication_engine");
@@ -223,24 +222,13 @@ async function runEngine(config = {}) {
   saveLeads(allLeads);
 
   // Persist to PostgreSQL
+  // Persist to Supabase
   try {
-    await initSchema();
-    const dbLeads = allLeads.map((lead) => ({
-      company_name: lead.company || "",
-      phone: lead.phone || null,
-      website: lead.website || null,
-      city: lead.city || "",
-      state: lead.state || "",
-      industry: lead.category || null,
-      rating: lead.rating || null,
-      reviews: lead.reviews || null,
-      source: lead.source || null,
-    }));
-    await upsertLeads(dbLeads);
-    console.log(`[engine] Persisted ${dbLeads.length} leads to PostgreSQL.`);
+    await upsertLeadsSupabase(allLeads);
+    console.log(`[engine] Persisted ${allLeads.length} leads to Supabase.`);
   } catch (err) {
     console.error(
-      `[engine] Database persistence failed (leads still saved to JSON): ${err.message}`,
+      `[engine] Supabase persistence failed (leads still saved to JSON): ${err.message}`,
     );
   }
 

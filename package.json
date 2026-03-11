@@ -11,6 +11,7 @@
     "export": "node tools/export_snapshot.js",
     "pipeline": "npm run score && npm run export",
     "dedup": "node scripts/run_deduplication.js",
+    "migrate:supabase": "node scripts/migrate_leads_to_supabase.js",
     "generate-city-leads": "node scripts/generate_city_leads.js",
     "city-pipeline": "node scripts/generate_city_leads.js && npm run score && node tools/city_export.js",
     "gpt-actions": "node agents/gpt_actions/server.js",
@@ -50,6 +51,7 @@
   "homepage": "https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM#readme",
   "dependencies": {
     "@playwright/test": "^1.58.2",
+    "@supabase/supabase-js": "^2.99.1",
     "axios": "^1.13.6",
     "better-sqlite3": "^12.6.2",
     "cheerio": "^1.2.0",

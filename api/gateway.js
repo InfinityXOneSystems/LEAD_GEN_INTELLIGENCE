@@ -9,6 +9,15 @@ const path = require("path");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 
+const {
+  upsertLead,
+  getAllLeads,
+  getTopLeads,
+  getLeadById,
+  deleteLead,
+} = require("../db/supabaseLeadStore");
+const { supabase, isConfigured: supabaseConfigured } = require("../db/supabaseClient");
+
 const ROOT = path.join(__dirname, "..");
 const LEADS_DIR = path.join(ROOT, "leads");
 const DATA_DIR = path.join(ROOT, "data");
@@ -82,7 +91,8 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
-function loadLeads() {
+/** Load leads from local JSON files (offline fallback). */
+function loadLeadsFromFile() {
   const scored = path.join(LEADS_DIR, "scored_leads.json");
   const raw = path.join(LEADS_DIR, "leads.json");
   if (fs.existsSync(scored)) return readJson(scored);
@@ -90,7 +100,8 @@ function loadLeads() {
   return [];
 }
 
-function saveLeads(leads) {
+/** Save leads to local JSON file (used as dual-write backup). */
+function saveLeadsToFile(leads) {
   fs.mkdirSync(LEADS_DIR, { recursive: true });
   const raw = path.join(LEADS_DIR, "leads.json");
   fs.writeFileSync(raw, JSON.stringify(leads, null, 2));
@@ -143,9 +154,14 @@ app.use("/api/settings", requireAuth);
 app.use("/api/outreach", requireAuth);
 
 // GET /api/leads/metrics  (must be before /api/leads/:id)
-app.get("/api/leads/metrics", (req, res) => {
+app.get("/api/leads/metrics", async (req, res) => {
   try {
-    const leads = loadLeads();
+    const leads = supabaseConfigured
+      ? await getAllLeads(1000).catch((err) => {
+          console.error("[gateway] Supabase metrics error:", err.message);
+          return loadLeadsFromFile();
+        })
+      : loadLeadsFromFile();
     const list = Array.isArray(leads) ? leads : [];
     const total = list.length;
     const aPlusOpportunities = list.filter(
@@ -180,26 +196,49 @@ app.get("/api/leads/metrics", (req, res) => {
 });
 
 // GET /api/leads
-app.get("/api/leads", (req, res) => {
+app.get("/api/leads", async (req, res) => {
   try {
-    const leads = loadLeads();
     const { city, state, minScore, limit = 100, offset = 0 } = req.query;
-    let result = Array.isArray(leads) ? leads : [];
-    if (city)
-      result = result.filter(
-        (l) => l.city && l.city.toLowerCase().includes(city.toLowerCase()),
-      );
-    if (state)
-      result = result.filter(
-        (l) => l.state && l.state.toLowerCase() === state.toLowerCase(),
-      );
-    if (minScore)
-      result = result.filter((l) => (l.score || 0) >= Number(minScore));
-    const total = result.length;
-    result = result.slice(Number(offset), Number(offset) + Number(limit));
+
+    if (!supabaseConfigured) {
+      // Offline fallback: use local JSON
+      const leads = loadLeadsFromFile();
+      let result = Array.isArray(leads) ? leads : [];
+      if (city)
+        result = result.filter(
+          (l) => l.city && l.city.toLowerCase().includes(city.toLowerCase()),
+        );
+      if (state)
+        result = result.filter(
+          (l) => l.state && l.state.toLowerCase() === state.toLowerCase(),
+        );
+      if (minScore)
+        result = result.filter((l) => (l.lead_score || l.score || 0) >= Number(minScore));
+      const total = result.length;
+      result = result.slice(Number(offset), Number(offset) + Number(limit));
+      return ok(res, { leads: result, total, offset: Number(offset), limit: Number(limit) });
+    }
+
+    let query = supabase
+      .from("leads")
+      .select("*", { count: "exact" })
+      .order("lead_score", { ascending: false })
+      .range(Number(offset), Number(offset) + Number(limit) - 1);
+
+    if (city) query = query.ilike("city", `%${city}%`);
+    if (state) query = query.ilike("state", state);
+    if (minScore) query = query.gte("lead_score", Number(minScore));
+
+    const { data, count, error } = await query;
+
+    if (error) {
+      console.error("[gateway] Supabase /api/leads query error:", error.message);
+      return fail(res, error.message);
+    }
+
     return ok(res, {
-      leads: result,
-      total,
+      leads: data || [],
+      total: count || 0,
       offset: Number(offset),
       limit: Number(limit),
     });
@@ -209,72 +248,58 @@ app.get("/api/leads", (req, res) => {
 });
 
 // GET /api/leads/:id
-app.get("/api/leads/:id", (req, res) => {
+app.get("/api/leads/:id", async (req, res) => {
   try {
-    const leads = loadLeads();
+    const lead = await getLeadById(req.params.id).catch(() => null);
+    if (lead) return ok(res, lead);
+
+    // Fallback: search local JSON by id or place_id
+    const leads = loadLeadsFromFile();
     const list = Array.isArray(leads) ? leads : [];
-    const lead = list.find(
+    const found = list.find(
       (l) => String(l.id) === req.params.id || l.place_id === req.params.id,
     );
-    if (!lead) return fail(res, "Lead not found", 404);
-    return ok(res, lead);
+    if (!found) return fail(res, "Lead not found", 404);
+    return ok(res, found);
   } catch (err) {
     return fail(res, err.message);
   }
 });
 
 // POST /api/leads
-app.post("/api/leads", (req, res) => {
+app.post("/api/leads", async (req, res) => {
   try {
-    const leads = loadLeads();
-    const list = Array.isArray(leads) ? leads : [];
-    const newLead = {
-      id: generateId(),
+    const row = await upsertLead({
       ...req.body,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-    list.push(newLead);
-    saveLeads(list);
-    return res.status(201).json(newLead);
+      date_scraped: new Date().toISOString(),
+    });
+    return res.status(201).json(row);
   } catch (err) {
     return fail(res, err.message);
   }
 });
 
 // PUT /api/leads/:id
-app.put("/api/leads/:id", (req, res) => {
+app.put("/api/leads/:id", async (req, res) => {
   try {
-    const leads = loadLeads();
-    const list = Array.isArray(leads) ? leads : [];
-    const idx = list.findIndex(
-      (l) => String(l.id) === req.params.id || l.place_id === req.params.id,
-    );
-    if (idx === -1) return fail(res, "Lead not found", 404);
-    list[idx] = {
-      ...list[idx],
-      ...req.body,
-      id: list[idx].id,
-      updatedAt: new Date().toISOString(),
-    };
-    saveLeads(list);
-    return res.json(list[idx]);
+    const { data, error } = await supabase
+      .from("leads")
+      .update({ ...req.body, updated_at: new Date().toISOString() })
+      .eq("id", req.params.id)
+      .select()
+      .single();
+
+    if (error || !data) return fail(res, error ? error.message : "Lead not found", 404);
+    return res.json(data);
   } catch (err) {
     return fail(res, err.message);
   }
 });
 
 // DELETE /api/leads/:id
-app.delete("/api/leads/:id", (req, res) => {
+app.delete("/api/leads/:id", async (req, res) => {
   try {
-    const leads = loadLeads();
-    const list = Array.isArray(leads) ? leads : [];
-    const filtered = list.filter(
-      (l) => String(l.id) !== req.params.id && l.place_id !== req.params.id,
-    );
-    if (filtered.length === list.length)
-      return fail(res, "Lead not found", 404);
-    saveLeads(filtered);
+    await deleteLead(req.params.id);
     return res.status(204).send();
   } catch (err) {
     return fail(res, err.message);
@@ -282,69 +307,66 @@ app.delete("/api/leads/:id", (req, res) => {
 });
 
 // POST /api/leads/:id/assign
-app.post("/api/leads/:id/assign", (req, res) => {
+app.post("/api/leads/:id/assign", async (req, res) => {
   try {
-    const leads = loadLeads();
-    const list = Array.isArray(leads) ? leads : [];
-    const idx = list.findIndex(
-      (l) => String(l.id) === req.params.id || l.place_id === req.params.id,
-    );
-    if (idx === -1) return fail(res, "Lead not found", 404);
     const { repId, repName, repInitials } = req.body;
-    list[idx] = {
-      ...list[idx],
+    // Merge assignment fields into existing metadata to avoid overwriting other fields
+    const existing = await getLeadById(req.params.id);
+    if (!existing) return fail(res, "Lead not found", 404);
+    const updatedMetadata = {
+      ...(existing.metadata || {}),
       assignedRep: repName || repId,
       assignedInitials: repInitials || "",
-      updatedAt: new Date().toISOString(),
     };
-    saveLeads(list);
-    return res.json(list[idx]);
+    const { data, error } = await supabase
+      .from("leads")
+      .update({ metadata: updatedMetadata, updated_at: new Date().toISOString() })
+      .eq("id", req.params.id)
+      .select()
+      .single();
+
+    if (error || !data) return fail(res, error ? error.message : "Lead not found", 404);
+    return res.json(data);
   } catch (err) {
     return fail(res, err.message);
   }
 });
 
 // PUT /api/leads/:id/status
-app.put("/api/leads/:id/status", (req, res) => {
+app.put("/api/leads/:id/status", async (req, res) => {
   try {
-    const leads = loadLeads();
-    const list = Array.isArray(leads) ? leads : [];
-    const idx = list.findIndex(
-      (l) => String(l.id) === req.params.id || l.place_id === req.params.id,
-    );
-    if (idx === -1) return fail(res, "Lead not found", 404);
-    list[idx] = {
-      ...list[idx],
-      status: req.body.status,
-      updatedAt: new Date().toISOString(),
-    };
-    saveLeads(list);
-    return res.json(list[idx]);
+    const { data, error } = await supabase
+      .from("leads")
+      .update({ status: req.body.status, updated_at: new Date().toISOString() })
+      .eq("id", req.params.id)
+      .select()
+      .single();
+
+    if (error || !data) return fail(res, error ? error.message : "Lead not found", 404);
+    return res.json(data);
   } catch (err) {
     return fail(res, err.message);
   }
 });
 
 // POST /api/leads/:id/notes
-app.post("/api/leads/:id/notes", (req, res) => {
+app.post("/api/leads/:id/notes", async (req, res) => {
   try {
-    const leads = loadLeads();
-    const list = Array.isArray(leads) ? leads : [];
-    const idx = list.findIndex(
-      (l) => String(l.id) === req.params.id || l.place_id === req.params.id,
-    );
-    if (idx === -1) return fail(res, "Lead not found", 404);
-    const existing = list[idx].notes || "";
+    const existing = await getLeadById(req.params.id);
+    if (!existing) return fail(res, "Lead not found", 404);
     const ts = new Date().toISOString().slice(0, 10);
-    list[idx] = {
-      ...list[idx],
-      notes: existing
-        ? `${existing}\n[${ts}] ${req.body.note}`
-        : `[${ts}] ${req.body.note}`,
-      updatedAt: new Date().toISOString(),
-    };
-    saveLeads(list);
-    return res.json(list[idx]);
+    const notes = existing.notes
+      ? `${existing.notes}\n[${ts}] ${req.body.note}`
+      : `[${ts}] ${req.body.note}`;
+    const { data, error } = await supabase
+      .from("leads")
+      .update({ notes, updated_at: new Date().toISOString() })
+      .eq("id", req.params.id)
+      .select()
+      .single();
+
+    if (error || !data) return fail(res, error ? error.message : "Update failed", 500);
+    return res.json(data);
   } catch (err) {
     return fail(res, err.message);
   }
