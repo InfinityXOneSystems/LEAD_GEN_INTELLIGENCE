@@ -20,8 +20,13 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:11.616807+00:00",
-    "enriched_at": "2026-03-10T19:07:11.617330+00:00",
+    "scraped_at": "2026-03-11T20:38:12.677466+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678454+00:00",
+    "validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
     "email_source": "domain_inference",
     "social_profiles": {
       "facebook": "https://facebook.com/southfloridaepoxypros",
@@ -46,20 +51,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:11.617463+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:11.617782+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679054+00:00"
   },
   {
     "company_name": "Broward Epoxy & Concrete",
@@ -82,8 +74,13 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:11.616807+00:00",
-    "enriched_at": "2026-03-10T19:07:11.617351+00:00",
+    "scraped_at": "2026-03-11T20:38:12.677466+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678474+00:00",
+    "validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
     "email_source": "domain_inference",
     "social_profiles": {
       "facebook": "https://facebook.com/browardepoxyconcrete",
@@ -108,20 +105,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:11.617478+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:11.617792+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679062+00:00"
   },
   {
     "company_name": "Prestige Garage Floors FL",
@@ -144,8 +128,13 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:11.616807+00:00",
-    "enriched_at": "2026-03-10T19:07:11.617365+00:00",
+    "scraped_at": "2026-03-11T20:38:12.677466+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678488+00:00",
+    "validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
     "email_source": "domain_inference",
     "social_profiles": {
       "facebook": "https://facebook.com/prestigegaragefloorsfl",
@@ -170,20 +159,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:11.617484+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:11.617796+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679067+00:00"
   },
   {
     "company_name": "XPS Concrete Coatings",
@@ -206,8 +182,13 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:11.616807+00:00",
-    "enriched_at": "2026-03-10T19:07:11.617375+00:00",
+    "scraped_at": "2026-03-11T20:38:12.677466+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678499+00:00",
+    "validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
     "email_source": "domain_inference",
     "social_profiles": {
       "facebook": "https://facebook.com/xpsconcretecoatings",
@@ -232,20 +213,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:11.617488+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:11.617799+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679071+00:00"
   },
   {
     "company_name": "Sunshine State Epoxy",
@@ -268,8 +236,13 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:11.616807+00:00",
-    "enriched_at": "2026-03-10T19:07:11.617389+00:00",
+    "scraped_at": "2026-03-11T20:38:12.677466+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678510+00:00",
+    "validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
     "email_source": "domain_inference",
     "social_profiles": {
       "facebook": "https://facebook.com/sunshinestateepoxy",
@@ -294,20 +267,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:11.617493+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:11.617802+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679075+00:00"
   },
   {
     "company_name": "Pompano Beach Epoxy Experts",
@@ -330,8 +290,13 @@
     "lead_score": 90,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:11.616807+00:00",
-    "enriched_at": "2026-03-10T19:07:11.617400+00:00",
+    "scraped_at": "2026-03-11T20:38:12.677466+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678521+00:00",
+    "validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
     "email_source": "domain_inference",
     "social_profiles": {
       "facebook": "https://facebook.com/pompanobeachepoxyexperts",
@@ -354,20 +319,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:11.617498+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:11.617806+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679080+00:00"
   },
   {
     "company_name": "Elite Floor Systems",
@@ -390,8 +342,13 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:11.616807+00:00",
-    "enriched_at": "2026-03-10T19:07:11.617409+00:00",
+    "scraped_at": "2026-03-11T20:38:12.677466+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678531+00:00",
+    "validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
     "email_source": "domain_inference",
     "social_profiles": {
       "facebook": "https://facebook.com/elitefloorsystems",
@@ -416,20 +373,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:11.617506+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:11.617808+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679088+00:00"
   },
   {
     "company_name": "South Florida Epoxy Pros",
@@ -452,8 +396,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.197950+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395317+00:00",
+    "scraped_at": "2026-03-11T20:38:12.628405+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678546+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -483,20 +427,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395851+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530721+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679094+00:00"
   },
   {
     "company_name": "Broward Epoxy & Concrete",
@@ -519,8 +450,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.197950+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395325+00:00",
+    "scraped_at": "2026-03-11T20:38:12.628405+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678558+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -550,20 +481,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395855+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530736+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679098+00:00"
   },
   {
     "company_name": "Prestige Garage Floors FL",
@@ -586,8 +504,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.197950+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395333+00:00",
+    "scraped_at": "2026-03-11T20:38:12.628405+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678568+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -617,20 +535,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395859+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530742+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679102+00:00"
   },
   {
     "company_name": "XPS Concrete Coatings",
@@ -653,8 +558,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.197950+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395342+00:00",
+    "scraped_at": "2026-03-11T20:38:12.628405+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678578+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -684,20 +589,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395863+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530745+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679106+00:00"
   },
   {
     "company_name": "Sunshine State Epoxy",
@@ -720,8 +612,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.197950+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395349+00:00",
+    "scraped_at": "2026-03-11T20:38:12.628405+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678586+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -751,20 +643,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395867+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530749+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679112+00:00"
   },
   {
     "company_name": "Fort Lauderdale Epoxy Experts",
@@ -787,8 +666,8 @@
     "lead_score": 90,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.197950+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395357+00:00",
+    "scraped_at": "2026-03-11T20:38:12.628405+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678600+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -816,20 +695,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395871+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530752+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679116+00:00"
   },
   {
     "company_name": "Elite Floor Systems",
@@ -852,8 +718,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.197950+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395365+00:00",
+    "scraped_at": "2026-03-11T20:38:12.628405+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678608+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -883,20 +749,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395875+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530755+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679120+00:00"
   },
   {
     "company_name": "South Florida Epoxy Pros",
@@ -919,8 +772,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.351776+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395373+00:00",
+    "scraped_at": "2026-03-11T20:38:12.675062+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678617+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -950,20 +803,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395879+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530758+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679124+00:00"
   },
   {
     "company_name": "Broward Epoxy & Concrete",
@@ -986,8 +826,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.351776+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395380+00:00",
+    "scraped_at": "2026-03-11T20:38:12.675062+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678625+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1017,20 +857,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395883+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530761+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679127+00:00"
   },
   {
     "company_name": "Prestige Garage Floors FL",
@@ -1053,8 +880,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.351776+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395388+00:00",
+    "scraped_at": "2026-03-11T20:38:12.675062+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678634+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1084,20 +911,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395886+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530763+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679131+00:00"
   },
   {
     "company_name": "XPS Concrete Coatings",
@@ -1120,8 +934,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.351776+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395395+00:00",
+    "scraped_at": "2026-03-11T20:38:12.675062+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678642+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1151,20 +965,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395890+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530766+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679135+00:00"
   },
   {
     "company_name": "Sunshine State Epoxy",
@@ -1187,8 +988,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.351776+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395402+00:00",
+    "scraped_at": "2026-03-11T20:38:12.675062+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678651+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1218,20 +1019,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395894+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530770+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679138+00:00"
   },
   {
     "company_name": "Miami Epoxy Experts",
@@ -1254,8 +1042,8 @@
     "lead_score": 90,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.351776+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395409+00:00",
+    "scraped_at": "2026-03-11T20:38:12.675062+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678659+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1283,20 +1071,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395898+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530774+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679141+00:00"
   },
   {
     "company_name": "Elite Floor Systems",
@@ -1319,8 +1094,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.351776+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395416+00:00",
+    "scraped_at": "2026-03-11T20:38:12.675062+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678669+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1350,20 +1125,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395906+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530777+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679166+00:00"
   },
   {
     "company_name": "South Florida Epoxy Pros",
@@ -1386,8 +1148,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:22.931904+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395424+00:00",
+    "scraped_at": "2026-03-11T20:38:12.601215+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678678+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1417,20 +1179,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395911+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530780+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679174+00:00"
   },
   {
     "company_name": "Broward Epoxy & Concrete",
@@ -1453,8 +1202,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:22.931904+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395431+00:00",
+    "scraped_at": "2026-03-11T20:38:12.601215+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678686+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1484,20 +1233,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395914+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530784+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679181+00:00"
   },
   {
     "company_name": "Prestige Garage Floors FL",
@@ -1520,8 +1256,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:22.931904+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395438+00:00",
+    "scraped_at": "2026-03-11T20:38:12.601215+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678694+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1551,20 +1287,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395918+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530787+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679190+00:00"
   },
   {
     "company_name": "XPS Concrete Coatings",
@@ -1587,8 +1310,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:22.931904+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395446+00:00",
+    "scraped_at": "2026-03-11T20:38:12.601215+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678702+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1618,20 +1341,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395922+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530790+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679195+00:00"
   },
   {
     "company_name": "Sunshine State Epoxy",
@@ -1654,8 +1364,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:22.931904+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395454+00:00",
+    "scraped_at": "2026-03-11T20:38:12.601215+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678710+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1685,20 +1395,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395926+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530793+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679199+00:00"
   },
   {
     "company_name": "Boca Raton Epoxy Experts",
@@ -1721,8 +1418,8 @@
     "lead_score": 90,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:22.931904+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395462+00:00",
+    "scraped_at": "2026-03-11T20:38:12.601215+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678719+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1750,20 +1447,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395930+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530796+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679203+00:00"
   },
   {
     "company_name": "Elite Floor Systems",
@@ -1786,8 +1470,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:22.931904+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395470+00:00",
+    "scraped_at": "2026-03-11T20:38:12.601215+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678727+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1817,20 +1501,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395937+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530799+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679209+00:00"
   },
   {
     "company_name": "South Florida Epoxy Pros",
@@ -1853,8 +1524,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391988+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395477+00:00",
+    "scraped_at": "2026-03-11T20:38:12.631304+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678735+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1884,20 +1555,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395941+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530803+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679213+00:00"
   },
   {
     "company_name": "Broward Epoxy & Concrete",
@@ -1920,8 +1578,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391988+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395485+00:00",
+    "scraped_at": "2026-03-11T20:38:12.631304+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678754+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -1951,20 +1609,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395945+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530805+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679216+00:00"
   },
   {
     "company_name": "Prestige Garage Floors FL",
@@ -1987,8 +1632,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391988+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395493+00:00",
+    "scraped_at": "2026-03-11T20:38:12.631304+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678763+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2018,20 +1663,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395949+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530808+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679220+00:00"
   },
   {
     "company_name": "XPS Concrete Coatings",
@@ -2054,8 +1686,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391988+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395501+00:00",
+    "scraped_at": "2026-03-11T20:38:12.631304+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678772+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2085,20 +1717,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395955+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530811+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679224+00:00"
   },
   {
     "company_name": "Sunshine State Epoxy",
@@ -2121,8 +1740,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391988+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395509+00:00",
+    "scraped_at": "2026-03-11T20:38:12.631304+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678780+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2152,20 +1771,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395959+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530814+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679227+00:00"
   },
   {
     "company_name": "Hollywood Epoxy Experts",
@@ -2188,8 +1794,8 @@
     "lead_score": 90,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391988+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395517+00:00",
+    "scraped_at": "2026-03-11T20:38:12.631304+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678788+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2217,20 +1823,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395963+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530817+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679231+00:00"
   },
   {
     "company_name": "Elite Floor Systems",
@@ -2253,8 +1846,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391988+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395525+00:00",
+    "scraped_at": "2026-03-11T20:38:12.631304+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678796+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2284,20 +1877,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395967+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530847+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679234+00:00"
   },
   {
     "company_name": "South Florida Concrete Pros",
@@ -2320,8 +1900,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391206+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395534+00:00",
+    "scraped_at": "2026-03-11T20:38:12.654015+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678805+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2351,20 +1931,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395971+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530851+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679241+00:00"
   },
   {
     "company_name": "Broward Concrete & Concrete",
@@ -2387,8 +1954,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391206+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395542+00:00",
+    "scraped_at": "2026-03-11T20:38:12.654015+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678814+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2418,20 +1985,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395974+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530854+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679244+00:00"
   },
   {
     "company_name": "Prestige Garage Floors FL",
@@ -2454,8 +2008,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391206+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395550+00:00",
+    "scraped_at": "2026-03-11T20:38:12.654015+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678822+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2485,20 +2039,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395978+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530857+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679248+00:00"
   },
   {
     "company_name": "XPS Concrete Coatings",
@@ -2521,8 +2062,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391206+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395558+00:00",
+    "scraped_at": "2026-03-11T20:38:12.654015+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678830+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2552,20 +2093,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395982+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530860+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679251+00:00"
   },
   {
     "company_name": "Sunshine State Epoxy",
@@ -2588,8 +2116,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391206+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395566+00:00",
+    "scraped_at": "2026-03-11T20:38:12.654015+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678838+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2619,20 +2147,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395985+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530863+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679255+00:00"
   },
   {
     "company_name": "Deerfield Beach Concrete Experts",
@@ -2655,8 +2170,8 @@
     "lead_score": 90,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391206+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395574+00:00",
+    "scraped_at": "2026-03-11T20:38:12.654015+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678847+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2684,20 +2199,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395989+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530866+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679258+00:00"
   },
   {
     "company_name": "Elite Floor Systems",
@@ -2720,8 +2222,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.391206+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395582+00:00",
+    "scraped_at": "2026-03-11T20:38:12.654015+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678855+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2751,20 +2253,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395993+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530869+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679263+00:00"
   },
   {
     "company_name": "South Florida Garage Pros",
@@ -2787,8 +2276,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.372099+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395591+00:00",
+    "scraped_at": "2026-03-11T20:38:12.667414+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678866+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2818,20 +2307,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.395997+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530872+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679267+00:00"
   },
   {
     "company_name": "Broward Garage & Concrete",
@@ -2854,8 +2330,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.372099+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395599+00:00",
+    "scraped_at": "2026-03-11T20:38:12.667414+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678874+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2885,20 +2361,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396003+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530875+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679271+00:00"
   },
   {
     "company_name": "Prestige Garage Floors FL",
@@ -2921,8 +2384,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.372099+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395607+00:00",
+    "scraped_at": "2026-03-11T20:38:12.667414+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678883+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -2952,20 +2415,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396007+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530878+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679274+00:00"
   },
   {
     "company_name": "XPS Concrete Coatings",
@@ -2988,8 +2438,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.372099+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395614+00:00",
+    "scraped_at": "2026-03-11T20:38:12.667414+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678891+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -3019,20 +2469,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396010+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530881+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679278+00:00"
   },
   {
     "company_name": "Sunshine State Epoxy",
@@ -3055,8 +2492,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.372099+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395621+00:00",
+    "scraped_at": "2026-03-11T20:38:12.667414+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678898+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -3086,20 +2523,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396014+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530884+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679284+00:00"
   },
   {
     "company_name": "Coral Springs Garage Experts",
@@ -3122,8 +2546,8 @@
     "lead_score": 90,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.372099+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395629+00:00",
+    "scraped_at": "2026-03-11T20:38:12.667414+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678909+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -3151,20 +2575,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396018+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530887+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679287+00:00"
   },
   {
     "company_name": "Elite Floor Systems",
@@ -3187,8 +2598,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.372099+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395637+00:00",
+    "scraped_at": "2026-03-11T20:38:12.667414+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678918+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -3218,20 +2629,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396022+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530890+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679291+00:00"
   },
   {
     "company_name": "South Florida Flooring Pros",
@@ -3254,8 +2652,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.394112+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395647+00:00",
+    "scraped_at": "2026-03-11T20:38:12.441623+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678928+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -3285,20 +2683,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396025+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530893+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Flooring"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679295+00:00"
   },
   {
     "company_name": "Broward Flooring & Concrete",
@@ -3321,8 +2706,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.394112+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395655+00:00",
+    "scraped_at": "2026-03-11T20:38:12.441623+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678937+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -3352,20 +2737,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396029+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530896+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679300+00:00"
   },
   {
     "company_name": "Prestige Garage Floors FL",
@@ -3388,8 +2760,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.394112+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395664+00:00",
+    "scraped_at": "2026-03-11T20:38:12.441623+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678945+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -3419,20 +2791,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396033+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530899+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679304+00:00"
   },
   {
     "company_name": "XPS Concrete Coatings",
@@ -3455,8 +2814,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.394112+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395671+00:00",
+    "scraped_at": "2026-03-11T20:38:12.441623+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678954+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -3486,20 +2845,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396036+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530902+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679307+00:00"
   },
   {
     "company_name": "Sunshine State Epoxy",
@@ -3522,8 +2868,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.394112+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395678+00:00",
+    "scraped_at": "2026-03-11T20:38:12.441623+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678963+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -3553,20 +2899,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396040+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530905+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Epoxy & Concrete Coatings"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679311+00:00"
   },
   {
     "company_name": "Plantation Flooring Experts",
@@ -3589,8 +2922,8 @@
     "lead_score": 90,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.394112+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395688+00:00",
+    "scraped_at": "2026-03-11T20:38:12.441623+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678972+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -3618,20 +2951,7 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396044+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530907+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Flooring"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679314+00:00"
   },
   {
     "company_name": "Elite Floor Systems",
@@ -3654,8 +2974,8 @@
     "lead_score": 100,
     "tier": "HOT",
     "source": "google_maps",
-    "scraped_at": "2026-03-10T19:07:23.394112+00:00",
-    "enriched_at": "2026-03-10T19:07:23.395696+00:00",
+    "scraped_at": "2026-03-11T20:38:12.441623+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678983+00:00",
     "validation": {
       "valid": true,
       "errors": [],
@@ -3685,19 +3005,6 @@
       "city_state": 5,
       "category_present": 5
     },
-    "scored_at": "2026-03-10T19:07:23.396050+00:00",
-    "crm_stage": "new",
-    "crm_added_at": "2026-03-10T19:07:23.530910+00:00",
-    "outreach_status": "pending",
-    "outreach_channel": null,
-    "follow_up_count": 0,
-    "last_contact": null,
-    "next_follow_up": null,
-    "assigned_to": null,
-    "notes": [],
-    "tags": [
-      "HOT",
-      "Flooring"
-    ]
+    "scored_at": "2026-03-11T20:38:12.679318+00:00"
   }
 ]
