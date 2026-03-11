@@ -1,38 +1,16 @@
 {
   "summary": {
-    "total": 852,
-    "valid": 852,
+    "total": 806,
+    "valid": 806,
     "invalid": 0,
-    "unique": 851,
-    "duplicates": 1,
-    "generated_at": "2026-03-11T16:44:21.369Z"
+    "unique": 806,
+    "duplicates": 0,
+    "generated_at": "2026-03-11T17:07:29.457Z"
   },
   "invalid_count": 0,
-  "duplicate_count": 1,
+  "duplicate_count": 0,
   "samples": {
     "invalid": [],
-    "duplicates": [
-      {
-        "company": "Team Industrial Services Inc",
-        "phone": "",
-        "website": "",
-        "address": "5.0",
-        "city": "Columbus",
-        "state": "OH",
-        "country": "USA",
-        "keyword": "industrial maintenance contractor",
-        "category": "General",
-        "rating": 5,
-        "reviews": 0,
-        "source": "google_maps",
-        "scrapedAt": "2026-03-11T16:42:16.349Z",
-        "_validation": {
-          "valid": true,
-          "errors": [],
-          "warnings": [],
-          "score": 35
-        }
-      }
-    ]
+    "duplicates": []
   }
 }
