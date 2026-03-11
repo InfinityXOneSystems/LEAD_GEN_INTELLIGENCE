@@ -34,7 +34,10 @@ on:
         type: choice
         options: [sandbox, development, staging, production]
 
-  # Auto-trigger when agents push code to sandbox branches
+  # Auto-trigger when agents push code to dedicated sandbox/agent/invention branches.
+  # NOTE: This trigger is intentionally NOT active on copilot/** or feature/** PR branches.
+  # If the workflow fires on a non-sandbox branch (e.g. GitHub validating a new workflow
+  # file on a PR branch), the sandbox job will skip gracefully via its if: condition.
   push:
     branches:
       - 'sandbox/**'
@@ -70,6 +73,14 @@ jobs:
     name: 🔒 Sandbox Execution
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # Skip gracefully when triggered on non-sandbox branches (e.g. GitHub validates
+    # this workflow file on PR branches where no actual sandbox run is intended).
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'repository_dispatch' ||
+      startsWith(github.ref, 'refs/heads/sandbox/') ||
+      startsWith(github.ref, 'refs/heads/agent/') ||
+      startsWith(github.ref, 'refs/heads/invention/')
 
     outputs:
       sandbox_ok: ${{ steps.run.outputs.ok }}
