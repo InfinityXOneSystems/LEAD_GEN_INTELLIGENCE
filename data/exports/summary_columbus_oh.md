@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-11
 
-**Total leads:** 331
+**Total leads:** 167
 
 | Tier | Count |
 |------|-------|
-| HOT  | 9  |
-| WARM | 63 |
-| COLD | 259 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -28,9 +28,9 @@
 | Columbus Garage Floor Coating |  |  | 55 |
 | Columbus Epoxy Floors |  |  | 55 |
 | "Showroom Floors Ltd, Epoxy Floors, Columbus, Oh" |  |  | 55 |
-| Epoxy Flooring Columbus |  |  | 55 |
 | Epoxy and Polished Floors of Columbus |  |  | 55 |
+| Epoxy Flooring Columbus |  |  | 55 |
 | Ideal Garage Floor Coatings |  |  | 55 |
-| Global Epoxy LLC |  |  | 55 |
 | Infinite Designs Epoxy Solutions of North Columbus |  |  | 55 |
-| Decorative Concrete Central Ohio |  |  | 55 |
+| Global Epoxy LLC |  |  | 55 |
+| Spaulding's Epoxy Floor Coating |  |  | 55 |
