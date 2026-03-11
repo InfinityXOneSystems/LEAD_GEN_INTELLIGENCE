@@ -1,14 +1,13 @@
 {
-  "services": {
-    "api-gateway": {
-      "type": "nodejs",
-      "startCommand": "node api/gateway.js",
-      "buildCommand": "npm install"
-    },
-    "worker": {
-      "type": "python",
-      "startCommand": "python -m task_queue.worker",
-      "buildCommand": "pip install -r requirements.txt"
-    }
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "npm run db:migrate && node api/gateway.js",
+    "healthcheckPath": "/api/health",
+    "healthcheckTimeout": 30,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 3
   }
 }

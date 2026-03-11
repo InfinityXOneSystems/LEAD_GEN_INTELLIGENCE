@@ -7,6 +7,7 @@ const rateLimit = require("express-rate-limit");
 const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
+const jwt = require("jsonwebtoken");
 
 const ROOT = path.join(__dirname, "..");
 const LEADS_DIR = path.join(ROOT, "leads");
@@ -102,7 +103,41 @@ function generateId() {
   );
 }
 
+// ── JWT auth middleware ───────────────────────────────────────────────────────
+
+/**
+ * Verifies a Bearer JWT token from the Authorization header.
+ * Skip auth when JWT_SECRET is not configured (development mode).
+ */
+function requireAuth(req, res, next) {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    // JWT_SECRET not set – allow all requests in development / CI
+    return next();
+  }
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ success: false, error: "Unauthorized: missing token" });
+  }
+  const token = authHeader.slice(7);
+  try {
+    req.user = jwt.verify(token, secret);
+    return next();
+  } catch (err) {
+    return res.status(401).json({ success: false, error: "Unauthorized: invalid token" });
+  }
+}
+
+
 // ── routes ───────────────────────────────────────────────────────────────────
+
+// Apply JWT auth to protected API routes
+app.use("/api/leads", requireAuth);
+app.use("/api/agent", requireAuth);
+app.use("/api/agents", requireAuth);
+app.use("/api/scraper", requireAuth);
+app.use("/api/settings", requireAuth);
+app.use("/api/outreach", requireAuth);
 
 // GET /api/leads/metrics  (must be before /api/leads/:id)
 app.get("/api/leads/metrics", (req, res) => {
@@ -863,6 +898,16 @@ app.get("/api/heatmap", (req, res) => {
 // GET /health  – top-level health check (no auth; used by Railway, Vercel, and monitoring)
 app.get("/health", (req, res) => {
   return res.json({ status: "OK", timestamp: new Date().toISOString() });
+});
+
+// GET /api/health  – Railway-compatible health check (used by railway.json healthcheckPath)
+app.get("/api/health", (req, res) => {
+  return res.json({
+    status: "ok",
+    service: "XPS Intelligence API Gateway",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
 });
 
 // GET /api  – root health check (used by frontend to verify connectivity)
