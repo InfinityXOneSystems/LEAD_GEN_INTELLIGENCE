@@ -102,12 +102,14 @@ app.post(
   "/webhooks/infinity-orchestrator",
   webhookRateLimiter,
   async (req, res) => {
-    if (!verifySignature(req)) {
+    // Allow calls from the gateway (internal forwarding) without re-verifying
+    const fromGateway = req.headers["x-forwarded-from"] === "xps-gateway";
+    if (!fromGateway && !verifySignature(req)) {
       return res.status(401).json({ error: "Invalid signature" });
     }
 
-    const event = req.headers["x-github-event"];
-    const payload = req.body;
+    const event = fromGateway ? req.body.event : req.headers["x-github-event"];
+    const payload = fromGateway ? req.body.payload || {} : req.body;
 
     console.log(`[Infinity Orchestrator] Received event: ${event}`);
 
@@ -140,16 +142,54 @@ app.post(
         }
       }
 
-      /* workflow_run failure → create an issue */
+      /* push to main → trigger score + export */
+      if (event === "push") {
+        const ref = payload.ref || "";
+        const branch = ref.replace("refs/heads/", "");
+        if (branch === "main") {
+          console.log(`[Orchestrator] Push to main — running score + export`);
+          await runPipelineStage("score");
+          await runPipelineStage("export");
+          return res.json({
+            ok: true,
+            event,
+            branch,
+            stages: ["score", "export"],
+          });
+        }
+      }
+
+      /* workflow_run failure → log warning */
       if (
         event === "workflow_run" &&
         payload.workflow_run?.conclusion === "failure"
       ) {
         const name = payload.workflow_run.name;
-        console.warn(
-          `[Orchestrator] Workflow failed: ${name} — consider auto-filing an issue`,
-        );
-        // Issue creation would require a GitHub token; log for now
+        console.warn(`[Orchestrator] Workflow failed: ${name}`);
+      }
+
+      /* Supabase lead insert — trigger scoring pipeline */
+      if (event === "supabase:INSERT") {
+        const tableName = payload.table || "";
+        // Match both 'leads' and 'public.leads' (schema-qualified)
+        if (tableName === "leads" || tableName === "public.leads") {
+          console.log(`[Orchestrator] New Supabase lead — running score`);
+          try {
+            await runPipelineStage("score");
+          } catch (e) {
+            console.error(
+              "[Orchestrator] Score after Supabase insert failed:",
+              e.message,
+            );
+          }
+          return res.json({ ok: true, event, action: "score triggered" });
+        }
+      }
+
+      /* Vercel deployment succeeded — log */
+      if (event === "deployment.succeeded") {
+        const url = payload.payload?.deployment?.url || "";
+        console.log(`[Orchestrator] ✅ Vercel deployment succeeded: ${url}`);
       }
 
       res.json({ ok: true, event, action: payload.action || null });

@@ -4,12 +4,13 @@ require("dotenv").config();
 
 const fs = require("fs");
 const path = require("path");
+const { execFileSync } = require("child_process");
 const { scrapeGoogleMaps } = require("./google_maps_scraper");
 const { scrapeBingMaps } = require("./bing_maps_scraper");
 const { scrapeYelp } = require("./yelp_scraper");
 const { scrapeAngi, scrapeHomeAdvisor } = require("./directory_scraper");
-const { upsertLeads } = require("../db/leadStore");
-const { initSchema } = require("../db/db");
+// NOTE: PostgreSQL persistence removed — leads now route to Supabase via
+// scripts/supabase_lead_writer.py and the InfinityXOneSystems/LEADS repo.
 const {
   DeduplicationEngine,
 } = require("../agents/dedupe/deduplication_engine");
@@ -222,25 +223,33 @@ async function runEngine(config = {}) {
   allLeads = dedupeLeads(allLeads);
   saveLeads(allLeads);
 
-  // Persist to PostgreSQL
+  // Route leads to Supabase + InfinityXOneSystems/LEADS repo
+  // (PostgreSQL persistence removed — all lead data goes to Supabase)
   try {
-    await initSchema();
-    const dbLeads = allLeads.map((lead) => ({
-      company_name: lead.company || "",
-      phone: lead.phone || null,
-      website: lead.website || null,
-      city: lead.city || "",
-      state: lead.state || "",
-      industry: lead.category || null,
-      rating: lead.rating || null,
-      reviews: lead.reviews || null,
-      source: lead.source || null,
-    }));
-    await upsertLeads(dbLeads);
-    console.log(`[engine] Persisted ${dbLeads.length} leads to PostgreSQL.`);
+    const leadsFile = path.join(LEADS_DIR_PRIMARY, "leads.json");
+    if (allLeads.length > 0 && fs.existsSync(leadsFile)) {
+      // Use 'python3' on Linux/Mac, 'python' on Windows
+      const pythonCmd = process.platform === "win32" ? "python" : "python3";
+      execFileSync(
+        pythonCmd,
+        [
+          path.join(__dirname, "../scripts/supabase_lead_writer.py"),
+          "--input",
+          leadsFile,
+        ],
+        {
+          env: { ...process.env },
+          timeout: 60_000,
+          stdio: "inherit",
+        },
+      );
+      console.log(
+        `[engine] Leads routed to Supabase + LEADS repo (${allLeads.length} leads).`,
+      );
+    }
   } catch (err) {
     console.error(
-      `[engine] Database persistence failed (leads still saved to JSON): ${err.message}`,
+      `[engine] Supabase/LEADS write failed (leads still saved to JSON): ${err.message}`,
     );
   }
 

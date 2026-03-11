@@ -60,6 +60,9 @@ jobs:
           LEADS_EMAIL_TO: info@infinityxonesystems.com
           SCRAPER_TARGETS: ${{ inputs.targets }}
           DRY_RUN: ${{ inputs.dry_run }}
+          # Supabase — all leads route here instead of PostgreSQL backend
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://nxfbfbipjsfzoefpgrof.supabase.co' }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           python -c "
           import asyncio
@@ -88,6 +91,7 @@ jobs:
           print(f'HOT:          {result[\"hot\"]}')
           print(f'WARM:         {result[\"warm\"]}')
           print(f'COLD:         {result[\"cold\"]}')
+          print(f'Supabase:     {result.get(\"supabase\", {}).get(\"supabase\", {}).get(\"success\", \"n/a\")} written')
           print(f'GitHub push:  {result[\"github\"][\"success\"]}')
           print(f'Email sent:   {result[\"email\"][\"success\"]}')
           print(f'CRM added:    {result[\"crm\"][\"added\"]}')
