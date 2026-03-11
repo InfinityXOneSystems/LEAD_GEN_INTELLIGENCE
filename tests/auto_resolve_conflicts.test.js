@@ -218,7 +218,7 @@ test("resolver: clean file with no conflicts exits 0", () => {
   const content = "no conflict markers here\njust plain text\n";
   const tmp = writeTmp(content);
   try {
-    execSync(`node ${JSON.stringify(RESOLVER)} ${JSON.stringify(tmp)}`, {
+    execFileSync(process.execPath, [RESOLVER, tmp], {
       encoding: "utf-8",
     });
     const after = fs.readFileSync(tmp, "utf-8");
