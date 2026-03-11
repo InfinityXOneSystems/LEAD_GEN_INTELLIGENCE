@@ -1,11 +1,11 @@
 {
   "summary": {
-    "total": 814,
-    "valid": 814,
+    "total": 852,
+    "valid": 852,
     "invalid": 0,
-    "unique": 813,
+    "unique": 851,
     "duplicates": 1,
-    "generated_at": "2026-03-11T14:45:11.079Z"
+    "generated_at": "2026-03-11T16:44:21.369Z"
   },
   "invalid_count": 0,
   "duplicate_count": 1,
@@ -13,7 +13,7 @@
     "invalid": [],
     "duplicates": [
       {
-        "company": "Team Industrial Services, Inc.",
+        "company": "Team Industrial Services Inc",
         "phone": "",
         "website": "",
         "address": "5.0",
@@ -25,7 +25,7 @@
         "rating": 5,
         "reviews": 0,
         "source": "google_maps",
-        "scrapedAt": "2026-03-11T14:43:06.632Z",
+        "scrapedAt": "2026-03-11T16:42:16.349Z",
         "_validation": {
           "valid": true,
           "errors": [],
