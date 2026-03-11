@@ -282,10 +282,7 @@
     "reviews": 72,
     "source": "yelp",
     "scrapedAt": "2026-03-11T14:45:02.917Z",
-    "_merged_from": [
-      "Tempe Abrasives, Inc",
-      "Tempe Auto Repair"
-    ],
+    "_merged_from": ["Tempe Abrasives, Inc", "Tempe Auto Repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -396,9 +393,7 @@
     "reviews": 61,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:47:32.917Z",
-    "_merged_from": [
-      "Sun Devil Auto"
-    ],
+    "_merged_from": ["Sun Devil Auto"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -521,9 +516,7 @@
     "reviews": 98,
     "source": "yelp",
     "scrapedAt": "2026-03-11T14:50:02.917Z",
-    "_merged_from": [
-      "Ohio Garage Interiors Columbus"
-    ],
+    "_merged_from": ["Ohio Garage Interiors Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -568,9 +561,7 @@
     "reviews": 43,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:51:02.917Z",
-    "_merged_from": [
-      "Capital City Concrete"
-    ],
+    "_merged_from": ["Capital City Concrete"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -877,9 +868,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:10.281Z",
-    "_merged_from": [
-      "S S concrete coatings llc"
-    ],
+    "_merged_from": ["S S concrete coatings llc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -901,9 +890,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:10.281Z",
-    "_merged_from": [
-      "Flooring Trends"
-    ],
+    "_merged_from": ["Flooring Trends"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -1626,9 +1613,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:50.935Z",
-    "_merged_from": [
-      "Rock Valley Industries LLC"
-    ],
+    "_merged_from": ["Rock Valley Industries LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -1932,9 +1917,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:59.108Z",
-    "_merged_from": [
-      "Cord Construction Co"
-    ],
+    "_merged_from": ["Cord Construction Co"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2040,9 +2023,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:07.242Z",
-    "_merged_from": [
-      "AAR"
-    ],
+    "_merged_from": ["AAR"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2106,9 +2087,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:15.344Z",
-    "_merged_from": [
-      "RSD CONCRETE"
-    ],
+    "_merged_from": ["RSD CONCRETE"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2256,9 +2235,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:23.477Z",
-    "_merged_from": [
-      "Stateline Carpet & Flooring LLC"
-    ],
+    "_merged_from": ["Stateline Carpet & Flooring LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2574,9 +2551,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:23.619Z",
-    "_merged_from": [
-      "Forest City Motor Co"
-    ],
+    "_merged_from": ["Forest City Motor Co"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2836,9 +2811,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.597Z",
-    "_merged_from": [
-      "C & S Auto Service"
-    ],
+    "_merged_from": ["C & S Auto Service"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2923,9 +2896,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.597Z",
-    "_merged_from": [
-      "Butitta Auto – Rockford on Main St."
-    ],
+    "_merged_from": ["Butitta Auto – Rockford on Main St."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3073,9 +3044,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.706Z",
-    "_merged_from": [
-      "Lou Bachrodt Chevrolet"
-    ],
+    "_merged_from": ["Lou Bachrodt Chevrolet"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3181,9 +3150,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.706Z",
-    "_merged_from": [
-      "Anderson's Rock River Ford Service"
-    ],
+    "_merged_from": ["Anderson's Rock River Ford Service"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3587,9 +3554,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.683Z",
-    "_merged_from": [
-      "Auto Enhancers Inc."
-    ],
+    "_merged_from": ["Auto Enhancers Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3800,9 +3765,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Scouts Truck and Trailer Repair"
-    ],
+    "_merged_from": ["Scouts Truck and Trailer Repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3908,9 +3871,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Meiborg Brothers Inc"
-    ],
+    "_merged_from": ["Meiborg Brothers Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3953,11 +3914,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Fleet Service Center Inc",
-      "Fleet Service",
-      "FleetPride"
-    ],
+    "_merged_from": ["Fleet Service Center Inc", "Fleet Service", "FleetPride"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4021,9 +3978,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Bc Truck Services Inc"
-    ],
+    "_merged_from": ["Bc Truck Services Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4174,9 +4129,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:47.776Z",
-    "_merged_from": [
-      "Midwest Millwright Services Inc."
-    ],
+    "_merged_from": ["Midwest Millwright Services Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4198,9 +4151,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:47.776Z",
-    "_merged_from": [
-      "J&A Fleet Maintenance"
-    ],
+    "_merged_from": ["J&A Fleet Maintenance"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4684,9 +4635,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:55.876Z",
-    "_merged_from": [
-      "Lowe's Distribution Center"
-    ],
+    "_merged_from": ["Lowe's Distribution Center"],
     "_validation": {
       "valid": true,
       "errors": [],
