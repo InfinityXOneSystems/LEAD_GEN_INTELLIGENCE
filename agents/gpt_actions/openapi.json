@@ -940,6 +940,33 @@
         }
       }
     },
+    "/api/health": {
+      "get": {
+        "summary": "GET /api/health",
+        "operationId": "get__api_health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/api": {
       "get": {
         "summary": "GET /api",
