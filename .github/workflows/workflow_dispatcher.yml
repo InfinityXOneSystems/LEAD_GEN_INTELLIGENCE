@@ -142,7 +142,7 @@ jobs:
               owner: context.repo.owner,
               repo:  context.repo.repo,
               workflow_id: 'ci.yml',
-              ref: ${{ github.head_ref || github.ref_name || 'main' }},
+              ref: "${{ github.head_ref || github.ref_name || 'main' }}",
             });
             console.log('Dispatched ci.yml');
 
@@ -155,7 +155,7 @@ jobs:
               owner: context.repo.owner,
               repo:  context.repo.repo,
               workflow_id: 'code_quality.yml',
-              ref: ${{ github.head_ref || github.ref_name || 'main' }},
+              ref: "${{ github.head_ref || github.ref_name || 'main' }}",
             });
             console.log('Dispatched code_quality.yml');
 
@@ -168,7 +168,7 @@ jobs:
               owner: context.repo.owner,
               repo:  context.repo.repo,
               workflow_id: 'system_validation.yml',
-              ref: ${{ github.head_ref || github.ref_name || 'main' }},
+              ref: "${{ github.head_ref || github.ref_name || 'main' }}",
             });
             console.log('Dispatched system_validation.yml');
 
