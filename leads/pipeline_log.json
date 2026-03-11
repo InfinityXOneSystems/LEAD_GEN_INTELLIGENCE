@@ -43,5 +43,27 @@
       "added": 49,
       "total_crm": 56
     }
+  },
+  {
+    "run_date": "2026-03-11T20:38:11.844555+00:00",
+    "elapsed_sec": 0.85,
+    "targets": 8,
+    "raw": 56,
+    "valid": 56,
+    "hot": 56,
+    "warm": 0,
+    "cold": 0,
+    "github": {
+      "success": false,
+      "reason": "GITHUB_TOKEN not set"
+    },
+    "email": {
+      "success": false,
+      "reason": "GMAIL_APP_PASSWORD not configured"
+    },
+    "crm": {
+      "added": 0,
+      "total_crm": 56
+    }
   }
 ]
