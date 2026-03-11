@@ -220,7 +220,7 @@
     }
   },
   {
-    "company": "Team Industrial Services, Inc.",
+    "company": "Team Industrial Services Inc",
     "phone": "",
     "website": "",
     "address": "5.0",
@@ -232,7 +232,7 @@
     "rating": 5,
     "reviews": 0,
     "source": "google_maps",
-    "scrapedAt": "2026-03-11T10:31:57.857Z",
+    "scrapedAt": "2026-03-11T12:35:45.403Z",
     "_validation": {
       "valid": true,
       "errors": [],
