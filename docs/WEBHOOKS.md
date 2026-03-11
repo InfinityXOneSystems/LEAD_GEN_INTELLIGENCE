@@ -117,16 +117,30 @@ Fill in every field exactly as shown below.
 
 ---
 
-#### Table
+#### Table (Conditions to fire webhook)
 
-> Supabase asks you to select a **schema** then a **table**.  Only one table per trigger.
+> "This is the table the trigger will watch for changes. You can only select 1 table for a trigger."
+
+The Supabase Dashboard shows a **Schema** dropdown first, then a **Table** dropdown.  
+The schema dropdown lists **all** available schemas — including Supabase system schemas that you must **not** choose:
+
+| Schema option in dropdown | What it is | Select? |
+|--------------------------|-----------|---------|
+| `auth` | Supabase built-in auth tables (`users`, `sessions`, …) | ❌ No |
+| `realtime` | Supabase internal realtime tables | ❌ No |
+| `storage` | Supabase built-in file storage tables | ❌ No |
+| `vault` | Supabase encrypted secrets store | ❌ No |
+| **`public`** | **Your application tables — where `leads` lives** | ✅ **Yes** |
+
+Select **`public`** for the schema, then select **`leads`** for the table.  
+This is the only table that should watch for changes for the XPS Intelligence pipeline.
 
 | Field | Exact value to enter |
 |-------|---------------------|
-| **Schema** | `public` |
+| **Schema** | `public` ← *choose this, not auth / realtime / storage / vault* |
 | **Table** | `leads` |
 
-The `leads` table has these columns that Supabase will include in the webhook payload:
+The `leads` table columns included in the webhook payload:
 `id`, `company_name`, `contact_name`, `phone`, `email`, `website`, `address`, `city`, `state`, `country`, `industry`, `category`, `keyword`, `linkedin`, `rating`, `reviews`, `lead_score`, `tier`, `status`, `source`, `metadata`, `date_scraped`, `last_contacted`, `updated_at`
 
 ---

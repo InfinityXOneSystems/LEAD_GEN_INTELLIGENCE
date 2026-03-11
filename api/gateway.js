@@ -1199,8 +1199,20 @@ app.get("/webhooks/info", (req, res) => {
         form_fields: {
           name: "xps-gateway-leads",
           description: "XPS Intelligence lead pipeline trigger",
-          schema: "public",
-          table: "leads",            // ← Table to watch (only 1 table per trigger)
+          // ── Schema / Table (Conditions to fire webhook) ──────────────────
+          // The Supabase dashboard schema dropdown lists system schemas
+          // (auth, realtime, storage, vault) AND user schemas.
+          // You MUST choose "public" — the schema where the leads table lives.
+          // Do NOT select auth / realtime / storage / vault.
+          available_schemas: [
+            { schema: "auth",     system: true,  select: false, note: "Supabase built-in auth tables — do NOT select" },
+            { schema: "realtime", system: true,  select: false, note: "Supabase internal realtime tables — do NOT select" },
+            { schema: "storage",  system: true,  select: false, note: "Supabase file storage tables — do NOT select" },
+            { schema: "vault",    system: true,  select: false, note: "Supabase encrypted secrets store — do NOT select" },
+            { schema: "public",   system: false, select: true,  note: "Your application tables — SELECT THIS" },
+          ],
+          schema: "public",            // ← Select this in the Schema dropdown
+          table: "leads",              // ← Only 1 table per trigger; select "leads"
           events: ["INSERT", "UPDATE", "DELETE"],
           type: "HTTP Request",
           method: "POST",
@@ -1223,15 +1235,16 @@ app.get("/webhooks/info", (req, res) => {
         instructions: [
           "1. Go to https://nxfbfbipjsfzoefpgrof.supabase.co → Database → Webhooks → Create new webhook",
           "2. Name: xps-gateway-leads",
-          "3. Schema: public  |  Table: leads  (only 1 table per trigger)",
-          "4. Events: check INSERT, UPDATE, DELETE",
-          "5. Type: HTTP Request  |  Method: POST",
-          `6. URL: ${base}/webhooks/supabase`,
-          "7. Timeout: 5000",
-          "8. HTTP Headers → Add header: Content-Type = application/json",
-          "9. HTTP Headers → Add header: Authorization = Bearer <value of SUPABASE_WEBHOOK_SECRET>",
-          "10. HTTP Parameters: leave empty",
-          "11. Click Confirm / Save",
+          "3. Conditions to fire webhook — Schema dropdown: select 'public' (NOT auth / realtime / storage / vault)",
+          "4. Table: leads  (only 1 table per trigger)",
+          "5. Events: check INSERT, UPDATE, DELETE",
+          "6. Type: HTTP Request  |  Method: POST",
+          `7. URL: ${base}/webhooks/supabase`,
+          "8. Timeout: 5000",
+          "9. HTTP Headers → Content-Type header should already be 'application/json' — verify",
+          "10. HTTP Headers → Add a new header: Authorization = Bearer <value of SUPABASE_WEBHOOK_SECRET>",
+          "11. HTTP Parameters: leave empty — click 'Add a new parameter' is NOT needed",
+          "12. Click Confirm / Save",
         ],
       },
       vercel: {
