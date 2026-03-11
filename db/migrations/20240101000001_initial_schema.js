@@ -84,7 +84,10 @@ exports.up = async function (knex) {
   if (!hasOutreachLog) {
     await knex.schema.createTable("outreach_log", (t) => {
       t.increments("id").primary();
-      t.integer("lead_id").references("id").inTable("leads").onDelete("SET NULL");
+      t.integer("lead_id")
+        .references("id")
+        .inTable("leads")
+        .onDelete("SET NULL");
       t.timestamp("sent_at", { useTz: true }).defaultTo(knex.fn.now());
       t.text("channel").defaultTo("email");
       t.text("template_id");
@@ -102,7 +105,10 @@ exports.up = async function (knex) {
   if (!hasLeadScores) {
     await knex.schema.createTable("lead_scores", (t) => {
       t.increments("id").primary();
-      t.integer("lead_id").references("id").inTable("leads").onDelete("CASCADE");
+      t.integer("lead_id")
+        .references("id")
+        .inTable("leads")
+        .onDelete("CASCADE");
       t.timestamp("scored_at", { useTz: true }).defaultTo(knex.fn.now());
       t.integer("score");
       t.text("tier");
@@ -117,7 +123,10 @@ exports.up = async function (knex) {
     const hasLeadId = await knex.schema.hasColumn("lead_scores", "lead_id");
     if (!hasLeadId) {
       await knex.schema.alterTable("lead_scores", (t) => {
-        t.integer("lead_id").references("id").inTable("leads").onDelete("CASCADE");
+        t.integer("lead_id")
+          .references("id")
+          .inTable("leads")
+          .onDelete("CASCADE");
       });
       await knex.schema.raw(
         "CREATE INDEX IF NOT EXISTS idx_lead_scores_lead_id ON lead_scores (lead_id)",
