@@ -1,14 +1,14 @@
 # .github/workflows/enterprise_lead_pipeline.yml
 # ================================================
 # Enterprise Autonomous Lead Pipeline
-# Runs every 2 hours — parallel asyncio scraping → validate → enrich →
-# score → push to InfinityXOneSystems/LEADS → email to info@infinityxonesystems.com → CRM ingest
+# GOVERNANCE: Tier 4 — Self-Healing (dispatch-only)
+# Schedule removed — was duplicating lead_scraper.yml every 2h.
+# Invoke via: workflow_dispatch or Tier 0 dispatcher.
+# See: .infinity/WORKFLOW_GOVERNANCE.md
 
-name: 🕷️ Enterprise Lead Pipeline (2hr cron)
+name: 🕷️ Enterprise Lead Pipeline
 
 on:
-  schedule:
-    - cron: "0 */2 * * *"   # every 2 hours
   workflow_dispatch:
     inputs:
       targets:
@@ -19,6 +19,10 @@ on:
         description: 'Dry run — skip GitHub push and email'
         type: boolean
         default: false
+
+concurrency:
+  group: enterprise-lead-pipeline
+  cancel-in-progress: false
 
 env:
   PYTHON_VERSION: "3.11"
@@ -96,7 +100,7 @@ jobs:
           git config --global user.name "XPS Pipeline Bot"
           git config --global user.email "info@infinityxonesystems.com"
           git add leads/ || true
-          git diff --cached --quiet || git commit -m "🤖 [Pipeline] Auto-update leads $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git diff --cached --quiet || git commit -m "🤖 [Pipeline] Auto-update leads [skip ci] $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git push origin HEAD || echo "Nothing to push"
 
       - name: Upload leads artifact

@@ -1,10 +1,12 @@
 name: Lead Intelligence Pipeline
 
+# GOVERNANCE: Tier 4 — Self-Healing (dispatch-only)
+# Schedule removed — use lead_scraper.yml for scheduled scraping.
+# This pipeline is kept for full-stack manual runs only.
+# Invoke via: workflow_dispatch or Tier 0 dispatcher.
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+
 on:
-  schedule:
-    # Run every 2 hours (GitHub Actions supports as frequent as every 5 min;
-    # 2h cadence balances freshness with rate limits and runner minutes)
-    - cron: '0 */2 * * *'
   workflow_dispatch:
     inputs:
       max_keywords:
@@ -139,7 +141,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No data changes to commit."
           else
-            git commit -m "data: pipeline run [$(date -u +%Y-%m-%dT%H:%M:%SZ)] — ${{ github.run_number }}"
+            git commit -m "data: pipeline run [skip ci] [$(date -u +%Y-%m-%dT%H:%M:%SZ)] — ${{ github.run_number }}"
             for attempt in 1 2 3; do
               git push && break || {
                 echo "Push attempt $attempt failed — syncing remote changes..."

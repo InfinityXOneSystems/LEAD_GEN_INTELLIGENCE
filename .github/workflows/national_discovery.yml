@@ -1,9 +1,16 @@
 name: national_lead_discovery
 
+# GOVERNANCE: Tier 3 — Async Intelligence (dispatch-only)
+# Schedule removed to consolidate scraping into lead_scraper.yml.
+# Invoke via: workflow_dispatch or Tier 0 dispatcher.
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+
 on:
-  schedule:
-    - cron: '0 */6 * * *'
   workflow_dispatch:
+
+concurrency:
+  group: national-discovery
+  cancel-in-progress: false
 
 permissions:
   contents: read
