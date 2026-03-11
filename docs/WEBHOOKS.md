@@ -100,33 +100,114 @@ SUPABASE_WEBHOOK_SECRET=<your-secret>   # set in Railway + in Supabase
 
 ### Step-by-step setup (Supabase)
 
-1. Go to **Supabase Dashboard → https://nxfbfbipjsfzoefpgrof.supabase.co**
-2. Navigate to **Database → Webhooks** (in the left sidebar)
+1. Go to **[Supabase Dashboard](https://nxfbfbipjsfzoefpgrof.supabase.co)**
+2. Navigate to **Database → Webhooks** in the left sidebar
 3. Click **Create a new webhook**
-4. Fill in:
 
-| Field | Value |
-|-------|-------|
+Fill in every field exactly as shown below.
+
+---
+
+#### General
+
+| Field | Exact value to enter |
+|-------|---------------------|
 | **Name** | `xps-gateway-leads` |
-| **Table** | `leads` (schema: `public`) |
-| **Events** | ✅ INSERT &nbsp; ✅ UPDATE &nbsp; ✅ DELETE |
-| **Type** | HTTP Request |
-| **Method** | POST |
-| **URL** | `https://<RAILWAY_BACKEND_URL>/webhooks/supabase` |
+| **Description** *(optional)* | `XPS Intelligence lead pipeline trigger` |
 
-5. Add HTTP header:
+---
 
-| Header | Value |
-|--------|-------|
+#### Table
+
+> Supabase asks you to select a **schema** then a **table**.  Only one table per trigger.
+
+| Field | Exact value to enter |
+|-------|---------------------|
+| **Schema** | `public` |
+| **Table** | `leads` |
+
+The `leads` table has these columns that Supabase will include in the webhook payload:
+`id`, `company_name`, `contact_name`, `phone`, `email`, `website`, `address`, `city`, `state`, `country`, `industry`, `category`, `keyword`, `linkedin`, `rating`, `reviews`, `lead_score`, `tier`, `status`, `source`, `metadata`, `date_scraped`, `last_contacted`, `updated_at`
+
+---
+
+#### Events (trigger on)
+
+Check **all three**:
+
+| Checkbox | Check? |
+|----------|--------|
+| ✅ **INSERT** | yes |
+| ✅ **UPDATE** | yes |
+| ✅ **DELETE** | yes |
+
+---
+
+#### Webhook Configuration
+
+| Field | Exact value to enter |
+|-------|---------------------|
+| **Type** | `HTTP Request` |
+| **Method** | `POST` |
+| **URL** | `https://<RAILWAY_BACKEND_URL>/webhooks/supabase` *(replace with your Railway URL)* |
+| **Timeout (ms)** | `5000` |
+
+---
+
+#### HTTP Headers
+
+Add these **two** headers (click **Add a new header** for each):
+
+| Header name | Header value |
+|-------------|-------------|
+| `Content-Type` | `application/json` |
 | `Authorization` | `Bearer <value of SUPABASE_WEBHOOK_SECRET>` |
 
-6. Click **Confirm**
+> The `Content-Type: application/json` header is already pre-filled by Supabase — just verify it is present.
+> The `Authorization` header is the custom secret your Railway backend uses to authenticate the call.
+> Replace `<value of SUPABASE_WEBHOOK_SECRET>` with the secret you set in Railway env.
+
+---
+
+#### HTTP Parameters
+
+Leave **empty** — no query-string parameters are needed.
+
+| Parameter name | Parameter value |
+|----------------|----------------|
+| *(none)* | *(none)* |
+
+---
+
+#### Complete example (what the Supabase form looks like when filled in)
+
+```
+Name:         xps-gateway-leads
+Schema:       public
+Table:        leads
+Events:       ☑ INSERT   ☑ UPDATE   ☑ DELETE
+Type:         HTTP Request
+Method:       POST
+URL:          https://xpsintelligencesystem-production.up.railway.app/webhooks/supabase
+Timeout:      5000
+
+HTTP Headers
+  Content-Type    application/json
+  Authorization   Bearer abc123yoursecrethere
+
+HTTP Parameters
+  (empty)
+```
+
+5. Click **Confirm** / **Save**
+
+---
 
 ### Events handled
 
 | Event | Action |
 |-------|--------|
-| `INSERT` on `leads` | Logs new lead, triggers scoring |
+| `INSERT` on `leads` | Logs new lead (`company_name`, `city`, `state`), forwards to Orchestrator which triggers scoring pipeline |
 | `UPDATE` on `leads` | Logs updated lead score |
 | `DELETE` on `leads` | Logs deleted lead |
 

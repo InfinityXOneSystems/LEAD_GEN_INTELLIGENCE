@@ -1195,16 +1195,43 @@ app.get("/webhooks/info", (req, res) => {
         url: `${base}/webhooks/supabase`,
         secret_env: "SUPABASE_WEBHOOK_SECRET",
         supabase_project: "https://nxfbfbipjsfzoefpgrof.supabase.co",
-        table: "leads",
-        events: ["INSERT", "UPDATE", "DELETE"],
+        // ── Exact values to fill into the Supabase Dashboard webhook form ──
+        form_fields: {
+          name: "xps-gateway-leads",
+          description: "XPS Intelligence lead pipeline trigger",
+          schema: "public",
+          table: "leads",            // ← Table to watch (only 1 table per trigger)
+          events: ["INSERT", "UPDATE", "DELETE"],
+          type: "HTTP Request",
+          method: "POST",
+          url: `${base}/webhooks/supabase`,
+          timeout_ms: 5000,
+          http_headers: [
+            // Supabase pre-fills Content-Type — verify it is set to application/json
+            { name: "Content-Type", value: "application/json" },
+            // Custom auth header — set value to your SUPABASE_WEBHOOK_SECRET
+            { name: "Authorization", value: "Bearer <SUPABASE_WEBHOOK_SECRET>" },
+          ],
+          http_parameters: [], // Leave empty — no query-string params needed
+        },
+        table_columns: [
+          "id", "company_name", "contact_name", "phone", "email", "website",
+          "address", "city", "state", "country", "industry", "category",
+          "keyword", "linkedin", "rating", "reviews", "lead_score", "tier",
+          "status", "source", "metadata", "date_scraped", "last_contacted", "updated_at",
+        ],
         instructions: [
-          "1. Go to Supabase Dashboard → https://nxfbfbipjsfzoefpgrof.supabase.co",
-          "2. Navigate to Database → Webhooks → Create new webhook",
-          "3. Name: xps-gateway-leads",
-          "4. Table: leads (schema: public)",
-          "5. Events: INSERT, UPDATE, DELETE",
+          "1. Go to https://nxfbfbipjsfzoefpgrof.supabase.co → Database → Webhooks → Create new webhook",
+          "2. Name: xps-gateway-leads",
+          "3. Schema: public  |  Table: leads  (only 1 table per trigger)",
+          "4. Events: check INSERT, UPDATE, DELETE",
+          "5. Type: HTTP Request  |  Method: POST",
           `6. URL: ${base}/webhooks/supabase`,
-          "7. HTTP headers: Authorization: Bearer <value of SUPABASE_WEBHOOK_SECRET>",
+          "7. Timeout: 5000",
+          "8. HTTP Headers → Add header: Content-Type = application/json",
+          "9. HTTP Headers → Add header: Authorization = Bearer <value of SUPABASE_WEBHOOK_SECRET>",
+          "10. HTTP Parameters: leave empty",
+          "11. Click Confirm / Save",
         ],
       },
       vercel: {
