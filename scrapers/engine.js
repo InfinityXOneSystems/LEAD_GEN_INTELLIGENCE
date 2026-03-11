@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const fs = require("fs");
 const path = require("path");
+const { execFileSync } = require("child_process");
 const { scrapeGoogleMaps } = require("./google_maps_scraper");
 const { scrapeBingMaps } = require("./bing_maps_scraper");
 const { scrapeYelp } = require("./yelp_scraper");
@@ -225,7 +226,6 @@ async function runEngine(config = {}) {
   // Route leads to Supabase + InfinityXOneSystems/LEADS repo
   // (PostgreSQL persistence removed — all lead data goes to Supabase)
   try {
-    const { execFileSync } = require("child_process");
     const leadsFile = path.join(LEADS_DIR_PRIMARY, "leads.json");
     if (allLeads.length > 0 && fs.existsSync(leadsFile)) {
       // Use 'python3' on Linux/Mac, 'python' on Windows
