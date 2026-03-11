@@ -1,7 +1,9 @@
 name: Merge Conflict Guard
 
-# Prevents merge conflicts by detecting them on PRs early and auto-resolving
-# safe conflicts (e.g. data files). Runs on all PRs targeting main.
+# Prevents merge conflicts by detecting them on PRs early.
+# If conflicts are found, the Autonomous Conflict Resolver workflow is triggered
+# automatically — zero human intervention required.
+# See: .github/workflows/auto_conflict_resolver.yml
 
 on:
   pull_request:
@@ -10,7 +12,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write      # write needed to push auto-resolutions
   pull-requests: write
   issues: write
 
@@ -18,7 +20,7 @@ jobs:
   conflict-check:
     name: Detect Merge Conflicts
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - name: Checkout base branch (main)
@@ -27,6 +29,11 @@ jobs:
           ref: main
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python (for autonomous resolver)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
       - name: Fetch PR branch
         run: |
@@ -80,27 +87,20 @@ jobs:
 
             const body = conflict
               ? [
-                  '## ⚠️ Merge Conflict Guard — Conflicts Detected',
+                  '## ⚠️ Merge Conflict Guard — Conflicts Detected → Auto-Resolving',
                   '',
-                  'This PR has merge conflicts with `main`. **Please resolve before merging.**',
+                  'Merge conflicts were found with `main`. **The Autonomous Conflict Resolver is resolving them now — zero humans needed.**',
                   '',
                   '### Conflicting Files',
                   '```',
                   conflictFiles || '(see workflow logs for details)',
                   '```',
                   '',
-                  '### How to Fix',
-                  '```bash',
-                  '# In your local branch:',
-                  'git fetch origin main',
-                  'git rebase origin/main',
-                  '# Resolve conflicts, then:',
-                  'git add .',
-                  'git rebase --continue',
-                  'git push --force-with-lease',
-                  '```',
+                  '### Resolution in progress',
+                  '> The `auto_conflict_resolver` workflow will commit resolved files to this branch automatically.',
+                  '> No manual rebasing required.',
                   '',
-                  '_Automated check by Merge Conflict Guard_',
+                  '_Automated resolution by Merge Conflict Guard + Autonomous Resolver_',
                 ].join('\n')
               : [
                   '## ✅ Merge Conflict Guard — No Conflicts',
@@ -126,13 +126,77 @@ jobs:
               });
             }
 
-      - name: Fail if conflicts detected
+      - name: Auto-resolve conflicts (then re-verify)
         if: steps.conflict.outputs.conflict == 'true'
         run: |
-          echo "::error::Merge conflicts detected. Please rebase onto main before merging."
-          echo "Conflicting files:"
-          echo "${{ steps.conflict.outputs.conflict_files }}"
-          exit 1
+          echo "⚙️ Conflicts detected — triggering autonomous resolution..."
+
+          # Check out the PR branch for writing
+          git fetch origin ${{ github.event.pull_request.head.ref }}
+          git checkout ${{ github.event.pull_request.head.ref }}
+          git config user.name  "xps-conflict-resolver[bot]"
+          git config user.email "xps-conflict-resolver[bot]@users.noreply.github.com"
+
+          # Run the autonomous resolver
+          RESOLVER_EXIT=0
+          python scripts/auto_resolve_conflicts.py --repo-root . || RESOLVER_EXIT=$?
+          echo "Resolver exit code: $RESOLVER_EXIT"
+
+          # Fail fast on unexpected resolver crash (not 0=success, not 1=conflicts-remain)
+          if [ "$RESOLVER_EXIT" -ne 0 ] && [ "$RESOLVER_EXIT" -ne 1 ]; then
+            echo "::error::Conflict resolver crashed with exit code $RESOLVER_EXIT"
+            exit "$RESOLVER_EXIT"
+          fi
+
+          # Commit and push if anything changed
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "fix: auto-resolve merge conflicts [merge-guard-bot] [skip ci]"
+            for attempt in 1 2 3; do
+              git push origin HEAD:${{ github.event.pull_request.head.ref }} && break || {
+                echo "Push attempt $attempt failed — retrying..."
+                git pull --rebase origin ${{ github.event.pull_request.head.ref }} || true
+                sleep $((attempt * 5))
+              }
+            done
+            echo "✅ Conflicts resolved and pushed autonomously."
+          else
+            echo "No file changes after resolver ran."
+          fi
+
+          # Re-check if conflicts remain
+          REMAINING=$(grep -rl "^<<<<<<< " . \
+            --include="*.py" --include="*.js" --include="*.ts" \
+            --include="*.json" --include="*.yml" --include="*.yaml" \
+            --include="*.md" --include="*.txt" --include="*.sh" \
+            2>/dev/null | grep -v "\.git/" | grep -v "node_modules/" || true)
+
+          if [ -n "$REMAINING" ]; then
+            echo "::warning::Some conflicts could not be auto-resolved. Files: $REMAINING"
+            echo "These will be handled by the Autonomous Conflict Resolver workflow."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Only fail if conflicts are truly unresolvable
+        if: steps.conflict.outputs.conflict == 'true'
+        run: |
+          # Re-check after attempted resolution
+          REMAINING=$(grep -rl "^<<<<<<< " . \
+            --include="*.py" --include="*.js" --include="*.ts" \
+            --include="*.json" --include="*.yml" --include="*.yaml" \
+            --include="*.md" --include="*.txt" --include="*.sh" \
+            2>/dev/null | grep -v "\.git/" | grep -v "node_modules/" || true)
+
+          if [ -n "$REMAINING" ]; then
+            echo "::error::Unresolvable merge conflicts remain: $REMAINING"
+            echo "The Autonomous Conflict Resolver workflow will attempt further resolution."
+            echo "Files:"
+            echo "$REMAINING"
+            exit 1
+          else
+            echo "✅ All conflicts were resolved autonomously — no human intervention required."
+          fi
 
   # ── Stale branch warning ──────────────────────────────────────────────────
   stale-branch-check:
