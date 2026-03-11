@@ -1195,6 +1195,25 @@ app.get("/webhooks/info", (req, res) => {
         url: `${base}/webhooks/supabase`,
         secret_env: "SUPABASE_WEBHOOK_SECRET",
         supabase_project: "https://nxfbfbipjsfzoefpgrof.supabase.co",
+        // ── Prerequisite: run db/supabase_migration.sql first ──────────────
+        // The Supabase webhook "Conditions to fire webhook" schema dropdown
+        // ONLY shows schemas that contain at least one table.
+        // A fresh Supabase project shows only: auth, realtime, storage, vault.
+        // `public` does NOT appear until you create a table in it.
+        // Solution: open the Supabase SQL Editor and run db/supabase_migration.sql
+        // BEFORE configuring this webhook.
+        prerequisite: {
+          title: "Create the leads table in Supabase first",
+          reason: "The webhook schema dropdown only shows `public` after at least one user table exists in it. A fresh project only shows auth/realtime/storage/vault.",
+          steps: [
+            "1. Open https://nxfbfbipjsfzoefpgrof.supabase.co/project/nxfbfbipjsfzoefpgrof/sql/new",
+            "2. Click 'New query'",
+            "3. Paste the full contents of db/supabase_migration.sql from this repo",
+            "4. Click Run (Ctrl+Enter) — expect 'Success. No rows returned.'",
+            "5. Now `public` will appear in the webhook schema dropdown",
+          ],
+          migration_file: "db/supabase_migration.sql",
+        },
         // ── Exact values to fill into the Supabase Dashboard webhook form ──
         form_fields: {
           name: "xps-gateway-leads",
@@ -1233,9 +1252,11 @@ app.get("/webhooks/info", (req, res) => {
           "status", "source", "metadata", "date_scraped", "last_contacted", "updated_at",
         ],
         instructions: [
+          "PREREQUISITE: Run db/supabase_migration.sql in Supabase SQL Editor BEFORE these steps",
+          "PREREQUISITE: Without the migration, 'public' will NOT appear in the schema dropdown",
           "1. Go to https://nxfbfbipjsfzoefpgrof.supabase.co → Database → Webhooks → Create new webhook",
           "2. Name: xps-gateway-leads",
-          "3. Conditions to fire webhook — Schema dropdown: select 'public' (NOT auth / realtime / storage / vault)",
+          "3. Conditions to fire webhook — Schema dropdown: select 'public' (appears only after migration)",
           "4. Table: leads  (only 1 table per trigger)",
           "5. Events: check INSERT, UPDATE, DELETE",
           "6. Type: HTTP Request  |  Method: POST",

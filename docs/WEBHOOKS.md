@@ -98,6 +98,31 @@ POST https://<RAILWAY_BACKEND_URL>/webhooks/supabase
 SUPABASE_WEBHOOK_SECRET=<your-secret>   # set in Railway + in Supabase
 ```
 
+---
+
+### ⚠️ Prerequisite — Create the `leads` table first
+
+> **`public` is not visible in the webhook schema dropdown until at least one
+> user-created table exists in the `public` schema.**  
+> The Supabase webhook form only shows `auth`, `realtime`, `storage`, and `vault`
+> if no application tables have been created yet.  Run the migration SQL below
+> **before** touching the Webhooks page.
+
+#### Step A — Run the migration SQL in the Supabase SQL Editor
+
+1. Open **[Supabase SQL Editor](https://nxfbfbipjsfzoefpgrof.supabase.co/project/nxfbfbipjsfzoefpgrof/sql/new)**
+2. Click **New query**
+3. Copy and paste the entire contents of **`db/supabase_migration.sql`** from this repository
+
+   *(The file is at `db/supabase_migration.sql` — it creates `public.leads`, its indexes, an `updated_at` trigger, and an RLS policy for the service role.)*
+
+4. Click **Run** (or press **Ctrl + Enter**)
+5. Confirm you see **"Success. No rows returned."**
+
+After this step the Supabase webhook schema dropdown will include **`public`** and you can select it.
+
+---
+
 ### Step-by-step setup (Supabase)
 
 1. Go to **[Supabase Dashboard](https://nxfbfbipjsfzoefpgrof.supabase.co)**
@@ -122,7 +147,11 @@ Fill in every field exactly as shown below.
 > "This is the table the trigger will watch for changes. You can only select 1 table for a trigger."
 
 The Supabase Dashboard shows a **Schema** dropdown first, then a **Table** dropdown.  
-The schema dropdown lists **all** available schemas — including Supabase system schemas that you must **not** choose:
+The schema dropdown only lists schemas that contain at least one table.
+
+**If you only see `auth`, `realtime`, `storage`, `vault` — stop here.**  
+You must first complete **Step A** above (run `db/supabase_migration.sql` in the SQL Editor).  
+Once the `leads` table exists in `public`, the dropdown will also show `public`.
 
 | Schema option in dropdown | What it is | Select? |
 |--------------------------|-----------|---------|
@@ -130,14 +159,14 @@ The schema dropdown lists **all** available schemas — including Supabase syste
 | `realtime` | Supabase internal realtime tables | ❌ No |
 | `storage` | Supabase built-in file storage tables | ❌ No |
 | `vault` | Supabase encrypted secrets store | ❌ No |
-| **`public`** | **Your application tables — where `leads` lives** | ✅ **Yes** |
+| **`public`** | **Your application tables — where `leads` lives** | ✅ **Yes** (appears after migration) |
 
 Select **`public`** for the schema, then select **`leads`** for the table.  
 This is the only table that should watch for changes for the XPS Intelligence pipeline.
 
 | Field | Exact value to enter |
 |-------|---------------------|
-| **Schema** | `public` ← *choose this, not auth / realtime / storage / vault* |
+| **Schema** | `public` ← *only visible after running db/supabase_migration.sql* |
 | **Table** | `leads` |
 
 The `leads` table columns included in the webhook payload:
