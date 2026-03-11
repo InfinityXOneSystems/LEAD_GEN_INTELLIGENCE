@@ -1,1 +1,73 @@
-[]
+[
+  {
+    "company_name": "South Florida Epoxy Pros",
+    "phone": "(954) 781-2200",
+    "website": "https://www.southfloridaepoxypros.com",
+    "email": "info@southfloridaepoxypros.com",
+    "address": "1450 NE 48th St, Pompano Beach, FL",
+    "city": "Pompano Beach",
+    "state": "FL",
+    "rating": 4.8,
+    "reviews": 127,
+    "category": "Epoxy Contractor",
+    "keyword": "epoxy floor contractors",
+    "industry": "Epoxy & Concrete Coatings",
+    "industry_match": true,
+    "estimated_size": "medium",
+    "employee_estimate": "5-20",
+    "estimated_years_in_business": "2-5",
+    "outreach_priority": "high",
+    "lead_score": 100,
+    "tier": "HOT",
+    "source": "google_maps",
+    "scraped_at": "2026-03-11T20:38:12.677466+00:00",
+    "enriched_at": "2026-03-11T20:38:12.678454+00:00",
+    "validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    "email_source": "domain_inference",
+    "social_profiles": {
+      "facebook": "https://facebook.com/southfloridaepoxypros",
+      "instagram": "https://instagram.com/southfloridaepoxypros",
+      "google_business": "https://g.page/southfloridaepoxypros"
+    },
+    "owner_research": {
+      "status": "pending",
+      "method": "linkedin_search",
+      "query": "owner South Florida Epoxy Pros Pompano Beach FL"
+    },
+    "score_breakdown": {
+      "phone": 15,
+      "website": 10,
+      "email": 15,
+      "address": 5,
+      "rating_4plus": 10,
+      "rating_45plus": 5,
+      "reviews_10plus": 5,
+      "reviews_50plus": 5,
+      "industry_match": 20,
+      "city_state": 5,
+      "category_present": 5
+    },
+    "scored_at": "2026-03-11T20:38:12.679054+00:00",
+    "_merged_from": [
+      "unknown",
+      "unknown",
+      "unknown",
+      "unknown",
+      "unknown",
+      "unknown",
+      "unknown"
+    ],
+    "_validation": {
+      "valid": false,
+      "errors": [
+        "Missing required field: company"
+      ],
+      "warnings": [],
+      "score": 80
+    }
+  }
+]
