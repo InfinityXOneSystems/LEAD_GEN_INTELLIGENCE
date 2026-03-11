@@ -1,5 +1,9 @@
 name: Social Media Scraper
 
+# GOVERNANCE: Tier 3 — Async Intelligence
+# Schedule: nightly at 02:00 UTC (kept as canonical social enrichment scheduler).
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+
 on:
   workflow_dispatch:
     inputs:
@@ -24,7 +28,11 @@ on:
         required: false
         default: '3'
   schedule:
-    - cron: '0 2 * * *'   # Daily at 2 AM UTC
+    - cron: '0 2 * * *'   # Daily at 2 AM UTC (nightly only)
+
+concurrency:
+  group: social-scraper
+  cancel-in-progress: false
 
 jobs:
   social-scrape:
@@ -66,5 +74,5 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add leads/leads.json leads/social_leads.json || true
-          git diff --staged --quiet || git commit -m "chore: social media enrichment run $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git diff --staged --quiet || git commit -m "chore: social media enrichment run [skip ci] $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git push

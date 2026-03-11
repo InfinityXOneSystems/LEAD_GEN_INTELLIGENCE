@@ -63,9 +63,7 @@
     ],
     "_validation": {
       "valid": false,
-      "errors": [
-        "Missing required field: company"
-      ],
+      "errors": ["Missing required field: company"],
       "warnings": [],
       "score": 80
     }

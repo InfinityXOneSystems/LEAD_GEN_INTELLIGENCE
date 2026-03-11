@@ -1,8 +1,12 @@
 name: Code Quality
 
+# GOVERNANCE: Tier 1 — Quality Gates
+# Push trigger restricted to main/develop only (was '**' = every branch).
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+
 on:
   push:
-    branches: ['**']
+    branches: [main, develop]
     paths:
       - '**.js'
       - '**.ts'
@@ -17,6 +21,10 @@ on:
       - 'package.json'
       - 'package-lock.json'
   workflow_dispatch:
+
+concurrency:
+  group: code-quality-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read

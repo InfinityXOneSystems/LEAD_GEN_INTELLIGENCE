@@ -1,5 +1,10 @@
 name: Deploy Backend to Railway
 
+# GOVERNANCE: Tier 2 — Deployment
+# Consolidates: deploy-backend.yml + deploy.yml (Docker build/push).
+# deploy.yml has been archived to .infinity/deprecated_workflows/deploy.yml.
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+
 on:
   push:
     branches: [main]
@@ -9,13 +14,73 @@ on:
       - "Procfile"
       - "railway.json"
       - "Dockerfile.backend"
+      - "Dockerfile.gateway"
+      - "api/**"
 
   workflow_dispatch:
 
+concurrency:
+  group: deploy-backend
+  cancel-in-progress: false
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ${{ github.repository }}
+
 jobs:
+  # ── Build & push Docker images (merged from deploy.yml) ──────────────────
+  build-and-push:
+    name: Build & Push Docker Images
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (backend)
+        id: meta-backend
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/backend
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: ${{ steps.meta-backend.outputs.tags }}
+          labels: ${{ steps.meta-backend.outputs.labels }}
+
+      - name: Extract metadata (gateway)
+        id: meta-gateway
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/gateway
+
+      - name: Build and push gateway image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.gateway
+          push: true
+          tags: ${{ steps.meta-gateway.outputs.tags }}
+          labels: ${{ steps.meta-gateway.outputs.labels }}
+
+  # ── Deploy to Railway ─────────────────────────────────────────────────────
   deploy:
     name: Deploy to Railway
     runs-on: ubuntu-latest
+    needs: build-and-push
     permissions:
       contents: read
 

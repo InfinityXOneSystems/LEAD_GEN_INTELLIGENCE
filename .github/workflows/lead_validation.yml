@@ -1,15 +1,11 @@
 name: Lead Validation Check
 
+# GOVERNANCE: Tier 3 — Async Intelligence (dispatch-only + PR gate)
+# Push trigger removed to prevent cascade from pipeline auto-commits.
+# Runs on PRs touching lead data and on explicit dispatch.
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+
 on:
-  push:
-    branches: ['**']
-    paths:
-      - 'data/leads/leads.json'
-      - 'validation/**'
-      - 'validators/**'
-      - 'contracts/**'
-      - 'scrapers/**'
-      - 'agents/scoring/**'
   pull_request:
     paths:
       - 'data/leads/leads.json'
@@ -24,6 +20,10 @@ on:
         description: 'Enforce quality gates (1 = yes)'
         required: false
         default: '1'
+
+concurrency:
+  group: lead-validation-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read

@@ -1,9 +1,14 @@
 name: Nationwide Lead Scraper
 
+# GOVERNANCE: Tier 3 — Async Intelligence (canonical scraper)
+# This is the single scheduled scraper. Reduced from every 2h to daily 06:00 UTC.
+# scrape-schedule.yml has been archived to .infinity/deprecated_workflows/.
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+
 on:
   schedule:
-    # Run every 2 hours – each run processes one batch of cities.
-    - cron: '0 */2 * * *'
+    # Run once daily at 06:00 UTC (reduced from every 2h — was causing run explosion)
+    - cron: '0 6 * * *'
   workflow_dispatch:
     inputs:
       batch_size:

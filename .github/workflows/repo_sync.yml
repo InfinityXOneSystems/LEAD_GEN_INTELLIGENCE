@@ -1,8 +1,9 @@
 name: Repo Sync — Branch Sync & Merge Guard
 
-# Keeps the repository branches in sync and validates merge readiness.
-# Triggers: manual dispatch, repository_dispatch (from GPT Actions / Copilot Mobile),
-# or push to main (propagates changes to other key branches).
+# GOVERNANCE: Tier 4 — Self-Healing (dispatch-only, no push trigger)
+# Removed push trigger to prevent cascade from data commits.
+# Invoke via: workflow_dispatch or repository_dispatch.
+# See: .infinity/WORKFLOW_GOVERNANCE.md
 
 on:
   workflow_dispatch:
@@ -13,12 +14,6 @@ on:
         default: 'full'
   repository_dispatch:
     types: [repo-sync, sync-branches]
-  push:
-    branches: [main]
-    paths:
-      - 'data/leads/**'
-      - 'leads/**'
-      - 'docs/**'
 
 permissions:
   contents: write
@@ -38,7 +33,6 @@ jobs:
     if: |
       github.event.inputs.action == 'sync-pages' ||
       github.event.inputs.action == 'full' ||
-      github.event_name == 'push' ||
       github.event_name == 'repository_dispatch'
 
     steps:
@@ -68,7 +62,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "Leads data already in sync."
           else
-            git commit -m "sync: propagate lead data to data/leads/ [repo-sync $(date -u +%Y-%m-%dT%H:%MZ)]"
+            git commit -m "sync: propagate lead data to data/leads/ [skip ci] [repo-sync $(date -u +%Y-%m-%dT%H:%MZ)]"
             for attempt in 1 2 3; do
               git push && break || {
                 echo "Push attempt $attempt failed — syncing remote changes..."
@@ -168,7 +162,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No encoding fixes needed."
           else
-            git commit -m "fix: convert UTF-16 JS files to UTF-8 [repo-sync]"
+            git commit -m "fix: convert UTF-16 JS files to UTF-8 [skip ci] [repo-sync]"
             for attempt in 1 2 3; do
               git push && break || {
                 echo "Push attempt $attempt failed — syncing remote changes..."

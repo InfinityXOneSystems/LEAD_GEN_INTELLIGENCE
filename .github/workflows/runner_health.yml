@@ -1,9 +1,17 @@
 name: GitHub-Hosted Runner Health Check
 
+# GOVERNANCE: Tier 4 — Self-Healing (dispatch-only)
+# Schedule changed from every 30 minutes to weekly (was generating 1400+ runs/month alone!).
+# See: .infinity/WORKFLOW_GOVERNANCE.md
+
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Every 30 minutes
+    - cron: '0 0 * * 0'  # Weekly on Sunday at midnight UTC (was: every 30 min)
   workflow_dispatch:
+
+concurrency:
+  group: runner-health
+  cancel-in-progress: true
 
 jobs:
   runner-health:
