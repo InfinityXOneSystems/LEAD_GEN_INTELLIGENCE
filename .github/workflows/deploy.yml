@@ -36,20 +36,22 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./backend
+          file: ./backend/Dockerfile
           push: true
           tags: ${{ steps.meta-backend.outputs.tags }}
           labels: ${{ steps.meta-backend.outputs.labels }}
 
-      - name: Extract metadata (frontend)
+      - name: Extract metadata (gateway)
         id: meta-frontend
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/frontend
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/gateway
 
-      - name: Build and push frontend
+      - name: Build and push gateway
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
+          context: .
+          file: ./Dockerfile.gateway
           push: true
           tags: ${{ steps.meta-frontend.outputs.tags }}
           labels: ${{ steps.meta-frontend.outputs.labels }}
