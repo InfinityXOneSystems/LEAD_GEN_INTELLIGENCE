@@ -43,10 +43,8 @@ function normalise(lead) {
     industry: lead.industry || lead.category || null,
     category: lead.category || null,
     keyword: lead.keyword || null,
-    rating:
-      lead.rating != null ? parseFloat(lead.rating) || null : null,
-    reviews:
-      lead.reviews != null ? parseInt(lead.reviews, 10) || null : null,
+    rating: lead.rating != null ? parseFloat(lead.rating) || null : null,
+    reviews: lead.reviews != null ? parseInt(lead.reviews, 10) || null : null,
     lead_score:
       lead.lead_score != null
         ? parseInt(lead.lead_score, 10)
@@ -57,7 +55,8 @@ function normalise(lead) {
     status: lead.status || "new",
     source: lead.source || null,
     metadata: lead.metadata || lead._validation || null,
-    date_scraped: lead.date_scraped || lead.scrapedAt || new Date().toISOString(),
+    date_scraped:
+      lead.date_scraped || lead.scrapedAt || new Date().toISOString(),
   };
 }
 
