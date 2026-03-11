@@ -256,9 +256,7 @@
     "reviews": 56,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:32.917Z",
-    "_merged_from": [
-      "Southwest Surface Blasting"
-    ],
+    "_merged_from": ["Southwest Surface Blasting"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -281,10 +279,7 @@
     "reviews": 72,
     "source": "yelp",
     "scrapedAt": "2026-03-11T14:45:02.917Z",
-    "_merged_from": [
-      "Tempe Abrasives, Inc",
-      "Tempe Auto Repair"
-    ],
+    "_merged_from": ["Tempe Abrasives, Inc", "Tempe Auto Repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -395,9 +390,7 @@
     "reviews": 61,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:47:32.917Z",
-    "_merged_from": [
-      "Sun Devil Auto"
-    ],
+    "_merged_from": ["Sun Devil Auto"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -495,9 +488,7 @@
     "reviews": 52,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:49:32.917Z",
-    "_merged_from": [
-      "Buckeye Complete Auto Care"
-    ],
+    "_merged_from": ["Buckeye Complete Auto Care"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -520,9 +511,7 @@
     "reviews": 98,
     "source": "yelp",
     "scrapedAt": "2026-03-11T14:50:02.917Z",
-    "_merged_from": [
-      "Ohio Garage Interiors Columbus"
-    ],
+    "_merged_from": ["Ohio Garage Interiors Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -567,9 +556,7 @@
     "reviews": 43,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:51:02.917Z",
-    "_merged_from": [
-      "Capital City Concrete"
-    ],
+    "_merged_from": ["Capital City Concrete"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -877,9 +864,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:10.281Z",
-    "_merged_from": [
-      "S S concrete coatings llc"
-    ],
+    "_merged_from": ["S S concrete coatings llc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -901,9 +886,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:10.281Z",
-    "_merged_from": [
-      "Flooring Trends"
-    ],
+    "_merged_from": ["Flooring Trends"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -1303,9 +1286,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:34.693Z",
-    "_merged_from": [
-      "Concrete Systems, Inc."
-    ],
+    "_merged_from": ["Concrete Systems, Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -1625,9 +1606,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:50.935Z",
-    "_merged_from": [
-      "Rock Valley Industries LLC"
-    ],
+    "_merged_from": ["Rock Valley Industries LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -1930,9 +1909,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:59.108Z",
-    "_merged_from": [
-      "Cord Construction Co"
-    ],
+    "_merged_from": ["Cord Construction Co"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2038,9 +2015,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:07.242Z",
-    "_merged_from": [
-      "AAR"
-    ],
+    "_merged_from": ["AAR"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2251,9 +2226,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:23.477Z",
-    "_merged_from": [
-      "Stateline Carpet & Flooring LLC"
-    ],
+    "_merged_from": ["Stateline Carpet & Flooring LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2569,9 +2542,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:23.619Z",
-    "_merged_from": [
-      "Forest City Motor Co"
-    ],
+    "_merged_from": ["Forest City Motor Co"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2828,9 +2799,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.597Z",
-    "_merged_from": [
-      "C & S Auto Service"
-    ],
+    "_merged_from": ["C & S Auto Service"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2915,9 +2884,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.597Z",
-    "_merged_from": [
-      "Butitta Auto – Rockford on Main St."
-    ],
+    "_merged_from": ["Butitta Auto – Rockford on Main St."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3065,9 +3032,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.706Z",
-    "_merged_from": [
-      "Lou Bachrodt Chevrolet"
-    ],
+    "_merged_from": ["Lou Bachrodt Chevrolet"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3173,9 +3138,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.706Z",
-    "_merged_from": [
-      "Anderson's Rock River Ford Service"
-    ],
+    "_merged_from": ["Anderson's Rock River Ford Service"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3578,9 +3541,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.683Z",
-    "_merged_from": [
-      "Auto Enhancers Inc."
-    ],
+    "_merged_from": ["Auto Enhancers Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3791,9 +3752,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Scouts Truck and Trailer Repair"
-    ],
+    "_merged_from": ["Scouts Truck and Trailer Repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3899,9 +3858,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Meiborg Brothers Inc"
-    ],
+    "_merged_from": ["Meiborg Brothers Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3944,11 +3901,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Fleet Service Center Inc",
-      "Fleet Service",
-      "FleetPride"
-    ],
+    "_merged_from": ["Fleet Service Center Inc", "Fleet Service", "FleetPride"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4012,9 +3965,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Bc Truck Services Inc"
-    ],
+    "_merged_from": ["Bc Truck Services Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4162,9 +4113,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:47.776Z",
-    "_merged_from": [
-      "Midwest Millwright Services Inc."
-    ],
+    "_merged_from": ["Midwest Millwright Services Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4186,9 +4135,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:47.776Z",
-    "_merged_from": [
-      "J&A Fleet Maintenance"
-    ],
+    "_merged_from": ["J&A Fleet Maintenance"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4672,9 +4619,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:55.876Z",
-    "_merged_from": [
-      "Lowe's Distribution Center"
-    ],
+    "_merged_from": ["Lowe's Distribution Center"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -5410,9 +5355,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:41:12.205Z",
-    "_merged_from": [
-      "Premier Concrete Coatings"
-    ],
+    "_merged_from": ["Premier Concrete Coatings"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -5539,10 +5482,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:41:12.205Z",
-    "_merged_from": [
-      "Epoxy Flooring Masters",
-      "Epoxy Flooring"
-    ],
+    "_merged_from": ["Epoxy Flooring Masters", "Epoxy Flooring"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -6244,9 +6184,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:41:53.146Z",
-    "_merged_from": [
-      "MCL Concrete LLC"
-    ],
+    "_merged_from": ["MCL Concrete LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -6373,9 +6311,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:41:53.146Z",
-    "_merged_from": [
-      "Roman Concrete"
-    ],
+    "_merged_from": ["Roman Concrete"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -6922,9 +6858,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:25.873Z",
-    "_merged_from": [
-      "DDC Mobile Blasting"
-    ],
+    "_merged_from": ["DDC Mobile Blasting"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -7586,9 +7520,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:34.074Z",
-    "_merged_from": [
-      "Auto Palace"
-    ],
+    "_merged_from": ["Auto Palace"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -7702,9 +7634,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:34.074Z",
-    "_merged_from": [
-      "Service Center - Germain Volkswagen of Columbus"
-    ],
+    "_merged_from": ["Service Center - Germain Volkswagen of Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -7768,9 +7698,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:34.074Z",
-    "_merged_from": [
-      "Byers Auto Group"
-    ],
+    "_merged_from": ["Byers Auto Group"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8157,9 +8085,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:42.209Z",
-    "_merged_from": [
-      "Columbus Mobile Truck Repair"
-    ],
+    "_merged_from": ["Columbus Mobile Truck Repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8265,9 +8191,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:42.209Z",
-    "_merged_from": [
-      "Eastern Truck & Trailer"
-    ],
+    "_merged_from": ["Eastern Truck & Trailer"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8310,9 +8234,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:42.209Z",
-    "_merged_from": [
-      "D&A Truck And Trailer Repair"
-    ],
+    "_merged_from": ["D&A Truck And Trailer Repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8502,9 +8424,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:50.207Z",
-    "_merged_from": [
-      "Columbus Fleet Maintenance"
-    ],
+    "_merged_from": ["Columbus Fleet Maintenance"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8526,9 +8446,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:50.207Z",
-    "_merged_from": [
-      "Franklin County Engineer West Maintenance Facility"
-    ],
+    "_merged_from": ["Franklin County Engineer West Maintenance Facility"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8571,9 +8489,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:50.207Z",
-    "_merged_from": [
-      "Fleet Management Office"
-    ],
+    "_merged_from": ["Fleet Management Office"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8679,10 +8595,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:50.344Z",
-    "_merged_from": [
-      "ACI Construction",
-      "Ronk Construction"
-    ],
+    "_merged_from": ["ACI Construction", "Ronk Construction"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9295,9 +9208,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:58.445Z",
-    "_merged_from": [
-      "Distribution Centre"
-    ],
+    "_merged_from": ["Distribution Centre"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9424,9 +9335,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:42:58.445Z",
-    "_merged_from": [
-      "NCS Distribution Center"
-    ],
+    "_merged_from": ["NCS Distribution Center"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9574,9 +9483,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:43:06.632Z",
-    "_merged_from": [
-      "Team Industrial Services, Inc."
-    ],
+    "_merged_from": ["Team Industrial Services, Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9955,9 +9862,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:43:06.653Z",
-    "_merged_from": [
-      "Floor Coverings International"
-    ],
+    "_merged_from": ["Floor Coverings International"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10084,9 +9989,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:43:14.853Z",
-    "_merged_from": [
-      "Precision Powdercoat"
-    ],
+    "_merged_from": ["Precision Powdercoat"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10261,9 +10164,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:43:14.853Z",
-    "_merged_from": [
-      "Arizona Valley Epoxy"
-    ],
+    "_merged_from": ["Arizona Valley Epoxy"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10458,9 +10359,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:43:14.877Z",
-    "_merged_from": [
-      "Cardinal Concrete Coatings"
-    ],
+    "_merged_from": ["Cardinal Concrete Coatings"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10755,9 +10654,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:43:31.307Z",
-    "_merged_from": [
-      "VALLEY CONCRETE GRINDING DUST FREE"
-    ],
+    "_merged_from": ["VALLEY CONCRETE GRINDING DUST FREE"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10842,9 +10739,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:43:55.612Z",
-    "_merged_from": [
-      "Concrete Finishing, Inc"
-    ],
+    "_merged_from": ["Concrete Finishing, Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11160,9 +11055,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:43:55.724Z",
-    "_merged_from": [
-      "Apache Concrete Cutting Inc"
-    ],
+    "_merged_from": ["Apache Concrete Cutting Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11674,9 +11567,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:12.003Z",
-    "_merged_from": [
-      "Arizona Facility Services"
-    ],
+    "_merged_from": ["Arizona Facility Services"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11803,9 +11694,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:28.140Z",
-    "_merged_from": [
-      "Arizona Flooring & Interiors LLC"
-    ],
+    "_merged_from": ["Arizona Flooring & Interiors LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11827,9 +11716,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:28.140Z",
-    "_merged_from": [
-      "AZ SANDBLASTING"
-    ],
+    "_merged_from": ["AZ SANDBLASTING"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12250,9 +12137,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:36.291Z",
-    "_merged_from": [
-      "Elite Auto Repair"
-    ],
+    "_merged_from": ["Elite Auto Repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12295,9 +12180,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:36.291Z",
-    "_merged_from": [
-      "Greasers Automotive"
-    ],
+    "_merged_from": ["Greasers Automotive"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12424,9 +12307,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:36.291Z",
-    "_merged_from": [
-      "CARS LAND SERVICE CENTER LLC"
-    ],
+    "_merged_from": ["CARS LAND SERVICE CENTER LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12578,9 +12459,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:36.390Z",
-    "_merged_from": [
-      "Tempe Kia Service"
-    ],
+    "_merged_from": ["Tempe Kia Service"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12644,9 +12523,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:36.390Z",
-    "_merged_from": [
-      "Sports Car Service Center"
-    ],
+    "_merged_from": ["Sports Car Service Center"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12710,9 +12587,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:36.390Z",
-    "_merged_from": [
-      "Chapman Commercial & Fleet"
-    ],
+    "_merged_from": ["Chapman Commercial & Fleet"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12755,9 +12630,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:36.390Z",
-    "_merged_from": [
-      "Chapman Collision Tempe"
-    ],
+    "_merged_from": ["Chapman Collision Tempe"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12863,9 +12736,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:44.443Z",
-    "_merged_from": [
-      "MGA Collision Center"
-    ],
+    "_merged_from": ["MGA Collision Center"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -13181,9 +13052,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:44.522Z",
-    "_merged_from": [
-      "DSM Arizona Inc."
-    ],
+    "_merged_from": ["DSM Arizona Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14024,9 +13893,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:45:00.686Z",
-    "_merged_from": [
-      "Commercial Remodeling Contractors"
-    ],
+    "_merged_from": ["Commercial Remodeling Contractors"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14048,9 +13915,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:45:00.686Z",
-    "_merged_from": [
-      "The Contractor Guys"
-    ],
+    "_merged_from": ["The Contractor Guys"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14240,9 +14105,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:45:00.686Z",
-    "_merged_from": [
-      "Best Floor Coatings"
-    ],
+    "_merged_from": ["Best Floor Coatings"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14516,9 +14379,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:45:08.933Z",
-    "_merged_from": [
-      "Tempe Mechanical"
-    ],
+    "_merged_from": ["Tempe Mechanical"],
     "_validation": {
       "valid": true,
       "errors": [],
