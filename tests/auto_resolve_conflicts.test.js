@@ -192,8 +192,9 @@ test("resolver: dry-run does not modify files", () => {
 
   const { fp, dir } = makeTempConflictFile(".txt", content);
 
-  execSync(
-    `${PYTHON} ${RESOLVER} --repo-root ${path.dirname(fp)} --dry-run 2>&1`,
+  execFileSync(
+    PYTHON,
+    [RESOLVER, "--repo-root", path.dirname(fp), "--dry-run"],
     { encoding: "utf8" }
   );
 
@@ -211,9 +212,11 @@ test("resolver: clean file with no conflicts exits 0", () => {
 
   let exitCode = 0;
   try {
-    execSync(`${PYTHON} ${RESOLVER} --repo-root ${path.dirname(fp)} 2>&1`, {
-      encoding: "utf8",
-    });
+    execFileSync(
+      PYTHON,
+      [RESOLVER, "--repo-root", path.dirname(fp)],
+      { encoding: "utf8" }
+    );
   } catch (err) {
     exitCode = err.status;
   }
