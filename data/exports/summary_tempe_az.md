@@ -2,13 +2,13 @@
 
 > Generated: 2026-03-11
 
-**Total leads:** 310
+**Total leads:** 293
 
 | Tier | Count |
 |------|-------|
-| HOT  | 9  |
-| WARM | 64 |
-| COLD | 237 |
+| HOT  | 0  |
+| WARM | 0 |
+| COLD | 0 |
 
 ## Top Leads
 
@@ -25,12 +25,12 @@
 | Sun Devil Industrial Floors | (480) 555-1808 | https://sundevilfloors.com | 75 |
 | Tempe Flake & Chip Floor Systems | (480) 555-2010 | https://tempeflakefloors.com | 67 |
 | Superior Epoxy Floors |  |  | 55 |
-| Two Brothers Epoxy Flooring |  |  | 55 |
 | Clean Air Epoxy |  |  | 55 |
+| Two Brothers Epoxy Flooring |  |  | 55 |
 | Epoxy Flooring Phoenix |  |  | 55 |
 | Quality Epoxy |  |  | 55 |
 | Ultimate Concrete Coatings & Epoxy Flooring |  |  | 55 |
-| Marvelous Epoxy Flooring |  |  | 55 |
 | Brilliant Epoxy Flooring Inc |  |  | 55 |
-| Epoxy Strong Phoenix |  |  | 55 |
-| Concrete Repairman® Foundation Repair |  |  | 55 |
+| Garage Floor Coating Direct |  |  | 55 |
+| Marvelous Epoxy Flooring |  |  | 55 |
+| Elite Epoxy |  |  | 55 |
