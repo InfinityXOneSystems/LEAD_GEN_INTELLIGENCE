@@ -54,6 +54,10 @@ PIPELINE_LOG = LEADS_DIR / "pipeline_log.json"
 LEADS_EMAIL_TO = os.getenv("LEADS_EMAIL_TO", "info@infinityxonesystems.com")
 LEADS_GITHUB_REPO = "InfinityXOneSystems/LEADS"
 
+# Ensure REPO_ROOT is on sys.path for scripts/ imports (supabase_lead_writer etc.)
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 # ── Default scrape targets ────────────────────────────────────────────────────
 DEFAULT_TARGETS = [
     {"city": "Pompano Beach", "state": "FL", "keyword": "epoxy floor contractors"},
@@ -685,8 +689,19 @@ async def run_pipeline(targets: Optional[List[Dict]] = None) -> Dict:
     (LEADS_DIR / f"leads_{run_date[:10]}.csv").write_text(csv_content)
     print(f"   → +{new_count} new (total: {len(existing_leads)})")
 
-    # 6a. GITHUB LEADS
-    print("\n[6a] 🐙  GitHub InfinityXOneSystems/LEADS…")
+    # 6a. SUPABASE (primary lead storage — replaces PostgreSQL)
+    print("\n[6a] 🗄️   Supabase lead storage…")
+    try:
+        from scripts.supabase_lead_writer import write_leads as _write_leads
+        supabase_result = _write_leads(normalised, date_slug=run_date[:10])
+        print(f"   → Supabase: {supabase_result.get('supabase', {}).get('success', 0)} written")
+        print(f"   → LEADS repo: {'✅' if supabase_result.get('github_leads', {}).get('success') else '⚠️ '}")
+    except Exception as _e:
+        supabase_result = {"error": str(_e)}
+        print(f"   → ⚠️  Supabase write failed: {_e}")
+
+    # 6b. GITHUB LEADS (also archived via supabase_lead_writer, this sends HTML+CSV)
+    print("\n[6b] 🐙  GitHub InfinityXOneSystems/LEADS…")
     github_result = push_to_github_leads(normalised, csv_content, html_content, run_date)
     print(f"   → {'✅ Pushed' if github_result['success'] else '⚠️  ' + github_result.get('reason','see log')}")
 
@@ -705,7 +720,7 @@ async def run_pipeline(targets: Optional[List[Dict]] = None) -> Dict:
         "run_date": run_date, "elapsed_sec": round(time.time() - start_time, 2),
         "targets": len(targets), "raw": len(raw_leads), "valid": len(deduped),
         "hot": len(hot), "warm": len(warm), "cold": len(cold),
-        "github": github_result, "email": email_result, "crm": crm_result,
+        "supabase": supabase_result, "github": github_result, "email": email_result, "crm": crm_result,
     }
     logs: List[Dict] = []
     if PIPELINE_LOG.exists():
