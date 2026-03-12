@@ -2,7 +2,7 @@
 // ==============================
 // XPS Intelligence – Analytics Dashboard
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 
 const API_URL =
@@ -10,14 +10,44 @@ const API_URL =
     ? process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
     : "http://localhost:8000";
 
+const STATIC_REPORT_URL =
+  (process.env.NEXT_PUBLIC_BASE_PATH || "") + "/data/scoring_report.json";
+
+const STATIC_LEADS_URL =
+  (process.env.NEXT_PUBLIC_BASE_PATH || "") + "/data/scored_leads.json";
+
+/** Build synthetic analytics data from the static scoring report + leads. */
+async function loadStaticAnalytics() {
+  const [report, leads] = await Promise.all([
+    fetch(STATIC_REPORT_URL)
+      .then((r) => r.json())
+      .catch((err) => {
+        console.warn("[Analytics] Failed to load scoring_report.json:", err);
+        return null;
+      }),
+    fetch(STATIC_LEADS_URL)
+      .then((r) => r.json())
+      .catch((err) => {
+        console.warn("[Analytics] Failed to load scored_leads.json:", err);
+        return [];
+      }),
+  ]);
+  return { report, leads: Array.isArray(leads) ? leads : [] };
+}
+
 export default function AnalyticsPage() {
   const [metrics, setMetrics] = useState(null);
   const [tasks, setTasks] = useState(null);
   const [health, setHealth] = useState(null);
+  const [report, setReport] = useState(null);
+  const [topLeads, setTopLeads] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    Promise.all([
+  const fetchAll = useCallback(async () => {
+    setLoading(true);
+
+    // Try live API endpoints first; gracefully fall back to static data.
+    const [m, t, h] = await Promise.all([
       fetch(`${API_URL}/api/v1/system/metrics`)
         .then((r) => r.json())
         .catch(() => null),
@@ -27,33 +57,31 @@ export default function AnalyticsPage() {
       fetch(`${API_URL}/health`)
         .then((r) => r.json())
         .catch(() => null),
-    ]).then(([m, t, h]) => {
-      setMetrics(m);
-      setTasks(t);
-      setHealth(h);
-      setLoading(false);
-    });
+    ]);
+
+    setMetrics(m);
+    setTasks(t);
+    setHealth(h);
+
+    // Always load static scoring report for lead statistics.
+    const { report: staticReport, leads } = await loadStaticAnalytics();
+    setReport(staticReport);
+
+    // Top 10 HOT leads sorted by lead_score desc.
+    const sorted = [...leads]
+      .sort(
+        (a, b) =>
+          (b.lead_score ?? b.score ?? 0) - (a.lead_score ?? a.score ?? 0),
+      )
+      .slice(0, 10);
+    setTopLeads(sorted);
+
+    setLoading(false);
   }, []);
 
-  const refresh = () => {
-    setLoading(true);
-    Promise.all([
-      fetch(`${API_URL}/api/v1/system/metrics`)
-        .then((r) => r.json())
-        .catch(() => null),
-      fetch(`${API_URL}/api/v1/system/tasks`)
-        .then((r) => r.json())
-        .catch(() => null),
-      fetch(`${API_URL}/health`)
-        .then((r) => r.json())
-        .catch(() => null),
-    ]).then(([m, t, h]) => {
-      setMetrics(m);
-      setTasks(t);
-      setHealth(h);
-      setLoading(false);
-    });
-  };
+  useEffect(() => {
+    fetchAll();
+  }, [fetchAll]);
 
   const taskList = tasks?.tasks ? Object.values(tasks.tasks) : [];
   const completed = taskList.filter((t) => t.status === "completed").length;
@@ -86,7 +114,7 @@ export default function AnalyticsPage() {
       <div style={S.content}>
         <div style={S.titleRow}>
           <h1 style={S.title}>📊 Analytics Dashboard</h1>
-          <button style={S.refreshBtn} onClick={refresh}>
+          <button style={S.refreshBtn} onClick={fetchAll}>
             🔄 Refresh
           </button>
         </div>
@@ -95,13 +123,131 @@ export default function AnalyticsPage() {
           <div style={S.loading}>Loading metrics…</div>
         ) : (
           <>
-            {/* Health Status */}
+            {/* Lead Database Statistics (always shown from static data) */}
+            {report && (
+              <div style={S.section}>
+                <h2 style={S.sectionTitle}>📋 Lead Database</h2>
+                <div style={S.statGrid}>
+                  <StatCard
+                    label="Total Leads"
+                    value={report.total_leads ?? 0}
+                    color="#FFD700"
+                  />
+                  <StatCard
+                    label="HOT Leads"
+                    value={report.tiers?.HOT ?? 0}
+                    color="#f87171"
+                  />
+                  <StatCard
+                    label="WARM Leads"
+                    value={report.tiers?.WARM ?? 0}
+                    color="#fbbf24"
+                  />
+                  <StatCard
+                    label="COLD Leads"
+                    value={report.tiers?.COLD ?? 0}
+                    color="#7dd3fc"
+                  />
+                  <StatCard
+                    label="Avg Score"
+                    value={report.average_score ?? 0}
+                    color="#4ade80"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Industry Breakdown */}
+            {report?.industries && (
+              <div style={S.section}>
+                <h2 style={S.sectionTitle}>🏭 Industry Breakdown</h2>
+                <div style={S.statGrid}>
+                  {Object.entries(report.industries).map(([industry, cnt]) => (
+                    <StatCard
+                      key={industry}
+                      label={industry}
+                      value={cnt}
+                      color="#a78bfa"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Top Leads */}
+            {topLeads.length > 0 && (
+              <div style={S.section}>
+                <h2 style={S.sectionTitle}>🏆 Top 10 Leads</h2>
+                <div style={S.tableWrapper}>
+                  <table style={S.table}>
+                    <thead>
+                      <tr>
+                        {[
+                          "Company",
+                          "City",
+                          "State",
+                          "Score",
+                          "Tier",
+                          "Industry",
+                        ].map((h) => (
+                          <th key={h} style={S.th}>
+                            {h}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {topLeads.map((l, i) => (
+                        <tr key={i} style={S.tr}>
+                          <td style={S.td}>
+                            {l.company_name || l.company || "—"}
+                          </td>
+                          <td style={{ ...S.td, color: "#aaa" }}>
+                            {l.city || "—"}
+                          </td>
+                          <td style={{ ...S.td, color: "#aaa" }}>
+                            {l.state || "—"}
+                          </td>
+                          <td
+                            style={{
+                              ...S.td,
+                              color: "#FFD700",
+                              fontWeight: 600,
+                            }}
+                          >
+                            {l.lead_score ?? l.score ?? 0}
+                          </td>
+                          <td
+                            style={{
+                              ...S.td,
+                              color:
+                                l.tier === "HOT"
+                                  ? "#f87171"
+                                  : l.tier === "WARM"
+                                    ? "#fbbf24"
+                                    : "#7dd3fc",
+                            }}
+                          >
+                            {l.tier || "—"}
+                          </td>
+                          <td style={{ ...S.td, color: "#a78bfa" }}>
+                            {l.industry || "—"}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* System Health (from live API if available) */}
             <div style={S.section}>
               <h2 style={S.sectionTitle}>🏥 System Health</h2>
               <div style={S.statGrid}>
                 <StatCard
-                  label="Status"
-                  value={health?.status || "—"}
+                  label="API Status"
+                  value={health?.status || "offline"}
                   color={health?.status === "healthy" ? "#4ade80" : "#f87171"}
                 />
                 <StatCard
@@ -122,20 +268,26 @@ export default function AnalyticsPage() {
               </div>
             </div>
 
-            {/* Task Stats */}
-            <div style={S.section}>
-              <h2 style={S.sectionTitle}>⚙️ Task Execution</h2>
-              <div style={S.statGrid}>
-                <StatCard
-                  label="Total Tasks"
-                  value={tasks?.total ?? 0}
-                  color="#FFD700"
-                />
-                <StatCard label="Completed" value={completed} color="#4ade80" />
-                <StatCard label="Queued" value={queued} color="#7dd3fc" />
-                <StatCard label="Failed" value={failed} color="#f87171" />
+            {/* Task Stats (from live API if available) */}
+            {taskList.length > 0 && (
+              <div style={S.section}>
+                <h2 style={S.sectionTitle}>⚙️ Task Execution</h2>
+                <div style={S.statGrid}>
+                  <StatCard
+                    label="Total Tasks"
+                    value={tasks?.total ?? 0}
+                    color="#FFD700"
+                  />
+                  <StatCard
+                    label="Completed"
+                    value={completed}
+                    color="#4ade80"
+                  />
+                  <StatCard label="Queued" value={queued} color="#7dd3fc" />
+                  <StatCard label="Failed" value={failed} color="#f87171" />
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Queue Metrics */}
             {metrics?.queue && (
@@ -308,5 +460,5 @@ const S = {
     textTransform: "uppercase",
   },
   td: { padding: "0.6rem 1rem", borderBottom: "1px solid #111", color: "#ccc" },
-  tr: { "&:hover": { background: "#0a0a0a" } },
+  tr: {},
 };

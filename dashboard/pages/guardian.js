@@ -51,7 +51,24 @@ export default function GuardianPage() {
         .then((r) => r.json())
         .catch(() => null),
     ])
-      .then(([h, m]) => {
+      .then(async ([h, m]) => {
+        // Fall back to static data if API is unavailable
+        if (!h && !m) {
+          try {
+            const staticBase =
+              typeof window !== "undefined"
+                ? process.env.NEXT_PUBLIC_BASE_PATH || ""
+                : "";
+            const res = await fetch(`${staticBase}/data/guardian.json`);
+            if (res.ok) {
+              const d = await res.json();
+              h = d;
+              m = d.metrics || null;
+            }
+          } catch {
+            // ignore
+          }
+        }
         setHealth(h);
         setMetrics(m);
         setLastChecked(new Date());
