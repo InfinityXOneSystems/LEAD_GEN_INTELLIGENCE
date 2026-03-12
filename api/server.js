@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const crypto = require("crypto");
 
 const PORT = process.env.PORT || 3000;
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
@@ -130,7 +131,9 @@ const MOCK_AGENTS = [
 // ---------------------------------------------------------------------------
 
 function generateId() {
-  return Math.random().toString(36).substring(2, 11);
+  // Use cryptographically secure random bytes and encode as base64url, then trim.
+  // 9 random bytes → 72 bits of entropy, more than sufficient for a short session ID.
+  return crypto.randomBytes(9).toString("base64url").slice(0, 11);
 }
 
 // ---------------------------------------------------------------------------
