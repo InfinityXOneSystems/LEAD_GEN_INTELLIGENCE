@@ -14,9 +14,7 @@
 const { createClient } = require("@supabase/supabase-js");
 
 const SUPABASE_URL =
-  process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  process.env.SUPABASE_URL ||
-  "";
+  process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || "";
 
 const SUPABASE_KEY =
   process.env.SUPABASE_SERVICE_ROLE_KEY ||
@@ -31,9 +29,14 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
   );
 }
 
-const supabase = SUPABASE_URL && SUPABASE_KEY
-  ? createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } })
-  : createClient("http://localhost", "placeholder", { auth: { persistSession: false } });
+const supabase =
+  SUPABASE_URL && SUPABASE_KEY
+    ? createClient(SUPABASE_URL, SUPABASE_KEY, {
+        auth: { persistSession: false },
+      })
+    : createClient("http://localhost", "placeholder", {
+        auth: { persistSession: false },
+      });
 
 /** Whether Supabase is configured (URL + key both set). */
 const isConfigured = Boolean(SUPABASE_URL && SUPABASE_KEY);
