@@ -33,7 +33,7 @@ app.use(
     methods: ["GET", "POST", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-  })
+  }),
 );
 
 app.use(express.json());
@@ -168,8 +168,11 @@ app.get("/health", (_req, res) => {
  * Body: { message, agentRole?, sessionId? }
  */
 app.post("/api/chat/send", async (req, res) => {
-  const { message, agentRole = "GeneralAgent", sessionId = generateId() } =
-    req.body || {};
+  const {
+    message,
+    agentRole = "GeneralAgent",
+    sessionId = generateId(),
+  } = req.body || {};
 
   if (!message || typeof message !== "string" || message.trim() === "") {
     return res.status(400).json({ error: "message is required" });
@@ -211,8 +214,16 @@ Provide concise, actionable insights.`;
     // Persist both turns in history (cap at MAX_CHAT_HISTORY_LENGTH to avoid unbounded growth)
     const updatedHistory = [
       ...history,
-      { role: "user", content: message.trim(), timestamp: new Date().toISOString() },
-      { role: "assistant", content: assistantContent, timestamp: new Date().toISOString() },
+      {
+        role: "user",
+        content: message.trim(),
+        timestamp: new Date().toISOString(),
+      },
+      {
+        role: "assistant",
+        content: assistantContent,
+        timestamp: new Date().toISOString(),
+      },
     ].slice(-MAX_CHAT_HISTORY_LENGTH);
     chatHistories.set(sessionId, updatedHistory);
 
@@ -260,9 +271,7 @@ app.get("/api/agents", (_req, res) => {
   const agents = MOCK_AGENTS.map((a) => ({
     ...a,
     lastActivity:
-      a.status === "running"
-        ? new Date().toISOString()
-        : a.lastActivity,
+      a.status === "running" ? new Date().toISOString() : a.lastActivity,
   }));
   res.status(200).json({
     agents,
@@ -277,7 +286,9 @@ app.get("/api/agents", (_req, res) => {
 app.get("/api/chat/history", (req, res) => {
   const { sessionId } = req.query;
   if (!sessionId) {
-    return res.status(400).json({ error: "sessionId query parameter is required" });
+    return res
+      .status(400)
+      .json({ error: "sessionId query parameter is required" });
   }
   const history = chatHistories.get(sessionId) || [];
   res.status(200).json({
@@ -295,7 +306,9 @@ app.get("/api/chat/history", (req, res) => {
 app.delete("/api/chat/history", (req, res) => {
   const { sessionId } = req.query;
   if (!sessionId) {
-    return res.status(400).json({ error: "sessionId query parameter is required" });
+    return res
+      .status(400)
+      .json({ error: "sessionId query parameter is required" });
   }
   const existed = chatHistories.has(sessionId);
   chatHistories.delete(sessionId);
@@ -338,7 +351,7 @@ app.use((err, _req, res, _next) => {
 app.listen(PORT, () => {
   console.log(`[XPS Intelligence API] Listening on port ${PORT}`);
   console.log(
-    `[XPS Intelligence API] Groq: ${GROQ_API_KEY ? "configured" : "NOT configured — set GROQ_API_KEY"}`
+    `[XPS Intelligence API] Groq: ${GROQ_API_KEY ? "configured" : "NOT configured — set GROQ_API_KEY"}`,
   );
 });
 
