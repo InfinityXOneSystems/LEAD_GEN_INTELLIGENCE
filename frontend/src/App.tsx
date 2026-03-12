@@ -15,7 +15,9 @@ interface BackendStatus {
 // ── Status Bar ────────────────────────────────────────────────────────────────
 
 function StatusBar({ backendUrl }: { backendUrl: string }) {
-  const [status, setStatus] = useState<"checking" | "healthy" | "degraded">("checking");
+  const [status, setStatus] = useState<"checking" | "healthy" | "degraded">(
+    "checking",
+  );
   const [details, setDetails] = useState<BackendStatus | null>(null);
 
   useEffect(() => {
@@ -102,11 +104,13 @@ function LeadsPanel() {
     let mounted = true;
     const fetch = async () => {
       try {
-        const res = await apiClient.get<{ data: Lead[] } | Lead[]>("/api/leads");
+        const res = await apiClient.get<{ data: Lead[] } | Lead[]>(
+          "/api/leads",
+        );
         if (!mounted) return;
         const list = Array.isArray(res.data)
           ? res.data
-          : (res.data as { data: Lead[] }).data ?? [];
+          : ((res.data as { data: Lead[] }).data ?? []);
         setLeads(list.slice(0, 50));
       } catch (err: unknown) {
         if (!mounted) return;
@@ -116,7 +120,9 @@ function LeadsPanel() {
       }
     };
     fetch();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   if (loading) {
@@ -124,7 +130,14 @@ function LeadsPanel() {
   }
   if (error) {
     return (
-      <div style={{ color: "#ff4444", padding: "1rem", background: "#1a0000", borderRadius: 8 }}>
+      <div
+        style={{
+          color: "#ff4444",
+          padding: "1rem",
+          background: "#1a0000",
+          borderRadius: 8,
+        }}
+      >
         {error}
       </div>
     );
@@ -136,39 +149,60 @@ function LeadsPanel() {
         <thead>
           <tr>
             {["Company", "City", "Phone", "Email", "Score", "Tier"].map((h) => (
-              <th key={h} style={styles.th}>{h}</th>
+              <th key={h} style={styles.th}>
+                {h}
+              </th>
             ))}
           </tr>
         </thead>
         <tbody>
           {leads.length === 0 ? (
             <tr>
-              <td colSpan={6} style={{ ...styles.td, textAlign: "center", color: "#888" }}>
+              <td
+                colSpan={6}
+                style={{ ...styles.td, textAlign: "center", color: "#888" }}
+              >
                 No leads found. Run a scraper to populate leads.
               </td>
             </tr>
           ) : (
             leads.map((l, i) => (
-              <tr key={l.id ?? i} style={i % 2 === 0 ? styles.trEven : styles.trOdd}>
+              <tr
+                key={l.id ?? i}
+                style={i % 2 === 0 ? styles.trEven : styles.trOdd}
+              >
                 <td style={styles.td}>{l.name || l.company_name || "—"}</td>
-                <td style={styles.td}>{l.city && l.state ? `${l.city}, ${l.state}` : l.city || "—"}</td>
+                <td style={styles.td}>
+                  {l.city && l.state ? `${l.city}, ${l.state}` : l.city || "—"}
+                </td>
                 <td style={styles.td}>{l.phone || "—"}</td>
                 <td style={styles.td}>
                   {l.email ? (
                     <a href={`mailto:${l.email}`} style={{ color: "#FFD700" }}>
                       {l.email}
                     </a>
-                  ) : "—"}
+                  ) : (
+                    "—"
+                  )}
                 </td>
-                <td style={{ ...styles.td, textAlign: "center" }}>{l.lead_score ?? "—"}</td>
                 <td style={{ ...styles.td, textAlign: "center" }}>
-                  <span style={{
-                    background: l.tier === "HOT" ? "#ff4400" : l.tier === "WARM" ? "#ff8800" : "#333",
-                    color: "#fff",
-                    borderRadius: 4,
-                    padding: "2px 8px",
-                    fontSize: 11,
-                  }}>
+                  {l.lead_score ?? "—"}
+                </td>
+                <td style={{ ...styles.td, textAlign: "center" }}>
+                  <span
+                    style={{
+                      background:
+                        l.tier === "HOT"
+                          ? "#ff4400"
+                          : l.tier === "WARM"
+                            ? "#ff8800"
+                            : "#333",
+                      color: "#fff",
+                      borderRadius: 4,
+                      padding: "2px 8px",
+                      fontSize: 11,
+                    }}
+                  >
                     {l.tier || "—"}
                   </span>
                 </td>
@@ -222,7 +256,8 @@ function TaskStatusDemo() {
 
 const API_URL =
   typeof import.meta !== "undefined"
-    ? ((import.meta as { env?: Record<string, string> }).env?.VITE_API_URL ?? "")
+    ? ((import.meta as { env?: Record<string, string> }).env?.VITE_API_URL ??
+      "")
     : "";
 
 export default function App() {
@@ -238,7 +273,11 @@ export default function App() {
             Autonomous Lead Generation &amp; AI Control System
           </p>
         </div>
-        <StatusBar backendUrl={API_URL || "https://xpsintelligencesystem-production.up.railway.app"} />
+        <StatusBar
+          backendUrl={
+            API_URL || "https://xpsintelligencesystem-production.up.railway.app"
+          }
+        />
       </header>
 
       {/* Nav */}

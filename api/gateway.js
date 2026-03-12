@@ -1433,7 +1433,10 @@ async function proxyToAgentCore(req, res, targetPath) {
   try {
     const fetchOpts = {
       method: req.method,
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     };
     if (req.method !== "GET" && req.method !== "HEAD" && req.body) {
       fetchOpts.body = JSON.stringify(req.body);
@@ -1442,7 +1445,10 @@ async function proxyToAgentCore(req, res, targetPath) {
       method: req.method,
       url,
       data: fetchOpts.body ? JSON.parse(fetchOpts.body) : undefined,
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
       timeout: 30000,
       validateStatus: () => true,
     });
@@ -1470,7 +1476,9 @@ app.post("/api/v1/runtime/command", async (req, res) => {
 
   // Fallback: gateway-native inline task (no agent core available)
   const taskId = `gw-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
-  console.log(`[Gateway] Runtime command queued: ${command} target=${target || "—"} task=${taskId}`);
+  console.log(
+    `[Gateway] Runtime command queued: ${command} target=${target || "—"} task=${taskId}`,
+  );
   return res.status(201).json({
     task_id: taskId,
     status: "queued",
@@ -1483,12 +1491,18 @@ app.post("/api/v1/runtime/command", async (req, res) => {
 // GET /api/v1/runtime/task/:taskId — poll task status
 app.get("/api/v1/runtime/task/:taskId", async (req, res) => {
   if (process.env.AGENT_CORE_URL) {
-    return proxyToAgentCore(req, res, `/api/v1/runtime/task/${encodeURIComponent(req.params.taskId)}`);
+    return proxyToAgentCore(
+      req,
+      res,
+      `/api/v1/runtime/task/${encodeURIComponent(req.params.taskId)}`,
+    );
   }
   // Fallback: gateway-native stub
   const { taskId } = req.params;
   if (!taskId || taskId === "ping") {
-    return res.status(404).json({ success: false, error: "Task not found", task_id: taskId });
+    return res
+      .status(404)
+      .json({ success: false, error: "Task not found", task_id: taskId });
   }
   return res.json({
     task_id: taskId,
@@ -1513,7 +1527,10 @@ app.get("/api/v1/system/health", async (req, res) => {
     uptime: process.uptime(),
     checks: [
       { name: "gateway", status: "healthy" },
-      { name: "agent_core", status: process.env.AGENT_CORE_URL ? "reachable" : "not_configured" },
+      {
+        name: "agent_core",
+        status: process.env.AGENT_CORE_URL ? "reachable" : "not_configured",
+      },
     ],
     timestamp: new Date().toISOString(),
   });
@@ -1531,7 +1548,12 @@ app.get("/api/v1/system/metrics", async (req, res) => {
       counters: {},
       gauges: { memory_heap_mb: Math.round(mem.heapUsed / 1024 / 1024) },
     },
-    worker_stats: { queue_size: 0, tasks_last_hour: 0, successes_last_hour: 0, failures_last_hour: 0 },
+    worker_stats: {
+      queue_size: 0,
+      tasks_last_hour: 0,
+      successes_last_hour: 0,
+      failures_last_hour: 0,
+    },
     queue_size: 0,
     circuit_breakers: {},
   });
@@ -1542,7 +1564,11 @@ app.get("/api/v1/system/tasks", async (req, res) => {
   if (process.env.AGENT_CORE_URL) {
     return proxyToAgentCore(req, res, "/api/v1/system/tasks");
   }
-  return res.json({ tasks: [], total: 0, note: "Set AGENT_CORE_URL for full task tracking." });
+  return res.json({
+    tasks: [],
+    total: 0,
+    note: "Set AGENT_CORE_URL for full task tracking.",
+  });
 });
 
 // GET /api/v1/system/agent-activity — agent activity feed
@@ -1550,7 +1576,11 @@ app.get("/api/v1/system/agent-activity", async (req, res) => {
   if (process.env.AGENT_CORE_URL) {
     return proxyToAgentCore(req, res, "/api/v1/system/agent-activity");
   }
-  return res.json({ entries: [], total: 0, note: "Set AGENT_CORE_URL for live agent activity." });
+  return res.json({
+    entries: [],
+    total: 0,
+    note: "Set AGENT_CORE_URL for live agent activity.",
+  });
 });
 
 // GET /health  – top-level health check (no auth; used by Railway, Vercel, and monitoring)

@@ -112,8 +112,9 @@ export async function getSystemHealth(): Promise<{
  * Fetch system runtime metrics.
  */
 export async function getSystemMetrics(): Promise<SystemMetricsResponse> {
-  const response =
-    await apiClient.get<SystemMetricsResponse>("/api/v1/system/metrics");
+  const response = await apiClient.get<SystemMetricsResponse>(
+    "/api/v1/system/metrics",
+  );
   return response.data;
 }
 
