@@ -56,11 +56,27 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Copy latest lead data to public
-        working-directory: ${{ github.workspace }}
+      - name: Copy latest leads data into static assets
         run: |
-          cp -f data/scored_leads.json dashboard/public/data/scored_leads.json || true
-          cp -f data/scoring_report.json dashboard/public/data/scoring_report.json || true
+          mkdir -p public/data
+          if [ -f ../leads/scored_leads.json ]; then
+            cp ../leads/scored_leads.json public/data/scored_leads.json
+            echo "Copied scored_leads.json ($(wc -l < ../leads/scored_leads.json) lines)"
+          elif [ -f ../data/scored_leads.json ]; then
+            cp ../data/scored_leads.json public/data/scored_leads.json
+            echo "Copied scored_leads.json from data/"
+          else
+            echo "WARNING: scored_leads.json not found, using existing public/data/scored_leads.json"
+          fi
+          if [ -f ../leads/scoring_report.json ]; then
+            cp ../leads/scoring_report.json public/data/scoring_report.json
+            echo "Copied scoring_report.json"
+          elif [ -f ../data/scoring_report.json ]; then
+            cp ../data/scoring_report.json public/data/scoring_report.json
+            echo "Copied scoring_report.json from data/"
+          else
+            echo "WARNING: scoring_report.json not found, using existing public/data/scoring_report.json"
+          fi
 
       - name: Build with Next.js
         run: npm run build
