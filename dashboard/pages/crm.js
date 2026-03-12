@@ -61,7 +61,57 @@ export default function CRMPage() {
       setTotalPages(cr.pages || 1);
       setStats(sr);
     } catch (e) {
-      console.error(e);
+      // Fall back to static scored_leads data when API is unavailable
+      try {
+        const staticBase =
+          typeof window !== "undefined"
+            ? process.env.NEXT_PUBLIC_BASE_PATH || ""
+            : "";
+        const res = await fetch(`${staticBase}/data/scored_leads.json`);
+        if (res.ok) {
+          let leads = await res.json();
+          // Apply client-side filters
+          if (activeStage !== "all")
+            leads = leads.filter((l) => (l.status || "new") === activeStage);
+          if (activeTier !== "all")
+            leads = leads.filter((l) => (l.tier || "").toUpperCase() === activeTier.toUpperCase());
+          if (search) {
+            const q = search.toLowerCase();
+            leads = leads.filter(
+              (l) =>
+                (l.company || l.company_name || "").toLowerCase().includes(q) ||
+                (l.city || "").toLowerCase().includes(q),
+            );
+          }
+          const pageLeads = leads.slice((page - 1) * 50, page * 50);
+          setContacts(
+            pageLeads.map((l) => ({
+              id: l.id,
+              company_name: l.company || l.company_name || "",
+              phone: l.phone || "",
+              email: l.email || "",
+              city: l.city || "",
+              state: l.state || "",
+              lead_score: l.lead_score ?? l.score ?? 0,
+              tier: l.tier || "COLD",
+              stage: l.status || "new",
+              industry: l.industry || "",
+              website: l.website || "",
+              notes: [],
+              outreach_log: [],
+            })),
+          );
+          setTotalPages(Math.max(1, Math.ceil(leads.length / 50)));
+          const tierCounts = leads.reduce((acc, l) => {
+            const t = (l.tier || "COLD").toUpperCase();
+            acc[t] = (acc[t] || 0) + 1;
+            return acc;
+          }, {});
+          setStats({ total: leads.length, by_tier: tierCounts });
+        }
+      } catch {
+        // ignore
+      }
     }
     setLoading(false);
   }, [activeStage, activeTier, search, page]);

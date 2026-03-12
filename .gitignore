@@ -17,8 +17,9 @@ data/leads/scoring_report.json
 data/leads/leads.json
 
 # Legacy frontend data directories (UI moved to xps-intelligence-frontend)
-dashboard/public/data/
 pages/data/
+
+# dashboard/public/data/ contains static JSON served by GitHub Pages — tracked intentionally
 
 # Build / cache artifacts
 dist/

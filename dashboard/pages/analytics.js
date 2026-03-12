@@ -10,6 +10,39 @@ const API_URL =
     ? process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
     : "http://localhost:8000";
 
+const STATIC_URL =
+  (typeof window !== "undefined" ? process.env.NEXT_PUBLIC_BASE_PATH || "" : "") +
+  "/data/analytics.json";
+
+async function loadAnalyticsData() {
+  let metrics = null, tasks = null, health = null;
+  try {
+    [metrics, tasks, health] = await Promise.all([
+      fetch(`${API_URL}/api/v1/system/metrics`).then((r) => r.json()).catch(() => null),
+      fetch(`${API_URL}/api/v1/system/tasks`).then((r) => r.json()).catch(() => null),
+      fetch(`${API_URL}/health`).then((r) => r.json()).catch(() => null),
+    ]);
+  } catch {
+    // API unavailable
+  }
+
+  // Fall back to static data if API is unavailable
+  if (!metrics && !health) {
+    try {
+      const res = await fetch(STATIC_URL);
+      if (res.ok) {
+        const d = await res.json();
+        health = d.health || null;
+        metrics = d.metrics || null;
+        tasks = d.tasks || null;
+      }
+    } catch {
+      // static fallback also unavailable
+    }
+  }
+  return [metrics, tasks, health];
+}
+
 export default function AnalyticsPage() {
   const [metrics, setMetrics] = useState(null);
   const [tasks, setTasks] = useState(null);
@@ -17,17 +50,7 @@ export default function AnalyticsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([
-      fetch(`${API_URL}/api/v1/system/metrics`)
-        .then((r) => r.json())
-        .catch(() => null),
-      fetch(`${API_URL}/api/v1/system/tasks`)
-        .then((r) => r.json())
-        .catch(() => null),
-      fetch(`${API_URL}/health`)
-        .then((r) => r.json())
-        .catch(() => null),
-    ]).then(([m, t, h]) => {
+    loadAnalyticsData().then(([m, t, h]) => {
       setMetrics(m);
       setTasks(t);
       setHealth(h);
@@ -37,17 +60,7 @@ export default function AnalyticsPage() {
 
   const refresh = () => {
     setLoading(true);
-    Promise.all([
-      fetch(`${API_URL}/api/v1/system/metrics`)
-        .then((r) => r.json())
-        .catch(() => null),
-      fetch(`${API_URL}/api/v1/system/tasks`)
-        .then((r) => r.json())
-        .catch(() => null),
-      fetch(`${API_URL}/health`)
-        .then((r) => r.json())
-        .catch(() => null),
-    ]).then(([m, t, h]) => {
+    loadAnalyticsData().then(([m, t, h]) => {
       setMetrics(m);
       setTasks(t);
       setHealth(h);
@@ -158,6 +171,29 @@ export default function AnalyticsPage() {
                     ),
                   )}
                 </div>
+              </div>
+            )}
+
+            {/* Lead Stats from static data */}
+            {metrics?.total_leads > 0 && (
+              <div style={S.section}>
+                <h2 style={S.sectionTitle}>📋 Lead Database</h2>
+                <div style={S.statGrid}>
+                  <StatCard label="Total Leads" value={metrics.total_leads ?? 0} color="#FFD700" />
+                  <StatCard label="HOT Leads" value={metrics.hot_leads ?? 0} color="#ef4444" />
+                  <StatCard label="WARM Leads" value={metrics.warm_leads ?? 0} color="#f97316" />
+                  <StatCard label="Avg Score" value={metrics.average_score ?? 0} color="#4ade80" />
+                </div>
+                {metrics.industries && (
+                  <div style={{ marginTop: "1rem" }}>
+                    <h3 style={{ ...S.sectionTitle, marginBottom: "0.5rem" }}>By Industry</h3>
+                    <div style={S.statGrid}>
+                      {Object.entries(metrics.industries).map(([ind, cnt]) => (
+                        <StatCard key={ind} label={ind} value={cnt} color="#7dd3fc" />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 

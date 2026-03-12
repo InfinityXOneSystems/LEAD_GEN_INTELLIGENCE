@@ -6,6 +6,8 @@ on:
     branches: ["main"]
     paths:
       - 'dashboard/**'
+      - 'data/**'
+      - 'leads/**'
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -38,6 +40,7 @@ jobs:
           cache-dependency-path: dashboard/package-lock.json
 
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
@@ -53,8 +56,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Copy latest lead data to public
+        working-directory: ${{ github.workspace }}
+        run: |
+          cp -f data/scored_leads.json dashboard/public/data/scored_leads.json || true
+          cp -f data/scoring_report.json dashboard/public/data/scoring_report.json || true
+
       - name: Build with Next.js
         run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
