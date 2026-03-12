@@ -96,13 +96,17 @@ async function main() {
   for (const filePath of LEAD_FILES) {
     const leads = loadJson(filePath);
     if (leads.length > 0) {
-      console.log(`[migrate]   Loaded ${leads.length} leads from ${path.relative(ROOT, filePath)}`);
+      console.log(
+        `[migrate]   Loaded ${leads.length} leads from ${path.relative(ROOT, filePath)}`,
+      );
       allLeads = allLeads.concat(leads);
     }
   }
 
   if (allLeads.length === 0) {
-    console.log("[migrate] No leads found in local JSON files. Nothing to migrate.");
+    console.log(
+      "[migrate] No leads found in local JSON files. Nothing to migrate.",
+    );
     return;
   }
 

@@ -85,9 +85,7 @@ export default function LeadsPage() {
     }
     if (cityFilter) {
       const q = cityFilter.toLowerCase();
-      result = result.filter((l) =>
-        (l.city || "").toLowerCase().includes(q),
-      );
+      result = result.filter((l) => (l.city || "").toLowerCase().includes(q));
     }
     if (minScore) {
       const ms = Number(minScore);
@@ -157,7 +155,10 @@ export default function LeadsPage() {
               style={styles.filterInput}
               placeholder="Search…"
               value={search}
-              onChange={(e) => { setSearch(e.target.value); setPage(0); }}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(0);
+              }}
             />
             <input
               style={styles.filterInput}
