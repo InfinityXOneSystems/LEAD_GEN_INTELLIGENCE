@@ -6,6 +6,7 @@ on:
     branches: ["main"]
     paths:
       - 'dashboard/**'
+      - '.github/workflows/nextjs.yml'
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -38,6 +39,7 @@ jobs:
           cache-dependency-path: dashboard/package-lock.json
 
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
@@ -54,7 +56,16 @@ jobs:
         run: npm ci
 
       - name: Build with Next.js
+        env:
+          # GitHub Pages serves from /<repo-name>/ — set basePath so Next.js
+          # links and asset URLs are rooted correctly.
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          NEXT_PUBLIC_API_URL: "https://xpsintelligencesystem-production.up.railway.app"
+          NEXT_PUBLIC_GATEWAY_URL: "https://xpsintelligencesystem-production.up.railway.app"
         run: npm run build
+
+      - name: Add .nojekyll to disable Jekyll processing
+        run: touch out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -71,3 +82,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+

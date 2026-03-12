@@ -468,7 +468,7 @@ app.get("/api/scraper/logs", (req, res) => {
 app.post("/api/scraper/results", (req, res) => {
   try {
     const { job_id, results = [] } = req.body;
-    const leads = loadLeads();
+    const leads = loadLeadsFromFile();
     const list = Array.isArray(leads) ? leads : [];
     let added = 0;
     results.forEach((r) => {
@@ -644,7 +644,7 @@ app.get("/api/tools", (req, res) => {
 // GET /api/stats
 app.get("/api/stats", (req, res) => {
   try {
-    const leads = loadLeads();
+    const leads = loadLeadsFromFile();
     const list = Array.isArray(leads) ? leads : [];
     const scores = list.map((l) => l.score || 0).filter((s) => s > 0);
     const avgScore = scores.length
@@ -746,7 +746,7 @@ app.post("/api/outreach/send", async (req, res) => {
   const { leadId, template, campaignId } = req.body;
   if (!leadId) return fail(res, "leadId required", 400);
   try {
-    const leads = loadLeads();
+    const leads = loadLeadsFromFile();
     const list = Array.isArray(leads) ? leads : [];
     const lead = list.find(
       (l) => String(l.id) === String(leadId) || l.place_id === String(leadId),
@@ -842,7 +842,7 @@ app.post("/api/outreach/campaigns", (req, res) => {
     }
 
     // Count matching leads for target_count
-    const leads = loadLeads();
+    const leads = loadLeadsFromFile();
     const list = Array.isArray(leads) ? leads : [];
     const minScore = typeof min_score === "number" ? min_score : 0;
     const industryLower = industry ? industry.toLowerCase() : null;
@@ -905,7 +905,7 @@ app.get("/api/monitoring/health", (req, res) => {
 // GET /api/heatmap
 app.get("/api/heatmap", (req, res) => {
   try {
-    const leads = loadLeads();
+    const leads = loadLeadsFromFile();
     const list = Array.isArray(leads) ? leads : [];
 
     const cityMap = {};
@@ -1414,6 +1414,145 @@ app.get("/webhooks/info", (req, res) => {
   });
 });
 
+// ── /api/v1/runtime/* – Runtime command proxy ─────────────────────────────────
+// Proxies runtime API calls to the FastAPI agent core when AGENT_CORE_URL is
+// set; falls back to inline responses so the frontend always gets a valid reply.
+//
+// Frontend runtimeClient.ts calls:
+//   POST /api/v1/runtime/command
+//   GET  /api/v1/runtime/task/:id
+//   GET  /api/v1/system/health
+//   GET  /api/v1/system/metrics
+//   GET  /api/v1/system/tasks
+//   GET  /api/v1/system/agent-activity
+
+/** Forward a request to the FastAPI agent core and pipe the response back. */
+async function proxyToAgentCore(req, res, targetPath) {
+  const agentUrl = process.env.AGENT_CORE_URL || "http://localhost:8000";
+  const url = `${agentUrl}${targetPath}`;
+  try {
+    const fetchOpts = {
+      method: req.method,
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+    };
+    if (req.method !== "GET" && req.method !== "HEAD" && req.body) {
+      fetchOpts.body = JSON.stringify(req.body);
+    }
+    const upstream = await axios({
+      method: req.method,
+      url,
+      data: fetchOpts.body ? JSON.parse(fetchOpts.body) : undefined,
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      timeout: 30000,
+      validateStatus: () => true,
+    });
+    return res.status(upstream.status).json(upstream.data);
+  } catch (err) {
+    // Agent core not reachable — return a 503 with diagnostic info
+    return res.status(503).json({
+      success: false,
+      error: "Agent core unavailable",
+      detail: err.message,
+      hint: "Set AGENT_CORE_URL to point to the FastAPI backend service.",
+    });
+  }
+}
+
+// POST /api/v1/runtime/command — submit a command to the runtime engine
+app.post("/api/v1/runtime/command", async (req, res) => {
+  const { command, target, parameters } = req.body || {};
+  if (!command) return fail(res, "command is required", 400);
+
+  // Try to forward to FastAPI agent core
+  if (process.env.AGENT_CORE_URL) {
+    return proxyToAgentCore(req, res, "/api/v1/runtime/command");
+  }
+
+  // Fallback: gateway-native inline task (no agent core available)
+  const taskId = `gw-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+  console.log(`[Gateway] Runtime command queued: ${command} target=${target || "—"} task=${taskId}`);
+  return res.status(201).json({
+    task_id: taskId,
+    status: "queued",
+    command,
+    target: target || null,
+    note: "Queued by API Gateway (agent core not configured). Set AGENT_CORE_URL to enable full runtime.",
+  });
+});
+
+// GET /api/v1/runtime/task/:taskId — poll task status
+app.get("/api/v1/runtime/task/:taskId", async (req, res) => {
+  if (process.env.AGENT_CORE_URL) {
+    return proxyToAgentCore(req, res, `/api/v1/runtime/task/${encodeURIComponent(req.params.taskId)}`);
+  }
+  // Fallback: gateway-native stub
+  const { taskId } = req.params;
+  if (!taskId || taskId === "ping") {
+    return res.status(404).json({ success: false, error: "Task not found", task_id: taskId });
+  }
+  return res.json({
+    task_id: taskId,
+    status: "completed",
+    command: "unknown",
+    logs: ["Task handled by API Gateway (agent core not configured)"],
+    result: null,
+    note: "Set AGENT_CORE_URL to enable full runtime task tracking.",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  });
+});
+
+// GET /api/v1/system/health — runtime system health
+app.get("/api/v1/system/health", async (req, res) => {
+  if (process.env.AGENT_CORE_URL) {
+    return proxyToAgentCore(req, res, "/api/v1/system/health");
+  }
+  return res.json({
+    status: "healthy",
+    service: "XPS Intelligence API Gateway",
+    uptime: process.uptime(),
+    checks: [
+      { name: "gateway", status: "healthy" },
+      { name: "agent_core", status: process.env.AGENT_CORE_URL ? "reachable" : "not_configured" },
+    ],
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// GET /api/v1/system/metrics — runtime metrics
+app.get("/api/v1/system/metrics", async (req, res) => {
+  if (process.env.AGENT_CORE_URL) {
+    return proxyToAgentCore(req, res, "/api/v1/system/metrics");
+  }
+  const mem = process.memoryUsage();
+  return res.json({
+    metrics: {
+      uptime_seconds: process.uptime(),
+      counters: {},
+      gauges: { memory_heap_mb: Math.round(mem.heapUsed / 1024 / 1024) },
+    },
+    worker_stats: { queue_size: 0, tasks_last_hour: 0, successes_last_hour: 0, failures_last_hour: 0 },
+    queue_size: 0,
+    circuit_breakers: {},
+  });
+});
+
+// GET /api/v1/system/tasks — recent tasks list
+app.get("/api/v1/system/tasks", async (req, res) => {
+  if (process.env.AGENT_CORE_URL) {
+    return proxyToAgentCore(req, res, "/api/v1/system/tasks");
+  }
+  return res.json({ tasks: [], total: 0, note: "Set AGENT_CORE_URL for full task tracking." });
+});
+
+// GET /api/v1/system/agent-activity — agent activity feed
+app.get("/api/v1/system/agent-activity", async (req, res) => {
+  if (process.env.AGENT_CORE_URL) {
+    return proxyToAgentCore(req, res, "/api/v1/system/agent-activity");
+  }
+  return res.json({ entries: [], total: 0, note: "Set AGENT_CORE_URL for live agent activity." });
+});
+
 // GET /health  – top-level health check (no auth; used by Railway, Vercel, and monitoring)
 app.get("/health", (req, res) => {
   return res.json({ status: "OK", timestamp: new Date().toISOString() });
@@ -1443,7 +1582,7 @@ app.get("/api", (req, res) => {
 
 // GET /api/status  – alias for health check (some UIs expect this path)
 app.get("/api/status", (req, res) => {
-  const leads = loadLeads();
+  const leads = loadLeadsFromFile();
   const list = Array.isArray(leads) ? leads : [];
   return res.json({
     success: true,
