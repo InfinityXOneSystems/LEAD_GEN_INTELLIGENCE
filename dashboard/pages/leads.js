@@ -2,17 +2,28 @@
 // =========================
 // XPS Intelligence – Leads Viewer
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
+
+const STATIC_DATA_URL =
+  (process.env.NEXT_PUBLIC_BASE_PATH || "") + "/data/scored_leads.json";
 
 const GATEWAY_URL =
   typeof window !== "undefined"
     ? process.env.NEXT_PUBLIC_GATEWAY_URL || "http://localhost:3200"
     : "http://localhost:3200";
 
+/** Normalise a raw lead record to the shape the table expects. */
+function normaliseLead(l) {
+  return {
+    ...l,
+    company_name: l.company_name || l.company || l.name || "",
+    lead_score: l.lead_score ?? l.score ?? 0,
+  };
+}
+
 export default function LeadsPage() {
-  const [leads, setLeads] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [allLeads, setAllLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [cityFilter, setCityFilter] = useState("");
@@ -20,38 +31,74 @@ export default function LeadsPage() {
   const [page, setPage] = useState(0);
   const PAGE_SIZE = 50;
 
-  const fetchLeads = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams({
-        limit: String(PAGE_SIZE),
-        offset: String(page * PAGE_SIZE),
-      });
-      if (cityFilter) params.set("city", cityFilter);
-      if (minScore) params.set("minScore", minScore);
-      const res = await fetch(`${GATEWAY_URL}/api/leads?${params}`);
-      const data = await res.json();
-      const arr = data.data?.leads || data.leads || [];
-      setLeads(arr);
-      setTotal(data.data?.total || arr.length);
-    } catch {
-      setLeads([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [page, cityFilter, minScore]);
-
   useEffect(() => {
-    fetchLeads();
-  }, [fetchLeads]);
+    let cancelled = false;
 
-  const filtered = search
-    ? leads.filter(
+    async function load() {
+      setLoading(true);
+      try {
+        // Try live gateway first; fall back to bundled static data.
+        let arr = [];
+        try {
+          const res = await fetch(`${GATEWAY_URL}/api/leads?limit=5000`); // load all leads for client-side filtering
+          if (res.ok) {
+            const data = await res.json();
+            arr = data.data?.leads || data.leads || [];
+          }
+        } catch {
+          // Gateway unreachable (expected on GitHub Pages)
+        }
+
+        if (arr.length === 0) {
+          const res = await fetch(STATIC_DATA_URL);
+          if (res.ok) {
+            arr = await res.json();
+          }
+        }
+
+        if (!cancelled) {
+          setAllLeads(arr.map(normaliseLead));
+        }
+      } catch {
+        if (!cancelled) setAllLeads([]);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Client-side filtering
+  const filtered = useMemo(() => {
+    let result = allLeads;
+    if (search) {
+      const q = search.toLowerCase();
+      result = result.filter(
         (l) =>
-          (l.company_name || "").toLowerCase().includes(search.toLowerCase()) ||
-          (l.city || "").toLowerCase().includes(search.toLowerCase()),
-      )
-    : leads;
+          (l.company_name || "").toLowerCase().includes(q) ||
+          (l.city || "").toLowerCase().includes(q),
+      );
+    }
+    if (cityFilter) {
+      const q = cityFilter.toLowerCase();
+      result = result.filter((l) =>
+        (l.city || "").toLowerCase().includes(q),
+      );
+    }
+    if (minScore) {
+      const ms = Number(minScore);
+      result = result.filter((l) => l.lead_score >= ms);
+    }
+    return result;
+  }, [allLeads, search, cityFilter, minScore]);
+
+  const total = filtered.length;
+  const pageLeads = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   const exportCsv = () => {
     const cols = [
@@ -65,7 +112,7 @@ export default function LeadsPage() {
       "rating",
     ];
     const rows = [cols.join(",")];
-    for (const l of leads) {
+    for (const l of filtered) {
       rows.push(
         cols
           .map((c) => `"${String(l[c] || "").replace(/"/g, '""')}"`)
@@ -110,7 +157,7 @@ export default function LeadsPage() {
               style={styles.filterInput}
               placeholder="Search…"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => { setSearch(e.target.value); setPage(0); }}
             />
             <input
               style={styles.filterInput}
@@ -164,9 +211,9 @@ export default function LeadsPage() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((l, i) => (
+                {pageLeads.map((l, i) => (
                   <tr key={i} style={{ borderBottom: "1px solid #0f0f0f" }}>
-                    <td style={styles.td}>{l.company_name || l.name || "—"}</td>
+                    <td style={styles.td}>{l.company_name || "—"}</td>
                     <td style={{ ...styles.td, color: "#aaa" }}>
                       {l.city || "—"}
                     </td>
@@ -204,7 +251,7 @@ export default function LeadsPage() {
                     </td>
                   </tr>
                 ))}
-                {filtered.length === 0 && (
+                {pageLeads.length === 0 && (
                   <tr>
                     <td
                       colSpan={7}
@@ -238,15 +285,15 @@ export default function LeadsPage() {
             ← Prev
           </button>
           <span style={{ color: "#888", fontSize: "0.875rem" }}>
-            Page {page + 1}
+            Page {page + 1} of {totalPages}
           </span>
           <button
             style={{
               ...styles.pageBtn,
-              opacity: leads.length < PAGE_SIZE ? 0.3 : 1,
+              opacity: page + 1 >= totalPages ? 0.3 : 1,
             }}
             onClick={() => setPage((p) => p + 1)}
-            disabled={leads.length < PAGE_SIZE}
+            disabled={page + 1 >= totalPages}
           >
             Next →
           </button>
