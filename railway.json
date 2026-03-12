@@ -7,7 +7,7 @@
   "deploy": {
     "runtime": "V2",
     "numReplicas": 1,
-    "startCommand": "npm run db:migrate && node api/gateway.js",
+    "startCommand": "node server.js",
     "healthcheckPath": "/api/health",
     "preDeployCommand": ["npm run db:migrate"],
     "sleepApplication": false,
