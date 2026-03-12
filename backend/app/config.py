@@ -48,6 +48,9 @@ class Settings(BaseSettings):
     # ── Scraper / Worker ─────────────────────────────────────────────────────
     SCRAPER_CONCURRENCY: int = 10
     MAX_LEADS_PER_DAY: int = 100000
+    # Shadow REST Scraper settings (no API keys required)
+    PLAYWRIGHT_ENABLED: bool = True
+    SCRAPER_TIMEOUT: int = 20
 
     # Derived
     @property
