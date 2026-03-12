@@ -16,7 +16,10 @@ const {
   getLeadById,
   deleteLead,
 } = require("../db/supabaseLeadStore");
-const { supabase, isConfigured: supabaseConfigured } = require("../db/supabaseClient");
+const {
+  supabase,
+  isConfigured: supabaseConfigured,
+} = require("../db/supabaseClient");
 
 const ROOT = path.join(__dirname, "..");
 const LEADS_DIR = path.join(ROOT, "leads");
@@ -218,10 +221,17 @@ app.get("/api/leads", async (req, res) => {
           (l) => l.state && l.state.toLowerCase() === state.toLowerCase(),
         );
       if (minScore)
-        result = result.filter((l) => (l.lead_score || l.score || 0) >= Number(minScore));
+        result = result.filter(
+          (l) => (l.lead_score || l.score || 0) >= Number(minScore),
+        );
       const total = result.length;
       result = result.slice(Number(offset), Number(offset) + Number(limit));
-      return ok(res, { leads: result, total, offset: Number(offset), limit: Number(limit) });
+      return ok(res, {
+        leads: result,
+        total,
+        offset: Number(offset),
+        limit: Number(limit),
+      });
     }
 
     let query = supabase
@@ -237,7 +247,10 @@ app.get("/api/leads", async (req, res) => {
     const { data, count, error } = await query;
 
     if (error) {
-      console.error("[gateway] Supabase /api/leads query error:", error.message);
+      console.error(
+        "[gateway] Supabase /api/leads query error:",
+        error.message,
+      );
       return fail(res, error.message);
     }
 
@@ -294,7 +307,8 @@ app.put("/api/leads/:id", async (req, res) => {
       .select()
       .single();
 
-    if (error || !data) return fail(res, error ? error.message : "Lead not found", 404);
+    if (error || !data)
+      return fail(res, error ? error.message : "Lead not found", 404);
     return res.json(data);
   } catch (err) {
     return fail(res, err.message);
@@ -325,12 +339,16 @@ app.post("/api/leads/:id/assign", async (req, res) => {
     };
     const { data, error } = await supabase
       .from("leads")
-      .update({ metadata: updatedMetadata, updated_at: new Date().toISOString() })
+      .update({
+        metadata: updatedMetadata,
+        updated_at: new Date().toISOString(),
+      })
       .eq("id", req.params.id)
       .select()
       .single();
 
-    if (error || !data) return fail(res, error ? error.message : "Lead not found", 404);
+    if (error || !data)
+      return fail(res, error ? error.message : "Lead not found", 404);
     return res.json(data);
   } catch (err) {
     return fail(res, err.message);
@@ -347,7 +365,8 @@ app.put("/api/leads/:id/status", async (req, res) => {
       .select()
       .single();
 
-    if (error || !data) return fail(res, error ? error.message : "Lead not found", 404);
+    if (error || !data)
+      return fail(res, error ? error.message : "Lead not found", 404);
     return res.json(data);
   } catch (err) {
     return fail(res, err.message);
@@ -370,7 +389,8 @@ app.post("/api/leads/:id/notes", async (req, res) => {
       .select()
       .single();
 
-    if (error || !data) return fail(res, error ? error.message : "Update failed", 500);
+    if (error || !data)
+      return fail(res, error ? error.message : "Update failed", 500);
     return res.json(data);
   } catch (err) {
     return fail(res, err.message);
