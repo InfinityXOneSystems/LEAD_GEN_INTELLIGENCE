@@ -52,17 +52,35 @@ export default function TrendsPage() {
       fetch(`${base}/api/v1/intelligence/niches`)
         .then((r) => r.json())
         .catch(() => null),
-    ]).then(([t, n]) => {
-      const tList = Array.isArray(t?.trends)
+    ]).then(async ([t, n]) => {
+      let tList = Array.isArray(t?.trends)
         ? t.trends
         : Array.isArray(t)
           ? t
           : [];
-      const nList = Array.isArray(n?.niches)
+      let nList = Array.isArray(n?.niches)
         ? n.niches
         : Array.isArray(n)
           ? n
           : [];
+
+      // Fall back to static data if API is unavailable
+      if (tList.length === 0 && nList.length === 0) {
+        try {
+          const staticBase =
+            typeof window !== "undefined"
+              ? process.env.NEXT_PUBLIC_BASE_PATH || ""
+              : "";
+          const res = await fetch(`${staticBase}/data/trends.json`);
+          if (res.ok) {
+            const d = await res.json();
+            tList = Array.isArray(d.trends) ? d.trends : [];
+            nList = Array.isArray(d.niches) ? d.niches : [];
+          }
+        } catch {
+          // ignore
+        }
+      }
       setTrends(tList);
       setNiches(nList);
       setLoading(false);

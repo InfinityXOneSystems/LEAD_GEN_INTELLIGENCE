@@ -21,8 +21,16 @@
 
   "rewrites": [
     {
+      "source": "/api/v1/(.*)",
+      "destination": "https://xpsintelligencesystem-production.up.railway.app/api/v1/$1"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "https://xpsintelligencesystem-production.up.railway.app/api/$1"
+    },
+    {
+      "source": "/health",
+      "destination": "https://xpsintelligencesystem-production.up.railway.app/health"
     }
   ],
 

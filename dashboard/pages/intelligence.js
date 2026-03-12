@@ -10,6 +10,11 @@ function getApiBase() {
   return process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 }
 
+function getStaticBase() {
+  if (typeof window === "undefined") return "";
+  return process.env.NEXT_PUBLIC_BASE_PATH || "";
+}
+
 export default function IntelligencePage() {
   const [status, setStatus] = useState(null);
   const [briefing, setBriefing] = useState(null);
@@ -20,6 +25,7 @@ export default function IntelligencePage() {
 
   const load = () => {
     const base = getApiBase();
+    const staticBase = getStaticBase();
     setLoading(true);
     Promise.all([
       fetch(`${base}/api/v1/intelligence/vision-cortex/status`)
@@ -31,7 +37,21 @@ export default function IntelligencePage() {
       fetch(`${base}/api/v1/intelligence/niches`)
         .then((r) => r.json())
         .catch(() => null),
-    ]).then(([s, b, n]) => {
+    ]).then(async ([s, b, n]) => {
+      // Fall back to static data if API is unavailable
+      if (!s && !b && !n) {
+        try {
+          const res = await fetch(`${staticBase}/data/intelligence.json`);
+          if (res.ok) {
+            const d = await res.json();
+            s = d.status || null;
+            b = d.briefing || null;
+            n = { niches: d.niches || [] };
+          }
+        } catch {
+          // ignore
+        }
+      }
       setStatus(s);
       setBriefing(b);
       setNiches(n);
@@ -50,7 +70,7 @@ export default function IntelligencePage() {
     fetch(`${base}/api/v1/intelligence/vision-cortex/run`, { method: "POST" })
       .then((r) => r.json())
       .then((d) => setRunMsg(d?.message || "Scrape started"))
-      .catch(() => setRunMsg("Failed to start scrape"))
+      .catch(() => setRunMsg("API unavailable — running in static mode"))
       .finally(() => setRunning(false));
   };
 
