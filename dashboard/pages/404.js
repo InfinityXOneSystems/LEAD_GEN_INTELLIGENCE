@@ -10,9 +10,7 @@ export default function NotFound() {
       <div style={styles.box}>
         <div style={styles.code}>404</div>
         <h1 style={styles.title}>Page Not Found</h1>
-        <p style={styles.desc}>
-          The page you requested could not be found.
-        </p>
+        <p style={styles.desc}>The page you requested could not be found.</p>
         <Link href="/" style={styles.btn}>
           ⚡ Back to Dashboard
         </Link>

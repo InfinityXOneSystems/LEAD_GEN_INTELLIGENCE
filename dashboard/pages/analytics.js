@@ -21,10 +21,16 @@ async function loadStaticAnalytics() {
   const [report, leads] = await Promise.all([
     fetch(STATIC_REPORT_URL)
       .then((r) => r.json())
-      .catch((err) => { console.warn("[Analytics] Failed to load scoring_report.json:", err); return null; }),
+      .catch((err) => {
+        console.warn("[Analytics] Failed to load scoring_report.json:", err);
+        return null;
+      }),
     fetch(STATIC_LEADS_URL)
       .then((r) => r.json())
-      .catch((err) => { console.warn("[Analytics] Failed to load scored_leads.json:", err); return []; }),
+      .catch((err) => {
+        console.warn("[Analytics] Failed to load scored_leads.json:", err);
+        return [];
+      }),
   ]);
   return { report, leads: Array.isArray(leads) ? leads : [] };
 }
@@ -176,13 +182,18 @@ export default function AnalyticsPage() {
                   <table style={S.table}>
                     <thead>
                       <tr>
-                        {["Company", "City", "State", "Score", "Tier", "Industry"].map(
-                          (h) => (
-                            <th key={h} style={S.th}>
-                              {h}
-                            </th>
-                          ),
-                        )}
+                        {[
+                          "Company",
+                          "City",
+                          "State",
+                          "Score",
+                          "Tier",
+                          "Industry",
+                        ].map((h) => (
+                          <th key={h} style={S.th}>
+                            {h}
+                          </th>
+                        ))}
                       </tr>
                     </thead>
                     <tbody>
@@ -197,7 +208,13 @@ export default function AnalyticsPage() {
                           <td style={{ ...S.td, color: "#aaa" }}>
                             {l.state || "—"}
                           </td>
-                          <td style={{ ...S.td, color: "#FFD700", fontWeight: 600 }}>
+                          <td
+                            style={{
+                              ...S.td,
+                              color: "#FFD700",
+                              fontWeight: 600,
+                            }}
+                          >
                             {l.lead_score ?? l.score ?? 0}
                           </td>
                           <td
@@ -261,7 +278,11 @@ export default function AnalyticsPage() {
                     value={tasks?.total ?? 0}
                     color="#FFD700"
                   />
-                  <StatCard label="Completed" value={completed} color="#4ade80" />
+                  <StatCard
+                    label="Completed"
+                    value={completed}
+                    color="#4ade80"
+                  />
                   <StatCard label="Queued" value={queued} color="#7dd3fc" />
                   <StatCard label="Failed" value={failed} color="#f87171" />
                 </div>
@@ -441,4 +462,3 @@ const S = {
   td: { padding: "0.6rem 1rem", borderBottom: "1px solid #111", color: "#ccc" },
   tr: {},
 };
-

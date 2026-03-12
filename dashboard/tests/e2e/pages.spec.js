@@ -42,11 +42,19 @@ test("home page nav links do not 404", async ({ page }) => {
   await page.goto("/");
 
   // Collect all hrefs from nav cards — only relative paths starting with /
-  const hrefs = await page.locator("a[href]").evaluateAll((els) =>
-    els
-      .map((el) => el.getAttribute("href"))
-      .filter((h) => h && h.startsWith("/") && !h.startsWith("//") && !h.startsWith("/github")),
-  );
+  const hrefs = await page
+    .locator("a[href]")
+    .evaluateAll((els) =>
+      els
+        .map((el) => el.getAttribute("href"))
+        .filter(
+          (h) =>
+            h &&
+            h.startsWith("/") &&
+            !h.startsWith("//") &&
+            !h.startsWith("/github"),
+        ),
+    );
 
   expect(hrefs.length).toBeGreaterThan(5);
 
@@ -190,7 +198,10 @@ test("crm page tabs switch without error", async ({ page }) => {
   // Try clicking on tab buttons
   const tabs = ["Contacts", "Outreach"];
   for (const tab of tabs) {
-    const btn = page.locator("button").filter({ hasText: new RegExp(tab, "i") }).first();
+    const btn = page
+      .locator("button")
+      .filter({ hasText: new RegExp(tab, "i") })
+      .first();
     if (await btn.isVisible()) {
       await btn.click();
       await expect(page.locator("body")).toBeVisible();
@@ -233,4 +244,3 @@ test("static data files are accessible", async ({ page }) => {
     ).toBe(200);
   }
 });
-

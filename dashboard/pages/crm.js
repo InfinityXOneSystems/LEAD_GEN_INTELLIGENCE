@@ -74,7 +74,9 @@ export default function CRMPage() {
           if (activeStage !== "all")
             leads = leads.filter((l) => (l.status || "new") === activeStage);
           if (activeTier !== "all")
-            leads = leads.filter((l) => (l.tier || "").toUpperCase() === activeTier.toUpperCase());
+            leads = leads.filter(
+              (l) => (l.tier || "").toUpperCase() === activeTier.toUpperCase(),
+            );
           if (search) {
             const q = search.toLowerCase();
             leads = leads.filter(
