@@ -76,7 +76,7 @@ export async function sendCommand(
   payload: RuntimeCommandRequest,
 ): Promise<RuntimeCommandResponse> {
   const response = await apiClient.post<RuntimeCommandResponse>(
-    "/v1/runtime/command",
+    "/api/v1/runtime/command",
     payload,
   );
   return response.data;
@@ -89,7 +89,7 @@ export async function getTaskStatus(
   taskId: string,
 ): Promise<TaskStatusResponse> {
   const response = await apiClient.get<TaskStatusResponse>(
-    `/v1/runtime/task/${encodeURIComponent(taskId)}`,
+    `/api/v1/runtime/task/${encodeURIComponent(taskId)}`,
   );
   return response.data;
 }
@@ -101,7 +101,10 @@ export async function getSystemHealth(): Promise<{
   status: string;
   checks: Array<{ name: string; status: string }>;
 }> {
-  const response = await apiClient.get("/v1/system/health");
+  const response = await apiClient.get<{
+    status: string;
+    checks: Array<{ name: string; status: string }>;
+  }>("/api/v1/system/health");
   return response.data;
 }
 
@@ -109,8 +112,9 @@ export async function getSystemHealth(): Promise<{
  * Fetch system runtime metrics.
  */
 export async function getSystemMetrics(): Promise<SystemMetricsResponse> {
-  const response =
-    await apiClient.get<SystemMetricsResponse>("/v1/system/metrics");
+  const response = await apiClient.get<SystemMetricsResponse>(
+    "/api/v1/system/metrics",
+  );
   return response.data;
 }
 
@@ -121,8 +125,7 @@ export async function getRecentTasks(
   limit = 50,
 ): Promise<{ tasks: TaskStatusResponse[] }> {
   const response = await apiClient.get<{ tasks: TaskStatusResponse[] }>(
-    "/v1/system/tasks",
-    { params: { limit } },
+    `/api/v1/system/tasks?limit=${encodeURIComponent(limit)}`,
   );
   return response.data;
 }
@@ -134,8 +137,7 @@ export async function getAgentActivity(
   limit = 100,
 ): Promise<{ entries: AgentActivityEntry[] }> {
   const response = await apiClient.get<{ entries: AgentActivityEntry[] }>(
-    "/v1/system/agent-activity",
-    { params: { limit } },
+    `/api/v1/system/agent-activity?limit=${encodeURIComponent(limit)}`,
   );
   return response.data;
 }
