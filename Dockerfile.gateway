@@ -15,11 +15,16 @@ RUN npm ci --omit=dev
 # Copy application code
 COPY . .
 
-# Default port 3000 (matches NEXT_PUBLIC_API_URL default and frontend expectation)
+# Set production defaults.
+# PORT and NODE_ENV can still be overridden by Railway service variables.
 ENV PORT=3000
+ENV NODE_ENV=production
+
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
   CMD curl -f http://localhost:3000/api/health || exit 1
 
+# railway.json startCommand overrides this CMD.
+# The fallback (docker run without Railway) starts just the gateway.
 CMD ["node", "api/gateway.js"]
