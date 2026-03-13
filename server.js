@@ -393,7 +393,9 @@ if (fs.existsSync(FRONTEND_DIST)) {
 } else {
   // No compiled frontend present (local dev / CI) — return JSON 404.
   app.use((req, res) => {
-    res.status(404).json({ error: `Route ${req.method} ${req.path} not found` });
+    res
+      .status(404)
+      .json({ error: `Route ${req.method} ${req.path} not found` });
   });
 }
 

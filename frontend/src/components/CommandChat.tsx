@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useRef, useEffect, type CSSProperties, type FormEvent } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  type CSSProperties,
+  type FormEvent,
+} from "react";
 import { Bot, Loader2, Send, X, Zap } from "lucide-react";
 import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
