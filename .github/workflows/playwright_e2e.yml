@@ -24,14 +24,14 @@ on:
       api_url:
         description: 'Backend API URL'
         required: false
-        default: 'https://xpsintelligencesystem-production.up.railway.app'
+        default: 'https://xps-intelligence.up.railway.app'
 
 permissions:
   contents: read
   pull-requests: write
 
 env:
-  RAILWAY_BACKEND: https://xpsintelligencesystem-production.up.railway.app
+  RAILWAY_BACKEND: https://xps-intelligence.up.railway.app
 
 jobs:
   playwright:

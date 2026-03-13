@@ -2,7 +2,7 @@ name: 🔧 Sync XPS-INTELLIGENCE-FRONTEND Config
 
 # Patches the wrong Railway backend URL in InfinityXOneSystems/XPS-INTELLIGENCE-FRONTEND.
 #
-# Root cause: XPS-INTELLIGENCE-FRONTEND has 'xpsintelligencesystem-production.up.railway.app'
+# Root cause: XPS-INTELLIGENCE-FRONTEND had 'xpsintelligencesystem-production.up.railway.app'
 # and 'xps-intelligence-system.up.railway.app' hard-coded, but the real Railway service
 # is at https://xps-intelligence.up.railway.app — causing the UI to show "no backend".
 #

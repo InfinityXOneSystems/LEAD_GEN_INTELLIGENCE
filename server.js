@@ -368,11 +368,34 @@ app.get("/api/agents", (_req, res) => {
   return res.json(agents);
 });
 
-// ── 404 catch-all ────────────────────────────────────────────────────────────
+// ── Serve Vite React frontend (production static build) ─────────────────────
+// When the Dockerfile.gateway builds the frontend into frontend/dist/, Express
+// serves the compiled SPA at every non-API route so that the Railway service
+// handles both the JSON API and the UI from a single container.
 
-app.use((req, res) => {
-  res.status(404).json({ error: `Route ${req.method} ${req.path} not found` });
-});
+const FRONTEND_DIST = path.join(__dirname, "frontend", "dist");
+
+if (fs.existsSync(FRONTEND_DIST)) {
+  // Serve static assets (JS, CSS, images, …)
+  app.use(express.static(FRONTEND_DIST));
+
+  // SPA catch-all: read index.html once at start-up and serve from memory
+  // so that each request does not perform a file-system access.
+  // API routes registered above take priority over this catch-all.
+  const INDEX_HTML = fs.readFileSync(
+    path.join(FRONTEND_DIST, "index.html"),
+    "utf8",
+  );
+  app.get("*", (_req, res) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(INDEX_HTML);
+  });
+} else {
+  // No compiled frontend present (local dev / CI) — return JSON 404.
+  app.use((req, res) => {
+    res.status(404).json({ error: `Route ${req.method} ${req.path} not found` });
+  });
+}
 
 // ── Start server ─────────────────────────────────────────────────────────────
 
