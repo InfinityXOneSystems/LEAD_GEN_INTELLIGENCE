@@ -7,8 +7,7 @@
   "deploy": {
     "runtime": "V2",
     "numReplicas": 1,
-    "preDeployCommand": "node scripts/migrate_with_retry.js",
-    "startCommand": "node api/gateway.js",
+    "startCommand": "node server.js",
     "healthcheckPath": "/api/health",
     "sleepApplication": false,
     "useLegacyStacker": false,
