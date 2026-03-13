@@ -60,24 +60,25 @@ jobs:
           python scripts/scrape_port_st_lucie.py $ARGS --max-per-keyword "$MAX"
 
       - name: Show PSL lead count
+        # YAML block scalar note: all lines in a run: | block must be indented
+        # at least as much as the first content line (12 spaces here). YAML
+        # strips that indentation when building the string, so the shell and
+        # Python runtime receive clean zero-indented code.
         run: |
           if [ -f leads/port_st_lucie_leads.json ]; then
             COUNT=$(python3 -c "import json; d=json.load(open('leads/port_st_lucie_leads.json')); print(len(d))" 2>/dev/null || echo 0)
             echo "✅ Port St Lucie leads: $COUNT"
-            python3 - <<'PY' 2>/dev/null || true
-import json
-
-with open('leads/port_st_lucie_leads.json') as f:
-    d = json.load(f)
-
-hot = sum(1 for l in d if l.get("tier") == "HOT")
-warm = sum(1 for l in d if l.get("tier") == "WARM")
-cold = sum(1 for l in d if l.get("tier") == "COLD")
-print("  HOT:", hot, "WARM:", warm, "COLD:", cold)
-
-for l in d[:5]:
-    print(f"  {l.get('company', '')}")
-PY
+            python3 -c "
+          import json
+          leads = json.load(open('leads/port_st_lucie_leads.json'))
+          hot  = sum(1 for l in leads if l.get('tier') == 'HOT')
+          warm = sum(1 for l in leads if l.get('tier') == 'WARM')
+          cold = sum(1 for l in leads if l.get('tier') == 'COLD')
+          print(f'  HOT: {hot}  WARM: {warm}  COLD: {cold}')
+          print()
+          for l in leads[:5]:
+              print(f'  {l[\"company\"]} | {l[\"phone\"]} | {l[\"city\"]}, {l[\"state\"]} | {l.get(\"website\",\"\")}')
+          "
           fi
 
       - name: Commit scraped leads
@@ -101,10 +102,39 @@ PY
             done
           fi
 
+      # YAML block scalar note: all lines must be indented ≥ 10 spaces (the
+      # block level). YAML strips those 10 spaces before passing the string to
+      # bash, so the shell and Python heredoc terminator arrive at column 0.
       - name: Write job summary
         run: |
           echo "## Port St Lucie, FL — Lead Scrape Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f leads/port_st_lucie_leads.json ]; then
-            python3 -c "import json,os; d=json.load(open('leads/port_st_lucie_leads.json')); hot=sum(1 for l in d if l.get('tier')=='HOT'); warm=sum(1 for l in d if l.get('tier')=='WARM'); cold=sum(1 for l in d if l.get('tier')=='COLD'); s=os.environ.get('GITHUB_STEP_SUMMARY','/dev/null'); f=open(s,'a'); [f.write(x) for x in ['| Metric | Value |\n','|--------|-------|\n',f'| Total | {len(d)} |\n',f'| HOT | {hot} |\n',f'| WARM | {warm} |\n',f'| COLD | {cold} |\n']]; f.close()" 2>/dev/null || true
+            python3 - << 'PYEOF'
+          import json, os
+          leads = json.load(open("leads/port_st_lucie_leads.json"))
+          hot  = sum(1 for l in leads if l.get("tier") == "HOT")
+          warm = sum(1 for l in leads if l.get("tier") == "WARM")
+          cold = sum(1 for l in leads if l.get("tier") == "COLD")
+
+          with open(os.environ.get("GITHUB_STEP_SUMMARY", "/dev/null"), "a") as f:
+              f.write(f"| Metric | Value |\n")
+              f.write(f"|--------|-------|\n")
+              f.write(f"| Total leads | {len(leads)} |\n")
+              f.write(f"| HOT | {hot} |\n")
+              f.write(f"| WARM | {warm} |\n")
+              f.write(f"| COLD | {cold} |\n")
+              f.write(f"\n### Top 10 Leads\n\n")
+              f.write("| Company | Phone | City | Website | Score |\n")
+              f.write("|---------|-------|------|---------|-------|\n")
+              for l in leads[:10]:
+                  company = l.get("company", "")
+                  phone   = l.get("phone", "")
+                  city    = f"{l.get('city','')}, {l.get('state','')}"
+                  website = l.get("website", "")
+                  score   = l.get("lead_score", 0)
+                  tier    = l.get("tier", "")
+                  web_link = f"[link]({website})" if website else "-"
+                  f.write(f"| {company} | {phone} | {city} | {web_link} | {score} ({tier}) |\n")
+          PYEOF
           fi
