@@ -94,9 +94,13 @@ async function runMigrations() {
   const ready = await waitForPostgres();
 
   if (!ready) {
-    // Don't crash the container — gateway can start without migrations.
-    // Migrations will be retried on next deploy / restart.
-    console.warn("[db:migrate] Skipping migrations — database unreachable. Gateway will start anyway.");
+    // NOTE: We intentionally exit 0 so the Railway container starts and passes
+    // the health-check.  Migrations will auto-run on the next deploy once the
+    // database is reachable.  The gateway degrades gracefully for DB-less routes.
+    console.warn("[db:migrate] ⚠️  DEGRADED MODE — database unreachable, migrations skipped.");
+    console.warn("[db:migrate]    The gateway will start but database-backed routes may fail.");
+    console.warn("[db:migrate]    Migrations will be retried on next deploy or manual restart.");
+    process.env.DB_MIGRATIONS_SKIPPED = "true";
     process.exit(0);
   }
 
@@ -110,7 +114,10 @@ async function runMigrations() {
     process.exit(0);
   } catch (err) {
     console.error("[db:migrate] ❌ Migration failed:", err.message);
-    // Exit 0 so the gateway still starts — log the error for ops review.
+    console.warn("[db:migrate] ⚠️  DEGRADED MODE — starting gateway with incomplete migrations.");
+    console.warn("[db:migrate]    Check Railway logs and re-deploy to retry migrations.");
+    // Exit 0 so the gateway starts and the health-check passes.
+    // Operators must check logs for migration errors after deploy.
     process.exit(0);
   }
 }

@@ -1614,7 +1614,9 @@ app.post("/api/v1/chat", async (req, res) => {
 
   if (!GROQ_API_KEY) {
     // Graceful fallback when no API key is configured
-    const fallbackReply = `[XPS Intelligence] I received your message: "${message}". ` +
+    // Truncate and sanitize the echoed message to prevent response injection
+    const safeMsg = String(message).slice(0, 200).replace(/[<>"'&]/g, "");
+    const fallbackReply = `[XPS Intelligence] I received your message: "${safeMsg}". ` +
       "To enable real AI responses, set the GROQ_API_KEY environment variable. " +
       "The system can still run scraping commands — try 'scrape epoxy contractors in Florida'.";
     return res.json({ reply: fallbackReply, model: "fallback", usage: null });

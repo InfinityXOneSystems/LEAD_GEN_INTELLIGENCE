@@ -186,7 +186,12 @@ async def _fetch(session: Any, url: str, timeout: int = TIMEOUT) -> Optional[str
     await asyncio.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
     try:
         async with session.get(
-            url, headers=_headers(), timeout=timeout, allow_redirects=True, ssl=False
+            url, headers=_headers(), timeout=timeout, allow_redirects=True,
+            # ssl=False: many small-business directories use self-signed or
+            # expired certificates. We are scraping public read-only HTML — no
+            # sensitive data is transmitted outbound, so relaxing cert
+            # verification is an accepted trade-off for scraper reliability.
+            ssl=False,
         ) as resp:
             if resp.status == 200:
                 return await resp.text(errors="replace")
@@ -996,6 +1001,8 @@ async def _main(args: argparse.Namespace) -> int:
     log.info("   Dry run  : %s", args.dry_run)
 
     semaphore = asyncio.Semaphore(CONCURRENCY)
+    # ssl=False: same rationale as _fetch() above — scraping public read-only HTML
+    # from small-business directories that commonly have self-signed certificates.
     connector = aiohttp.TCPConnector(ssl=False, limit=CONCURRENCY * 2)
     timeout_cfg = aiohttp.ClientTimeout(total=TIMEOUT)
 
