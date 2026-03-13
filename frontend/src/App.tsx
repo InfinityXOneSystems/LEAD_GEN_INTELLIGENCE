@@ -275,7 +275,7 @@ export default function App() {
         </div>
         <StatusBar
           backendUrl={
-            API_URL || "https://xpsintelligencesystem-production.up.railway.app"
+            API_URL || "https://xps-intelligence.up.railway.app"
           }
         />
       </header>

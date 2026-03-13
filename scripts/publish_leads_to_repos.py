@@ -838,7 +838,7 @@ def publish_to_frontend_repo(leads: List[dict]) -> None:
         "total": len(leads),
         "hot": sum(1 for l in frontend_leads if l.get("rating") in ("A+", "A")),
         "source": "XPS Intelligence Shadow Scraper Pipeline",
-        "api_endpoint": "https://xpsintelligencesystem-production.up.railway.app/api/leads",
+        "api_endpoint": "https://xps-intelligence.up.railway.app/api/leads",
     }
     _upsert_file(
         FRONTEND_REPO,

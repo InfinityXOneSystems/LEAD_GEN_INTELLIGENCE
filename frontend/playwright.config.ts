@@ -60,7 +60,7 @@ export default defineConfig({
         env: {
           VITE_API_URL:
             process.env.VITE_API_URL ||
-            "https://xpsintelligencesystem-production.up.railway.app",
+            "https://xps-intelligence.up.railway.app",
         },
       }
     : {

@@ -7,11 +7,11 @@
   "rewrites": [
     {
       "source": "/api/v1/(.*)",
-      "destination": "https://xpsintelligencesystem-production.up.railway.app/api/v1/$1"
+      "destination": "https://xps-intelligence.up.railway.app/api/v1/$1"
     },
     {
       "source": "/health",
-      "destination": "https://xpsintelligencesystem-production.up.railway.app/health"
+      "destination": "https://xps-intelligence.up.railway.app/health"
     }
   ],
   "headers": [
@@ -35,7 +35,7 @@
     }
   ],
   "env": {
-    "NEXT_PUBLIC_API_URL": "https://xpsintelligencesystem-production.up.railway.app",
-    "NEXT_PUBLIC_GATEWAY_URL": "https://xpsintelligencesystem-production.up.railway.app"
+    "NEXT_PUBLIC_API_URL": "https://xps-intelligence.up.railway.app",
+    "NEXT_PUBLIC_GATEWAY_URL": "https://xps-intelligence.up.railway.app"
   }
 }
