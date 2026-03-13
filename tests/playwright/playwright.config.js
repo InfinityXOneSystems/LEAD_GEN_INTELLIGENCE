@@ -8,8 +8,7 @@
 
 const { defineConfig, devices } = require("@playwright/test");
 
-const BASE_URL =
-  process.env.PLAYWRIGHT_FRONTEND_URL || "http://127.0.0.1:5173";
+const BASE_URL = process.env.PLAYWRIGHT_FRONTEND_URL || "http://127.0.0.1:5173";
 
 module.exports = defineConfig({
   testDir: "./",
@@ -17,7 +16,10 @@ module.exports = defineConfig({
   expect: { timeout: 20_000 },
   retries: 1,
   workers: 1,
-  reporter: [["list"], ["html", { outputFolder: "/tmp/playwright-report", open: "never" }]],
+  reporter: [
+    ["list"],
+    ["html", { outputFolder: "/tmp/playwright-report", open: "never" }],
+  ],
   outputDir: "/tmp/xps-screenshots",
   use: {
     baseURL: BASE_URL,
