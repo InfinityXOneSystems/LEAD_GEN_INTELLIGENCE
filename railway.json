@@ -7,7 +7,7 @@
   "deploy": {
     "runtime": "V2",
     "numReplicas": 1,
-    "startCommand": "NODE_ENV=production npm run db:migrate; node api/gateway.js",
+    "startCommand": "export NODE_ENV=production && npm run db:migrate && node api/gateway.js",
     "healthcheckPath": "/api/health",
     "sleepApplication": false,
     "useLegacyStacker": false,
