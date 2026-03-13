@@ -62,7 +62,7 @@ concurrency:
   cancel-in-progress: false   # Never cancel — each invention is unique
 
 env:
-  RAILWAY_BACKEND: https://xpsintelligencesystem-production.up.railway.app
+  RAILWAY_BACKEND: https://xps-intelligence.up.railway.app
   SANDBOX_BRANCH: sandbox/${{ github.run_id }}
 
 # ─────────────────────────────────────────────────────────────────────────────

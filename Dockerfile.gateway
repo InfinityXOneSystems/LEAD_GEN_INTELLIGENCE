@@ -1,9 +1,31 @@
 # Dockerfile.gateway – Node.js Express API gateway
+# Multi-stage: Stage 1 builds the Vite React frontend, Stage 2 runs Express.
+# The Express server serves both the JSON API (/api/*) and the compiled SPA.
+
+# ── Stage 1: Build Vite frontend ─────────────────────────────────────────────
+FROM node:20-bookworm-slim AS frontend-build
+
+WORKDIR /frontend
+
+COPY frontend/package*.json ./
+RUN npm ci
+
+COPY frontend/ ./
+
+# VITE_API_URL is baked into the JS bundle at build time.
+# Default in src/lib/api.ts is https://xps-intelligence.up.railway.app so we
+# don't need to pass it explicitly unless the Railway URL changes.
+ARG VITE_API_URL=https://xps-intelligence.up.railway.app
+ENV VITE_API_URL=${VITE_API_URL}
+
+RUN npm run build
+
+# ── Stage 2: Express gateway + frontend static files ─────────────────────────
 FROM node:20-bookworm-slim
 
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies (curl for healthcheck)
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends curl && \
     rm -rf /var/lib/apt/lists/*
@@ -15,15 +37,18 @@ RUN npm ci --omit=dev
 # Copy application code
 COPY . .
 
+# Overwrite the frontend source with the compiled dist from Stage 1
+# so Express can serve it via express.static('frontend/dist').
+COPY --from=frontend-build /frontend/dist ./frontend/dist
+
 # Set NODE_ENV so Express and dependencies use production mode
 ENV NODE_ENV=production
-# Default port 3000 (matches NEXT_PUBLIC_API_URL default and frontend expectation)
+# Default port 3000; Railway overrides this with the PORT env var at runtime.
 ENV PORT=3000
-ENV NODE_ENV=production
 
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-  CMD curl -f http://localhost:3000/api/health || exit 1
+  CMD curl -f "http://localhost:${PORT:-3000}/api/health" || exit 1
 
 CMD ["node", "server.js"]
