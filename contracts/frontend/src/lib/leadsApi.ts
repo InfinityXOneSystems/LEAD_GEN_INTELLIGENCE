@@ -1,7 +1,7 @@
 /**
  * leadsApi.ts — XPS Intelligence Frontend Lead API Client
  *
- * Connects to https://xpsintelligencesystem-production.up.railway.app/api
+ * Connects to https://xps-intelligence.up.railway.app/api
  * Response normalization: unwraps {leads:[], total} envelope and maps
  * shadow-scraper schema → frontend Lead type.
  *

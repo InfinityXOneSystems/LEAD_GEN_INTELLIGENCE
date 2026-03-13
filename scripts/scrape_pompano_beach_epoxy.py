@@ -146,13 +146,16 @@ async def scrape_google_maps(query: str, max_results: int = 20) -> list:
     if not leads:
         print("  ⚠️  No Playwright results — falling back to universal_shadow_scraper.py")
         import subprocess, sys
-        subprocess.run(
+        result = subprocess.run(
             [sys.executable, "scripts/universal_shadow_scraper.py",
              "--keywords", "epoxy flooring contractor,garage epoxy installer",
              "--locations", "Pompano Beach, FL",
              "--max-per-keyword", "20"],
             cwd=str(REPO_ROOT)
         )
+        if result.returncode != 0:
+            print(f"  ❌  universal_shadow_scraper.py failed (exit {result.returncode}) — no leads available")
+            return []
         # Load whatever the universal scraper wrote
         scored_path = REPO_ROOT / "leads" / "scored_leads.json"
         if scored_path.exists():

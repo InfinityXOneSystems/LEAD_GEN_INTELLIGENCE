@@ -121,6 +121,18 @@ module.exports = {
 
   test: {
     ...sharedConfig,
+    connection: (() => {
+      const conn = buildConnection();
+      const testDb =
+        process.env.PGDATABASE_TEST || process.env.DATABASE_NAME_TEST;
+      // Only override database when using host/port connection style; a
+      // connection-string (DATABASE_URL) cannot be patched inline without
+      // re-parsing, so callers should set TEST_DATABASE_URL when needed.
+      if (testDb && !("connectionString" in conn)) {
+        return { ...conn, database: testDb };
+      }
+      return conn;
+    })(),
     pool: { min: 1, max: 5 },
   },
 
