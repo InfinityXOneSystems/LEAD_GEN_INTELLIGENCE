@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useState,
-  useRef,
-  useEffect,
-  type CSSProperties,
-  type FormEvent,
-} from "react";
+import { useState, useRef, useEffect, type CSSProperties, type FormEvent } from "react";
 import { Bot, Loader2, Send, X, Zap } from "lucide-react";
 import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
@@ -18,14 +12,16 @@ import {
 } from "@/lib/runtimeClient";
 import { sendChatMessage, type ChatHistoryMessage } from "@/lib/chatClient";
 
-// LLMChatMessage is the history format sent to the backend (same as ChatHistoryMessage).
-type LLMChatMessage = ChatHistoryMessage;
+/** Unique ID generator for chat messages */
+function genId(): string {
+  return `msg-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
 
-// Simple ID generator — crypto.randomUUID when available, fallback to Math.random.
-const genId = (): string =>
-  typeof crypto !== "undefined" && crypto.randomUUID
-    ? crypto.randomUUID()
-    : Math.random().toString(36).slice(2);
+/** Chat message shape used internally (with history for Groq/Copilot) */
+type LLMChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
 
 interface ChatMessage {
   id: string;

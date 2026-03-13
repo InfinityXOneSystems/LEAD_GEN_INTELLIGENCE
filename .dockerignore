@@ -6,8 +6,12 @@ __pycache__/
 
 # Virtual env
 venv/
+
+# Secrets / environment files (use Railway env vars instead)
 .env
 .env.*
+!.env.railway.template
+!.env.railway.example
 
 # Git
 .git
@@ -17,9 +21,35 @@ venv/
 logs/
 *.log
 
-# Docker
+# Docker (don't bake compose/other Dockerfiles into the image)
+docker-compose*.yml
+docker/
 Dockerfile
-docker-compose.yml
+Dockerfile.backend
+Dockerfile.scraper
+
+# Node / npm — exclude ALL node_modules directories to prevent
+# host-built binaries from being copied into the container image.
+# The runtime stage runs `npm ci --omit=dev` inside the container.
+node_modules/
+frontend/node_modules/
+
+# Frontend source — the compiled dist is copied from Stage 1.
+# We don't need the raw TypeScript/JSX source in the Express runtime image.
+frontend/src/
+frontend/tsconfig*.json
+frontend/vite.config.ts
+frontend/tailwind.config.js
+frontend/postcss.config.js
+frontend/index.html
+frontend/playwright.config.ts
+frontend/tests/
+
+# Dashboard (Next.js) — not needed in the Express image
+dashboard/
+dashboard/.next/
+dashboard/out/
+dashboard/node_modules/
 
 # IDE
 .vscode
@@ -28,3 +58,15 @@ docker-compose.yml
 # OS
 .DS_Store
 Thumbs.db
+
+# CI / test artefacts
+test-results/
+playwright-report/
+coverage/
+dist/
+.next/
+
+# Documentation (reduces image size, not needed at runtime)
+docs/
+*.md
+!README.md

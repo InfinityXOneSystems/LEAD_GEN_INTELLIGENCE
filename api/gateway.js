@@ -44,18 +44,25 @@ const CORS_ORIGINS = process.env.CORS_ALLOWED_ORIGINS
   ? process.env.CORS_ALLOWED_ORIGINS.split(",").map((s) => s.trim())
   : null;
 
+// Pre-compile CORS origin patterns at startup to avoid recreating RegExp objects
+// on every incoming request.
+const CORS_PATTERNS = CORS_ORIGINS
+  ? CORS_ORIGINS.map((allowed) => {
+      if (!allowed.includes("*")) return { literal: allowed };
+      const escaped = allowed
+        .replace(/[.+?^${}()|[\]\\]/g, "\\$&")
+        .replace(/\*/g, ".*");
+      return { regex: new RegExp("^" + escaped + "$") };
+    })
+  : null;
+
 // Returns true when `origin` matches an entry that may contain a '*' wildcard.
 function isCorsAllowed(origin) {
   if (!origin) return true; // same-origin / server-to-server requests
-  if (!CORS_ORIGINS) return true; // no restriction in local dev
-  return CORS_ORIGINS.some((allowed) => {
-    if (!allowed.includes("*")) return allowed === origin;
-    // Escape all regex-special characters except '*', then convert '*' to '.*'
-    const escaped = allowed
-      .replace(/[.+?^${}()|[\]\\]/g, "\\$&")
-      .replace(/\*/g, ".*");
-    return new RegExp("^" + escaped + "$").test(origin);
-  });
+  if (!CORS_PATTERNS) return true; // no restriction in local dev
+  return CORS_PATTERNS.some((p) =>
+    p.literal ? p.literal === origin : p.regex.test(origin),
+  );
 }
 
 app.use((req, res, next) => {
@@ -108,11 +115,34 @@ function loadLeadsFromFile() {
   return [];
 }
 
+// TTL cache for the file-based leads fallback — avoids re-reading and
+// re-parsing large JSON files on every request in offline/file-only mode.
+const FILE_LEADS_CACHE_TTL_MS = 30_000; // 30 seconds
+let _fileLeadsCache = null;
+let _fileLeadsCacheAt = 0;
+
+/** Return cached leads from disk; refreshes at most once per TTL window. */
+function loadLeadsFromFileCached() {
+  const now = Date.now();
+  if (
+    _fileLeadsCache !== null &&
+    now - _fileLeadsCacheAt < FILE_LEADS_CACHE_TTL_MS
+  ) {
+    return _fileLeadsCache;
+  }
+  _fileLeadsCache = loadLeadsFromFile();
+  _fileLeadsCacheAt = now;
+  return _fileLeadsCache;
+}
+
 /** Save leads to local JSON file (used as dual-write backup). */
 function saveLeadsToFile(leads) {
   fs.mkdirSync(LEADS_DIR, { recursive: true });
   const raw = path.join(LEADS_DIR, "leads.json");
   fs.writeFileSync(raw, JSON.stringify(leads, null, 2));
+  // Invalidate the in-memory cache so the next read reflects the new data.
+  _fileLeadsCache = null;
+  _fileLeadsCacheAt = 0;
 }
 
 function generateId() {
@@ -167,9 +197,9 @@ app.get("/api/leads/metrics", async (req, res) => {
     const leads = supabaseConfigured
       ? await getAllLeads(1000).catch((err) => {
           console.error("[gateway] Supabase metrics error:", err.message);
-          return loadLeadsFromFile();
+          return loadLeadsFromFileCached();
         })
-      : loadLeadsFromFile();
+      : loadLeadsFromFileCached();
     const list = Array.isArray(leads) ? leads : [];
     const total = list.length;
     const aPlusOpportunities = list.filter(
@@ -210,7 +240,7 @@ app.get("/api/leads", async (req, res) => {
 
     if (!supabaseConfigured) {
       // Offline fallback: use local JSON
-      const leads = loadLeadsFromFile();
+      const leads = loadLeadsFromFileCached();
       let result = Array.isArray(leads) ? leads : [];
       if (city)
         result = result.filter(
@@ -272,7 +302,7 @@ app.get("/api/leads/:id", async (req, res) => {
     if (lead) return ok(res, lead);
 
     // Fallback: search local JSON by id or place_id
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFileCached();
     const list = Array.isArray(leads) ? leads : [];
     const found = list.find(
       (l) => String(l.id) === req.params.id || l.place_id === req.params.id,
@@ -644,7 +674,7 @@ app.get("/api/tools", (req, res) => {
 // GET /api/stats
 app.get("/api/stats", (req, res) => {
   try {
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFileCached();
     const list = Array.isArray(leads) ? leads : [];
     const scores = list.map((l) => l.score || 0).filter((s) => s > 0);
     const avgScore = scores.length
@@ -746,7 +776,7 @@ app.post("/api/outreach/send", async (req, res) => {
   const { leadId, template, campaignId } = req.body;
   if (!leadId) return fail(res, "leadId required", 400);
   try {
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFileCached();
     const list = Array.isArray(leads) ? leads : [];
     const lead = list.find(
       (l) => String(l.id) === String(leadId) || l.place_id === String(leadId),
@@ -842,7 +872,7 @@ app.post("/api/outreach/campaigns", (req, res) => {
     }
 
     // Count matching leads for target_count
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFileCached();
     const list = Array.isArray(leads) ? leads : [];
     const minScore = typeof min_score === "number" ? min_score : 0;
     const industryLower = industry ? industry.toLowerCase() : null;
@@ -905,7 +935,7 @@ app.get("/api/monitoring/health", (req, res) => {
 // GET /api/heatmap
 app.get("/api/heatmap", (req, res) => {
   try {
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFileCached();
     const list = Array.isArray(leads) ? leads : [];
 
     const cityMap = {};
@@ -1595,7 +1625,7 @@ function buildSmartFallbackReply(userMessage) {
   // Load current lead data
   let leads = [];
   try {
-    leads = loadLeadsFromFile();
+    leads = loadLeadsFromFileCached();
   } catch (_) {}
   const total = leads.length;
   const hot = leads.filter(
@@ -1836,7 +1866,7 @@ app.post("/api/v1/chat", async (req, res) => {
   // Build a live-context system prompt with real lead stats
   let liveLeads = [];
   try {
-    liveLeads = loadLeadsFromFile();
+    liveLeads = loadLeadsFromFileCached();
   } catch (_) {}
   const liveTotal = liveLeads.length;
   const liveHot = liveLeads.filter(
@@ -1937,7 +1967,7 @@ app.get("/api", (req, res) => {
 
 // GET /api/status  – alias for health check (some UIs expect this path)
 app.get("/api/status", (req, res) => {
-  const leads = loadLeadsFromFile();
+  const leads = loadLeadsFromFileCached();
   const list = Array.isArray(leads) ? leads : [];
   return res.json({
     success: true,

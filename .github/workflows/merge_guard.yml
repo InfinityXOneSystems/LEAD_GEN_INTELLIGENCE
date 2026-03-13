@@ -15,6 +15,7 @@ permissions:
   contents: write      # write needed to push auto-resolutions
   pull-requests: write
   issues: write
+  actions: write
 
 jobs:
   conflict-check:
@@ -180,6 +181,7 @@ jobs:
 
       - name: Only fail if conflicts are truly unresolvable
         if: steps.conflict.outputs.conflict == 'true'
+        id: post_resolve_check
         run: |
           # Re-check after attempted resolution
           REMAINING=$(grep -rl "^<<<<<<< " . \
@@ -193,10 +195,113 @@ jobs:
             echo "The Autonomous Conflict Resolver workflow will attempt further resolution."
             echo "Files:"
             echo "$REMAINING"
+            echo "all_resolved=false" >> $GITHUB_OUTPUT
             exit 1
           else
             echo "✅ All conflicts were resolved autonomously — no human intervention required."
+            echo "all_resolved=true" >> $GITHUB_OUTPUT
           fi
+
+      - name: Auto-merge PR after conflict resolution
+        if: steps.post_resolve_check.outputs.all_resolved == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR="${{ github.event.pull_request.number }}"
+          REPO="${{ github.repository }}"
+
+          if [ -z "$PR" ]; then
+            echo "ℹ️  Not a pull_request event — skipping auto-merge."
+            exit 0
+          fi
+
+          STATE=$(gh pr view "$PR" --repo "$REPO" \
+            --json state,isDraft,mergeable \
+            --jq '{state:.state,isDraft:.isDraft,mergeable:.mergeable}')
+
+          IS_OPEN=$(echo "$STATE"  | python3 -c "import sys,json; print(json.load(sys.stdin).get('state',''))")
+          IS_DRAFT=$(echo "$STATE" | python3 -c "import sys,json; print(json.load(sys.stdin).get('isDraft',''))")
+
+          if [ "$IS_OPEN" != "OPEN" ]; then
+            echo "ℹ️  PR #$PR is not open (state: $IS_OPEN) — nothing to merge."
+            exit 0
+          fi
+
+          if [ "$IS_DRAFT" = "True" ]; then
+            echo "Converting draft PR to ready for review..."
+            gh pr ready "$PR" --repo "$REPO" || true
+          fi
+
+          echo "🔀 Auto-merging PR #$PR after successful conflict resolution..."
+          printf "Auto-merged by Merge Guard after autonomous conflict resolution.\n" \
+            > /tmp/mg_merge_body.txt
+
+          gh pr merge "$PR" \
+            --repo "$REPO" \
+            --squash \
+            --subject "Merge PR #${PR}: conflicts auto-resolved and merged" \
+            --body-file /tmp/mg_merge_body.txt \
+            --delete-branch 2>&1 || {
+              FINAL_STATE=$(gh pr view "$PR" --repo "$REPO" --json state --jq '.state' 2>/dev/null || echo "UNKNOWN")
+              if [ "$FINAL_STATE" = "MERGED" ]; then
+                echo "✅ PR #$PR is confirmed merged."
+              else
+                echo "⚠️  Auto-merge returned non-zero but merge may have partially succeeded (state: $FINAL_STATE)."
+              fi
+            }
+
+          echo "✅ Auto-merge complete for PR #$PR."
+
+      - name: Auto-merge PR when no conflicts were found
+        if: steps.conflict.outputs.conflict != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR="${{ github.event.pull_request.number }}"
+          REPO="${{ github.repository }}"
+
+          if [ -z "$PR" ]; then
+            echo "ℹ️  Not a pull_request event — skipping auto-merge."
+            exit 0
+          fi
+
+          STATE=$(gh pr view "$PR" --repo "$REPO" \
+            --json state,isDraft,mergeable \
+            --jq '{state:.state,isDraft:.isDraft,mergeable:.mergeable}')
+
+          IS_OPEN=$(echo "$STATE"  | python3 -c "import sys,json; print(json.load(sys.stdin).get('state',''))")
+          IS_DRAFT=$(echo "$STATE" | python3 -c "import sys,json; print(json.load(sys.stdin).get('isDraft',''))")
+          MERGEABLE=$(echo "$STATE"| python3 -c "import sys,json; print(json.load(sys.stdin).get('mergeable',''))")
+
+          if [ "$IS_OPEN" != "OPEN" ]; then
+            echo "ℹ️  PR #$PR is not open (state: $IS_OPEN) — nothing to merge."
+            exit 0
+          fi
+
+          if [ "$MERGEABLE" = "CONFLICTING" ]; then
+            echo "⚠️  GitHub still reports PR #$PR as conflicting — skipping auto-merge."
+            exit 0
+          fi
+
+          if [ "$IS_DRAFT" = "True" ]; then
+            gh pr ready "$PR" --repo "$REPO" || true
+          fi
+
+          echo "🔀 PR #$PR is conflict-free — auto-merging..."
+          printf "Auto-merged by Merge Guard (no conflicts detected).\n" \
+            > /tmp/mg_clean_merge_body.txt
+
+          gh pr merge "$PR" \
+            --repo "$REPO" \
+            --squash \
+            --subject "Merge PR #${PR}: auto-merged (no conflicts)" \
+            --body-file /tmp/mg_clean_merge_body.txt \
+            --delete-branch 2>&1 || {
+              FINAL_STATE=$(gh pr view "$PR" --repo "$REPO" --json state --jq '.state' 2>/dev/null || echo "UNKNOWN")
+              echo "Merge result state: $FINAL_STATE"
+            }
+
+          echo "✅ Auto-merge complete for PR #$PR."
 
   # ── Stale branch warning ──────────────────────────────────────────────────
   stale-branch-check:

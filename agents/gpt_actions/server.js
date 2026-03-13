@@ -15,6 +15,16 @@ app.use(express.json());
 // Allow at most `max` requests per `windowMs` per IP for sensitive routes.
 function createRateLimiter({ windowMs = 60_000, max = 30 } = {}) {
   const store = new Map();
+  // Prune expired entries periodically to prevent the Map from growing
+  // unboundedly as unique IP addresses accumulate over time.
+  const pruneInterval = setInterval(() => {
+    const now = Date.now();
+    for (const [key, entry] of store) {
+      if (now >= entry.resetAt) store.delete(key);
+    }
+  }, windowMs);
+  if (pruneInterval.unref) pruneInterval.unref();
+
   return (req, res, next) => {
     const key = req.ip || "unknown";
     const now = Date.now();
@@ -49,6 +59,8 @@ const TEMPLATES_FILE = path.join(
 
 // ── helpers ────────────────────────────────────────────────────────────────
 
+const CACHE_TTL_MS = 30_000; // 30 seconds
+
 function readLeads() {
   if (!fs.existsSync(LEADS_FILE)) return [];
   try {
@@ -58,9 +70,25 @@ function readLeads() {
   }
 }
 
+// TTL cache for leads file — avoids re-reading/parsing on every request.
+let _leadsCache = null;
+let _leadsCacheAt = 0;
+
+function readLeadsCached() {
+  const now = Date.now();
+  if (_leadsCache !== null && now - _leadsCacheAt < CACHE_TTL_MS)
+    return _leadsCache;
+  _leadsCache = readLeads();
+  _leadsCacheAt = now;
+  return _leadsCache;
+}
+
 function writeLeads(leads) {
   fs.mkdirSync(path.dirname(LEADS_FILE), { recursive: true });
   fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2));
+  // Invalidate cache so the next read sees the updated data.
+  _leadsCache = null;
+  _leadsCacheAt = 0;
 }
 
 function scoreLead(lead) {
@@ -103,12 +131,25 @@ function parseTasks() {
   });
 }
 
+// TTL cache for tasks — avoids re-reading the CSV on every /status and /tasks request.
+let _tasksCache = null;
+let _tasksCacheAt = 0;
+
+function parseTasksCached() {
+  const now = Date.now();
+  if (_tasksCache !== null && now - _tasksCacheAt < CACHE_TTL_MS)
+    return _tasksCache;
+  _tasksCache = parseTasks();
+  _tasksCacheAt = now;
+  return _tasksCache;
+}
+
 // ── routes ─────────────────────────────────────────────────────────────────
 
 /** GET /status – system health */
 app.get("/status", (_req, res) => {
-  const leads = readLeads();
-  const tasks = parseTasks();
+  const leads = readLeadsCached();
+  const tasks = parseTasksCached();
   const pending = tasks.filter((t) => t.STATUS === "pending").length;
   res.json({
     status: "ok",
@@ -120,7 +161,7 @@ app.get("/status", (_req, res) => {
 
 /** GET /leads – return all stored leads (optional ?limit=N) */
 app.get("/leads", (req, res) => {
-  let leads = readLeads();
+  let leads = readLeadsCached();
   const limit = parseInt(req.query.limit, 10);
   if (!isNaN(limit) && limit > 0) leads = leads.slice(0, limit);
   res.json({ leads, count: leads.length });
@@ -159,7 +200,7 @@ app.post("/score", (req, res) => {
 
 /** GET /tasks – return todo tasks (optional ?status=pending|complete) */
 app.get("/tasks", apiLimiter, (req, res) => {
-  let tasks = parseTasks();
+  let tasks = parseTasksCached();
   if (req.query.status) {
     tasks = tasks.filter((t) => t.STATUS === req.query.status);
   }
@@ -282,7 +323,7 @@ app.post("/validate", apiLimiter, (_req, res) => {
     const {
       runValidationPipeline,
     } = require("../../validation/lead_validation_pipeline");
-    const leads = readLeads();
+    const leads = readLeadsCached();
     const result = runValidationPipeline(leads, {
       writeReports: true,
       enforceGates: false,
@@ -327,7 +368,7 @@ app.post("/workspace/sheets/export", apiLimiter, async (req, res) => {
     const {
       sheetsExportLeads,
     } = require("../../integrations/google_workspace");
-    const leads = readLeads();
+    const leads = readLeadsCached();
     if (leads.length === 0) {
       return res
         .status(400)
