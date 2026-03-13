@@ -4,98 +4,186 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
 const crypto = require("crypto");
 
 const PORT = process.env.PORT || 3000;
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const GROQ_MODEL = "llama-3.3-70b-versatile";
+
+// Allowed agent roles — validated before interpolation into the system prompt
+// to prevent prompt injection attacks.
+const ALLOWED_AGENT_ROLES = new Set([
+  "GeneralAgent",
+  "PlannerAgent",
+  "ScraperAgent",
+  "EnrichmentAgent",
+  "ValidatorAgent",
+  "OutreachAgent",
+]);
 const MAX_CHAT_HISTORY_LENGTH = 20;
 
 // In-memory chat history store keyed by sessionId
 const chatHistories = new Map();
 
 // ---------------------------------------------------------------------------
-// App setup
+// Real lead data — sourced from the shadow scraper pipeline
 // ---------------------------------------------------------------------------
 
-const app = express();
-
-app.use(
-  cors({
-    origin: [
-      "https://xps-intelligence-frontend.vercel.app",
-      "https://infinityxonesystems.github.io",
-      /\.vercel\.app$/,
-      /\.railway\.app$/,
-      "http://localhost:3000",
-      "http://localhost:5173",
-    ],
-    methods: ["GET", "POST", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  }),
-);
-
-app.use(express.json());
-
-// ---------------------------------------------------------------------------
-// Mock data
-// ---------------------------------------------------------------------------
-
-const MOCK_LEADS = [
-  {
-    id: "1",
-    company: "ABC Roofing Inc",
-    email: "contact@abcroofing.com",
-    phone: "555-0123",
-    score: 92,
-    location: "Dallas, TX",
-    industry: "Roofing",
-    status: "hot",
-  },
-  {
-    id: "2",
-    company: "XYZ Flooring Services",
-    email: "info@xyzflooring.com",
-    phone: "555-0456",
-    score: 87,
-    location: "Miami, FL",
-    industry: "Flooring",
-    status: "hot",
-  },
-  {
-    id: "3",
-    company: "Premier Tile & Stone",
-    email: "sales@premiertile.com",
-    phone: "555-0789",
-    score: 74,
-    location: "Houston, TX",
-    industry: "Flooring",
-    status: "warm",
-  },
-  {
-    id: "4",
-    company: "Elite Hardwood Floors",
-    email: "hello@elitehardwood.com",
-    phone: "555-0321",
-    score: 68,
-    location: "Atlanta, GA",
-    industry: "Flooring",
-    status: "warm",
-  },
-  {
-    id: "5",
-    company: "Sunshine Contractors LLC",
-    email: "office@sunshinecontractors.com",
-    phone: "555-0654",
-    score: 45,
-    location: "Phoenix, AZ",
-    industry: "General Contractor",
-    status: "cold",
-  },
+// Ordered list of candidate paths for the scored/normalized leads file.
+// The pipeline (scoring_pipeline.js + normalize_leads.js) writes to these
+// locations after each scrape cycle.  We pick the first that exists.
+const ROOT = path.resolve(__dirname, "..");
+const LEAD_FILE_CANDIDATES = [
+  path.join(ROOT, "leads", "scored_leads.json"),
+  path.join(ROOT, "pages", "data", "scored_leads.json"),
+  path.join(ROOT, "data", "leads", "scored_leads.json"),
+  path.join(ROOT, "leads", "leads.json"),
+  path.join(ROOT, "data", "leads", "leads.json"),
 ];
 
-const MOCK_AGENTS = [
+// Simple TTL cache so we re-read from disk at most once per minute.
+let _leadsCache = null;
+let _leadsCacheAt = 0;
+const LEADS_CACHE_TTL_MS = 60_000;
+
+/**
+ * Normalise a raw lead record to the canonical API schema expected by
+ * the frontend.  Mirrors the logic in scripts/normalize_leads.js.
+ */
+function normaliseLead(l, index) {
+  const score = Number(l.lead_score ?? l.score ?? 0) || 0;
+  const tier = score >= 75 ? "hot" : score >= 50 ? "warm" : "cold";
+  const city = (l.city || "").trim();
+  const state = (l.state || "").trim();
+  const location = city && state ? `${city}, ${state}` : city || state || "";
+
+  let website = (l.website || "").trim();
+  if (website && !/^https?:\/\//i.test(website)) {
+    website = "https://" + website;
+  }
+
+  return {
+    id: l.id || index + 1,
+    company: (l.company || l.company_name || "Unknown").trim(),
+    email: (l.email || "").trim(),
+    phone: (l.phone || "").trim(),
+    website,
+    address: (l.address || "").trim(),
+    city,
+    state,
+    country: l.country || "US",
+    location,
+    industry: (l.industry || l.category || "General Contractor").trim(),
+    rating: Number(l.rating) || 0,
+    reviews: Number(l.reviews) || 0,
+    score,
+    lead_score: score,
+    tier,
+    status: (l.status || tier).toLowerCase(),
+    source: l.source || "shadow_scraper",
+    date_scraped: l.date_scraped || l.scrapedAt || l.scraped_at || l.date || null,
+  };
+}
+
+/**
+ * Attempt to load leads from Supabase via the REST API.
+ * Returns an array of normalised lead objects on success, or null on failure.
+ */
+async function loadLeadsFromSupabase() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !anonKey) return null;
+
+  try {
+    const https = require("https");
+    const url = new URL(
+      "/rest/v1/leads?select=*&order=lead_score.desc&limit=1000",
+      supabaseUrl,
+    );
+    const data = await new Promise((resolve, reject) => {
+      const options = {
+        hostname: url.hostname,
+        path: url.pathname + url.search,
+        method: "GET",
+        headers: {
+          apikey: anonKey,
+          Authorization: `Bearer ${anonKey}`,
+          Accept: "application/json",
+        },
+      };
+      const req = https.request(options, (res) => {
+        let body = "";
+        res.on("data", (chunk) => { body += chunk; });
+        res.on("end", () => {
+          try { resolve(JSON.parse(body)); } catch (e) { reject(e); }
+        });
+      });
+      req.on("error", reject);
+      req.setTimeout(10_000, () => { req.destroy(); reject(new Error("timeout")); });
+      req.end();
+    });
+
+    if (!Array.isArray(data) || data.length === 0) return null;
+    console.log(`[leads] Loaded ${data.length} leads from Supabase`);
+    return data.map(normaliseLead);
+  } catch (err) {
+    console.warn("[leads] Supabase fetch failed:", err.message);
+    return null;
+  }
+}
+
+/**
+ * Load leads from the local file system (pipeline output).
+ */
+function loadLeadsFromDisk() {
+  for (const candidate of LEAD_FILE_CANDIDATES) {
+    if (fs.existsSync(candidate)) {
+      try {
+        const raw = JSON.parse(fs.readFileSync(candidate, "utf8"));
+        const arr = Array.isArray(raw) ? raw : [];
+        if (arr.length > 0) {
+          console.log(`[leads] Loaded ${arr.length} leads from ${candidate}`);
+          return arr.map(normaliseLead);
+        }
+      } catch (err) {
+        console.warn(`[leads] Failed to parse ${candidate}:`, err.message);
+      }
+    }
+  }
+  console.warn("[leads] No lead file found — returning empty array");
+  return [];
+}
+
+/**
+ * Return a cached or freshly loaded leads array.
+ * Tries Supabase first; falls back to the local scored_leads.json.
+ */
+async function getLeads() {
+  const now = Date.now();
+  if (_leadsCache && now - _leadsCacheAt < LEADS_CACHE_TTL_MS) {
+    return _leadsCache;
+  }
+
+  let leads = await loadLeadsFromSupabase();
+  if (!leads) {
+    leads = loadLeadsFromDisk();
+  }
+
+  _leadsCache = leads;
+  _leadsCacheAt = now;
+  return leads;
+}
+
+// ---------------------------------------------------------------------------
+// Static agent data
+// ---------------------------------------------------------------------------
+
+const AGENTS = [
   {
     role: "PlannerAgent",
     status: "idle",
@@ -131,10 +219,32 @@ const MOCK_AGENTS = [
 // ---------------------------------------------------------------------------
 
 function generateId() {
-  // Use cryptographically secure random bytes and encode as base64url, then trim.
-  // 9 random bytes → 72 bits of entropy, more than sufficient for a short session ID.
   return crypto.randomBytes(9).toString("base64url").slice(0, 11);
 }
+
+// ---------------------------------------------------------------------------
+// App setup
+// ---------------------------------------------------------------------------
+
+const app = express();
+
+app.use(
+  cors({
+    origin: [
+      "https://xps-intelligence-frontend.vercel.app",
+      "https://infinityxonesystems.github.io",
+      /\.vercel\.app$/,
+      /\.railway\.app$/,
+      "http://localhost:3000",
+      "http://localhost:5173",
+    ],
+    methods: ["GET", "POST", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+);
+
+app.use(express.json());
 
 // ---------------------------------------------------------------------------
 // Routes
@@ -151,6 +261,7 @@ app.get("/api/health", (_req, res) => {
     backend: "XPS Intelligence API",
     version: "1.0.0",
     groq: GROQ_API_KEY ? "configured" : "not configured",
+    dataSource: process.env.NEXT_PUBLIC_SUPABASE_URL ? "supabase" : "local",
   });
 });
 
@@ -178,6 +289,9 @@ app.post("/api/chat/send", async (req, res) => {
     return res.status(400).json({ error: "message is required" });
   }
 
+  // Validate agentRole against the allowed set to prevent prompt injection.
+  const safeRole = ALLOWED_AGENT_ROLES.has(agentRole) ? agentRole : "GeneralAgent";
+
   if (!GROQ_API_KEY) {
     return res.status(503).json({
       error: "GROQ_API_KEY is not configured on the server",
@@ -185,11 +299,10 @@ app.post("/api/chat/send", async (req, res) => {
   }
 
   try {
-    // Lazy-require so the module is only loaded when needed and after env setup
     const Groq = require("groq-sdk");
     const groq = new Groq({ apiKey: GROQ_API_KEY });
 
-    const systemPrompt = `You are an XPS Intelligence AI Agent operating in the role of ${agentRole}. \
+    const systemPrompt = `You are an XPS Intelligence AI Agent operating in the role of ${safeRole}. \
 You specialise in contractor lead generation for the flooring and construction industries. \
 Provide concise, actionable insights.`;
 
@@ -211,19 +324,11 @@ Provide concise, actionable insights.`;
     const assistantContent =
       completion.choices[0]?.message?.content || "No response generated.";
 
-    // Persist both turns in history (cap at MAX_CHAT_HISTORY_LENGTH to avoid unbounded growth)
+    // Persist both turns in history
     const updatedHistory = [
       ...history,
-      {
-        role: "user",
-        content: message.trim(),
-        timestamp: new Date().toISOString(),
-      },
-      {
-        role: "assistant",
-        content: assistantContent,
-        timestamp: new Date().toISOString(),
-      },
+      { role: "user", content: message.trim(), timestamp: new Date().toISOString() },
+      { role: "assistant", content: assistantContent, timestamp: new Date().toISOString() },
     ].slice(-MAX_CHAT_HISTORY_LENGTH);
     chatHistories.set(sessionId, updatedHistory);
 
@@ -234,32 +339,66 @@ Provide concise, actionable insights.`;
         id: generateId(),
         role: "assistant",
         content: assistantContent,
-        agentRole,
+        agentRole: safeRole,
         timestamp: new Date().toISOString(),
         status: "sent",
       },
-      agentRole,
+      agentRole: safeRole,
       sessionId,
     });
   } catch (err) {
     console.error("[chat/send] Error:", err.message || err);
+    // Only expose error details in non-production environments.
+    const isDev = process.env.NODE_ENV !== "production";
     return res.status(500).json({
       error: "Chat request failed",
-      details: err.message || "Unknown error",
+      ...(isDev && { details: err.message || "Unknown error" }),
     });
   }
 });
 
 /**
  * GET /api/leads
- * Returns mock contractor leads
+ * Returns real contractor leads from the shadow scraper pipeline.
+ * Query params: tier (hot|warm|cold), industry, state, limit, offset
  */
-app.get("/api/leads", (_req, res) => {
-  res.status(200).json({
-    leads: MOCK_LEADS,
-    total: MOCK_LEADS.length,
-    timestamp: new Date().toISOString(),
-  });
+app.get("/api/leads", async (req, res) => {
+  try {
+    let leads = await getLeads();
+
+    // Optional filters
+    const { tier, industry, state, limit, offset } = req.query;
+    if (tier) {
+      const t = tier.toLowerCase();
+      leads = leads.filter((l) => l.tier === t);
+    }
+    if (industry) {
+      const i = industry.toLowerCase();
+      leads = leads.filter((l) => (l.industry || "").toLowerCase().includes(i));
+    }
+    if (state) {
+      const s = state.toUpperCase();
+      leads = leads.filter((l) => (l.state || "").toUpperCase() === s);
+    }
+
+    const total = leads.length;
+    const off = parseInt(offset, 10) || 0;
+    const lim = parseInt(limit, 10) || total;
+    const page = leads.slice(off, off + lim);
+
+    return res.status(200).json({
+      leads: page,
+      total,
+      offset: off,
+      limit: lim,
+      timestamp: new Date().toISOString(),
+      source: process.env.NEXT_PUBLIC_SUPABASE_URL ? "supabase" : "shadow_scraper",
+    });
+  } catch (err) {
+    console.error("[leads] Error:", err.message);
+    const isDev = process.env.NODE_ENV !== "production";
+    return res.status(500).json({ error: "Failed to load leads", ...(isDev && { details: err.message }) });
+  }
 });
 
 /**
@@ -267,8 +406,7 @@ app.get("/api/leads", (_req, res) => {
  * Returns agent status data
  */
 app.get("/api/agents", (_req, res) => {
-  // Refresh lastActivity timestamps so the response looks live
-  const agents = MOCK_AGENTS.map((a) => ({
+  const agents = AGENTS.map((a) => ({
     ...a,
     lastActivity:
       a.status === "running" ? new Date().toISOString() : a.lastActivity,
@@ -353,6 +491,12 @@ app.listen(PORT, () => {
   console.log(
     `[XPS Intelligence API] Groq: ${GROQ_API_KEY ? "configured" : "NOT configured — set GROQ_API_KEY"}`,
   );
+  // Warm the leads cache on startup
+  getLeads().then((leads) => {
+    console.log(`[XPS Intelligence API] Lead cache primed: ${leads.length} leads`);
+  }).catch((err) => {
+    console.warn("[XPS Intelligence API] Lead cache prime failed:", err.message);
+  });
 });
 
 module.exports = app;
