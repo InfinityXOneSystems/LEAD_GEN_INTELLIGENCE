@@ -21,6 +21,8 @@ const {
   isConfigured: supabaseConfigured,
 } = require("../db/supabaseClient");
 
+const { loadLeadsFromFile } = require("../lib/lead_utils");
+
 const ROOT = path.join(__dirname, "..");
 const LEADS_DIR = path.join(ROOT, "leads");
 const DATA_DIR = path.join(ROOT, "data");
@@ -100,13 +102,6 @@ function readJson(filePath) {
 }
 
 /** Load leads from local JSON files (offline fallback). */
-function loadLeadsFromFile() {
-  const scored = path.join(LEADS_DIR, "scored_leads.json");
-  const raw = path.join(LEADS_DIR, "leads.json");
-  if (fs.existsSync(scored)) return readJson(scored);
-  if (fs.existsSync(raw)) return readJson(raw);
-  return [];
-}
 
 /** Save leads to local JSON file (used as dual-write backup). */
 function saveLeadsToFile(leads) {
@@ -167,9 +162,9 @@ app.get("/api/leads/metrics", async (req, res) => {
     const leads = supabaseConfigured
       ? await getAllLeads(1000).catch((err) => {
           console.error("[gateway] Supabase metrics error:", err.message);
-          return loadLeadsFromFile();
+          return loadLeadsFromFile(LEADS_DIR);
         })
-      : loadLeadsFromFile();
+      : loadLeadsFromFile(LEADS_DIR);
     const list = Array.isArray(leads) ? leads : [];
     const total = list.length;
     const aPlusOpportunities = list.filter(
@@ -210,7 +205,7 @@ app.get("/api/leads", async (req, res) => {
 
     if (!supabaseConfigured) {
       // Offline fallback: use local JSON
-      const leads = loadLeadsFromFile();
+      const leads = loadLeadsFromFile(LEADS_DIR);
       let result = Array.isArray(leads) ? leads : [];
       if (city)
         result = result.filter(
@@ -272,7 +267,7 @@ app.get("/api/leads/:id", async (req, res) => {
     if (lead) return ok(res, lead);
 
     // Fallback: search local JSON by id or place_id
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFile(LEADS_DIR);
     const list = Array.isArray(leads) ? leads : [];
     const found = list.find(
       (l) => String(l.id) === req.params.id || l.place_id === req.params.id,
@@ -468,7 +463,7 @@ app.get("/api/scraper/logs", (req, res) => {
 app.post("/api/scraper/results", (req, res) => {
   try {
     const { job_id, results = [] } = req.body;
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFile(LEADS_DIR);
     const list = Array.isArray(leads) ? leads : [];
     let added = 0;
     results.forEach((r) => {
@@ -644,7 +639,7 @@ app.get("/api/tools", (req, res) => {
 // GET /api/stats
 app.get("/api/stats", (req, res) => {
   try {
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFile(LEADS_DIR);
     const list = Array.isArray(leads) ? leads : [];
     const scores = list.map((l) => l.score || 0).filter((s) => s > 0);
     const avgScore = scores.length
@@ -746,7 +741,7 @@ app.post("/api/outreach/send", async (req, res) => {
   const { leadId, template, campaignId } = req.body;
   if (!leadId) return fail(res, "leadId required", 400);
   try {
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFile(LEADS_DIR);
     const list = Array.isArray(leads) ? leads : [];
     const lead = list.find(
       (l) => String(l.id) === String(leadId) || l.place_id === String(leadId),
@@ -842,7 +837,7 @@ app.post("/api/outreach/campaigns", (req, res) => {
     }
 
     // Count matching leads for target_count
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFile(LEADS_DIR);
     const list = Array.isArray(leads) ? leads : [];
     const minScore = typeof min_score === "number" ? min_score : 0;
     const industryLower = industry ? industry.toLowerCase() : null;
@@ -905,7 +900,7 @@ app.get("/api/monitoring/health", (req, res) => {
 // GET /api/heatmap
 app.get("/api/heatmap", (req, res) => {
   try {
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFile(LEADS_DIR);
     const list = Array.isArray(leads) ? leads : [];
 
     const cityMap = {};
@@ -1595,7 +1590,7 @@ function buildSmartFallbackReply(userMessage) {
   // Load current lead data
   let leads = [];
   try {
-    leads = loadLeadsFromFile();
+    leads = loadLeadsFromFile(LEADS_DIR);
   } catch (_) {}
   const total = leads.length;
   const hot = leads.filter(
@@ -1836,7 +1831,7 @@ app.post("/api/v1/chat", async (req, res) => {
   // Build a live-context system prompt with real lead stats
   let liveLeads = [];
   try {
-    liveLeads = loadLeadsFromFile();
+    liveLeads = loadLeadsFromFile(LEADS_DIR);
   } catch (_) {}
   const liveTotal = liveLeads.length;
   const liveHot = liveLeads.filter(
@@ -1937,7 +1932,7 @@ app.get("/api", (req, res) => {
 
 // GET /api/status  – alias for health check (some UIs expect this path)
 app.get("/api/status", (req, res) => {
-  const leads = loadLeadsFromFile();
+  const leads = loadLeadsFromFile(LEADS_DIR);
   const list = Array.isArray(leads) ? leads : [];
   return res.json({
     success: true,
