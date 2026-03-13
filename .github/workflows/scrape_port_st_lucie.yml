@@ -64,17 +64,7 @@ jobs:
           if [ -f leads/port_st_lucie_leads.json ]; then
             COUNT=$(python3 -c "import json; d=json.load(open('leads/port_st_lucie_leads.json')); print(len(d))" 2>/dev/null || echo 0)
             echo "✅ Port St Lucie leads: $COUNT"
-            python3 -c "
-import json
-leads = json.load(open('leads/port_st_lucie_leads.json'))
-hot  = sum(1 for l in leads if l.get('tier') == 'HOT')
-warm = sum(1 for l in leads if l.get('tier') == 'WARM')
-cold = sum(1 for l in leads if l.get('tier') == 'COLD')
-print(f'  HOT: {hot}  WARM: {warm}  COLD: {cold}')
-print()
-for l in leads[:5]:
-    print(f'  {l[\"company\"]} | {l[\"phone\"]} | {l[\"city\"]}, {l[\"state\"]} | {l.get(\"website\",\"\")}')
-"
+            python3 -c "import json; d=json.load(open('leads/port_st_lucie_leads.json')); print('  HOT:',sum(1 for l in d if l.get('tier')=='HOT'),'WARM:',sum(1 for l in d if l.get('tier')=='WARM'),'COLD:',sum(1 for l in d if l.get('tier')=='COLD')); [print(f'  {l.get(chr(99)+chr(111)+chr(109)+chr(112)+chr(97)+chr(110)+chr(121),'')}') for l in d[:5]]" 2>/dev/null || true
           fi
 
       - name: Commit scraped leads
@@ -103,31 +93,5 @@ for l in leads[:5]:
           echo "## Port St Lucie, FL — Lead Scrape Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f leads/port_st_lucie_leads.json ]; then
-            python3 - << 'PYEOF'
-import json, os
-leads = json.load(open("leads/port_st_lucie_leads.json"))
-hot  = sum(1 for l in leads if l.get("tier") == "HOT")
-warm = sum(1 for l in leads if l.get("tier") == "WARM")
-cold = sum(1 for l in leads if l.get("tier") == "COLD")
-
-with open(os.environ.get("GITHUB_STEP_SUMMARY", "/dev/null"), "a") as f:
-    f.write(f"| Metric | Value |\n")
-    f.write(f"|--------|-------|\n")
-    f.write(f"| Total leads | {len(leads)} |\n")
-    f.write(f"| 🔥 HOT | {hot} |\n")
-    f.write(f"| 🌡 WARM | {warm} |\n")
-    f.write(f"| 🧊 COLD | {cold} |\n")
-    f.write(f"\n### Top 10 Leads\n\n")
-    f.write("| Company | Phone | City | Website | Score |\n")
-    f.write("|---------|-------|------|---------|-------|\n")
-    for l in leads[:10]:
-        company = l.get("company", "")
-        phone   = l.get("phone", "")
-        city    = f"{l.get('city','')}, {l.get('state','')}"
-        website = l.get("website", "")
-        score   = l.get("lead_score", 0)
-        tier    = l.get("tier", "")
-        web_link = f"[link]({website})" if website else "—"
-        f.write(f"| {company} | {phone} | {city} | {web_link} | {score} ({tier}) |\n")
-PYEOF
+            python3 -c "import json,os; d=json.load(open('leads/port_st_lucie_leads.json')); hot=sum(1 for l in d if l.get('tier')=='HOT'); warm=sum(1 for l in d if l.get('tier')=='WARM'); cold=sum(1 for l in d if l.get('tier')=='COLD'); s=os.environ.get('GITHUB_STEP_SUMMARY','/dev/null'); f=open(s,'a'); [f.write(x) for x in ['| Metric | Value |\n','|--------|-------|\n',f'| Total | {len(d)} |\n',f'| HOT | {hot} |\n',f'| WARM | {warm} |\n',f'| COLD | {cold} |\n']]; f.close()" 2>/dev/null || true
           fi

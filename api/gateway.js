@@ -1583,6 +1583,83 @@ app.get("/api/v1/system/agent-activity", async (req, res) => {
   });
 });
 
+// ── /api/v1/chat – LLM Chat Endpoint (Groq) ──────────────────────────────────
+// POST /api/v1/chat
+//   Body: { message: string, history?: [{role, content}], system?: string }
+//   Response: { reply: string, model: string, usage?: {...} }
+//
+// Uses GROQ_API_KEY env var.  Falls back to a canned response when the key
+// is absent so the frontend always gets a well-formed reply.
+app.post("/api/v1/chat", async (req, res) => {
+  const { message, history = [], system } = req.body || {};
+
+  if (!message || typeof message !== "string" || !message.trim()) {
+    return res.status(400).json({ success: false, error: "message is required" });
+  }
+
+  const GROQ_API_KEY = process.env.GROQ_API_KEY || "";
+  const GROQ_MODEL = process.env.GROQ_MODEL || "llama3-8b-8192";
+  const GROQ_API_BASE = "https://api.groq.com/openai/v1";
+
+  const systemPrompt = system ||
+    "You are XPS Intelligence AI — an autonomous lead generation and business intelligence assistant. " +
+    "Help users scrape contractors, analyze markets, manage leads, run outreach, and understand their data. " +
+    "Be concise, practical, and action-oriented. When users ask to scrape or search, describe what you would do.";
+
+  const messages = [
+    { role: "system", content: systemPrompt },
+    ...(Array.isArray(history) ? history.slice(-20) : []),
+    { role: "user", content: message.trim() },
+  ];
+
+  if (!GROQ_API_KEY) {
+    // Graceful fallback when no API key is configured
+    const fallbackReply = `[XPS Intelligence] I received your message: "${message}". ` +
+      "To enable real AI responses, set the GROQ_API_KEY environment variable. " +
+      "The system can still run scraping commands — try 'scrape epoxy contractors in Florida'.";
+    return res.json({ reply: fallbackReply, model: "fallback", usage: null });
+  }
+
+  try {
+    const payload = JSON.stringify({
+      model: GROQ_MODEL,
+      messages,
+      temperature: 0.7,
+      max_tokens: 1024,
+      stream: false,
+    });
+
+    const groqRes = await axios.post(
+      `${GROQ_API_BASE}/chat/completions`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${GROQ_API_KEY}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        timeout: 30000,
+      },
+    );
+
+    const choice = groqRes.data?.choices?.[0];
+    const reply = choice?.message?.content || "(no response)";
+    const usage = groqRes.data?.usage || null;
+    return res.json({ reply, model: GROQ_MODEL, usage });
+  } catch (err) {
+    const status = err.response?.status;
+    const detail = err.response?.data?.error?.message || err.message;
+    console.error("[Chat] Groq API error:", status, detail);
+
+    // Return a structured error so the frontend can display it gracefully
+    return res.status(502).json({
+      success: false,
+      error: `LLM error: ${detail}`,
+      reply: `I encountered an error communicating with the AI service: ${detail}. Please try again.`,
+    });
+  }
+});
+
 // GET /health  – top-level health check (no auth; used by Railway, Vercel, and monitoring)
 app.get("/health", (req, res) => {
   return res.json({ status: "OK", timestamp: new Date().toISOString() });

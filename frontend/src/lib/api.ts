@@ -19,7 +19,7 @@ const RAW_BASE =
   // Vite injects VITE_* at build time; import.meta.env is safe to use here.
   (typeof import.meta !== "undefined" &&
     (import.meta as { env?: Record<string, string> }).env?.VITE_API_URL) ||
-  "https://xps-intelligence.up.railway.app";
+  "https://xpsintelligencesystem-production.up.railway.app";
 
 /** Backend base URL — strip trailing slash once so callers never need to. */
 export const API_BASE_URL = RAW_BASE.replace(/\/$/, "");

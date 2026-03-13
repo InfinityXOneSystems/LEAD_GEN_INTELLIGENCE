@@ -172,3 +172,37 @@ export async function pollTaskUntilDone(
 
   throw new Error(`Task ${taskId} timed out after ${timeoutMs / 1000}s`);
 }
+
+// ─── Chat / LLM ────────────────────────────────────────────────────────────────
+
+export interface ChatMessage {
+  role: "user" | "assistant" | "system";
+  content: string;
+}
+
+export interface ChatResponse {
+  reply: string;
+  model: string;
+  usage?: {
+    prompt_tokens: number;
+    completion_tokens: number;
+    total_tokens: number;
+  } | null;
+}
+
+/**
+ * Send a natural-language message to the XPS Intelligence LLM agent (Groq).
+ * Supports conversation history for multi-turn dialogue.
+ */
+export async function sendChatMessage(
+  message: string,
+  history: ChatMessage[] = [],
+  system?: string,
+): Promise<ChatResponse> {
+  const response = await apiClient.post<ChatResponse>("/api/v1/chat", {
+    message,
+    history,
+    system,
+  });
+  return response.data;
+}
