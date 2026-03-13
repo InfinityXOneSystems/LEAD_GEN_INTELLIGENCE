@@ -180,29 +180,42 @@ function buildSmartFallbackReply(message) {
   const cold = total - hot - warm;
 
   // Lead stats queries
-  if (msg.includes("how many") || msg.includes("stats") || msg.includes("count") || msg.includes("total")) {
+  if (
+    msg.includes("how many") ||
+    msg.includes("stats") ||
+    msg.includes("count") ||
+    msg.includes("total")
+  ) {
     return (
       `📊 **XPS Intelligence Lead Database — Live Stats**\n\n` +
       `| Tier | Count | % |\n|------|-------|---|\n` +
-      `| 🔥 HOT (score ≥75) | ${hot} | ${total ? Math.round((hot/total)*100) : 0}% |\n` +
-      `| 🌡 WARM (50–74) | ${warm} | ${total ? Math.round((warm/total)*100) : 0}% |\n` +
-      `| ❄️ COLD (<50) | ${cold} | ${total ? Math.round((cold/total)*100) : 0}% |\n` +
+      `| 🔥 HOT (score ≥75) | ${hot} | ${total ? Math.round((hot / total) * 100) : 0}% |\n` +
+      `| 🌡 WARM (50–74) | ${warm} | ${total ? Math.round((warm / total) * 100) : 0}% |\n` +
+      `| ❄️ COLD (<50) | ${cold} | ${total ? Math.round((cold / total) * 100) : 0}% |\n` +
       `| **Total** | **${total}** | 100% |\n\n` +
       `_Last updated: ${new Date().toISOString().slice(0, 10)}. Sources: Google Maps, Yelp, BBB, YellowPages, SuperPages._`
     );
   }
 
   // Scrape / find requests
-  if (msg.includes("scrape") || msg.includes("find") || msg.includes("search")) {
+  if (
+    msg.includes("scrape") ||
+    msg.includes("find") ||
+    msg.includes("search")
+  ) {
     const topLeads = leads
-      .sort((a, b) => ((b.lead_score || b.score || 0) - (a.lead_score || a.score || 0)))
+      .sort(
+        (a, b) =>
+          (b.lead_score || b.score || 0) - (a.lead_score || a.score || 0),
+      )
       .slice(0, 5);
     let table = `| Company | City, State | Score | Tier |\n|---------|------------|-------|------|\n`;
     for (const l of topLeads) {
       const co = l.company_name || l.company || "—";
       const loc = [l.city, l.state].filter(Boolean).join(", ") || "—";
       const score = l.lead_score || l.score || 0;
-      const tier = l.tier || (score >= 75 ? "HOT" : score >= 50 ? "WARM" : "COLD");
+      const tier =
+        l.tier || (score >= 75 ? "HOT" : score >= 50 ? "WARM" : "COLD");
       table += `| ${co} | ${loc} | ${score} | ${tier} |\n`;
     }
     return (
@@ -217,7 +230,10 @@ function buildSmartFallbackReply(message) {
   if (msg.includes("hot") || msg.includes("best") || msg.includes("top")) {
     const hotLeads = leads
       .filter((l) => (l.lead_score || l.score || 0) >= 75)
-      .sort((a, b) => ((b.lead_score || b.score || 0) - (a.lead_score || a.score || 0)))
+      .sort(
+        (a, b) =>
+          (b.lead_score || b.score || 0) - (a.lead_score || a.score || 0),
+      )
       .slice(0, 5);
     if (hotLeads.length) {
       let table = `| Company | City | Phone | Score |\n|---------|------|-------|-------|\n`;
@@ -229,7 +245,11 @@ function buildSmartFallbackReply(message) {
   }
 
   // Help / capabilities
-  if (msg.includes("help") || msg.includes("what can") || msg.includes("capabilities")) {
+  if (
+    msg.includes("help") ||
+    msg.includes("what can") ||
+    msg.includes("capabilities")
+  ) {
     return (
       `⚡ **XPS Intelligence — Capabilities**\n\n` +
       `I'm your autonomous lead generation AI. Here's what I can do:\n\n` +
@@ -406,7 +426,8 @@ app.post("/api/chat/send", async (req, res) => {
               messages,
               max_tokens: 1024,
             });
-            replyContent = completion.choices[0]?.message?.content || "No response";
+            replyContent =
+              completion.choices[0]?.message?.content || "No response";
             modelUsed = "groq:llama-3.3-70b-versatile";
           } catch (groqErr) {
             console.warn("[Chat] Groq also failed:", groqErr.message);
@@ -523,19 +544,40 @@ app.get("/api/agents", (_req, res) => {
 // ── /api/v1/system/agent-activity — Live agent activity feed ─────────────────
 app.get("/api/v1/system/agent-activity", (_req, res) => {
   const agents = [
-    { role: "ScraperAgent",     status: "running", lastActivity: new Date().toISOString() },
-    { role: "ValidatorAgent",   status: "idle",    lastActivity: new Date(Date.now() - 30_000).toISOString() },
-    { role: "EnrichmentAgent",  status: "idle",    lastActivity: new Date(Date.now() - 120_000).toISOString() },
-    { role: "ScoringAgent",     status: "idle",    lastActivity: new Date(Date.now() - 60_000).toISOString() },
-    { role: "OutreachAgent",    status: "idle",    lastActivity: new Date(Date.now() - 300_000).toISOString() },
+    {
+      role: "ScraperAgent",
+      status: "running",
+      lastActivity: new Date().toISOString(),
+    },
+    {
+      role: "ValidatorAgent",
+      status: "idle",
+      lastActivity: new Date(Date.now() - 30_000).toISOString(),
+    },
+    {
+      role: "EnrichmentAgent",
+      status: "idle",
+      lastActivity: new Date(Date.now() - 120_000).toISOString(),
+    },
+    {
+      role: "ScoringAgent",
+      status: "idle",
+      lastActivity: new Date(Date.now() - 60_000).toISOString(),
+    },
+    {
+      role: "OutreachAgent",
+      status: "idle",
+      lastActivity: new Date(Date.now() - 300_000).toISOString(),
+    },
   ];
   const entries = agents.map((a, i) => ({
     id: `act-${i + 1}`,
     agent: a.role,
     type: a.status === "running" ? "task_started" : "task_completed",
-    message: a.status === "running"
-      ? `${a.role} is actively processing leads`
-      : `${a.role} completed its last run successfully`,
+    message:
+      a.status === "running"
+        ? `${a.role} is actively processing leads`
+        : `${a.role} completed its last run successfully`,
     timestamp: a.lastActivity,
     status: a.status,
   }));
@@ -547,8 +589,11 @@ app.get("/api/v1/system/metrics", (_req, res) => {
   const leads = loadLeadsFromFile();
   return res.json({
     leads_total: leads.length,
-    leads_hot:  leads.filter(l => (l.lead_score || l.score || 0) >= 75).length,
-    leads_warm: leads.filter(l => { const s = l.lead_score || l.score || 0; return s >= 50 && s < 75; }).length,
+    leads_hot: leads.filter((l) => (l.lead_score || l.score || 0) >= 75).length,
+    leads_warm: leads.filter((l) => {
+      const s = l.lead_score || l.score || 0;
+      return s >= 50 && s < 75;
+    }).length,
     uptime_seconds: Math.round(process.uptime()),
     memory_mb: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
     timestamp: new Date().toISOString(),
@@ -557,22 +602,34 @@ app.get("/api/v1/system/metrics", (_req, res) => {
 
 // ── /api/v1/system/tasks — Recent task list ──────────────────────────────────
 app.get("/api/v1/system/tasks", (_req, res) => {
-  return res.json({ tasks: [], total: 0, note: "No task store configured locally." });
+  return res.json({
+    tasks: [],
+    total: 0,
+    note: "No task store configured locally.",
+  });
 });
 
 // ── /api/v1/runtime/command — Queue a runtime command ───────────────────────
 app.post("/api/v1/runtime/command", (req, res) => {
   const { command, command_type, params } = req.body || {};
   if (!command || !command.trim()) {
-    return res.status(422).json({ error: "command is required and must be non-empty" });
+    return res
+      .status(422)
+      .json({ error: "command is required and must be non-empty" });
   }
   const taskId = `gw-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
   // Detect agent from command text
   const lower = command.toLowerCase();
   let agent = "orchestrator";
-  if (lower.includes("scrape") || lower.includes("find") || lower.includes("search")) agent = "scraper";
+  if (
+    lower.includes("scrape") ||
+    lower.includes("find") ||
+    lower.includes("search")
+  )
+    agent = "scraper";
   else if (lower.includes("seo") || lower.includes("audit")) agent = "seo";
-  else if (lower.includes("outreach") || lower.includes("email")) agent = "outreach";
+  else if (lower.includes("outreach") || lower.includes("email"))
+    agent = "outreach";
   else if (lower.includes("score") || lower.includes("tier")) agent = "scoring";
 
   // Store in memory so /task/:id can return it
@@ -593,7 +650,10 @@ app.post("/api/v1/runtime/command", (req, res) => {
     if (t) {
       t.status = "completed";
       t.completed_at = new Date().toISOString();
-      t.result = { message: `Command "${command}" executed successfully`, leads_found: 0 };
+      t.result = {
+        message: `Command "${command}" executed successfully`,
+        leads_found: 0,
+      };
       t.logs.push(`Task ${taskId} completed`);
     }
   }, 3000);

@@ -36,15 +36,19 @@ async function shot(page, name) {
 
 // ── wait helper: wait until input is no longer disabled ──────────────────────
 async function waitForReady(page, timeout = 15_000) {
-  await page.waitForFunction(
-    () => {
-      const btn = document.querySelector('button[type="submit"], button');
-      return btn && !btn.disabled;
-    },
-    { timeout },
-  ).catch((err) => {
-    console.warn(`⚠️  waitForReady timed out after ${timeout}ms: ${err.message}`);
-  });
+  await page
+    .waitForFunction(
+      () => {
+        const btn = document.querySelector('button[type="submit"], button');
+        return btn && !btn.disabled;
+      },
+      { timeout },
+    )
+    .catch((err) => {
+      console.warn(
+        `⚠️  waitForReady timed out after ${timeout}ms: ${err.message}`,
+      );
+    });
 }
 
 // ---------------------------------------------------------------------------
@@ -70,7 +74,9 @@ test.describe("1 · Backend API", () => {
     console.log(`✅ /api/leads: ${list.length} leads returned`);
   });
 
-  test("POST /api/chat/send returns LLM reply (fallback)", async ({ request }) => {
+  test("POST /api/chat/send returns LLM reply (fallback)", async ({
+    request,
+  }) => {
     const r = await request.post(`${BACKEND_URL}/api/chat/send`, {
       data: { message: "How many leads do you have?", agentRole: "LeadAgent" },
       headers: { "Content-Type": "application/json" },
@@ -79,10 +85,17 @@ test.describe("1 · Backend API", () => {
     const b = await r.json();
     expect(b.reply).toBeDefined();
     expect(b.reply.content.length).toBeGreaterThan(10);
-    console.log("✅ /api/chat/send model:", b.reply.model, "| chars:", b.reply.content.length);
+    console.log(
+      "✅ /api/chat/send model:",
+      b.reply.model,
+      "| chars:",
+      b.reply.content.length,
+    );
   });
 
-  test("POST /api/v1/runtime/command queues scraper task", async ({ request }) => {
+  test("POST /api/v1/runtime/command queues scraper task", async ({
+    request,
+  }) => {
     const r = await request.post(`${BACKEND_URL}/api/v1/runtime/command`, {
       data: { command: "scrape flooring contractors in Austin TX" },
       headers: { "Content-Type": "application/json" },
@@ -96,7 +109,9 @@ test.describe("1 · Backend API", () => {
 
     // Poll for completion
     await new Promise((res) => setTimeout(res, 4000));
-    const poll = await request.get(`${BACKEND_URL}/api/v1/runtime/task/${b.task_id}`);
+    const poll = await request.get(
+      `${BACKEND_URL}/api/v1/runtime/task/${b.task_id}`,
+    );
     expect(poll.status()).toBe(200);
     const t = await poll.json();
     expect(t.task_id).toBe(b.task_id);
@@ -104,7 +119,9 @@ test.describe("1 · Backend API", () => {
     console.log("✅ Task polled, status:", t.status);
   });
 
-  test("POST /api/v1/runtime/command rejects empty command (422)", async ({ request }) => {
+  test("POST /api/v1/runtime/command rejects empty command (422)", async ({
+    request,
+  }) => {
     const r = await request.post(`${BACKEND_URL}/api/v1/runtime/command`, {
       data: { command: "" },
       headers: { "Content-Type": "application/json" },
@@ -113,13 +130,19 @@ test.describe("1 · Backend API", () => {
     console.log("✅ Empty command correctly rejected with 422");
   });
 
-  test("GET /api/v1/runtime/task/nonexistent returns 404", async ({ request }) => {
-    const r = await request.get(`${BACKEND_URL}/api/v1/runtime/task/nonexistent-id`);
+  test("GET /api/v1/runtime/task/nonexistent returns 404", async ({
+    request,
+  }) => {
+    const r = await request.get(
+      `${BACKEND_URL}/api/v1/runtime/task/nonexistent-id`,
+    );
     expect(r.status()).toBe(404);
     console.log("✅ Non-existent task returns 404");
   });
 
-  test("GET /api/v1/system/agent-activity returns agent entries", async ({ request }) => {
+  test("GET /api/v1/system/agent-activity returns agent entries", async ({
+    request,
+  }) => {
     const r = await request.get(`${BACKEND_URL}/api/v1/system/agent-activity`);
     expect(r.status()).toBe(200);
     const b = await r.json();
@@ -167,10 +190,16 @@ test.describe("2 · Homepage", () => {
   });
 
   test("all 4 nav buttons are visible and clickable", async ({ page }) => {
-    await expect(page.getByRole("button", { name: /Chat Agent/i })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /Chat Agent/i }),
+    ).toBeVisible();
     await expect(page.getByRole("button", { name: /Leads/i })).toBeVisible();
-    await expect(page.getByRole("button", { name: /Agent Activity/i })).toBeVisible();
-    await expect(page.getByRole("button", { name: /Task Status/i })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /Agent Activity/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /Task Status/i }),
+    ).toBeVisible();
     await shot(page, "03-homepage-nav-buttons");
     console.log("✅ All 4 nav buttons visible");
   });
@@ -205,9 +234,13 @@ test.describe("3 · Chat Agent tab", () => {
     console.log("✅ Send button enabled after typing");
   });
 
-  test("submitting chat message returns LLM reply with lead stats table", async ({ page }) => {
+  test("submitting chat message returns LLM reply with lead stats table", async ({
+    page,
+  }) => {
     const input = page.getByRole("textbox");
-    await input.fill("How many leads do you have and show me the top HOT leads?");
+    await input.fill(
+      "How many leads do you have and show me the top HOT leads?",
+    );
     await shot(page, "06-chat-message-typed");
 
     await page.getByRole("button", { name: /Send/i }).click();
@@ -216,7 +249,7 @@ test.describe("3 · Chat Agent tab", () => {
     await page.waitForFunction(
       () => {
         const tables = document.querySelectorAll("table");
-        const paras  = [...document.querySelectorAll("p, div")];
+        const paras = [...document.querySelectorAll("p, div")];
         return (
           tables.length > 0 ||
           paras.some((el) => el.textContent && el.textContent.includes("HOT"))
@@ -232,7 +265,9 @@ test.describe("3 · Chat Agent tab", () => {
     console.log("✅ LLM response received with lead data");
   });
 
-  test("second chat message returns HOT leads table with phone numbers", async ({ page }) => {
+  test("second chat message returns HOT leads table with phone numbers", async ({
+    page,
+  }) => {
     const input = page.getByRole("textbox");
     await input.fill("Show me the top HOT contractor leads with phone numbers");
     await page.keyboard.press("Enter");
@@ -285,7 +320,9 @@ test.describe("4 · Leads tab", () => {
 // ---------------------------------------------------------------------------
 
 test.describe("5 · Agent Activity tab", () => {
-  test("clicking Agent Activity shows 5 live agent entries", async ({ page }) => {
+  test("clicking Agent Activity shows 5 live agent entries", async ({
+    page,
+  }) => {
     await page.goto(FRONTEND_URL);
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(500);
@@ -295,7 +332,9 @@ test.describe("5 · Agent Activity tab", () => {
 
     await shot(page, "11-agent-activity-tab");
     const body = await page.locator("body").innerText();
-    expect(body).toMatch(/ScraperAgent|ValidatorAgent|EnrichmentAgent|ScoringAgent|OutreachAgent/i);
+    expect(body).toMatch(
+      /ScraperAgent|ValidatorAgent|EnrichmentAgent|ScoringAgent|OutreachAgent/i,
+    );
     console.log("✅ Agent Activity tab: live agent entries visible");
   });
 });
@@ -322,12 +361,18 @@ test.describe("6 · Task Status tab", () => {
     console.log("✅ Task Status tab: textbox + Poll button present");
   });
 
-  test("filling Task ID and clicking Poll returns task result", async ({ request, page }) => {
+  test("filling Task ID and clicking Poll returns task result", async ({
+    request,
+    page,
+  }) => {
     // First queue a real task via the API
-    const queueResp = await request.post(`${BACKEND_URL}/api/v1/runtime/command`, {
-      data: { command: "scrape epoxy contractors in Dallas TX" },
-      headers: { "Content-Type": "application/json" },
-    });
+    const queueResp = await request.post(
+      `${BACKEND_URL}/api/v1/runtime/command`,
+      {
+        data: { command: "scrape epoxy contractors in Dallas TX" },
+        headers: { "Content-Type": "application/json" },
+      },
+    );
     const { task_id } = await queueResp.json();
 
     // Now open the UI and poll it
@@ -364,15 +409,17 @@ test.describe("6 · Task Status tab", () => {
 // ---------------------------------------------------------------------------
 
 test.describe("7 · Full navigation flow", () => {
-  test("clicking all 4 tabs in sequence works without errors", async ({ page }) => {
+  test("clicking all 4 tabs in sequence works without errors", async ({
+    page,
+  }) => {
     await page.goto(FRONTEND_URL);
     await page.waitForLoadState("networkidle");
 
     const tabs = [
-      { name: /Chat Agent/i,      shot: "15-nav-chat" },
-      { name: /Leads/i,           shot: "16-nav-leads" },
-      { name: /Agent Activity/i,  shot: "17-nav-activity" },
-      { name: /Task Status/i,     shot: "18-nav-taskstatus" },
+      { name: /Chat Agent/i, shot: "15-nav-chat" },
+      { name: /Leads/i, shot: "16-nav-leads" },
+      { name: /Agent Activity/i, shot: "17-nav-activity" },
+      { name: /Task Status/i, shot: "18-nav-taskstatus" },
     ];
 
     for (const tab of tabs) {
