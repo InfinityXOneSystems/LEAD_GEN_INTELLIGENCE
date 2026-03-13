@@ -64,7 +64,20 @@ jobs:
           if [ -f leads/port_st_lucie_leads.json ]; then
             COUNT=$(python3 -c "import json; d=json.load(open('leads/port_st_lucie_leads.json')); print(len(d))" 2>/dev/null || echo 0)
             echo "✅ Port St Lucie leads: $COUNT"
-            python3 -c "import json; d=json.load(open('leads/port_st_lucie_leads.json')); print('  HOT:',sum(1 for l in d if l.get('tier')=='HOT'),'WARM:',sum(1 for l in d if l.get('tier')=='WARM'),'COLD:',sum(1 for l in d if l.get('tier')=='COLD')); [print(f'  {l.get('company','')}') for l in d[:5]]" 2>/dev/null || true
+            python3 - <<'PY' 2>/dev/null || true
+import json
+
+with open('leads/port_st_lucie_leads.json') as f:
+    d = json.load(f)
+
+hot = sum(1 for l in d if l.get("tier") == "HOT")
+warm = sum(1 for l in d if l.get("tier") == "WARM")
+cold = sum(1 for l in d if l.get("tier") == "COLD")
+print("  HOT:", hot, "WARM:", warm, "COLD:", cold)
+
+for l in d[:5]:
+    print(f"  {l.get('company', '')}")
+PY
           fi
 
       - name: Commit scraped leads
