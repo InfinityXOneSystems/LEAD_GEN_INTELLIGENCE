@@ -35,6 +35,8 @@ jobs:
     name: 🏥 System Health Check
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
 
     steps:
       - name: Check Railway backend /api/health

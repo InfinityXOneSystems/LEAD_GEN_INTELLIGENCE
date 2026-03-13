@@ -159,8 +159,6 @@ def dedup_leads(leads: List[dict]) -> Tuple[List[dict], int]:
         city    = (lead.get("city") or "").lower().strip()
         state   = (lead.get("state") or "").lower().strip()
         key = (company, city, state)
-        if not company:
-            continue  # drop leads with no company name
         if key not in seen:
             seen.add(key)
             unique.append(lead)
@@ -300,10 +298,13 @@ def run_validation(
         if phone and not is_valid_phone(phone):
             reasons.append("invalid_phone_format")
 
-        # URL reachability: if website given and we checked
+        # URL reachability: if website given and we checked, flag as warning only
+        # (do not reject — website may be down temporarily)
         if check_urls and website:
             norm = normalise_url(website)
-            if norm and not url_results.get(norm, True):
+            # Use False as default: if URL was submitted for checking but result
+            # is missing, treat as unreachable rather than silently passing it.
+            if norm and not url_results.get(norm, False):
                 reasons.append("website_unreachable")
 
         url_reachable = None

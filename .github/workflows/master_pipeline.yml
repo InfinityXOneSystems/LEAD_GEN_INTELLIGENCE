@@ -14,6 +14,8 @@ name: 🚀 Master Lead Pipeline
 
 on:
   schedule:
+    # 08:00 UTC = 03:00–04:00 EST — after overnight scraper (03:00 UTC) has finished.
+    # This gives the scraper a full hour to write leads before the pipeline reads them.
     - cron: "0 8 * * *"   # 08:00 UTC daily
   workflow_dispatch:
     inputs:
@@ -55,6 +57,9 @@ jobs:
   auth:
     name: 🔑 Resolve Auth Token
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     outputs:
       token: ${{ steps.token.outputs.token }}
       source: ${{ steps.token.outputs.source }}
@@ -285,6 +290,8 @@ jobs:
     needs: publish
     if: always() && needs.publish.result != 'cancelled'
     timeout-minutes: 5
+    permissions:
+      contents: read
 
     steps:
       - name: Check Railway backend health
