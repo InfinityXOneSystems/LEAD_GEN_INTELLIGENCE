@@ -112,7 +112,7 @@ jobs:
       - name: Run universal shadow scraper
         run: |
           echo "🚀 Starting universal shadow scraper..."
-          eval python scripts/universal_shadow_scraper.py ${{ steps.args.outputs.args }}
+          python scripts/universal_shadow_scraper.py ${{ steps.args.outputs.args }}
 
       - name: Show lead summary
         if: always()
