@@ -241,9 +241,8 @@ def write_outputs(
 
     # 3. Supabase + LEADS repo via supabase_lead_writer
     try:
-        import sys as _sys
-        if str(REPO_ROOT) not in _sys.path:
-            _sys.path.insert(0, str(REPO_ROOT))
+        if str(REPO_ROOT) not in sys.path:
+            sys.path.insert(0, str(REPO_ROOT))
         from scripts.supabase_lead_writer import write_leads as _write_leads
         sink_results = _write_leads(
             leads,

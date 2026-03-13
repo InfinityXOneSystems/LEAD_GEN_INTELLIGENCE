@@ -2,21 +2,21 @@
 """
 scripts/publish_leads_to_repos.py
 ===================================
-Enterprise Lead Publisher
+Enterprise Lead Publisher — powered by Infinity Orchestrator GitHub App
 
 Pushes the normalised, scored lead data into two target repos via the
-GitHub Contents API:
+GitHub Contents API.  Authentication priority:
+  1. GitHub App (GH_APP_ID + GH_APP_PRIVATE_KEY) — Infinity Orchestrator
+  2. GH_PAT personal access token
+  3. GITHUB_TOKEN (current repo only — dry-run equivalent for cross-repo)
 
+Target repos:
   1.  InfinityXOneSystems/LEADS          — enterprise schema (JSON archive)
   2.  InfinityXOneSystems/XPS-INTELLIGENCE-FRONTEND — public/data/leads.json
       (frontend-compatible schema consumed by LeadsPage + ContractorsPage)
 
-Required env var:
-  GITHUB_TOKEN   — personal-access token or Actions GITHUB_TOKEN with
-                   write access to both target repos.
-
-Optional:
-  LEADS_MAX      — max leads to publish (default 500, keep PRs manageable)
+Optional env vars:
+  LEADS_MAX      — max leads to publish (default 500)
   DRY_RUN        — set to "1" to skip GitHub writes
 
 Usage:
@@ -27,19 +27,26 @@ Usage:
 from __future__ import annotations
 
 import base64
-import hashlib
 import json
 import logging
 import os
 import re
 import sys
-import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from urllib.request import Request, urlopen
-from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
+from urllib.error import HTTPError
+
+# ── Infinity Orchestrator App Auth ───────────────────────────────────────────
+# Prefer the App auth helper (no third-party deps) but fall back gracefully.
+try:
+    _REPO_ROOT = Path(__file__).resolve().parent.parent
+    sys.path.insert(0, str(_REPO_ROOT))
+    from scripts.lib.github_app_auth import get_token as _get_app_token
+    _APP_AUTH_AVAILABLE = True
+except Exception:
+    _APP_AUTH_AVAILABLE = False
 
 logging.basicConfig(
     level=logging.INFO,
@@ -55,12 +62,44 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 # ─────────────────────────────────────────────────────────────────────────────
 
 GITHUB_API = "https://api.github.com"
-GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 LEADS_MAX = int(os.environ.get("LEADS_MAX", "500"))
 
 LEADS_REPO = "InfinityXOneSystems/LEADS"
 FRONTEND_REPO = "InfinityXOneSystems/XPS-INTELLIGENCE-FRONTEND"
+
+_TARGET_REPOS = [LEADS_REPO, FRONTEND_REPO]
+
+
+def _resolved_token() -> str:
+    """
+    Resolve the best available GitHub token at call time.
+
+    Priority:
+      1. Infinity Orchestrator GitHub App  (GH_APP_ID + GH_APP_PRIVATE_KEY)
+      2. GH_PAT personal access token
+      3. GITHUB_TOKEN (Actions default — cross-repo writes will 403)
+    """
+    if _APP_AUTH_AVAILABLE:
+        try:
+            tok = _get_app_token(repos=_TARGET_REPOS)
+            if tok:
+                return tok
+        except Exception as exc:
+            log.warning("App auth failed: %s", exc)
+
+    pat = os.environ.get("GH_PAT", "").strip()
+    if pat:
+        return pat
+
+    default = os.environ.get("GITHUB_TOKEN", "").strip()
+    if default:
+        return default
+
+    raise RuntimeError(
+        "No GitHub token found. Set GH_APP_ID+GH_APP_PRIVATE_KEY, GH_PAT, or GITHUB_TOKEN."
+    )
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # GitHub API helpers
@@ -77,10 +116,10 @@ def _gh_request(
     """Execute a GitHub API request, returning the parsed JSON response."""
     url = f"{GITHUB_API}{path}"
     headers = {
-        "Authorization": f"Bearer {GITHUB_TOKEN}",
+        "Authorization": f"Bearer {_resolved_token()}",
         "Accept": accept,
         "X-GitHub-Api-Version": "2022-11-28",
-        "User-Agent": "XPS-Intelligence-Lead-Publisher/1.0",
+        "User-Agent": "InfinityOrchestrator-LeadPublisher/1.0",
     }
     data: Optional[bytes] = None
     if body is not None:
@@ -873,10 +912,15 @@ def publish_to_frontend_repo(leads: List[dict]) -> None:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def main() -> int:
-    if not GITHUB_TOKEN and not DRY_RUN:
-        log.error("GITHUB_TOKEN is not set. Export it before running this script.")
-        log.error("  export GITHUB_TOKEN=ghp_...")
-        return 1
+    # Validate credentials early
+    try:
+        tok = _resolved_token()
+        log.info("Auth resolved (token length=%d)", len(tok))
+    except RuntimeError as exc:
+        log.error("%s", exc)
+        if not DRY_RUN:
+            return 1
+        log.warning("DRY_RUN=1 — continuing without a real token")
 
     leads = _load_pipeline_leads(LEADS_MAX)
     if not leads:

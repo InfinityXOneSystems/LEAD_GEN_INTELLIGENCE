@@ -306,7 +306,7 @@ def _merge_into_pipeline(new_leads: List[Dict[str, Any]]) -> int:
                         "email": lead["email"],
                         "website": lead["website"],
                         "address": lead["address"],
-                        "city": lead["city"].split(",")[0].strip(),
+                        "city": (lead.get("city") or "").split(",")[0].strip(),
                         "state": "FL",
                         "country": "USA",
                         "keyword": lead["industry"],

@@ -51,6 +51,7 @@ concurrency:
 permissions:
   contents: read
   actions: write
+  id-token: write   # required for GitHub App OIDC
 
 env:
   DISPATCHER_VERSION: "1.0.0"
@@ -71,8 +72,21 @@ jobs:
       dispatch_tier2: ${{ steps.plan.outputs.dispatch_tier2 }}
       dispatch_tier3: ${{ steps.plan.outputs.dispatch_tier3 }}
       dispatch_tier4: ${{ steps.plan.outputs.dispatch_tier4 }}
+      app_token: ${{ steps.app-token.outputs.token }}
 
     steps:
+      # ── Mint Infinity Orchestrator App token ───────────────────────────────
+      - name: Generate Infinity Orchestrator App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          repositories: >-
+            XPS_INTELLIGENCE_SYSTEM,
+            LEADS,
+            XPS-INTELLIGENCE-FRONTEND
+        continue-on-error: true   # graceful fallback if App not configured
       - name: Collect context
         id: ctx
         run: |
@@ -137,6 +151,7 @@ jobs:
         if: env.DRY_RUN == 'false'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ needs.validate.outputs.app_token || secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
@@ -150,6 +165,7 @@ jobs:
         if: env.DRY_RUN == 'false'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ needs.validate.outputs.app_token || secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
@@ -163,6 +179,7 @@ jobs:
         if: env.DRY_RUN == 'false'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ needs.validate.outputs.app_token || secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
@@ -191,6 +208,7 @@ jobs:
         if: env.DRY_RUN == 'false'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ needs.validate.outputs.app_token || secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
@@ -204,6 +222,7 @@ jobs:
         if: env.DRY_RUN == 'false'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ needs.validate.outputs.app_token || secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
@@ -232,6 +251,7 @@ jobs:
         if: env.DRY_RUN == 'false'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ needs.validate.outputs.app_token || secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
@@ -245,6 +265,7 @@ jobs:
         if: env.DRY_RUN == 'false'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ needs.validate.outputs.app_token || secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
@@ -254,11 +275,25 @@ jobs:
             });
             console.log('Dispatched lead_validation.yml');
 
+      - name: Dispatch enterprise_lead_pipeline.yml
+        if: env.DRY_RUN == 'false'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ needs.validate.outputs.app_token || secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              workflow_id: 'enterprise_lead_pipeline.yml',
+              ref: 'main',
+            });
+            console.log('Dispatched enterprise_lead_pipeline.yml');
+
       - name: Dry run summary
         if: env.DRY_RUN == 'true'
         run: |
           echo "### [DRY RUN] Tier 3 dispatch plan" >> $GITHUB_STEP_SUMMARY
-          echo "Would dispatch: lead_scraper.yml, lead_validation.yml" >> $GITHUB_STEP_SUMMARY
+          echo "Would dispatch: lead_scraper.yml, lead_validation.yml, enterprise_lead_pipeline.yml" >> $GITHUB_STEP_SUMMARY
 
   # ── Tier 4: Self-Healing (nightly schedule only) ──────────────────────────
   dispatch-tier4:
@@ -273,6 +308,7 @@ jobs:
         if: env.DRY_RUN == 'false'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ needs.validate.outputs.app_token || secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
@@ -286,6 +322,7 @@ jobs:
         if: env.DRY_RUN == 'false'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ needs.validate.outputs.app_token || secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
@@ -321,5 +358,12 @@ jobs:
           echo "| dispatch-tier2 | ${{ needs.dispatch-tier2.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| dispatch-tier3 | ${{ needs.dispatch-tier3.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| dispatch-tier4 | ${{ needs.dispatch-tier4.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          # Show auth method
+          if [ -n "${{ needs.validate.outputs.app_token }}" ]; then
+            echo "🔐 **Auth**: Infinity Orchestrator GitHub App token" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ **Auth**: GITHUB_TOKEN fallback (set GH_APP_ID + GH_APP_PRIVATE_KEY for full access)" >> $GITHUB_STEP_SUMMARY
+          fi
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "_Dispatcher v${{ env.DISPATCHER_VERSION }} — $(date -u +%Y-%m-%dT%H:%M:%SZ)_" >> $GITHUB_STEP_SUMMARY

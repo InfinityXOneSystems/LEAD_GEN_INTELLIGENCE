@@ -1,9 +1,9 @@
 # .github/workflows/enterprise_lead_pipeline.yml
 # ================================================
 # Enterprise Autonomous Lead Pipeline
-# GOVERNANCE: Tier 4 — Self-Healing (dispatch-only)
-# Schedule removed — was duplicating lead_scraper.yml every 2h.
-# Invoke via: workflow_dispatch or Tier 0 dispatcher.
+# GOVERNANCE: Tier 3/4 — daily schedule + dispatch
+# Auth: Infinity Orchestrator GitHub App (GH_APP_ID + GH_APP_PRIVATE_KEY)
+#       with fallback to GH_PAT for cross-repo writes.
 # See: .infinity/WORKFLOW_GOVERNANCE.md
 
 name: 🕷️ Enterprise Lead Pipeline
@@ -34,12 +34,47 @@ jobs:
     name: Autonomous Lead Pipeline
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    permissions:
+      contents: write
+      id-token: write    # required for OIDC / App auth
 
     steps:
+      # ── 1. Mint an Infinity Orchestrator App token ──────────────────────────
+      - name: Generate Infinity Orchestrator App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          # Request access to all three repos needed by the pipeline
+          repositories: >-
+            XPS_INTELLIGENCE_SYSTEM,
+            LEADS,
+            XPS-INTELLIGENCE-FRONTEND
+        continue-on-error: true   # fall back to GH_PAT if App not configured
+
+      - name: Resolve cross-repo token
+        id: token
+        run: |
+          # Use App token if generated, otherwise GH_PAT
+          if [ -n "${{ steps.app-token.outputs.token }}" ]; then
+            echo "token=${{ steps.app-token.outputs.token }}" >> $GITHUB_OUTPUT
+            echo "source=github_app" >> $GITHUB_OUTPUT
+            echo "✅ Using Infinity Orchestrator GitHub App token"
+          elif [ -n "${{ secrets.GH_PAT }}" ]; then
+            echo "token=${{ secrets.GH_PAT }}" >> $GITHUB_OUTPUT
+            echo "source=gh_pat" >> $GITHUB_OUTPUT
+            echo "⚠️  Falling back to GH_PAT"
+          else
+            echo "token=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+            echo "source=github_token" >> $GITHUB_OUTPUT
+            echo "⚠️  Using GITHUB_TOKEN (cross-repo writes may fail)"
+          fi
+
       - name: Checkout XPS Intelligence System
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.token.outputs.token }}
 
       - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v5
@@ -56,35 +91,27 @@ jobs:
 
       - name: Run autonomous pipeline
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ steps.token.outputs.token }}
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           LEADS_EMAIL_TO: info@infinityxonesystems.com
           SCRAPER_TARGETS: ${{ inputs.targets }}
           DRY_RUN: ${{ inputs.dry_run }}
-          # Supabase — all leads route here instead of PostgreSQL backend
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://nxfbfbipjsfzoefpgrof.supabase.co' }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           python -c "
-          import asyncio
-          import sys
-          import os
+          import asyncio, sys, os, json
           sys.path.insert(0, '.')
           from agents.pipeline.autonomous_lead_pipeline import run_pipeline, DEFAULT_TARGETS
-          import json
 
           targets_json = os.getenv('SCRAPER_TARGETS', '')
           targets = json.loads(targets_json) if targets_json.strip() else DEFAULT_TARGETS
 
           result = asyncio.run(run_pipeline(targets))
           print('Pipeline result:', json.dumps(result, indent=2, default=str))
-
-          # Exit with error code if pipeline failed
           if not result.get('success'):
               sys.exit(1)
-
-          # Print summary for GitHub Actions log
           print()
           print('=' * 60)
           print('PIPELINE SUMMARY')
@@ -93,17 +120,20 @@ jobs:
           print(f'HOT:          {result[\"hot\"]}')
           print(f'WARM:         {result[\"warm\"]}')
           print(f'COLD:         {result[\"cold\"]}')
-          print(f'Supabase:     {result.get(\"supabase\", {}).get(\"supabase\", {}).get(\"success\", \"n/a\")} written')
           print(f'GitHub push:  {result[\"github\"][\"success\"]}')
           print(f'Email sent:   {result[\"email\"][\"success\"]}')
-          print(f'CRM added:    {result[\"crm\"][\"added\"]}')
           print(f'Runtime:      {result[\"elapsed_sec\"]}s')
           print('=' * 60)
           "
 
       - name: Publish leads to LEADS repo + Frontend repo
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          # Infinity Orchestrator App auth — highest privilege
+          GH_APP_ID: ${{ secrets.GH_APP_ID }}
+          GH_APP_PRIVATE_KEY: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          # Fallbacks
+          GH_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ steps.token.outputs.token }}
           LEADS_MAX: "500"
           DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
         run: python scripts/publish_leads_to_repos.py

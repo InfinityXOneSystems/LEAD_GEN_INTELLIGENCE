@@ -655,7 +655,6 @@ app.use((_req, res) => {
 // Error handler
 // ---------------------------------------------------------------------------
 
-// eslint-disable-next-line no-unused-vars
 app.use((err, _req, res, _next) => {
   console.error("[server] Unhandled error:", err);
   res.status(500).json({
