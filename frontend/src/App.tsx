@@ -98,20 +98,18 @@ interface Lead {
 }
 
 function LeadsPanel() {
-  const [leads, setLeads]     = useState<Lead[]>([]);
-  const [total, setTotal]     = useState(0);
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [error, setError]     = useState<string | null>(null);
-  const [search, setSearch]   = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     let mounted = true;
     const doFetch = async () => {
       try {
         const res = await apiClient.get<
-          | { leads: Lead[]; total: number }
-          | { data: Lead[] }
-          | Lead[]
+          { leads: Lead[]; total: number } | { data: Lead[] } | Lead[]
         >("/api/leads?limit=100");
         if (!mounted) return;
         let list: Lead[] = [];
@@ -120,10 +118,11 @@ function LeadsPanel() {
           list = res.data;
           count = list.length;
         } else if ("leads" in res.data && Array.isArray(res.data.leads)) {
-          list  = res.data.leads;
-          count = (res.data as { leads: Lead[]; total: number }).total ?? list.length;
+          list = res.data.leads;
+          count =
+            (res.data as { leads: Lead[]; total: number }).total ?? list.length;
         } else if ("data" in res.data && Array.isArray(res.data.data)) {
-          list  = res.data.data;
+          list = res.data.data;
           count = list.length;
         }
         setLeads(list);
@@ -136,12 +135,14 @@ function LeadsPanel() {
       }
     };
     doFetch();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const filtered = search
-    ? leads.filter(l =>
-        JSON.stringify(l).toLowerCase().includes(search.toLowerCase())
+    ? leads.filter((l) =>
+        JSON.stringify(l).toLowerCase().includes(search.toLowerCase()),
       )
     : leads;
 
@@ -150,7 +151,14 @@ function LeadsPanel() {
   }
   if (error) {
     return (
-      <div style={{ color: "#ff4444", padding: "1rem", background: "#1a0000", borderRadius: 8 }}>
+      <div
+        style={{
+          color: "#ff4444",
+          padding: "1rem",
+          background: "#1a0000",
+          borderRadius: 8,
+        }}
+      >
         {error}
       </div>
     );
@@ -158,20 +166,41 @@ function LeadsPanel() {
 
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: "1rem",
+          flexWrap: "wrap",
+          gap: "0.5rem",
+        }}
+      >
         <div style={{ color: "#FFD700", fontWeight: "bold", fontSize: 16 }}>
           🏢 {total.toLocaleString()} Real Scraped Leads
-          <span style={{ color: "#888", fontWeight: "normal", fontSize: 12, marginLeft: 8 }}>
+          <span
+            style={{
+              color: "#888",
+              fontWeight: "normal",
+              fontSize: 12,
+              marginLeft: 8,
+            }}
+          >
             (shadow scraper — live data)
           </span>
         </div>
         <input
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="Filter by city, state, company…"
           style={{
-            background: "#1a1a1a", border: "1px solid #333", color: "#fff",
-            padding: "6px 12px", borderRadius: 6, width: 280, fontSize: 13,
+            background: "#1a1a1a",
+            border: "1px solid #333",
+            color: "#fff",
+            padding: "6px 12px",
+            borderRadius: 6,
+            width: 280,
+            fontSize: 13,
           }}
         />
       </div>
@@ -179,11 +208,13 @@ function LeadsPanel() {
         <table style={styles.table}>
           <thead>
             <tr>
-              {["Company", "City", "Phone", "Email", "Score", "Tier"].map((h) => (
-                <th key={h} style={styles.th}>
-                  {h}
-                </th>
-              ))}
+              {["Company", "City", "Phone", "Email", "Score", "Tier"].map(
+                (h) => (
+                  <th key={h} style={styles.th}>
+                    {h}
+                  </th>
+                ),
+              )}
             </tr>
           </thead>
           <tbody>
@@ -200,46 +231,53 @@ function LeadsPanel() {
               </tr>
             ) : (
               filtered.map((l, i) => (
-              <tr
-                key={l.id ?? i}
-                style={i % 2 === 0 ? styles.trEven : styles.trOdd}
-              >
-                <td style={styles.td}>{l.company || l.name || l.company_name || "—"}</td>
-                <td style={styles.td}>
-                  {l.city && l.state ? `${l.city}, ${l.state}` : l.city || "—"}
-                </td>
-                <td style={styles.td}>{l.phone || "—"}</td>
-                <td style={styles.td}>
-                  {l.email ? (
-                    <a href={`mailto:${l.email}`} style={{ color: "#FFD700" }}>
-                      {l.email}
-                    </a>
-                  ) : (
-                    "—"
-                  )}
-                </td>
-                <td style={{ ...styles.td, textAlign: "center" }}>
-                  {l.lead_score ?? l.score ?? "—"}
-                </td>
-                <td style={{ ...styles.td, textAlign: "center" }}>
-                  <span
-                    style={{
-                      background:
-                        (l.tier || "").toLowerCase() === "hot"
-                          ? "#ff4400"
-                          : (l.tier || "").toLowerCase() === "warm"
-                            ? "#ff8800"
-                            : "#333",
-                      color: "#fff",
-                      borderRadius: 4,
-                      padding: "2px 8px",
-                      fontSize: 11,
-                    }}
-                  >
-                    {(l.tier || "—").toUpperCase()}
-                  </span>
-                </td>
-              </tr>
+                <tr
+                  key={l.id ?? i}
+                  style={i % 2 === 0 ? styles.trEven : styles.trOdd}
+                >
+                  <td style={styles.td}>
+                    {l.company || l.name || l.company_name || "—"}
+                  </td>
+                  <td style={styles.td}>
+                    {l.city && l.state
+                      ? `${l.city}, ${l.state}`
+                      : l.city || "—"}
+                  </td>
+                  <td style={styles.td}>{l.phone || "—"}</td>
+                  <td style={styles.td}>
+                    {l.email ? (
+                      <a
+                        href={`mailto:${l.email}`}
+                        style={{ color: "#FFD700" }}
+                      >
+                        {l.email}
+                      </a>
+                    ) : (
+                      "—"
+                    )}
+                  </td>
+                  <td style={{ ...styles.td, textAlign: "center" }}>
+                    {l.lead_score ?? l.score ?? "—"}
+                  </td>
+                  <td style={{ ...styles.td, textAlign: "center" }}>
+                    <span
+                      style={{
+                        background:
+                          (l.tier || "").toLowerCase() === "hot"
+                            ? "#ff4400"
+                            : (l.tier || "").toLowerCase() === "warm"
+                              ? "#ff8800"
+                              : "#333",
+                        color: "#fff",
+                        borderRadius: 4,
+                        padding: "2px 8px",
+                        fontSize: 11,
+                      }}
+                    >
+                      {(l.tier || "—").toUpperCase()}
+                    </span>
+                  </td>
+                </tr>
               ))
             )}
           </tbody>
@@ -308,9 +346,7 @@ export default function App() {
           </p>
         </div>
         <StatusBar
-          backendUrl={
-            API_URL || "https://xps-intelligence.up.railway.app"
-          }
+          backendUrl={API_URL || "https://xps-intelligence.up.railway.app"}
         />
       </header>
 

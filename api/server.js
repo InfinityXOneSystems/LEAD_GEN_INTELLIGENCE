@@ -56,7 +56,9 @@ const LEADS_CACHE_TTL_MS = 60_000;
  */
 function normaliseLead(l, index) {
   const score = Number(l.lead_score ?? l.score ?? 0) || 0;
-  const tier = (l.tier || (score >= 75 ? "hot" : score >= 50 ? "warm" : "cold")).toLowerCase();
+  const tier = (
+    l.tier || (score >= 75 ? "hot" : score >= 50 ? "warm" : "cold")
+  ).toLowerCase();
   const city = (l.city || "").trim();
   const state = (l.state || "").trim();
   const location = city && state ? `${city}, ${state}` : city || state || "";
@@ -68,20 +70,33 @@ function normaliseLead(l, index) {
 
   // Frontend LeadRating: 'A+' | 'A' | 'B+' | 'B' | 'C' | 'D'
   const rating =
-    score >= 85 ? "A+" :
-    score >= 70 ? "A"  :
-    score >= 55 ? "B+" :
-    score >= 40 ? "B"  :
-    score >= 25 ? "C"  : "D";
+    score >= 85
+      ? "A+"
+      : score >= 70
+        ? "A"
+        : score >= 55
+          ? "B+"
+          : score >= 40
+            ? "B"
+            : score >= 25
+              ? "C"
+              : "D";
 
   // Frontend LeadStatus: 'new' | 'contacted' | 'qualified' | 'proposal' | 'signed' | 'lost'
   const leadStatus = (() => {
     const s = (l.status || "").toLowerCase();
-    if (["contacted","qualified","proposal","signed","lost"].includes(s)) return s;
+    if (["contacted", "qualified", "proposal", "signed", "lost"].includes(s))
+      return s;
     return "new";
   })();
 
-  const createdAt = l.date_scraped || l.scrapedAt || l.scraped_at || l.date || l.createdAt || new Date().toISOString();
+  const createdAt =
+    l.date_scraped ||
+    l.scrapedAt ||
+    l.scraped_at ||
+    l.date ||
+    l.createdAt ||
+    new Date().toISOString();
 
   return {
     // Legacy / pipeline fields
@@ -145,13 +160,22 @@ async function loadLeadsFromSupabase() {
       };
       const req = https.request(options, (res) => {
         let body = "";
-        res.on("data", (chunk) => { body += chunk; });
+        res.on("data", (chunk) => {
+          body += chunk;
+        });
         res.on("end", () => {
-          try { resolve(JSON.parse(body)); } catch (e) { reject(e); }
+          try {
+            resolve(JSON.parse(body));
+          } catch (e) {
+            reject(e);
+          }
         });
       });
       req.on("error", reject);
-      req.setTimeout(10_000, () => { req.destroy(); reject(new Error("timeout")); });
+      req.setTimeout(10_000, () => {
+        req.destroy();
+        reject(new Error("timeout"));
+      });
       req.end();
     });
 
@@ -326,7 +350,9 @@ app.post("/api/chat/send", async (req, res) => {
   }
 
   // Validate agentRole against the allowed set to prevent prompt injection.
-  const safeRole = ALLOWED_AGENT_ROLES.has(agentRole) ? agentRole : "GeneralAgent";
+  const safeRole = ALLOWED_AGENT_ROLES.has(agentRole)
+    ? agentRole
+    : "GeneralAgent";
 
   if (!GROQ_API_KEY) {
     return res.status(503).json({
@@ -363,8 +389,16 @@ Provide concise, actionable insights.`;
     // Persist both turns in history
     const updatedHistory = [
       ...history,
-      { role: "user", content: message.trim(), timestamp: new Date().toISOString() },
-      { role: "assistant", content: assistantContent, timestamp: new Date().toISOString() },
+      {
+        role: "user",
+        content: message.trim(),
+        timestamp: new Date().toISOString(),
+      },
+      {
+        role: "assistant",
+        content: assistantContent,
+        timestamp: new Date().toISOString(),
+      },
     ].slice(-MAX_CHAT_HISTORY_LENGTH);
     chatHistories.set(sessionId, updatedHistory);
 
@@ -428,12 +462,19 @@ app.get("/api/leads", async (req, res) => {
       offset: off,
       limit: lim,
       timestamp: new Date().toISOString(),
-      source: process.env.NEXT_PUBLIC_SUPABASE_URL ? "supabase" : "shadow_scraper",
+      source: process.env.NEXT_PUBLIC_SUPABASE_URL
+        ? "supabase"
+        : "shadow_scraper",
     });
   } catch (err) {
     console.error("[leads] Error:", err.message);
     const isDev = process.env.NODE_ENV !== "production";
-    return res.status(500).json({ error: "Failed to load leads", ...(isDev && { details: err.message }) });
+    return res
+      .status(500)
+      .json({
+        error: "Failed to load leads",
+        ...(isDev && { details: err.message }),
+      });
   }
 });
 
@@ -451,7 +492,9 @@ app.get("/api/leads/metrics", async (_req, res) => {
     const withWebsite = leads.filter((l) => l.website).length;
     const avgScore =
       leads.length > 0
-        ? Math.round(leads.reduce((s, l) => s + (l.score || 0), 0) / leads.length)
+        ? Math.round(
+            leads.reduce((s, l) => s + (l.score || 0), 0) / leads.length,
+          )
         : 0;
 
     // A+ opportunities = top-tier scored leads (score >= 85)
@@ -709,11 +752,18 @@ app.listen(PORT, () => {
     `[XPS Intelligence API] Groq: ${GROQ_API_KEY ? "configured" : "NOT configured — set GROQ_API_KEY"}`,
   );
   // Warm the leads cache on startup
-  getLeads().then((leads) => {
-    console.log(`[XPS Intelligence API] Lead cache primed: ${leads.length} leads`);
-  }).catch((err) => {
-    console.warn("[XPS Intelligence API] Lead cache prime failed:", err.message);
-  });
+  getLeads()
+    .then((leads) => {
+      console.log(
+        `[XPS Intelligence API] Lead cache primed: ${leads.length} leads`,
+      );
+    })
+    .catch((err) => {
+      console.warn(
+        "[XPS Intelligence API] Lead cache prime failed:",
+        err.message,
+      );
+    });
 });
 
 module.exports = app;
