@@ -60,6 +60,8 @@ media/output/
 services/new_service.py
 agents/memory/state.json
 **/validation_report.json
+**/duplicates.json
+**/invalid_leads.json
 
 # Python
 *.py[cod]
