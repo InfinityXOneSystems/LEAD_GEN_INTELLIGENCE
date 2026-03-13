@@ -70,6 +70,15 @@ const INDUSTRY_KEYWORDS = {
   ],
 };
 
+// Pre-computed lowercase keyword map — avoids repeated .toLowerCase() calls
+// inside the hot-path detectIndustry() function.
+const INDUSTRY_KEYWORDS_LOWER = Object.fromEntries(
+  Object.entries(INDUSTRY_KEYWORDS).map(([industry, kws]) => [
+    industry,
+    kws.map((kw) => kw.toLowerCase()),
+  ]),
+);
+
 // ---------------------------------------------------------------------------
 // Priority markets: cities near XPS Xpress locations
 // ---------------------------------------------------------------------------
@@ -161,8 +170,8 @@ function detectIndustry(lead) {
   let bestIndustry = null;
   let bestScore = 0;
 
-  for (const [industry, keywords] of Object.entries(INDUSTRY_KEYWORDS)) {
-    const matched = keywords.some((kw) => text.includes(kw.toLowerCase()));
+  for (const [industry, keywords] of Object.entries(INDUSTRY_KEYWORDS_LOWER)) {
+    const matched = keywords.some((kw) => text.includes(kw));
     if (matched) {
       const pts = INDUSTRY_PRIORITY[industry] || 5;
       if (pts > bestScore) {
@@ -251,10 +260,11 @@ function scoreLead(lead) {
  * @returns {Object[]} scored and ranked leads
  */
 function scoreLeads(leads) {
-  return leads
+  const scored = leads
     .map(scoreLead)
-    .sort((a, b) => b.lead_score - a.lead_score)
-    .map((lead, i) => ({ ...lead, rank: i + 1 }));
+    .sort((a, b) => b.lead_score - a.lead_score);
+  for (let i = 0; i < scored.length; i++) scored[i].rank = i + 1;
+  return scored;
 }
 
 /**
