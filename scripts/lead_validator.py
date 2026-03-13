@@ -298,12 +298,14 @@ def run_validation(
         if phone and not is_valid_phone(phone):
             reasons.append("invalid_phone_format")
 
-        # URL reachability: if website given and we checked, flag as warning only
-        # (do not reject — website may be down temporarily)
+        # URL reachability: informational warning only — does NOT block the lead.
+        # Websites can be temporarily down; blocking here would drop valid leads.
+        # Blocking reasons: missing_company, missing_location.
+        # Non-blocking reasons: invalid_phone_format, website_unreachable.
+        BLOCKING_REASONS = {"missing_company", "missing_location"}
         if check_urls and website:
             norm = normalise_url(website)
-            # Use False as default: if URL was submitted for checking but result
-            # is missing, treat as unreachable rather than silently passing it.
+            # Use False as default: treat missing result as unreachable.
             if norm and not url_results.get(norm, False):
                 reasons.append("website_unreachable")
 
@@ -314,10 +316,16 @@ def run_validation(
 
         enriched = enrich_lead(dict(lead), url_reachable=url_reachable)
 
-        if reasons:
-            enriched["_rejection_reasons"] = reasons
+        # Only reject leads with at least one BLOCKING reason.
+        # Non-blocking reasons (invalid_phone_format, website_unreachable) are
+        # recorded on the lead for downstream visibility but do not cause rejection.
+        blocking = [r for r in reasons if r in BLOCKING_REASONS]
+        if blocking:
+            enriched["_rejection_reasons"] = reasons  # include all reasons for audit
             invalid.append(enriched)
         else:
+            if reasons:
+                enriched["_validation_warnings"] = reasons  # non-blocking: keep as warning
             valid.append(enriched)
 
     log.info("Validation complete: %d valid, %d invalid", len(valid), len(invalid))

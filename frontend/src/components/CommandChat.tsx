@@ -1,14 +1,27 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, type CSSProperties, type FormEvent } from "react";
 import { Bot, Loader2, Send, X, Zap } from "lucide-react";
 import toast from "react-hot-toast";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   sendCommand,
   pollTaskUntilDone,
   type TaskStatusResponse,
 } from "@/lib/runtimeClient";
 import { sendChatMessage, type ChatHistoryMessage } from "@/lib/chatClient";
+
+/** Unique ID generator for chat messages */
+function genId(): string {
+  return `msg-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+/** Chat message shape used internally (with history for Groq/Copilot) */
+type LLMChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
 
 interface ChatMessage {
   id: string;

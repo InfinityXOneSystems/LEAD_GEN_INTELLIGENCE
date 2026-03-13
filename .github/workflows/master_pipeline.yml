@@ -14,9 +14,9 @@ name: 🚀 Master Lead Pipeline
 
 on:
   schedule:
-    # 08:00 UTC = 03:00–04:00 EST — after overnight scraper (03:00 UTC) has finished.
-    # This gives the scraper a full hour to write leads before the pipeline reads them.
-    - cron: "0 8 * * *"   # 08:00 UTC daily
+    # 04:30 UTC daily — 1.5 hours after the overnight shadow scraper (03:00 UTC)
+    # finishes, giving ample time for leads to be written before validation reads them.
+    - cron: "30 4 * * *"   # 04:30 UTC daily
   workflow_dispatch:
     inputs:
       skip_scrape:
