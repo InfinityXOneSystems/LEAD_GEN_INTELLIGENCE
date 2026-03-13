@@ -277,9 +277,27 @@ app.post("/api/chat/send", async (req, res) => {
 
   try {
     let replyContent;
+    let modelUsed;
 
-    if (groqKey) {
-      // ── Primary: Groq ──────────────────────────────────────────────────
+    if (ghToken) {
+      // ── Primary: GitHub Copilot ────────────────────────────────────────
+      try {
+        replyContent = await callCopilotChat(messages);
+        modelUsed = "copilot:claude-3.7-sonnet";
+      } catch (copilotErr) {
+        console.warn("[Chat] Copilot failed, falling back to Groq:", copilotErr.message);
+        if (!groqKey) throw copilotErr;
+        const groq = getGroqClient();
+        const completion = await groq.chat.completions.create({
+          model: "llama-3.3-70b-versatile",
+          messages,
+          max_tokens: 1024,
+        });
+        replyContent = completion.choices[0]?.message?.content || "No response";
+        modelUsed = "groq:llama-3.3-70b-versatile";
+      }
+    } else if (groqKey) {
+      // ── Secondary: Groq (no Copilot token) ────────────────────────────
       const groq = getGroqClient();
       const completion = await groq.chat.completions.create({
         model: "llama-3.3-70b-versatile",
@@ -287,9 +305,7 @@ app.post("/api/chat/send", async (req, res) => {
         max_tokens: 1024,
       });
       replyContent = completion.choices[0]?.message?.content || "No response";
-    } else {
-      // ── Fallback: GitHub Copilot ───────────────────────────────────────
-      replyContent = await callCopilotChat(messages);
+      modelUsed = "groq:llama-3.3-70b-versatile";
     }
 
     const replyId = crypto.randomUUID();
@@ -304,9 +320,7 @@ app.post("/api/chat/send", async (req, res) => {
         agentRole: agentRole || "LeadAgent",
         timestamp: new Date().toISOString(),
         status: "sent",
-        model: groqKey
-          ? "groq:llama-3.3-70b-versatile"
-          : "copilot:claude-3.7-sonnet",
+        model: modelUsed,
       },
       agentRole: agentRole || "LeadAgent",
       sessionId: sessionId || crypto.randomUUID(),
@@ -315,6 +329,15 @@ app.post("/api/chat/send", async (req, res) => {
     console.error("[Chat] Error:", err.message);
     return res.status(500).json({ error: "Chat request failed" });
   }
+});
+
+// ── /api/v1/chat alias (gateway compatibility) ───────────────────────────────
+// Allows runtimeClient.ts and api/gateway.js to reach the same chat handler
+// via either /api/chat/send or /api/v1/chat.
+app.post("/api/v1/chat", (req, res, next) => {
+  // Re-use the same handler by forwarding to the /api/chat/send route.
+  req.url = "/api/chat/send";
+  app._router.handle(req, res, next);
 });
 
 // ── Leads endpoint ──────────────────────────────────────────────────────────
