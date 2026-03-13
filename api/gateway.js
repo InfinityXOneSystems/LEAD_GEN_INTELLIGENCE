@@ -21,6 +21,8 @@ const {
   isConfigured: supabaseConfigured,
 } = require("../db/supabaseClient");
 
+const { loadLeadsFromFile } = require("../lib/lead_utils");
+
 const ROOT = path.join(__dirname, "..");
 const LEADS_DIR = path.join(ROOT, "leads");
 const DATA_DIR = path.join(ROOT, "data");
@@ -107,13 +109,6 @@ function readJson(filePath) {
 }
 
 /** Load leads from local JSON files (offline fallback). */
-function loadLeadsFromFile() {
-  const scored = path.join(LEADS_DIR, "scored_leads.json");
-  const raw = path.join(LEADS_DIR, "leads.json");
-  if (fs.existsSync(scored)) return readJson(scored);
-  if (fs.existsSync(raw)) return readJson(raw);
-  return [];
-}
 
 // TTL cache for the file-based leads fallback — avoids re-reading and
 // re-parsing large JSON files on every request in offline/file-only mode.
@@ -498,7 +493,7 @@ app.get("/api/scraper/logs", (req, res) => {
 app.post("/api/scraper/results", (req, res) => {
   try {
     const { job_id, results = [] } = req.body;
-    const leads = loadLeadsFromFile();
+    const leads = loadLeadsFromFile(LEADS_DIR);
     const list = Array.isArray(leads) ? leads : [];
     let added = 0;
     results.forEach((r) => {
