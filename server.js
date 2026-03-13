@@ -250,7 +250,11 @@ app.post("/api/chat/send", async (req, res) => {
       leadCount = loadLeadsFromFile().length;
     }
   } catch (_) {
-    try { leadCount = loadLeadsFromFile().length; } catch (__) { /* ignore */ }
+    try {
+      leadCount = loadLeadsFromFile().length;
+    } catch (__) {
+      /* ignore */
+    }
   }
 
   const systemPrompt =

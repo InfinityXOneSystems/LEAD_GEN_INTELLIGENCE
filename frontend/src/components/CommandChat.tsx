@@ -39,22 +39,54 @@ function isRuntimeCommand(input: string): boolean {
 function parseRuntimeCommand(input: string) {
   const lower = input.toLowerCase().trim();
 
-  if (lower.includes("scrape") || lower.includes("find") || lower.includes("search")) {
-    return { command: "run_scraper", target: input, parameters: { query: input } };
+  if (
+    lower.includes("scrape") ||
+    lower.includes("find") ||
+    lower.includes("search")
+  ) {
+    return {
+      command: "run_scraper",
+      target: input,
+      parameters: { query: input },
+    };
   }
   if (lower.includes("seo") || lower.includes("audit")) {
     const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
-    return { command: "run_seo_audit", target: urlMatch?.[0] ?? input, parameters: {} };
+    return {
+      command: "run_seo_audit",
+      target: urlMatch?.[0] ?? input,
+      parameters: {},
+    };
   }
-  if (lower.includes("social") || lower.includes("linkedin") || lower.includes("facebook")) {
+  if (
+    lower.includes("social") ||
+    lower.includes("linkedin") ||
+    lower.includes("facebook")
+  ) {
     const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
-    return { command: "run_social_scan", target: urlMatch?.[0] ?? input, parameters: {} };
+    return {
+      command: "run_social_scan",
+      target: urlMatch?.[0] ?? input,
+      parameters: {},
+    };
   }
-  if (lower.includes("browse") || lower.includes("navigate") || lower.includes("visit")) {
+  if (
+    lower.includes("browse") ||
+    lower.includes("navigate") ||
+    lower.includes("visit")
+  ) {
     const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
-    return { command: "run_browser", target: urlMatch?.[0] ?? input, parameters: { action: "navigate" } };
+    return {
+      command: "run_browser",
+      target: urlMatch?.[0] ?? input,
+      parameters: { action: "navigate" },
+    };
   }
-  return { command: "health_check", target: null, parameters: { original_input: input } };
+  return {
+    command: "health_check",
+    target: null,
+    parameters: { original_input: input },
+  };
 }
 
 function StatusBadge({ status }: { status: string }) {
@@ -179,8 +211,9 @@ export default function CommandChat() {
       } else {
         // ── Groq / GitHub Copilot chat (conversational) ───────────────────
         const history: ChatHistoryMessage[] = messages
-          .filter((m): m is ChatMessage & { role: "user" | "assistant" } =>
-            m.role === "user" || m.role === "assistant"
+          .filter(
+            (m): m is ChatMessage & { role: "user" | "assistant" } =>
+              m.role === "user" || m.role === "assistant",
           )
           .map((m) => ({ role: m.role, content: m.content }));
 

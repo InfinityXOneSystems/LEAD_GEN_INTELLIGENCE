@@ -17,7 +17,8 @@ const { Pool } = require("pg");
 function buildPoolConfig() {
   const url = process.env.DATABASE_URL || "";
   if (url) {
-    const isPrivate = url.includes(".railway.internal") || url.includes("localhost");
+    const isPrivate =
+      url.includes(".railway.internal") || url.includes("localhost");
     return {
       connectionString: url,
       // Private-network connections (*.railway.internal) run inside Railway's
