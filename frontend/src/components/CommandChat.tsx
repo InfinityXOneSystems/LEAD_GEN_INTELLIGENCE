@@ -19,7 +19,6 @@ interface ChatMessage {
   model?: string;
   timestamp: Date;
 }
-}
 
 /**
  * Detect whether the user input is an explicit pipeline/scraper command
@@ -180,8 +179,10 @@ export default function CommandChat() {
       } else {
         // ── Groq / GitHub Copilot chat (conversational) ───────────────────
         const history: ChatHistoryMessage[] = messages
-          .filter((m) => m.role === "user" || m.role === "assistant")
-          .map((m) => ({ role: m.role as "user" | "assistant", content: m.content }));
+          .filter((m): m is ChatMessage & { role: "user" | "assistant" } =>
+            m.role === "user" || m.role === "assistant"
+          )
+          .map((m) => ({ role: m.role, content: m.content }));
 
         const assistantId = addMessage({
           role: "assistant",
