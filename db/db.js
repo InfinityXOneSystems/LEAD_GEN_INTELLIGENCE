@@ -51,6 +51,7 @@ function buildPoolConfig() {
 
 const pool = new Pool(buildPoolConfig());
 
+const pool = new Pool(poolConfig);
 pool.on("error", (err) => {
   console.error("Unexpected PostgreSQL pool error:", err.message);
 });
