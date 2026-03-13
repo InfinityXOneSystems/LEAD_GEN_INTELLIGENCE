@@ -76,7 +76,8 @@ let _leadsCacheAt = 0;
 
 function readLeadsCached() {
   const now = Date.now();
-  if (_leadsCache !== null && now - _leadsCacheAt < CACHE_TTL_MS) return _leadsCache;
+  if (_leadsCache !== null && now - _leadsCacheAt < CACHE_TTL_MS)
+    return _leadsCache;
   _leadsCache = readLeads();
   _leadsCacheAt = now;
   return _leadsCache;
@@ -136,7 +137,8 @@ let _tasksCacheAt = 0;
 
 function parseTasksCached() {
   const now = Date.now();
-  if (_tasksCache !== null && now - _tasksCacheAt < CACHE_TTL_MS) return _tasksCache;
+  if (_tasksCache !== null && now - _tasksCacheAt < CACHE_TTL_MS)
+    return _tasksCache;
   _tasksCache = parseTasks();
   _tasksCacheAt = now;
   return _tasksCache;

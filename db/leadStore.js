@@ -143,9 +143,18 @@ async function upsertLeads(leads) {
          date_scraped  = NOW()
        RETURNING *`,
       [
-        companyNames, contactNames, phones, emails, websites,
-        cities, states, industries, ratings, reviewsList,
-        leadScores, sources,
+        companyNames,
+        contactNames,
+        phones,
+        emails,
+        websites,
+        cities,
+        states,
+        industries,
+        ratings,
+        reviewsList,
+        leadScores,
+        sources,
       ],
     );
 

@@ -124,7 +124,10 @@ let _fileLeadsCacheAt = 0;
 /** Return cached leads from disk; refreshes at most once per TTL window. */
 function loadLeadsFromFileCached() {
   const now = Date.now();
-  if (_fileLeadsCache !== null && now - _fileLeadsCacheAt < FILE_LEADS_CACHE_TTL_MS) {
+  if (
+    _fileLeadsCache !== null &&
+    now - _fileLeadsCacheAt < FILE_LEADS_CACHE_TTL_MS
+  ) {
     return _fileLeadsCache;
   }
   _fileLeadsCache = loadLeadsFromFile();

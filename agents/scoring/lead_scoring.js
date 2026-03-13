@@ -260,7 +260,9 @@ function scoreLead(lead) {
  * @returns {Object[]} scored and ranked leads
  */
 function scoreLeads(leads) {
-  const scored = leads.map(scoreLead).sort((a, b) => b.lead_score - a.lead_score);
+  const scored = leads
+    .map(scoreLead)
+    .sort((a, b) => b.lead_score - a.lead_score);
   for (let i = 0; i < scored.length; i++) scored[i].rank = i + 1;
   return scored;
 }
