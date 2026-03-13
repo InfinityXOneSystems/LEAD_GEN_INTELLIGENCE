@@ -412,73 +412,53 @@ def publish_to_leads_repo(leads: List[dict]) -> None:
 
 def _build_leads_api() -> str:
     """
-    Updated leadsApi.ts that tries the Railway backend first, then falls
-    back to the static public/data/leads.json file bundled in the repo.
+    Updated leadsApi.ts — full implementation from contracts/frontend/src/lib/leadsApi.ts.
+    Unwraps {leads:[], total} envelope from Express server, normalises
+    shadow-scraper fields → frontend Lead type, falls back to /data/leads.json.
     """
+    contract_path = REPO_ROOT / "contracts" / "frontend" / "src" / "lib" / "leadsApi.ts"
+    if contract_path.exists():
+        return contract_path.read_text(encoding="utf-8")
+    # Inline fallback if contract file isn't present
     return """\
 import { api } from './api'
 import type { Lead, DashboardMetrics, ScraperConfig, ScraperLog } from '@/types/lead'
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Static-file fallback — used when the Railway API is unreachable (e.g. during
-// a static export or when running locally without the backend).
-// The file is auto-updated by the XPS Intelligence scraper pipeline and
-// committed to public/data/leads.json on every pipeline run.
-// ─────────────────────────────────────────────────────────────────────────────
 async function _loadStaticLeads(): Promise<Lead[]> {
   try {
     const base = import.meta.env.BASE_URL?.replace(/\\/$/, '') ?? ''
     const resp = await fetch(`${base}/data/leads.json`)
     if (!resp.ok) return []
-    const raw: unknown[] = await resp.json()
-    return raw as Lead[]
-  } catch {
-    return []
-  }
+    const raw: unknown = await resp.json()
+    const list = Array.isArray(raw) ? raw : (raw as {leads?:unknown[]}).leads ?? []
+    return list as Lead[]
+  } catch { return [] }
 }
 
 export const leadsApi = {
   async getAll(): Promise<Lead[]> {
     try {
-      return await api.get<Lead[]>('/leads')
+      const raw = await api.get<unknown>('/leads?limit=500')
+      const arr = Array.isArray(raw) ? raw : (raw as {leads?:unknown[]}).leads ?? []
+      return arr as Lead[]
     } catch {
-      // Railway API down — serve from the committed static file
       return _loadStaticLeads()
     }
   },
-
-  async getById(id: string): Promise<Lead> {
-    return api.get<Lead>(`/leads/${id}`)
-  },
-
-  async create(lead: Omit<Lead, 'id' | 'createdAt'>): Promise<Lead> {
-    return api.post<Lead>('/leads', lead)
-  },
-
-  async update(id: string, lead: Partial<Lead>): Promise<Lead> {
-    return api.put<Lead>(`/leads/${id}`, lead)
-  },
-
-  async delete(id: string): Promise<void> {
-    return api.delete<void>(`/leads/${id}`)
-  },
-
+  async getById(id: string): Promise<Lead> { return api.get<Lead>(`/leads/${id}`) },
+  async create(lead: Omit<Lead,'id'|'createdAt'>): Promise<Lead> { return api.post<Lead>('/leads', lead) },
+  async update(id: string, lead: Partial<Lead>): Promise<Lead> { return api.put<Lead>(`/leads/${id}`, lead) },
+  async delete(id: string): Promise<void> { return api.delete<void>(`/leads/${id}`) },
   async getMetrics(): Promise<DashboardMetrics> {
-    return api.get<DashboardMetrics>('/leads/metrics')
+    try { return await api.get<DashboardMetrics>('/leads/metrics') }
+    catch { return { totalLeads: 0, aPlusOpportunities: 0, emailsSent: 0, responseRate: 0, revenuePipeline: 0 } }
   },
-
   async assignRep(leadId: string, repId: string, repName: string, repInitials: string): Promise<Lead> {
-    return api.post<Lead>(`/leads/${leadId}/assign`, {
-      repId,
-      repName,
-      repInitials,
-    })
+    return api.post<Lead>(`/leads/${leadId}/assign`, { repId, repName, repInitials })
   },
-
   async updateStatus(leadId: string, status: Lead['status']): Promise<Lead> {
     return api.put<Lead>(`/leads/${leadId}/status`, { status })
   },
-
   async addNote(leadId: string, note: string): Promise<Lead> {
     return api.post<Lead>(`/leads/${leadId}/notes`, { note })
   },
@@ -488,15 +468,12 @@ export const scraperApi = {
   async run(config: ScraperConfig): Promise<{ jobId: string }> {
     return api.post<{ jobId: string }>('/scraper/run', config)
   },
-
   async getStatus(jobId: string): Promise<ScraperLog> {
     return api.get<ScraperLog>(`/scraper/status/${jobId}`)
   },
-
-  async getLogs(limit: number = 50): Promise<ScraperLog[]> {
+  async getLogs(limit = 50): Promise<ScraperLog[]> {
     return api.get<ScraperLog[]>(`/scraper/logs?limit=${limit}`)
   },
-
   async cancel(jobId: string): Promise<void> {
     return api.post<void>(`/scraper/cancel/${jobId}`, {})
   },
@@ -508,7 +485,11 @@ def _build_contractors_page() -> str:
     """
     Return the updated ContractorsPage.tsx that uses the real useContractors
     hook instead of a hard-coded MOCK_CONTRACTORS array.
+    Reads from contracts/frontend/src/pages/ContractorsPage.tsx if present.
     """
+    contract_path = REPO_ROOT / "contracts" / "frontend" / "src" / "pages" / "ContractorsPage.tsx"
+    if contract_path.exists():
+        return contract_path.read_text(encoding="utf-8")
     return """\
 import { useState } from 'react'
 import { motion } from 'framer-motion'
@@ -902,6 +883,15 @@ def publish_to_frontend_repo(leads: List[dict]) -> None:
         "src/lib/leadsApi.ts",
         leads_api,
         f"feat: leadsApi — add static-file fallback for offline/static builds [{timestamp}]",
+    )
+
+    # Fix .env.production to point to the correct Railway URL
+    _upsert_file(
+        FRONTEND_REPO,
+        ".env.production",
+        "VITE_API_URL=https://xps-intelligence.up.railway.app/api\n"
+        "VITE_WS_URL=wss://xps-intelligence.up.railway.app\n",
+        f"fix: update Railway URL to xps-intelligence.up.railway.app [{timestamp}]",
     )
 
     log.info("✅ Frontend repo updated: %d leads", len(leads))

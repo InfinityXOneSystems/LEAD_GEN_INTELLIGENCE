@@ -50,11 +50,13 @@ const LEADS_CACHE_TTL_MS = 60_000;
 
 /**
  * Normalise a raw lead record to the canonical API schema expected by
- * the frontend.  Mirrors the logic in scripts/normalize_leads.js.
+ * the frontend.  Includes both the legacy fields (score, tier, industry)
+ * AND the fields the XPS-INTELLIGENCE-FRONTEND Lead type requires
+ * (opportunityScore, rating, status as LeadStatus, category, createdAt).
  */
 function normaliseLead(l, index) {
   const score = Number(l.lead_score ?? l.score ?? 0) || 0;
-  const tier = score >= 75 ? "hot" : score >= 50 ? "warm" : "cold";
+  const tier = (l.tier || (score >= 75 ? "hot" : score >= 50 ? "warm" : "cold")).toLowerCase();
   const city = (l.city || "").trim();
   const state = (l.state || "").trim();
   const location = city && state ? `${city}, ${state}` : city || state || "";
@@ -64,7 +66,25 @@ function normaliseLead(l, index) {
     website = "https://" + website;
   }
 
+  // Frontend LeadRating: 'A+' | 'A' | 'B+' | 'B' | 'C' | 'D'
+  const rating =
+    score >= 85 ? "A+" :
+    score >= 70 ? "A"  :
+    score >= 55 ? "B+" :
+    score >= 40 ? "B"  :
+    score >= 25 ? "C"  : "D";
+
+  // Frontend LeadStatus: 'new' | 'contacted' | 'qualified' | 'proposal' | 'signed' | 'lost'
+  const leadStatus = (() => {
+    const s = (l.status || "").toLowerCase();
+    if (["contacted","qualified","proposal","signed","lost"].includes(s)) return s;
+    return "new";
+  })();
+
+  const createdAt = l.date_scraped || l.scrapedAt || l.scraped_at || l.date || l.createdAt || new Date().toISOString();
+
   return {
+    // Legacy / pipeline fields
     id: l.id || index + 1,
     company: (l.company || l.company_name || "Unknown").trim(),
     email: (l.email || "").trim(),
@@ -76,14 +96,21 @@ function normaliseLead(l, index) {
     country: l.country || "US",
     location,
     industry: (l.industry || l.category || "General Contractor").trim(),
-    rating: Number(l.rating) || 0,
+    rawRating: Number(l.rating) || 0,
     reviews: Number(l.reviews) || 0,
     score,
     lead_score: score,
     tier,
-    status: (l.status || tier).toLowerCase(),
     source: l.source || "shadow_scraper",
-    date_scraped: l.date_scraped || l.scrapedAt || l.scraped_at || l.date || null,
+    date_scraped: createdAt,
+    // Frontend Lead type fields (XPS-INTELLIGENCE-FRONTEND)
+    rating,
+    opportunityScore: score,
+    status: leadStatus,
+    category: (l.industry || l.category || "General Contractor").trim(),
+    createdAt,
+    isNew: leadStatus === "new",
+    notes: l.notes || "",
   };
 }
 
@@ -231,15 +258,24 @@ const app = express();
 app.use(
   cors({
     origin: [
+      // Production frontends
       "https://xps-intelligence-frontend.vercel.app",
+      "https://xps-intelligence.vercel.app",
       "https://infinityxonesystems.github.io",
+      // Any Vercel preview deployment for this org
+      /^https:\/\/xps-intelligence.*\.vercel\.app$/,
+      /^https:\/\/.*infinityxone.*\.vercel\.app$/,
       /\.vercel\.app$/,
       /\.railway\.app$/,
+      // Local development
       "http://localhost:3000",
+      "http://localhost:3001",
       "http://localhost:5173",
+      "http://127.0.0.1:3000",
+      "http://127.0.0.1:5173",
     ],
-    methods: ["GET", "POST", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     credentials: true,
   }),
 );
