@@ -103,9 +103,10 @@ interface Lead {
  *  2. { leads: Lead[]; total: number }      (unwrapped)
  *  3. { success: true; data: { leads: Lead[]; total: number } }  (wrapped — default gateway format)
  */
-function normaliseLeadsResponse(
-  body: unknown,
-): { list: Lead[]; total: number } {
+function normaliseLeadsResponse(body: unknown): {
+  list: Lead[];
+  total: number;
+} {
   if (Array.isArray(body)) {
     return { list: body as Lead[], total: (body as Lead[]).length };
   }
@@ -113,16 +114,25 @@ function normaliseLeadsResponse(
     const obj = body as Record<string, unknown>;
     // Unwrapped: { leads, total }
     if (Array.isArray(obj.leads)) {
-      return { list: obj.leads as Lead[], total: (obj.total as number) ?? (obj.leads as Lead[]).length };
+      return {
+        list: obj.leads as Lead[],
+        total: (obj.total as number) ?? (obj.leads as Lead[]).length,
+      };
     }
     // Wrapped: { success, data: { leads, total } }
     if (obj.data && typeof obj.data === "object") {
       const inner = obj.data as Record<string, unknown>;
       if (Array.isArray(inner.leads)) {
-        return { list: inner.leads as Lead[], total: (inner.total as number) ?? (inner.leads as Lead[]).length };
+        return {
+          list: inner.leads as Lead[],
+          total: (inner.total as number) ?? (inner.leads as Lead[]).length,
+        };
       }
       if (Array.isArray(inner)) {
-        return { list: inner as unknown as Lead[], total: (inner as unknown as Lead[]).length };
+        return {
+          list: inner as unknown as Lead[],
+          total: (inner as unknown as Lead[]).length,
+        };
       }
     }
   }

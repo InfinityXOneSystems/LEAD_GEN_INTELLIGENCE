@@ -1594,56 +1594,107 @@ function buildSmartFallbackReply(userMessage) {
 
   // Load current lead data
   let leads = [];
-  try { leads = loadLeadsFromFile(); } catch (_) {}
+  try {
+    leads = loadLeadsFromFile();
+  } catch (_) {}
   const total = leads.length;
-  const hot   = leads.filter(l => l.tier === "HOT"  || (l.lead_score||l.score||0) >= 75).length;
-  const warm  = leads.filter(l => l.tier === "WARM" || ((l.lead_score||l.score||0) >= 50 && (l.lead_score||l.score||0) < 75)).length;
-  const cold  = total - hot - warm;
+  const hot = leads.filter(
+    (l) => l.tier === "HOT" || (l.lead_score || l.score || 0) >= 75,
+  ).length;
+  const warm = leads.filter(
+    (l) =>
+      l.tier === "WARM" ||
+      ((l.lead_score || l.score || 0) >= 50 &&
+        (l.lead_score || l.score || 0) < 75),
+  ).length;
+  const cold = total - hot - warm;
 
   // Extract cities/states mentioned
-  const stateAbbrs = (msg.match(/\b([a-z]{2})\b/g) || []).map(s => s.toUpperCase())
-    .filter(s => ["TX","FL","GA","IL","AZ","CA","NY","OH","NC","PA","WA","CO","NV","MI","TN"].includes(s));
-  const cityWords = (msg.match(/\b(houston|miami|atlanta|chicago|phoenix|dallas|orlando|tampa|denver|seattle|boston|detroit|austin|nashville|charlotte)\b/gi) || []);
+  const stateAbbrs = (msg.match(/\b([a-z]{2})\b/g) || [])
+    .map((s) => s.toUpperCase())
+    .filter((s) =>
+      [
+        "TX",
+        "FL",
+        "GA",
+        "IL",
+        "AZ",
+        "CA",
+        "NY",
+        "OH",
+        "NC",
+        "PA",
+        "WA",
+        "CO",
+        "NV",
+        "MI",
+        "TN",
+      ].includes(s),
+    );
+  const cityWords =
+    msg.match(
+      /\b(houston|miami|atlanta|chicago|phoenix|dallas|orlando|tampa|denver|seattle|boston|detroit|austin|nashville|charlotte)\b/gi,
+    ) || [];
 
   // ── Intent: scrape / find / search ──────────────────────────────────────────
   if (/scrape|find|search|discover|get me|show me.*leads|fetch/.test(msg)) {
     // Build a keyword from the message
-    const kwMatch = msg.match(/\b(epoxy|flooring|tile|hardwood|carpet|concrete|roofing|hvac|plumbing|electrical|solar|painting|siding|pool|landscaping|fence|deck)\b/i);
+    const kwMatch = msg.match(
+      /\b(epoxy|flooring|tile|hardwood|carpet|concrete|roofing|hvac|plumbing|electrical|solar|painting|siding|pool|landscaping|fence|deck)\b/i,
+    );
     const kw = kwMatch ? kwMatch[0] : "flooring contractor";
 
     // Filter leads by keyword and location if mentioned
-    let filtered = leads.filter(l =>
-      (l.keyword||"").toLowerCase().includes(kw) ||
-      (l.category||"").toLowerCase().includes(kw) ||
-      (l.company||"").toLowerCase().includes(kw)
+    let filtered = leads.filter(
+      (l) =>
+        (l.keyword || "").toLowerCase().includes(kw) ||
+        (l.category || "").toLowerCase().includes(kw) ||
+        (l.company || "").toLowerCase().includes(kw),
     );
     if (cityWords.length > 0) {
-      filtered = filtered.filter(l => cityWords.some(c => (l.city||"").toLowerCase().includes(c.toLowerCase())));
+      filtered = filtered.filter((l) =>
+        cityWords.some((c) =>
+          (l.city || "").toLowerCase().includes(c.toLowerCase()),
+        ),
+      );
     }
     if (stateAbbrs.length > 0) {
-      filtered = filtered.filter(l => stateAbbrs.includes((l.state||"").toUpperCase()));
+      filtered = filtered.filter((l) =>
+        stateAbbrs.includes((l.state || "").toUpperCase()),
+      );
     }
-    filtered.sort((a,b) => (b.lead_score||b.score||0) - (a.lead_score||a.score||0));
+    filtered.sort(
+      (a, b) => (b.lead_score || b.score || 0) - (a.lead_score || a.score || 0),
+    );
     const top = filtered.slice(0, 10);
 
     if (top.length === 0) {
-      return `🔍 **Searching for ${kw} contractors${cityWords.length ? " in " + cityWords.join(", ") : ""}...**\n\n` +
+      return (
+        `🔍 **Searching for ${kw} contractors${cityWords.length ? " in " + cityWords.join(", ") : ""}...**\n\n` +
         `No matching leads found in the current dataset for that combination.\n\n` +
         `**To scrape fresh leads, trigger the workflow:**\n` +
         `\`\`\`\nnpm run scrape -- --keywords "${kw} contractor" --locations "${cityWords[0] || "Houston, TX"}"\n\`\`\`\n\n` +
-        `Or go to GitHub → Actions → 🕷️ Universal Shadow Scraper → Run workflow.`;
+        `Or go to GitHub → Actions → 🕷️ Universal Shadow Scraper → Run workflow.`
+      );
     }
 
-    const locationLabel = cityWords.length > 0 ? cityWords.join(", ") : (stateAbbrs.length > 0 ? stateAbbrs.join(", ") : "nationwide");
+    const locationLabel =
+      cityWords.length > 0
+        ? cityWords.join(", ")
+        : stateAbbrs.length > 0
+          ? stateAbbrs.join(", ")
+          : "nationwide";
     let reply = `✅ **Found ${top.length} ${kw} contractors in ${locationLabel}** (from ${total.toLocaleString()} total leads)\n\n`;
     reply += `| # | Company | Phone | City, State | Score |\n`;
     reply += `|---|---------|-------|-------------|-------|\n`;
     top.forEach((l, i) => {
       const co = (l.company || l.company_name || "?").slice(0, 40);
       const ph = l.phone || "—";
-      const loc = `${l.city||""}, ${l.state||""}`.trim().replace(/^,|,$/, "");
+      const loc = `${l.city || ""}, ${l.state || ""}`
+        .trim()
+        .replace(/^,|,$/, "");
       const sc = l.lead_score || l.score || 0;
-      reply += `| ${i+1} | ${co} | ${ph} | ${loc} | ${sc} |\n`;
+      reply += `| ${i + 1} | ${co} | ${ph} | ${loc} | ${sc} |\n`;
     });
     reply += `\n**Tier breakdown:** 🔥 HOT: ${hot} · 🌡 WARM: ${warm} · 🧊 COLD: ${cold}\n`;
     reply += `\n_Source: YellowPages, SuperPages, Google Maps, Bing Maps, Playwright headless — no API keys used._`;
@@ -1651,18 +1702,34 @@ function buildSmartFallbackReply(userMessage) {
   }
 
   // ── Intent: stats / summary / dashboard ─────────────────────────────────────
-  if (/how many|count|total|stats|summary|dashboard|report|overview|status/.test(msg)) {
+  if (
+    /how many|count|total|stats|summary|dashboard|report|overview|status/.test(
+      msg,
+    )
+  ) {
     const sources = {};
-    leads.forEach(l => { const s = l.source||"unknown"; sources[s] = (sources[s]||0)+1; });
-    const topSources = Object.entries(sources).sort((a,b)=>b[1]-a[1]).slice(0,5)
-      .map(([s,c]) => `${s}: ${c}`).join(" · ");
+    leads.forEach((l) => {
+      const s = l.source || "unknown";
+      sources[s] = (sources[s] || 0) + 1;
+    });
+    const topSources = Object.entries(sources)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([s, c]) => `${s}: ${c}`)
+      .join(" · ");
 
     const cities = {};
-    leads.forEach(l => { if (l.city) cities[l.city] = (cities[l.city]||0)+1; });
-    const topCities = Object.entries(cities).sort((a,b)=>b[1]-a[1]).slice(0,5)
-      .map(([c,n]) => `${c} (${n})`).join(", ");
+    leads.forEach((l) => {
+      if (l.city) cities[l.city] = (cities[l.city] || 0) + 1;
+    });
+    const topCities = Object.entries(cities)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([c, n]) => `${c} (${n})`)
+      .join(", ");
 
-    return `📊 **XPS Intelligence Lead Database — Live Status**\n\n` +
+    return (
+      `📊 **XPS Intelligence Lead Database — Live Status**\n\n` +
       `| Metric | Value |\n|--------|-------|\n` +
       `| Total Leads | **${total.toLocaleString()}** |\n` +
       `| 🔥 HOT (score ≥ 75) | **${hot}** |\n` +
@@ -1672,22 +1739,31 @@ function buildSmartFallbackReply(userMessage) {
       `**Top cities:** ${topCities}\n\n` +
       `**Pipeline:** Universal Shadow Scraper → Score → Validate → Publish\n` +
       `**Scrape schedule:** Twice daily (03:00 + 15:00 UTC)\n` +
-      `_All leads scraped from public web — YellowPages, Yelp, BBB, Manta, SuperPages, DuckDuckGo, Google Maps, Bing Maps — no API keys._`;
+      `_All leads scraped from public web — YellowPages, Yelp, BBB, Manta, SuperPages, DuckDuckGo, Google Maps, Bing Maps — no API keys._`
+    );
   }
 
   // ── Intent: market analysis ──────────────────────────────────────────────────
   if (/market|best|top|hottest|analysis|opportunity|where should/.test(msg)) {
     const stateCounts = {};
-    leads.forEach(l => { if (l.state) stateCounts[l.state] = (stateCounts[l.state]||0)+1; });
-    const topStates = Object.entries(stateCounts).sort((a,b)=>b[1]-a[1]).slice(0,8)
-      .map(([s,n]) => `**${s}** (${n} leads)`).join(", ");
-    const hotLeads = leads.filter(l => (l.lead_score||l.score||0) >= 75).slice(0,5);
+    leads.forEach((l) => {
+      if (l.state) stateCounts[l.state] = (stateCounts[l.state] || 0) + 1;
+    });
+    const topStates = Object.entries(stateCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8)
+      .map(([s, n]) => `**${s}** (${n} leads)`)
+      .join(", ");
+    const hotLeads = leads
+      .filter((l) => (l.lead_score || l.score || 0) >= 75)
+      .slice(0, 5);
 
-    let reply = `📈 **Top Market Opportunities — XPS Intelligence Analysis**\n\n` +
+    let reply =
+      `📈 **Top Market Opportunities — XPS Intelligence Analysis**\n\n` +
       `**Highest lead volume by state:** ${topStates}\n\n` +
       `**Top 5 HOT leads right now:**\n`;
-    hotLeads.forEach((l,i) => {
-      reply += `${i+1}. **${l.company||l.company_name}** — ${l.city}, ${l.state} | ${l.phone||"no phone"} | Score: ${l.lead_score||l.score}\n`;
+    hotLeads.forEach((l, i) => {
+      reply += `${i + 1}. **${l.company || l.company_name}** — ${l.city}, ${l.state} | ${l.phone || "no phone"} | Score: ${l.lead_score || l.score}\n`;
     });
     reply += `\n_Score ≥ 75 = HOT: has phone + website + industry match. Ready for outreach._`;
     return reply;
@@ -1695,7 +1771,8 @@ function buildSmartFallbackReply(userMessage) {
 
   // ── Intent: help / what can you do ──────────────────────────────────────────
   if (/help|what can|capabilities|features|what do|how do|explain/.test(msg)) {
-    return `⚡ **XPS Intelligence — Capabilities**\n\n` +
+    return (
+      `⚡ **XPS Intelligence — Capabilities**\n\n` +
       `I'm your autonomous lead generation and business intelligence agent. Here's what I can do:\n\n` +
       `**🕷️ Scraping (no API keys)**\n` +
       `- Find any business type in any US city/state\n` +
@@ -1713,17 +1790,22 @@ function buildSmartFallbackReply(userMessage) {
       `- "Find epoxy contractors in Houston TX"\n` +
       `- "Show me HOT leads in Florida"\n` +
       `- "How many leads do we have?"\n` +
-      `- "What are the best markets right now?"`;
+      `- "What are the best markets right now?"`
+    );
   }
 
   // ── Default: show lead summary ───────────────────────────────────────────────
-  const topLeads = [...leads].sort((a,b) => (b.lead_score||b.score||0) - (a.lead_score||a.score||0)).slice(0,5);
+  const topLeads = [...leads]
+    .sort(
+      (a, b) => (b.lead_score || b.score || 0) - (a.lead_score || a.score || 0),
+    )
+    .slice(0, 5);
   let reply = `⚡ **XPS Intelligence** — ${total.toLocaleString()} leads in database\n\n`;
   reply += `**Quick stats:** 🔥 ${hot} HOT · 🌡 ${warm} WARM · 🧊 ${cold} COLD\n\n`;
   if (topLeads.length) {
     reply += `**Top 5 leads right now:**\n`;
-    topLeads.forEach((l,i) => {
-      reply += `${i+1}. **${l.company||l.company_name}** — ${l.city}, ${l.state} | Score: ${l.lead_score||l.score||0}\n`;
+    topLeads.forEach((l, i) => {
+      reply += `${i + 1}. **${l.company || l.company_name}** — ${l.city}, ${l.state} | Score: ${l.lead_score || l.score || 0}\n`;
     });
     reply += "\n";
   }
@@ -1742,7 +1824,9 @@ app.post("/api/v1/chat", async (req, res) => {
   const { message, history = [], system } = req.body || {};
 
   if (!message || typeof message !== "string" || !message.trim()) {
-    return res.status(400).json({ success: false, error: "message is required" });
+    return res
+      .status(400)
+      .json({ success: false, error: "message is required" });
   }
 
   const GROQ_API_KEY = process.env.GROQ_API_KEY || "";
@@ -1751,19 +1835,26 @@ app.post("/api/v1/chat", async (req, res) => {
 
   // Build a live-context system prompt with real lead stats
   let liveLeads = [];
-  try { liveLeads = loadLeadsFromFile(); } catch (_) {}
+  try {
+    liveLeads = loadLeadsFromFile();
+  } catch (_) {}
   const liveTotal = liveLeads.length;
-  const liveHot   = liveLeads.filter(l => (l.lead_score||l.score||0) >= 75).length;
-  const liveWarm  = liveLeads.filter(l => { const s=l.lead_score||l.score||0; return s>=50&&s<75; }).length;
+  const liveHot = liveLeads.filter(
+    (l) => (l.lead_score || l.score || 0) >= 75,
+  ).length;
+  const liveWarm = liveLeads.filter((l) => {
+    const s = l.lead_score || l.score || 0;
+    return s >= 50 && s < 75;
+  }).length;
 
-  const systemPrompt = system || (
+  const systemPrompt =
+    system ||
     "You are XPS Intelligence AI — an autonomous lead generation and business intelligence assistant. " +
-    `LIVE DATABASE STATUS: ${liveTotal.toLocaleString()} leads total (🔥 ${liveHot} HOT, 🌡 ${liveWarm} WARM). ` +
-    "Sources: YellowPages, SuperPages, Yelp, BBB, Manta, DuckDuckGo, Google Maps HTML, Bing Maps, Playwright headless — NO API KEYS required. " +
-    "You can find contractors, analyze markets, run audits, and manage outreach. " +
-    "Be concise, data-driven, and action-oriented. Return markdown tables for lead lists. " +
-    "When users ask to scrape: confirm you are triggering the universal shadow scraper and describe expected results."
-  );
+      `LIVE DATABASE STATUS: ${liveTotal.toLocaleString()} leads total (🔥 ${liveHot} HOT, 🌡 ${liveWarm} WARM). ` +
+      "Sources: YellowPages, SuperPages, Yelp, BBB, Manta, DuckDuckGo, Google Maps HTML, Bing Maps, Playwright headless — NO API KEYS required. " +
+      "You can find contractors, analyze markets, run audits, and manage outreach. " +
+      "Be concise, data-driven, and action-oriented. Return markdown tables for lead lists. " +
+      "When users ask to scrape: confirm you are triggering the universal shadow scraper and describe expected results.";
 
   const messages = [
     { role: "system", content: systemPrompt },

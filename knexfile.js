@@ -39,39 +39,58 @@ function buildConnection() {
     return {
       connectionString: connStr,
       ssl: needsSsl
-        ? { rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== "false" }
+        ? {
+            rejectUnauthorized:
+              process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== "false",
+          }
         : false,
     };
   }
 
   // ── 2. PG* standard env vars (set directly by Railway PostgreSQL service) ─
   const pgHost = process.env.PGHOST || process.env.DATABASE_HOST;
-  const pgPort = parseInt(process.env.PGPORT || process.env.DATABASE_PORT || "5432", 10);
-  const pgDb   = process.env.PGDATABASE || process.env.POSTGRES_DB || process.env.DATABASE_NAME;
-  const pgUser = process.env.PGUSER || process.env.POSTGRES_USER || process.env.DATABASE_USER;
-  const pgPass = process.env.PGPASSWORD || process.env.POSTGRES_PASSWORD || process.env.DATABASE_PASSWORD;
+  const pgPort = parseInt(
+    process.env.PGPORT || process.env.DATABASE_PORT || "5432",
+    10,
+  );
+  const pgDb =
+    process.env.PGDATABASE ||
+    process.env.POSTGRES_DB ||
+    process.env.DATABASE_NAME;
+  const pgUser =
+    process.env.PGUSER ||
+    process.env.POSTGRES_USER ||
+    process.env.DATABASE_USER;
+  const pgPass =
+    process.env.PGPASSWORD ||
+    process.env.POSTGRES_PASSWORD ||
+    process.env.DATABASE_PASSWORD;
 
   if (pgHost && pgDb && pgUser) {
     return {
-      host:     pgHost,
-      port:     pgPort,
+      host: pgHost,
+      port: pgPort,
       database: pgDb,
-      user:     pgUser,
+      user: pgUser,
       password: pgPass || "",
-      ssl: process.env.DATABASE_SSL === "true"
-        ? { rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== "false" }
-        : false,
+      ssl:
+        process.env.DATABASE_SSL === "true"
+          ? {
+              rejectUnauthorized:
+                process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== "false",
+            }
+          : false,
     };
   }
 
   // ── 3. Local dev / CI fallback ────────────────────────────────────────────
   return {
-    host:     "localhost",
-    port:     5432,
+    host: "localhost",
+    port: 5432,
     database: "lead_intelligence",
-    user:     "lead_admin",
+    user: "lead_admin",
     password: "",
-    ssl:      false,
+    ssl: false,
   };
 }
 
@@ -110,4 +129,3 @@ module.exports = {
     pool: { min: 2, max: 20 },
   },
 };
-

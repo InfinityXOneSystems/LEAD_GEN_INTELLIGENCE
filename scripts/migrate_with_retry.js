@@ -21,11 +21,11 @@
 require("dotenv").config();
 
 const { execSync } = require("child_process");
-const { Client }   = require("pg");
+const { Client } = require("pg");
 
-const WAIT_SECONDS  = parseInt(process.env.DB_WAIT_SECONDS   || "60",  10);
-const RETRY_INTERVAL= parseInt(process.env.DB_RETRY_INTERVAL || "3",   10);
-const NODE_ENV      = process.env.NODE_ENV || "development";
+const WAIT_SECONDS = parseInt(process.env.DB_WAIT_SECONDS || "60", 10);
+const RETRY_INTERVAL = parseInt(process.env.DB_RETRY_INTERVAL || "3", 10);
+const NODE_ENV = process.env.NODE_ENV || "development";
 
 // ── Build a pg.Client connection config from the same env vars as knexfile ──
 function buildPgConfig() {
@@ -36,7 +36,8 @@ function buildPgConfig() {
     null;
 
   if (connStr) {
-    const needsSsl = connStr.includes("railway.app") || connStr.includes("neon.tech");
+    const needsSsl =
+      connStr.includes("railway.app") || connStr.includes("neon.tech");
     return {
       connectionString: connStr,
       ssl: needsSsl ? { rejectUnauthorized: false } : false,
@@ -45,12 +46,27 @@ function buildPgConfig() {
   }
 
   return {
-    host:     process.env.PGHOST     || process.env.DATABASE_HOST || "localhost",
-    port:     parseInt(process.env.PGPORT || process.env.DATABASE_PORT || "5432", 10),
-    database: process.env.PGDATABASE || process.env.POSTGRES_DB   || process.env.DATABASE_NAME || "railway",
-    user:     process.env.PGUSER     || process.env.POSTGRES_USER || process.env.DATABASE_USER || "postgres",
-    password: process.env.PGPASSWORD || process.env.POSTGRES_PASSWORD || process.env.DATABASE_PASSWORD || "",
-    ssl:      false,
+    host: process.env.PGHOST || process.env.DATABASE_HOST || "localhost",
+    port: parseInt(
+      process.env.PGPORT || process.env.DATABASE_PORT || "5432",
+      10,
+    ),
+    database:
+      process.env.PGDATABASE ||
+      process.env.POSTGRES_DB ||
+      process.env.DATABASE_NAME ||
+      "railway",
+    user:
+      process.env.PGUSER ||
+      process.env.POSTGRES_USER ||
+      process.env.DATABASE_USER ||
+      "postgres",
+    password:
+      process.env.PGPASSWORD ||
+      process.env.POSTGRES_PASSWORD ||
+      process.env.DATABASE_PASSWORD ||
+      "",
+    ssl: false,
     connectionTimeoutMillis: 5000,
   };
 }
@@ -58,10 +74,12 @@ function buildPgConfig() {
 async function waitForPostgres() {
   const cfg = buildPgConfig();
   const target = cfg.connectionString
-    ? cfg.connectionString.replace(/:[^:@]+@/, ":***@")  // mask password
+    ? cfg.connectionString.replace(/:[^:@]+@/, ":***@") // mask password
     : `${cfg.host}:${cfg.port}/${cfg.database}`;
 
-  console.log(`[db:migrate] Waiting for PostgreSQL at ${target} (up to ${WAIT_SECONDS}s)…`);
+  console.log(
+    `[db:migrate] Waiting for PostgreSQL at ${target} (up to ${WAIT_SECONDS}s)…`,
+  );
 
   const deadline = Date.now() + WAIT_SECONDS * 1000;
   let attempt = 0;
@@ -79,14 +97,18 @@ async function waitForPostgres() {
       const remaining = Math.ceil((deadline - Date.now()) / 1000);
       console.log(
         `[db:migrate] Attempt ${attempt}: not ready (${err.code || err.message}). ` +
-        `Retrying in ${RETRY_INTERVAL}s… (${remaining}s remaining)`,
+          `Retrying in ${RETRY_INTERVAL}s… (${remaining}s remaining)`,
       );
-      try { await client.end(); } catch (_) {}
+      try {
+        await client.end();
+      } catch (_) {}
       await new Promise((r) => setTimeout(r, RETRY_INTERVAL * 1000));
     }
   }
 
-  console.error(`[db:migrate] PostgreSQL did not become ready within ${WAIT_SECONDS}s.`);
+  console.error(
+    `[db:migrate] PostgreSQL did not become ready within ${WAIT_SECONDS}s.`,
+  );
   return false;
 }
 
@@ -97,25 +119,40 @@ async function runMigrations() {
     // NOTE: We intentionally exit 0 so the Railway container starts and passes
     // the health-check.  Migrations will auto-run on the next deploy once the
     // database is reachable.  The gateway degrades gracefully for DB-less routes.
-    console.warn("[db:migrate] ⚠️  DEGRADED MODE — database unreachable, migrations skipped.");
-    console.warn("[db:migrate]    The gateway will start but database-backed routes may fail.");
-    console.warn("[db:migrate]    Migrations will be retried on next deploy or manual restart.");
+    console.warn(
+      "[db:migrate] ⚠️  DEGRADED MODE — database unreachable, migrations skipped.",
+    );
+    console.warn(
+      "[db:migrate]    The gateway will start but database-backed routes may fail.",
+    );
+    console.warn(
+      "[db:migrate]    Migrations will be retried on next deploy or manual restart.",
+    );
     process.env.DB_MIGRATIONS_SKIPPED = "true";
     process.exit(0);
   }
 
   try {
-    console.log(`[db:migrate] Running knex migrate:latest (NODE_ENV=${NODE_ENV})…`);
-    execSync(`NODE_ENV=${NODE_ENV} npx knex migrate:latest --knexfile knexfile.js`, {
-      stdio: "inherit",
-      env: process.env,
-    });
+    console.log(
+      `[db:migrate] Running knex migrate:latest (NODE_ENV=${NODE_ENV})…`,
+    );
+    execSync(
+      `NODE_ENV=${NODE_ENV} npx knex migrate:latest --knexfile knexfile.js`,
+      {
+        stdio: "inherit",
+        env: process.env,
+      },
+    );
     console.log("[db:migrate] ✅ Migrations complete.");
     process.exit(0);
   } catch (err) {
     console.error("[db:migrate] ❌ Migration failed:", err.message);
-    console.warn("[db:migrate] ⚠️  DEGRADED MODE — starting gateway with incomplete migrations.");
-    console.warn("[db:migrate]    Check Railway logs and re-deploy to retry migrations.");
+    console.warn(
+      "[db:migrate] ⚠️  DEGRADED MODE — starting gateway with incomplete migrations.",
+    );
+    console.warn(
+      "[db:migrate]    Check Railway logs and re-deploy to retry migrations.",
+    );
     // Exit 0 so the gateway starts and the health-check passes.
     // Operators must check logs for migration errors after deploy.
     process.exit(0);

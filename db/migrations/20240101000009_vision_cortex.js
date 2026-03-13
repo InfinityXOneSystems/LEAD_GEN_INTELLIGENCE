@@ -76,11 +76,21 @@ exports.up = async function (knex) {
       t.unique(["content_hash"]);
     });
 
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_vci_relevance ON vision_cortex_items (relevance_score DESC)");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_vci_category ON vision_cortex_items (category)");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_vci_scraped ON vision_cortex_items (scraped_at DESC)");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_vci_opportunity ON vision_cortex_items (is_opportunity) WHERE is_opportunity = true");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_vci_trending ON vision_cortex_items (is_trending) WHERE is_trending = true");
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_vci_relevance ON vision_cortex_items (relevance_score DESC)",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_vci_category ON vision_cortex_items (category)",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_vci_scraped ON vision_cortex_items (scraped_at DESC)",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_vci_opportunity ON vision_cortex_items (is_opportunity) WHERE is_opportunity = true",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_vci_trending ON vision_cortex_items (is_trending) WHERE is_trending = true",
+    );
   }
 
   // ── vision_cortex_briefings ────────────────────────────────────────────────
@@ -113,9 +123,15 @@ exports.up = async function (knex) {
       t.timestamp("created_at", { useTz: true }).defaultTo(knex.fn.now());
       t.unique(["trend_date", "keyword"]);
     });
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_vct_date ON vision_cortex_trends (trend_date DESC)");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_vct_keyword ON vision_cortex_trends (keyword)");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_vct_mentions ON vision_cortex_trends (mention_count DESC)");
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_vct_date ON vision_cortex_trends (trend_date DESC)",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_vct_keyword ON vision_cortex_trends (keyword)",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_vct_mentions ON vision_cortex_trends (mention_count DESC)",
+    );
   }
 
   // ── invention_proposals ────────────────────────────────────────────────────
@@ -140,8 +156,12 @@ exports.up = async function (knex) {
       t.timestamp("created_at", { useTz: true }).defaultTo(knex.fn.now());
       t.timestamp("updated_at", { useTz: true }).defaultTo(knex.fn.now());
     });
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_ip_score ON invention_proposals (opportunity_score DESC)");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_ip_status ON invention_proposals (status)");
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_ip_score ON invention_proposals (opportunity_score DESC)",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_ip_status ON invention_proposals (status)",
+    );
   }
 };
 

@@ -72,12 +72,24 @@ exports.up = async function (knex) {
       t.unique(["company_name", "city", "state"]);
     });
 
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_efc_lead_score ON epoxy_floor_contractors (lead_score DESC)");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_efc_state ON epoxy_floor_contractors (state)");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_efc_city ON epoxy_floor_contractors (city)");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_efc_tier ON epoxy_floor_contractors (tier)");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_efc_status ON epoxy_floor_contractors (status)");
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_efc_date_scraped ON epoxy_floor_contractors (date_scraped DESC)");
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_efc_lead_score ON epoxy_floor_contractors (lead_score DESC)",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_efc_state ON epoxy_floor_contractors (state)",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_efc_city ON epoxy_floor_contractors (city)",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_efc_tier ON epoxy_floor_contractors (tier)",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_efc_status ON epoxy_floor_contractors (status)",
+    );
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_efc_date_scraped ON epoxy_floor_contractors (date_scraped DESC)",
+    );
   }
 
   // ── contractor_services ────────────────────────────────────────────────────
@@ -116,7 +128,9 @@ exports.up = async function (knex) {
       t.timestamp("reviewed_at", { useTz: true });
       t.timestamp("scraped_at", { useTz: true }).defaultTo(knex.fn.now());
     });
-    await knex.schema.raw("CREATE INDEX IF NOT EXISTS idx_cr_contractor ON contractor_reviews (contractor_id)");
+    await knex.schema.raw(
+      "CREATE INDEX IF NOT EXISTS idx_cr_contractor ON contractor_reviews (contractor_id)",
+    );
   }
 
   // ── outreach_campaigns ─────────────────────────────────────────────────────
