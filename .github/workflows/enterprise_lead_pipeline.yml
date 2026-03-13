@@ -9,6 +9,8 @@
 name: 🕷️ Enterprise Lead Pipeline
 
 on:
+  schedule:
+    - cron: '0 7 * * *'       # 07:00 UTC daily
   workflow_dispatch:
     inputs:
       targets:
@@ -98,6 +100,13 @@ jobs:
           print(f'Runtime:      {result[\"elapsed_sec\"]}s')
           print('=' * 60)
           "
+
+      - name: Publish leads to LEADS repo + Frontend repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          LEADS_MAX: "500"
+          DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+        run: python scripts/publish_leads_to_repos.py
 
       - name: Commit updated leads to XPS repo
         run: |
