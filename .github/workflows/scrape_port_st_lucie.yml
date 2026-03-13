@@ -59,6 +59,13 @@ jobs:
           if [ -z "$MAX" ]; then MAX=25; fi
           python scripts/scrape_port_st_lucie.py $ARGS --max-per-keyword "$MAX"
 
+      # YAML multiline indentation note (110% Protocol):
+      # All lines inside a `run: |` literal block scalar MUST be indented at
+      # least as far as the first content line (here: 12 spaces / 6 levels of
+      # 2-space YAML indent).  This applies even to embedded multi-line strings
+      # passed to interpreters (e.g. `python3 -c "..."`).  YAML strips the
+      # block indentation when building the string value, so Python receives
+      # the code without leading whitespace — no IndentationError occurs.
       - name: Show PSL lead count
         # YAML block scalar note: all lines in a run: | block must be indented
         # at least as much as the first content line (12 spaces here). YAML
