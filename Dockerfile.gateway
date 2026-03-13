@@ -37,7 +37,7 @@ RUN npm ci --omit=dev
 # Copy application code
 COPY . .
 
-# Overwrite the frontend source with the compiled dist from Stage 1
+# Copy the compiled frontend dist from Stage 1 into the runtime image
 # so Express can serve it via express.static('frontend/dist').
 COPY --from=frontend-build /frontend/dist ./frontend/dist
 
