@@ -254,8 +254,12 @@ XPS_INTELLIGENCE_SYSTEM/
 └── .github/         — GitHub Actions workflows
 ```
 
-> **⚠️ TWO FRONTENDS:** `dashboard/` (Next.js, 13 pages) and `frontend/` (Vite+React, 4 tabs) are both active.  
-> See [DASHBOARD_GUIDE.md](DASHBOARD_GUIDE.md) for full documentation of both.
+> **⚠️ THREE FRONTENDS across TWO repos:**
+> - `dashboard/` (Next.js, 13 pages) — this repo
+> - `frontend/` (Vite+React, 4 tabs) — this repo  
+> - [`XPS-INTELLIGENCE-FRONTEND`](https://github.com/InfinityXOneSystems/XPS-INTELLIGENCE-FRONTEND) (Vite+React 19, 20 pages) — **separate repo**
+>
+> See [DASHBOARD_GUIDE.md](DASHBOARD_GUIDE.md) for full documentation of all three.
 
 ---
 
@@ -282,6 +286,7 @@ ISC License — see [LICENSE](LICENSE) for details.
 - **Dashboard — Next.js (GitHub Pages):** [https://infinityxonesystems.github.io/XPS_INTELLIGENCE_SYSTEM/](https://infinityxonesystems.github.io/XPS_INTELLIGENCE_SYSTEM/)
 - **Dashboard — Next.js (Vercel):** [https://xps-intelligence-dashboard.vercel.app](https://xps-intelligence-dashboard.vercel.app) *(dashboard/)*
 - **Frontend Control Panel (Vercel):** [https://xps-intelligence.vercel.app](https://xps-intelligence.vercel.app) *(frontend/)*
+- **XPS-INTELLIGENCE-FRONTEND (separate repo):** [https://github.com/InfinityXOneSystems/XPS-INTELLIGENCE-FRONTEND](https://github.com/InfinityXOneSystems/XPS-INTELLIGENCE-FRONTEND)
 - **Backend API (Railway):** [https://xps-intelligence.up.railway.app](https://xps-intelligence.up.railway.app)
 - **Frontend Guide:** [DASHBOARD_GUIDE.md](DASHBOARD_GUIDE.md)
 - **GitHub:** [https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM](https://github.com/InfinityXOneSystems/XPS_INTELLIGENCE_SYSTEM)
