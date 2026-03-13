@@ -1,14 +1,31 @@
 "use client";
 
-import { useState, useRef } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  type CSSProperties,
+  type FormEvent,
+} from "react";
 import { Bot, Loader2, Send, X, Zap } from "lucide-react";
 import toast from "react-hot-toast";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   sendCommand,
   pollTaskUntilDone,
   type TaskStatusResponse,
 } from "@/lib/runtimeClient";
 import { sendChatMessage, type ChatHistoryMessage } from "@/lib/chatClient";
+
+// LLMChatMessage is the history format sent to the backend (same as ChatHistoryMessage).
+type LLMChatMessage = ChatHistoryMessage;
+
+// Simple ID generator — crypto.randomUUID when available, fallback to Math.random.
+const genId = (): string =>
+  typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2);
 
 interface ChatMessage {
   id: string;
