@@ -18,10 +18,7 @@ const poolConfig = process.env.DATABASE_URL
           : false,
     }
   : {
-      host:
-        process.env.PGHOST ||
-        process.env.DATABASE_HOST ||
-        "localhost",
+      host: process.env.PGHOST || process.env.DATABASE_HOST || "localhost",
       port: parseInt(
         process.env.PGPORT || process.env.DATABASE_PORT || "5432",
         10,
@@ -30,14 +27,8 @@ const poolConfig = process.env.DATABASE_URL
         process.env.PGDATABASE ||
         process.env.DATABASE_NAME ||
         "lead_intelligence",
-      user:
-        process.env.PGUSER ||
-        process.env.DATABASE_USER ||
-        "lead_admin",
-      password:
-        process.env.PGPASSWORD ||
-        process.env.DATABASE_PASSWORD ||
-        "",
+      user: process.env.PGUSER || process.env.DATABASE_USER || "lead_admin",
+      password: process.env.PGPASSWORD || process.env.DATABASE_PASSWORD || "",
       ssl:
         process.env.DATABASE_SSL === "true"
           ? {

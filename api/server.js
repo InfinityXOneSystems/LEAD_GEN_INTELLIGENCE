@@ -469,12 +469,10 @@ app.get("/api/leads", async (req, res) => {
   } catch (err) {
     console.error("[leads] Error:", err.message);
     const isDev = process.env.NODE_ENV !== "production";
-    return res
-      .status(500)
-      .json({
-        error: "Failed to load leads",
-        ...(isDev && { details: err.message }),
-      });
+    return res.status(500).json({
+      error: "Failed to load leads",
+      ...(isDev && { details: err.message }),
+    });
   }
 });
 

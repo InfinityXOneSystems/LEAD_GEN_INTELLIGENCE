@@ -31,8 +31,14 @@ if (process.env.SKIP_MIGRATIONS === "true") {
   process.exit(0);
 }
 
-if (!process.env.DATABASE_URL && !process.env.DATABASE_HOST && !process.env.PGHOST) {
-  console.warn("[migrate] No DATABASE_URL or DATABASE_HOST found — skipping migrations.");
+if (
+  !process.env.DATABASE_URL &&
+  !process.env.DATABASE_HOST &&
+  !process.env.PGHOST
+) {
+  console.warn(
+    "[migrate] No DATABASE_URL or DATABASE_HOST found — skipping migrations.",
+  );
   process.exit(0);
 }
 
@@ -43,7 +49,9 @@ function sleep(ms) {
 async function runMigrations() {
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
-      console.log(`[migrate] Attempt ${attempt}/${MAX_RETRIES} — running knex migrate:latest …`);
+      console.log(
+        `[migrate] Attempt ${attempt}/${MAX_RETRIES} — running knex migrate:latest …`,
+      );
       execSync("npx knex migrate:latest --knexfile knexfile.js", {
         stdio: ["inherit", "inherit", "pipe"],
         env: { ...process.env },
@@ -56,11 +64,15 @@ async function runMigrations() {
       const reason = stderrText.includes("ECONNREFUSED")
         ? "PostgreSQL not reachable (ECONNREFUSED) — database may still be starting"
         : stderrText.includes("password")
-        ? "PostgreSQL authentication failed — check PGPASSWORD / DATABASE_URL"
-        : stderrText.includes("ETIMEDOUT")
-        ? "PostgreSQL connection timed out — check PGHOST and network configuration"
-        : stderrText.split("\n")[0].slice(0, 200) || (err.message || "unknown error running knex migrate:latest");
-      console.error(`[migrate] ❌ Migration attempt ${attempt} failed: ${reason}`);
+          ? "PostgreSQL authentication failed — check PGPASSWORD / DATABASE_URL"
+          : stderrText.includes("ETIMEDOUT")
+            ? "PostgreSQL connection timed out — check PGHOST and network configuration"
+            : stderrText.split("\n")[0].slice(0, 200) ||
+              err.message ||
+              "unknown error running knex migrate:latest";
+      console.error(
+        `[migrate] ❌ Migration attempt ${attempt} failed: ${reason}`,
+      );
 
       if (attempt < MAX_RETRIES) {
         console.log(`[migrate] Retrying in ${RETRY_DELAY_MS / 1000}s …`);
