@@ -225,6 +225,40 @@ def push_leads_to_github_repo(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# GitHub Pages data write
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Repo root = two levels up from this script (scripts/ → repo root)
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def write_pages_data(
+    leads: List[dict],
+    output_path: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """
+    Write normalised leads to pages/data/scored_leads.json so that
+    the GitHub Pages lead dashboard can load them without an API call.
+
+    Args:
+        leads:       list of normalised lead dicts
+        output_path: override destination path (default: pages/data/scored_leads.json)
+
+    Returns:
+        dict with success flag and path written
+    """
+    dest = output_path or (_REPO_ROOT / "pages" / "data" / "scored_leads.json")
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        dest.write_text(json.dumps(leads, indent=2), encoding="utf-8")
+        log.info("✅ pages/data written: %d leads → %s", len(leads), dest)
+        return {"success": True, "path": str(dest), "count": len(leads)}
+    except Exception as exc:
+        log.error("❌ Failed to write pages/data: %s", exc)
+        return {"success": False, "error": str(exc)}
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Full write pipeline
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -234,15 +268,17 @@ def write_leads(
     date_slug: Optional[str] = None,
     skip_supabase: bool = False,
     skip_github: bool = False,
+    skip_pages: bool = False,
 ) -> Dict[str, Any]:
     """
-    Write leads to all configured sinks (Supabase + LEADS repo).
+    Write leads to all configured sinks (Supabase + LEADS repo + GitHub Pages).
 
     Args:
         leads:          list of lead dicts from scraper/pipeline
         date_slug:      date string for file naming (default: today)
         skip_supabase:  skip Supabase write (useful in dry-run)
         skip_github:    skip LEADS repo push (useful in dry-run)
+        skip_pages:     skip pages/data write (useful in dry-run)
 
     Returns:
         dict with results from each sink
@@ -261,6 +297,12 @@ def write_leads(
         results["github_leads"] = push_leads_to_github_repo(leads, date_slug)
     else:
         results["github_leads"] = {"skipped": True}
+
+    if not skip_pages:
+        normalised = [_normalise_lead(l) for l in leads]
+        results["pages_data"] = write_pages_data(normalised)
+    else:
+        results["pages_data"] = {"skipped": True}
 
     return results
 
@@ -292,6 +334,7 @@ def _cli(argv: Optional[list] = None) -> int:
         date_slug=args.date,
         skip_supabase=args.dry_run,
         skip_github=args.dry_run,
+        skip_pages=args.dry_run,
     )
     print(json.dumps(result, indent=2))
     return 0 if result.get("supabase", {}).get("failed", 0) == 0 else 1

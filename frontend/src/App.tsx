@@ -83,8 +83,9 @@ type ModuleId = (typeof MODULES)[number]["id"];
 // ── Leads Panel ───────────────────────────────────────────────────────────────
 
 interface Lead {
-  id?: string;
+  id?: string | number;
   name?: string;
+  company?: string;
   company_name?: string;
   city?: string;
   state?: string;
@@ -92,26 +93,40 @@ interface Lead {
   email?: string;
   website?: string;
   lead_score?: number;
+  score?: number;
   tier?: string;
 }
 
 function LeadsPanel() {
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     let mounted = true;
-    const fetch = async () => {
+    const doFetch = async () => {
       try {
-        const res = await apiClient.get<{ data: Lead[] } | Lead[]>(
-          "/api/leads",
-        );
+        const res = await apiClient.get<
+          { leads: Lead[]; total: number } | { data: Lead[] } | Lead[]
+        >("/api/leads?limit=100");
         if (!mounted) return;
-        const list = Array.isArray(res.data)
-          ? res.data
-          : ((res.data as { data: Lead[] }).data ?? []);
-        setLeads(list.slice(0, 50));
+        let list: Lead[] = [];
+        let count = 0;
+        if (Array.isArray(res.data)) {
+          list = res.data;
+          count = list.length;
+        } else if ("leads" in res.data && Array.isArray(res.data.leads)) {
+          list = res.data.leads;
+          count =
+            (res.data as { leads: Lead[]; total: number }).total ?? list.length;
+        } else if ("data" in res.data && Array.isArray(res.data.data)) {
+          list = res.data.data;
+          count = list.length;
+        }
+        setLeads(list);
+        setTotal(count);
       } catch (err: unknown) {
         if (!mounted) return;
         setError(err instanceof Error ? err.message : "Failed to load leads");
@@ -119,11 +134,17 @@ function LeadsPanel() {
         if (mounted) setLoading(false);
       }
     };
-    fetch();
+    doFetch();
     return () => {
       mounted = false;
     };
   }, []);
+
+  const filtered = search
+    ? leads.filter((l) =>
+        JSON.stringify(l).toLowerCase().includes(search.toLowerCase()),
+      )
+    : leads;
 
   if (loading) {
     return <p style={{ color: "#888", padding: "2rem" }}>Loading leads…</p>;
@@ -144,73 +165,124 @@ function LeadsPanel() {
   }
 
   return (
-    <div style={{ overflowX: "auto" }}>
-      <table style={styles.table}>
-        <thead>
-          <tr>
-            {["Company", "City", "Phone", "Email", "Score", "Tier"].map((h) => (
-              <th key={h} style={styles.th}>
-                {h}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {leads.length === 0 ? (
+    <div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: "1rem",
+          flexWrap: "wrap",
+          gap: "0.5rem",
+        }}
+      >
+        <div style={{ color: "#FFD700", fontWeight: "bold", fontSize: 16 }}>
+          🏢 {total.toLocaleString()} Real Scraped Leads
+          <span
+            style={{
+              color: "#888",
+              fontWeight: "normal",
+              fontSize: 12,
+              marginLeft: 8,
+            }}
+          >
+            (shadow scraper — live data)
+          </span>
+        </div>
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Filter by city, state, company…"
+          style={{
+            background: "#1a1a1a",
+            border: "1px solid #333",
+            color: "#fff",
+            padding: "6px 12px",
+            borderRadius: 6,
+            width: 280,
+            fontSize: 13,
+          }}
+        />
+      </div>
+      <div style={{ overflowX: "auto" }}>
+        <table style={styles.table}>
+          <thead>
             <tr>
-              <td
-                colSpan={6}
-                style={{ ...styles.td, textAlign: "center", color: "#888" }}
-              >
-                No leads found. Run a scraper to populate leads.
-              </td>
+              {["Company", "City", "Phone", "Email", "Score", "Tier"].map(
+                (h) => (
+                  <th key={h} style={styles.th}>
+                    {h}
+                  </th>
+                ),
+              )}
             </tr>
-          ) : (
-            leads.map((l, i) => (
-              <tr
-                key={l.id ?? i}
-                style={i % 2 === 0 ? styles.trEven : styles.trOdd}
-              >
-                <td style={styles.td}>{l.name || l.company_name || "—"}</td>
-                <td style={styles.td}>
-                  {l.city && l.state ? `${l.city}, ${l.state}` : l.city || "—"}
-                </td>
-                <td style={styles.td}>{l.phone || "—"}</td>
-                <td style={styles.td}>
-                  {l.email ? (
-                    <a href={`mailto:${l.email}`} style={{ color: "#FFD700" }}>
-                      {l.email}
-                    </a>
-                  ) : (
-                    "—"
-                  )}
-                </td>
-                <td style={{ ...styles.td, textAlign: "center" }}>
-                  {l.lead_score ?? "—"}
-                </td>
-                <td style={{ ...styles.td, textAlign: "center" }}>
-                  <span
-                    style={{
-                      background:
-                        l.tier === "HOT"
-                          ? "#ff4400"
-                          : l.tier === "WARM"
-                            ? "#ff8800"
-                            : "#333",
-                      color: "#fff",
-                      borderRadius: 4,
-                      padding: "2px 8px",
-                      fontSize: 11,
-                    }}
-                  >
-                    {l.tier || "—"}
-                  </span>
+          </thead>
+          <tbody>
+            {filtered.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={6}
+                  style={{ ...styles.td, textAlign: "center", color: "#888" }}
+                >
+                  {leads.length === 0
+                    ? "No leads found. Run a scraper to populate leads."
+                    : `No results for "${search}"`}
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : (
+              filtered.map((l, i) => (
+                <tr
+                  key={l.id ?? i}
+                  style={i % 2 === 0 ? styles.trEven : styles.trOdd}
+                >
+                  <td style={styles.td}>
+                    {l.company || l.name || l.company_name || "—"}
+                  </td>
+                  <td style={styles.td}>
+                    {l.city && l.state
+                      ? `${l.city}, ${l.state}`
+                      : l.city || "—"}
+                  </td>
+                  <td style={styles.td}>{l.phone || "—"}</td>
+                  <td style={styles.td}>
+                    {l.email ? (
+                      <a
+                        href={`mailto:${l.email}`}
+                        style={{ color: "#FFD700" }}
+                      >
+                        {l.email}
+                      </a>
+                    ) : (
+                      "—"
+                    )}
+                  </td>
+                  <td style={{ ...styles.td, textAlign: "center" }}>
+                    {l.lead_score ?? l.score ?? "—"}
+                  </td>
+                  <td style={{ ...styles.td, textAlign: "center" }}>
+                    <span
+                      style={{
+                        background:
+                          (l.tier || "").toLowerCase() === "hot"
+                            ? "#ff4400"
+                            : (l.tier || "").toLowerCase() === "warm"
+                              ? "#ff8800"
+                              : "#333",
+                        color: "#fff",
+                        borderRadius: 4,
+                        padding: "2px 8px",
+                        fontSize: 11,
+                      }}
+                    >
+                      {(l.tier || "—").toUpperCase()}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
@@ -274,9 +346,7 @@ export default function App() {
           </p>
         </div>
         <StatusBar
-          backendUrl={
-            API_URL || "https://xpsintelligencesystem-production.up.railway.app"
-          }
+          backendUrl={API_URL || "https://xps-intelligence.up.railway.app"}
         />
       </header>
 

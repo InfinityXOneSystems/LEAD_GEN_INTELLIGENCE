@@ -1,7 +1,7 @@
 [
   {
     "id": "gc_flooring_contractors",
-    "name": "Google Maps — Flooring Contractors USA",
+    "name": "Google Maps \u2014 Flooring Contractors USA",
     "type": "google_maps",
     "queries": [
       "flooring contractors near me",
@@ -28,7 +28,7 @@
   },
   {
     "id": "yelp_flooring",
-    "name": "Yelp — Flooring Services",
+    "name": "Yelp \u2014 Flooring Services",
     "type": "yelp",
     "queries": ["flooring", "hardwood floors", "tile contractors"],
     "regions": ["nationwide"],
@@ -38,16 +38,14 @@
   },
   {
     "id": "bing_construction",
-    "name": "Bing Maps — Construction Companies",
+    "name": "Bing Maps \u2014 Construction Companies",
     "type": "bing_maps",
     "queries": [
       "general contractors",
       "commercial flooring",
       "construction company"
     ],
-    "regions": [
-      "nationwide"
-    ],
+    "regions": ["nationwide"],
     "priority": "medium",
     "schedule": "weekly",
     "enabled": true
@@ -74,7 +72,7 @@
   },
   {
     "id": "linkedin_companies",
-    "name": "LinkedIn — Flooring Company Pages",
+    "name": "LinkedIn \u2014 Flooring Company Pages",
     "type": "linkedin",
     "search_terms": [
       "flooring company",
@@ -88,6 +86,8 @@
     "priority": "low",
     "schedule": "monthly",
     "enabled": false
+  },
+  {
     "id": "arxiv_cs_ai",
     "name": "arXiv CS.AI",
     "url": "https://rss.arxiv.org/rss/cs.AI",
@@ -386,5 +386,27 @@
     "priority": 4,
     "scrape_interval_hours": 24,
     "tags": ["claude", "safety", "ai", "alignment"]
+  },
+  {
+    "id": "yellowpages_port_st_lucie",
+    "name": "YellowPages \u2014 Port St Lucie FL Contractors",
+    "type": "directory",
+    "base_url": "https://www.yellowpages.com",
+    "queries": [
+      "flooring contractors",
+      "epoxy flooring",
+      "tile installation",
+      "hardwood floor installation",
+      "carpet installation",
+      "concrete polishing",
+      "general contractors"
+    ],
+    "regions": ["Port St Lucie, FL"],
+    "city": "Port St Lucie",
+    "state": "FL",
+    "priority": "high",
+    "schedule": "daily",
+    "enabled": true,
+    "scraper": "shadow_rest_scraper"
   }
 ]

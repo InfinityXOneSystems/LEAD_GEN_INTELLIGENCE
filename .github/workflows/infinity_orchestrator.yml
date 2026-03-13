@@ -1,8 +1,8 @@
 name: Infinity Orchestrator
 
 # GOVERNANCE: Tier 4 — Self-Healing (no push trigger)
-# Push trigger removed — all pipeline runs must be explicit dispatch or issue comment commands.
-# This prevents every commit to main from running a full pipeline.
+# Auth: Infinity Orchestrator GitHub App (GH_APP_ID + GH_APP_PRIVATE_KEY)
+#       Falls back to GITHUB_TOKEN for single-repo operations.
 # See: .infinity/WORKFLOW_GOVERNANCE.md
 
 on:
@@ -43,6 +43,7 @@ jobs:
     permissions:
       contents: write
       issues: write
+      id-token: write
 
     # Only run on comment commands or explicit dispatch
     if: >
@@ -54,10 +55,34 @@ jobs:
        contains(github.event.comment.body, '/score'))
 
     steps:
+      # ── Mint Infinity Orchestrator App token ─────────────────────────────
+      - name: Generate Infinity Orchestrator App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          repositories: >-
+            XPS_INTELLIGENCE_SYSTEM,
+            LEADS,
+            XPS-INTELLIGENCE-FRONTEND
+        continue-on-error: true
+
+      - name: Resolve token
+        id: token
+        run: |
+          if [ -n "${{ steps.app-token.outputs.token }}" ]; then
+            echo "token=${{ steps.app-token.outputs.token }}" >> $GITHUB_OUTPUT
+            echo "✅ Infinity Orchestrator GitHub App token active"
+          else
+            echo "token=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+            echo "⚠️  Using GITHUB_TOKEN fallback"
+          fi
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.token.outputs.token }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -87,6 +112,10 @@ jobs:
       - name: Run pipeline stage — ${{ steps.stage.outputs.stage }}
         env:
           STAGE: ${{ steps.stage.outputs.stage }}
+          # Expose App credentials for sub-scripts (e.g. publish_leads_to_repos.py)
+          GH_APP_ID: ${{ secrets.GH_APP_ID }}
+          GH_APP_PRIVATE_KEY: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          GITHUB_TOKEN: ${{ steps.token.outputs.token }}
         run: |
           case "$STAGE" in
             scrape)   node scrapers/engine.js ;;
@@ -99,6 +128,7 @@ jobs:
               node validation/lead_validation_pipeline.js
               node agents/scoring/scoring_pipeline.js
               node tools/export_snapshot.js
+              python scripts/publish_leads_to_repos.py
               ;;
             *)        echo "Unknown stage: $STAGE" && exit 1 ;;
           esac

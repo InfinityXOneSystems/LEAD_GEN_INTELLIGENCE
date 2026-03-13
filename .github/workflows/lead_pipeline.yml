@@ -69,6 +69,16 @@ jobs:
         run: node scrapers/google_maps_scraper.js
         continue-on-error: true
 
+      - name: Run asyncio shadow scraper (Vision Cortex)
+        run: |
+          pip install aiohttp==3.13.3 feedparser==6.0.12 beautifulsoup4==4.14.3 --quiet
+          python scripts/shadow_scraper_pipeline.py --leads-only 2>&1 || true
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
       - name: Count raw leads
         id: count
         run: |
@@ -357,12 +367,64 @@ jobs:
             done
           fi
 
+  # ── Stage 6: Publish — GitHub Pages + LEADS repo ────────────────────────────
+  publish:
+    name: "Stage 6 — Publish (GitHub Pages + LEADS repo)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [score]
+    if: always() && needs.score.result != 'failure'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Pull latest scored leads
+        run: git pull origin main || true
+
+      - name: Install Python dependencies
+        run: pip install aiohttp==3.13.3 feedparser==6.0.12 beautifulsoup4==4.14.3 --quiet
+
+      - name: Run shadow scraper pipeline — normalise + publish all sinks
+        # --leads-only: use existing pipeline output (add --dry-run to preview only)
+        run: |
+          python scripts/shadow_scraper_pipeline.py --leads-only
+        env:
+          NEXT_PUBLIC_SUPABASE_URL:    ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY:   ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          GITHUB_TOKEN:                ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Commit GitHub Pages lead data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pages/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "pages/data already current."
+          else
+            git commit -m "data: publish leads to GitHub Pages [skip ci]"
+            for attempt in 1 2 3; do
+              git push && break || {
+                echo "Push attempt $attempt failed — syncing remote changes..."
+                git fetch origin main
+                git merge -X ours --no-edit origin/main 2>/dev/null || true
+                sleep $((attempt * 5))
+              }
+            done
+          fi
+
   # ── Pipeline Summary ─────────────────────────────────────────────────────────
   summary:
     name: Pipeline Summary
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    needs: [scrape, validate, score, outreach, update-docs]
+    needs: [scrape, validate, score, outreach, update-docs, publish]
     if: always()
 
     steps:
@@ -377,5 +439,6 @@ jobs:
           echo "| Score | ${{ needs.score.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Outreach | ${{ needs.outreach.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Update Docs | ${{ needs.update-docs.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Publish | ${{ needs.publish.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "_Pipeline completed at $(date -u '+%Y-%m-%d %H:%M:%S') UTC_" >> $GITHUB_STEP_SUMMARY
