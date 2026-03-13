@@ -10,6 +10,10 @@
       "destination": "https://xps-intelligence.up.railway.app/api/v1/$1"
     },
     {
+      "source": "/api/(.*)",
+      "destination": "https://xps-intelligence.up.railway.app/api/$1"
+    },
+    {
       "source": "/health",
       "destination": "https://xps-intelligence.up.railway.app/health"
     }
@@ -21,7 +25,14 @@
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
       ]
     },
     {

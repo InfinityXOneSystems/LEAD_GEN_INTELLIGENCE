@@ -19,6 +19,8 @@ COPY . .
 ENV NODE_ENV=production
 # Default port 3000 (matches NEXT_PUBLIC_API_URL default and frontend expectation)
 ENV PORT=3000
+ENV NODE_ENV=production
+
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \

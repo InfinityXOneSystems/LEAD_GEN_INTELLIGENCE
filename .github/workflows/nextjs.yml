@@ -83,11 +83,9 @@ jobs:
           # GitHub Pages serves from /<repo-name>/ — set basePath so Next.js
           # links and asset URLs are rooted correctly.
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
-          NEXT_PUBLIC_API_URL: "https://xpsintelligencesystem-production.up.railway.app"
-          NEXT_PUBLIC_GATEWAY_URL: "https://xpsintelligencesystem-production.up.railway.app"
+          NEXT_PUBLIC_API_URL: "https://xps-intelligence.up.railway.app"
+          NEXT_PUBLIC_GATEWAY_URL: "https://xps-intelligence.up.railway.app"
         run: npm run build
-        env:
-          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
       - name: Add .nojekyll to disable Jekyll processing
         run: touch out/.nojekyll

@@ -10,8 +10,8 @@ const STATIC_DATA_URL =
 
 const GATEWAY_URL =
   typeof window !== "undefined"
-    ? process.env.NEXT_PUBLIC_GATEWAY_URL || "http://localhost:3200"
-    : "http://localhost:3200";
+    ? process.env.NEXT_PUBLIC_GATEWAY_URL || "http://localhost:3099"
+    : "http://localhost:3099";
 
 /** Normalise a raw lead record to the shape the table expects. */
 function normaliseLead(l) {

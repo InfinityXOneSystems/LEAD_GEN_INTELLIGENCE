@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3099";
 const ADMIN_TOKEN = process.env.NEXT_PUBLIC_ADMIN_TOKEN || "";
 const hdrs = {
   "Content-Type": "application/json",
