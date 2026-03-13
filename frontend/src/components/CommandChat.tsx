@@ -39,7 +39,13 @@ const COMMAND_PATTERNS: Array<{
     build: (s) => {
       const kw = s.match(new RegExp(`\\b(${SCRAPE_KEYWORDS.join("|")})\\b`, "i"))?.[0] ?? "contractor";
       const city = s.match(/\b(in|near|around)\s+([A-Za-z\s]+(?:,\s*[A-Z]{2})?)/i)?.[2]?.trim() ?? "";
-      return { command: "scrape_leads", command_type: "scrape", params: { keyword: `${kw} contractor`, location: city }, priority: 5, timeout_seconds: 60 };
+      return {
+        command: "scrape_leads",
+        command_type: "scrape",
+        params: { keyword: `${kw} contractor`, location: city },
+        priority: 5,
+        timeout_seconds: 60,
+      };
     },
   },
   {

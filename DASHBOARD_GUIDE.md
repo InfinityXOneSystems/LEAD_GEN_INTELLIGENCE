@@ -1,213 +1,219 @@
-# Dashboard UI - Phase 6 Complete
+# XPS Intelligence — Frontend Applications Guide
 
-## Summary
-
-Successfully built a modern, production-ready Next.js dashboard for the XPS Lead Intelligence Platform (Phase 6).
-
-## What Was Built
-
-### Core Application
-- **Next.js 16 Dashboard** at `/dashboard`
-- **Static Export** configured for GitHub Pages deployment
-- **TypeScript** for type safety
-- **Tailwind CSS 4** for modern styling
-
-### Components Created
-1. **StatsCards** - Display lead statistics (Total, HOT, WARM, COLD, Average Score)
-2. **FilterBar** - Filter leads by tier (HOT/WARM/COLD) and search
-3. **LeadsTable** - Paginated table showing lead details with sorting
-4. **ThemeToggle** - Switch between dark and light modes
-
-### Features Implemented
-- ✅ Dark/Light theme with electric gold (#EAB308) accents
-- ✅ Responsive design (desktop, tablet, mobile)
-- ✅ PWA support (installable, offline-capable)
-- ✅ Real-time filtering and search
-- ✅ Paginated lead viewing (50 per page)
-- ✅ Lead tier classification (HOT ≥75, WARM ≥50, COLD <50)
-
-## Directory Structure
-
-```
-dashboard/
-├── app/
-│   ├── layout.tsx        # Root layout with metadata
-│   ├── page.tsx          # Main dashboard page
-│   └── globals.css       # Global styles
-├── components/
-│   ├── StatsCards.tsx    # Statistics display
-│   ├── FilterBar.tsx     # Filtering controls
-│   ├── LeadsTable.tsx    # Lead table with pagination
-│   └── ThemeToggle.tsx   # Theme switcher
-├── public/
-│   ├── data/
-│   │   ├── scored_leads.json      # Sample lead data
-│   │   └── scoring_report.json    # Sample stats
-│   ├── manifest.json     # PWA manifest
-│   └── sw.js            # Service worker
-├── next.config.ts       # Next.js config (static export)
-├── package.json         # Dependencies
-└── README.md           # Dashboard documentation
-```
-
-## Data Integration
-
-The dashboard loads data from:
-- `/data/scored_leads.json` - Main lead data array
-- `/data/scoring_report.json` - Summary statistics
-
-### Expected Data Format
-
-**scored_leads.json:**
-```json
-[
-  {
-    "company": "Company Name",
-    "phone": "(555) 123-4567",
-    "website": "https://example.com",
-    "rating": 4.5,
-    "reviews": 100,
-    "city": "Columbus",
-    "state": "OH",
-    "email": "contact@example.com",
-    "lead_score": 85,
-    "tier": "HOT",
-    "industry_detected": "Epoxy",
-    "rank": 1
-  }
-]
-```
-
-**scoring_report.json:**
-```json
-{
-  "generated_at": "2026-03-05T23:00:00.000Z",
-  "total_leads": 100,
-  "average_score": 72,
-  "tiers": {
-    "HOT": 25,
-    "WARM": 50,
-    "COLD": 25
-  },
-  "industries": {
-    "Epoxy": 40,
-    "Concrete": 30,
-    "SurfacePrep": 20,
-    "Industrial": 10
-  }
-}
-```
-
-## How to Use
-
-### Development
-```bash
-cd dashboard
-npm install
-npm run dev
-# Open http://localhost:3000
-```
-
-### Build for Production
-```bash
-cd dashboard
-npm run build
-# Output: dashboard/out/
-```
-
-### Deploy to GitHub Pages
-1. Build the static export
-2. Copy `dashboard/out/` contents to your GitHub Pages directory
-3. Ensure `data/scored_leads.json` and `data/scoring_report.json` are present
-4. Push to your `gh-pages` branch
-
-## Integration with Existing System
-
-### Connecting to Scoring Pipeline
-
-To integrate with the existing scoring pipeline:
-
-1. **Copy data after scoring:**
-   ```bash
-   # After running: npm run score
-   cp data/leads/scored_leads.json dashboard/public/data/
-   cp data/leads/scoring_report.json dashboard/public/data/
-   ```
-
-2. **Automate with GitHub Actions:**
-   - Add a workflow step to copy scored data to `dashboard/public/data/`
-   - Rebuild and redeploy dashboard after scoring runs
-
-3. **Example workflow step:**
-   ```yaml
-   - name: Update dashboard data
-     run: |
-       cp data/leads/scored_leads.json dashboard/public/data/
-       cp data/leads/scoring_report.json dashboard/public/data/
-       cd dashboard
-       npm run build
-   ```
-
-## Theme Customization
-
-### Colors
-- **Dark Mode**: Black background (`#000000`)
-- **Light Mode**: Zinc-50 background (`#FAFAFA`)
-- **Primary Accent**: Electric gold (`#EAB308`)
-- **Secondary**: Zinc grays
-
-### Modify in `app/globals.css` and component className props
-
-## PWA Configuration
-
-### Install on Mobile
-1. Open dashboard in mobile browser
-2. Tap "Add to Home Screen"
-3. App will be installable with offline support
-
-### Service Worker
-- Caches: `/`, `/data/leads`, `/data/stats`
-- Updates automatically on new deployments
-
-## Performance
-
-- **Build Time**: ~3 seconds
-- **Bundle Size**: Optimized with Next.js 16
-- **Load Time**: <2s on 3G connections
-- **Lighthouse Score**: 90+ (Performance, Accessibility, Best Practices)
-
-## Next Steps
-
-### Recommended Enhancements
-1. **Real-time updates**: Add WebSocket support for live data
-2. **Export functionality**: Add CSV/Excel export
-3. **Advanced analytics**: Charts and graphs (Recharts or Chart.js)
-4. **Lead management**: Edit, archive, and tag leads
-5. **Chat interface**: Integrate natural language commands
-6. **Google Sheets sync**: Two-way data sync
-
-### GitHub Pages Deployment
-- Set repository Pages source to `gh-pages` branch
-- Configure custom domain (optional)
-- Enable HTTPS
-
-## Technical Notes
-
-- Uses Next.js App Router (not Pages Router)
-- Static export means no API routes (data must be JSON files)
-- Tailwind CSS 4 with new `@theme inline` syntax
-- Service worker for offline support
-- Responsive design with mobile-first approach
-
-## Support
-
-For issues or questions:
-- Check `dashboard/README.md`
-- Review component source code in `dashboard/components/`
-- See Phase 6 requirements in MASTER_BLUEPRINT.md
+> **⚠️ IMPORTANT FOR ALL AGENTS:** This repository contains TWO separate frontend applications.  
+> Both must be maintained. **Never forget the `frontend/` Vite app.**
 
 ---
 
-**Phase 6: Dashboard UI ✓ Complete**
+## Overview — Two Frontends, One Backend
 
-Built with ❤️ for XPS Lead Intelligence Platform
+| | `dashboard/` | `frontend/` |
+|---|---|---|
+| **Framework** | Next.js 16 (static export) | Vite + React 18 + TypeScript |
+| **Package name** | `xps-intelligence-dashboard` | `xps-intelligence-frontend` |
+| **Purpose** | Full enterprise dashboard — 13 pages | AI control panel — 4-tab command centre |
+| **Deploy target** | GitHub Pages (primary) + Vercel | Vercel (primary) |
+| **Workflow** | `nextjs.yml` → GitHub Pages, `dashboard_deploy.yml` → Vercel | `frontend_deploy.yml` → Vercel |
+| **Vercel secret** | `VERCEL_DASHBOARD_PROJECT_ID` | `VERCEL_PROJECT_ID` |
+| **Live URL (Vercel)** | `xps-intelligence-dashboard.vercel.app` | `xps-intelligence.vercel.app` |
+| **GitHub Pages** | `https://infinityxonesystems.github.io/XPS_INTELLIGENCE_SYSTEM/` | — |
+| **Backend** | `https://xps-intelligence.up.railway.app` | `https://xps-intelligence.up.railway.app` |
+| **Local dev** | `cd dashboard && npm run dev` → `http://localhost:3001` | `cd frontend && npm run dev` → `http://localhost:5173` |
+
+Both frontends connect to the **same Railway backend** (Express gateway at `api/gateway.js`).
+
+---
+
+## 1. `dashboard/` — Full Enterprise Dashboard (Next.js)
+
+### Pages
+
+| Route | File | Description |
+|-------|------|-------------|
+| `/` | `pages/index.js` | Home — navigation grid of all modules |
+| `/chat` | `pages/chat.js` | **Autonomous AI Agent** — full 3-panel Manus-style layout; parallel task slots; shadow scraper activity |
+| `/leads` | `pages/leads.js` | **Lead Viewer** — search, filter, paginate, export CSV; loads from API + static JSON fallback |
+| `/crm` | `pages/crm.js` | Enterprise CRM — pipeline, outreach, follow-up, contacts |
+| `/analytics` | `pages/analytics.js` | Lead analytics, pipeline charts, system health |
+| `/intelligence` | `pages/intelligence.js` | Vision Cortex — AI intelligence scraper, daily briefings, market opportunities |
+| `/invention-lab` | `pages/invention-lab.js` | Idea generation, hypothesis testing, experiment engine |
+| `/trends` | `pages/trends.js` | Live trend discovery, niche scanner, competitive intelligence |
+| `/guardian` | `pages/guardian.js` | System Guardian — real-time health, anomaly detection, auto-repair |
+| `/workspace` | `pages/workspace.js` | Live browser, code editor, UI generation |
+| `/studio` | `pages/studio.js` | AI image/video creator, business templates |
+| `/connectors` | `pages/connectors.js` | GitHub, Google Workspace, Vercel, Docker MCP |
+| `/settings` | `pages/settings.js` | LLM, APIs, scraping, outreach configuration |
+
+### Components
+
+- `components/RuntimeCommandChat.js` — Autonomous LLM chat with tool-call visualisation, parallel worker slots, shadow scraper activity feed
+
+### Static Data (GitHub Pages)
+
+The dashboard bundles static JSON in `public/data/` for offline / GitHub Pages serving:
+- `public/data/scored_leads.json` — **auto-synced from `leads/scored_leads.json`** at build time
+- `public/data/scoring_report.json` — lead scoring summary
+- `public/data/analytics.json` — pre-computed analytics
+- `public/data/guardian.json` — system guardian data
+- `public/data/intelligence.json` — vision cortex data
+- `public/data/trends.json` — market trend data
+
+> The `nextjs.yml` workflow copies `leads/scored_leads.json` → `public/data/scored_leads.json` before building so the GitHub Pages deployment always has the latest lead data.
+
+### Local Development
+
+```bash
+cd dashboard
+cp .env.local.example .env.local   # configure backend URLs
+npm install
+npm run dev                         # → http://localhost:3001
+```
+
+### Build & Deploy
+
+```bash
+# GitHub Pages (auto on push to main)
+cd dashboard && npm run build       # outputs to dashboard/out/
+
+# Vercel (auto via dashboard_deploy.yml, or manual)
+vercel --prod
+```
+
+### Environment Variables
+
+| Variable | Local default | Production |
+|----------|--------------|------------|
+| `NEXT_PUBLIC_API_URL` | `http://localhost:3099` | `https://xps-intelligence.up.railway.app` |
+| `NEXT_PUBLIC_GATEWAY_URL` | `http://localhost:3099` | `https://xps-intelligence.up.railway.app` |
+| `NEXT_PUBLIC_BASE_PATH` | *(empty)* | Set by GitHub Pages / Vercel automatically |
+
+---
+
+## 2. `frontend/` — Vite+React Control Panel
+
+### Tabs
+
+| Tab | Component | Description |
+|-----|-----------|-------------|
+| 💬 Chat Agent | `CommandChat.tsx` | LLM chat with Groq; smart local fallback reads live lead data; renders GFM markdown tables |
+| 📋 Leads | `App.tsx → LeadsPanel` | Lead table with search; normalises all 3 gateway response shapes |
+| 🤖 Agent Activity | `AgentActivityFeed.tsx` | Live agent task feed |
+| 📊 Task Status | `TaskStatusPanel.tsx` | Runtime task monitor |
+
+### Key files
+
+```
+frontend/src/
+├── App.tsx                    # Root — tabs, status bar, leads panel
+│   └── normaliseLeadsResponse()  # handles { success, data: { leads } } gateway format
+├── components/
+│   ├── CommandChat.tsx        # LLM chat; react-markdown + remark-gfm; SCRAPE_KEYWORDS[]
+│   ├── TaskStatusPanel.tsx    # Task status display
+│   └── AgentActivityFeed.tsx  # Agent activity feed
+└── lib/
+    ├── api.ts                 # Axios client (VITE_API_URL)
+    └── runtimeClient.ts       # sendChatMessage, sendCommand, pollTaskUntilDone
+```
+
+### Local Development
+
+```bash
+cd frontend
+npm install
+npm run dev                    # → http://localhost:5173
+# Backend must be running: cd .. && PORT=3099 node api/gateway.js
+```
+
+### Build & Deploy
+
+```bash
+cd frontend
+VITE_API_URL=https://xps-intelligence.up.railway.app npm run build
+# Vercel auto-deploys on push to main (see frontend_deploy.yml)
+```
+
+### Environment Variables
+
+| Variable | Local default | Production |
+|----------|--------------|------------|
+| `VITE_API_URL` | `http://localhost:3099` | `https://xps-intelligence.up.railway.app` |
+| `VITE_GATEWAY_URL` | `http://localhost:3099` | `https://xps-intelligence.up.railway.app` |
+
+---
+
+## Backend (shared by both frontends)
+
+Both frontends call the same Railway Express gateway:
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/health` | GET | Health check |
+| `/api/status` | GET | System status, lead count |
+| `/api/leads` | GET | Lead list (filter: city, state, minScore, limit, offset) |
+| `/api/v1/chat` | POST | LLM chat (Groq when key set; smart local fallback otherwise) |
+| `/api/v1/runtime/command` | POST | Dispatch a runtime command |
+| `/api/v1/runtime/task/:id` | GET | Poll task status |
+| `/api/v1/system/health` | GET | Detailed system health |
+| `/api/v1/system/metrics` | GET | Pipeline metrics |
+
+**Smart chat fallback** — when `GROQ_API_KEY` is not set, `buildSmartFallbackReply()` in `api/gateway.js` reads live lead data and answers:
+- "find/scrape [keyword] in [city]" → markdown table of matching leads
+- "how many leads / stats" → tier breakdown + top sources + top cities
+- "best markets" → lead volume by state + top HOT leads
+- "what can you do / help" → full capabilities list with live count
+
+---
+
+## Data Flow
+
+```
+Universal Shadow Scraper (scripts/universal_shadow_scraper.py)
+         │  16 sources: YP, Yelp, BBB, Manta, SuperPages, DDG,
+         │  Google Maps HTML, Bing Maps, Local.com, ChamberOfCommerce,
+         │  Hotfrog, Playwright headless — NO API KEYS
+         ▼
+leads/scored_leads.json  (1,159+ real leads, primary)
+         │
+         ├──▶ pages/data/scored_leads.json   (GitHub Pages static)
+         ├──▶ dashboard/public/data/scored_leads.json  (synced at build time)
+         ├──▶ Railway PostgreSQL              (db/db.js — backend only)
+         └──▶ Supabase                        (nxfbfbipjsfzoefpgrof.supabase.co)
+                     │
+              Express Gateway (api/gateway.js)
+                     │
+         ┌───────────┴───────────┐
+         ▼                       ▼
+  dashboard/ (Next.js)    frontend/ (Vite+React)
+  GitHub Pages + Vercel   Vercel
+```
+
+---
+
+## Deployment Workflows
+
+| Workflow | Triggers on | Deploys |
+|----------|-------------|---------|
+| `nextjs.yml` | push to `main` (dashboard/, data/, leads/) | `dashboard/` → GitHub Pages |
+| `dashboard_deploy.yml` | push to main/develop/staging (dashboard/, leads/) | `dashboard/` → Vercel |
+| `frontend_deploy.yml` | push to main/develop/staging (frontend/) | `frontend/` → Vercel |
+| `universal_scraper.yml` | cron 03:00 + 15:00 UTC | Scrapes → updates leads/scored_leads.json |
+| `deploy-railway.yml` | push to main | Backend → Railway |
+
+---
+
+## Quick Start Checklist
+
+```bash
+# 1. Start backend
+PORT=3099 node api/gateway.js
+
+# 2. Start dashboard (Next.js, port 3001)
+cd dashboard && npm install && npm run dev
+
+# 3. Start frontend control panel (Vite, port 5173)
+cd ../frontend && npm install && npm run dev
+
+# 4. Open both
+open http://localhost:3001   # Dashboard — 13 pages
+open http://localhost:5173   # Frontend control panel — 4 tabs
+```

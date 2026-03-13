@@ -12,9 +12,9 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
     NEXT_PUBLIC_API_URL:
-      process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000",
+      process.env.NEXT_PUBLIC_API_URL || "https://xps-intelligence.up.railway.app",
     NEXT_PUBLIC_GATEWAY_URL:
-      process.env.NEXT_PUBLIC_GATEWAY_URL || "http://localhost:3000",
+      process.env.NEXT_PUBLIC_GATEWAY_URL || "https://xps-intelligence.up.railway.app",
   },
 };
 

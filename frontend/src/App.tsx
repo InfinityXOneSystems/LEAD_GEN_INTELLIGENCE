@@ -153,7 +153,9 @@ function LeadsPanel() {
       }
     };
     doFetch();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const filtered = search

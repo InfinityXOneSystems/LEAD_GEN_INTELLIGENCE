@@ -12,11 +12,11 @@ import Link from "next/link";
 import RuntimeCommandChat from "../components/RuntimeCommandChat";
 
 function getApiBase() {
-  if (typeof window === "undefined") return "http://localhost:8000";
+  if (typeof window === "undefined") return "http://localhost:3099";
   return (
     process.env.NEXT_PUBLIC_API_URL ||
     (typeof window !== "undefined" && window.__NEXT_PUBLIC_API_URL) ||
-    "http://localhost:8000"
+    "http://localhost:3099"
   );
 }
 
