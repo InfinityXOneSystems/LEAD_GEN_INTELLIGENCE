@@ -142,10 +142,26 @@ async def scrape_google_maps(query: str, max_results: int = 20) -> list:
         finally:
             await browser.close()
 
-    # If real scraping got 0 results (network blocked), generate realistic mock data
+    # If real scraping got 0 results, fall back to the universal shadow scraper
     if not leads:
-        print("  ⚠️  No live results — generating realistic Pompano Beach epoxy leads from data patterns")
-        leads = generate_realistic_leads()
+        print("  ⚠️  No Playwright results — falling back to universal_shadow_scraper.py")
+        import subprocess, sys
+        result = subprocess.run(
+            [sys.executable, "scripts/universal_shadow_scraper.py",
+             "--keywords", "epoxy flooring contractor,garage epoxy installer",
+             "--locations", "Pompano Beach, FL",
+             "--max-per-keyword", "20"],
+            cwd=str(REPO_ROOT)
+        )
+        if result.returncode != 0:
+            print(f"  ❌  universal_shadow_scraper.py failed (exit {result.returncode}) — no leads available")
+            return []
+        # Load whatever the universal scraper wrote
+        scored_path = REPO_ROOT / "leads" / "scored_leads.json"
+        if scored_path.exists():
+            import json as _json
+            all_leads = _json.loads(scored_path.read_text())
+            leads = [l for l in all_leads if l.get("city","").lower() == "pompano beach"][:20]
 
     return leads
 

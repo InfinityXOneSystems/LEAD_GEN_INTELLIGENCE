@@ -105,36 +105,204 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
+// ── Task status badge ──────────────────────────────────────────────────────────
 function TaskCard({ task }: { task: TaskStatusResponse }) {
-  const [expanded, setExpanded] = useState(false);
+  const done = task.status === "completed" || task.status === "failed";
+  const colour =
+    task.status === "completed"
+      ? "#4ade80"
+      : task.status === "failed"
+        ? "#f87171"
+        : "#FFD700";
   return (
-    <div className="mt-2 rounded-lg border border-gray-200 bg-gray-50 p-3 text-xs">
-      <div className="flex items-center justify-between gap-2">
-        <span className="font-mono text-gray-500">
-          {task.task_id.slice(0, 8)}…
-        </span>
-        <StatusBadge status={task.status} />
-        <button
-          onClick={() => setExpanded((v) => !v)}
-          className="ml-auto text-gray-400 hover:text-gray-600"
-        >
-          {expanded ? <X size={12} /> : <span className="text-xs">logs</span>}
-        </button>
-      </div>
-      {task.error && <p className="mt-1 text-red-600">{task.error}</p>}
-      {expanded && task.logs.length > 0 && (
-        <pre className="mt-2 max-h-40 overflow-y-auto rounded bg-gray-900 p-2 text-green-400 text-[10px]">
-          {task.logs.join("\n")}
-        </pre>
+    <div
+      style={{
+        marginTop: 8,
+        padding: "4px 8px",
+        background: "#111",
+        borderRadius: 6,
+        fontSize: 11,
+        display: "flex",
+        alignItems: "center",
+        gap: 6,
+      }}
+    >
+      <span
+        style={{
+          width: 7,
+          height: 7,
+          borderRadius: "50%",
+          background: colour,
+          display: "inline-block",
+          flexShrink: 0,
+        }}
+      />
+      <span style={{ color: "#666" }}>{task.task_id?.slice(0, 12)}…</span>
+      <span style={{ color: colour, fontWeight: 600 }}>{task.status}</span>
+      {done && task.logs?.length > 0 && (
+        <details style={{ marginLeft: 4 }}>
+          <summary style={{ cursor: "pointer", color: "#888", fontSize: 10 }}>
+            logs
+          </summary>
+          <pre style={{ color: "#aaa", marginTop: 4, fontSize: 10 }}>
+            {task.logs.join("\n")}
+          </pre>
+        </details>
       )}
     </div>
   );
 }
 
+// ── Markdown render components (dark theme) ──────────────────────────────────
+const MD_TABLE: CSSProperties = {
+  borderCollapse: "collapse",
+  width: "100%",
+  marginTop: 8,
+  marginBottom: 8,
+  fontSize: 12,
+};
+const MD_TH: CSSProperties = {
+  background: "#111",
+  color: "#FFD700",
+  padding: "4px 8px",
+  textAlign: "left",
+  fontWeight: 600,
+  border: "1px solid #333",
+};
+const MD_TD: CSSProperties = {
+  padding: "4px 8px",
+  border: "1px solid #222",
+  color: "#ccc",
+};
+const MD_CODE: CSSProperties = {
+  background: "#1a1a1a",
+  color: "#4ade80",
+  padding: "2px 6px",
+  borderRadius: 4,
+  fontSize: 12,
+  fontFamily: "monospace",
+};
+const MD_PRE: CSSProperties = {
+  background: "#0d0d0d",
+  border: "1px solid #333",
+  borderRadius: 6,
+  padding: "10px 12px",
+  overflowX: "auto",
+  margin: "8px 0",
+};
+const MD_STRONG: CSSProperties = { color: "#FFD700", fontWeight: 700 };
+const MD_P: CSSProperties = { margin: "4px 0", lineHeight: 1.6 };
+const MD_LI: CSSProperties = { marginBottom: 2 };
+const MD_UL: CSSProperties = { paddingLeft: 18, margin: "4px 0" };
+
+const mdComponents = {
+  table: ({ children }: { children?: React.ReactNode }) => (
+    <table style={MD_TABLE}>{children}</table>
+  ),
+  thead: ({ children }: { children?: React.ReactNode }) => (
+    <thead>{children}</thead>
+  ),
+  tbody: ({ children }: { children?: React.ReactNode }) => (
+    <tbody>{children}</tbody>
+  ),
+  tr: ({ children }: { children?: React.ReactNode }) => <tr>{children}</tr>,
+  th: ({ children }: { children?: React.ReactNode }) => (
+    <th style={MD_TH}>{children}</th>
+  ),
+  td: ({ children }: { children?: React.ReactNode }) => (
+    <td style={MD_TD}>{children}</td>
+  ),
+  code: ({
+    inline,
+    children,
+  }: {
+    inline?: boolean;
+    children?: React.ReactNode;
+  }) =>
+    inline ? (
+      <code style={MD_CODE}>{children}</code>
+    ) : (
+      <pre style={MD_PRE}>
+        <code style={{ ...MD_CODE, background: "none", padding: 0 }}>
+          {children}
+        </code>
+      </pre>
+    ),
+  strong: ({ children }: { children?: React.ReactNode }) => (
+    <strong style={MD_STRONG}>{children}</strong>
+  ),
+  p: ({ children }: { children?: React.ReactNode }) => (
+    <p style={MD_P}>{children}</p>
+  ),
+  li: ({ children }: { children?: React.ReactNode }) => (
+    <li style={MD_LI}>{children}</li>
+  ),
+  ul: ({ children }: { children?: React.ReactNode }) => (
+    <ul style={MD_UL}>{children}</ul>
+  ),
+  ol: ({ children }: { children?: React.ReactNode }) => (
+    <ol style={{ ...MD_UL, listStyleType: "decimal" }}>{children}</ol>
+  ),
+  h1: ({ children }: { children?: React.ReactNode }) => (
+    <h1
+      style={{
+        color: "#FFD700",
+        margin: "8px 0 4px",
+        fontSize: 16,
+        fontWeight: 700,
+      }}
+    >
+      {children}
+    </h1>
+  ),
+  h2: ({ children }: { children?: React.ReactNode }) => (
+    <h2
+      style={{
+        color: "#FFD700",
+        margin: "8px 0 4px",
+        fontSize: 14,
+        fontWeight: 700,
+      }}
+    >
+      {children}
+    </h2>
+  ),
+  h3: ({ children }: { children?: React.ReactNode }) => (
+    <h3
+      style={{
+        color: "#FFD700",
+        margin: "6px 0 3px",
+        fontSize: 13,
+        fontWeight: 600,
+      }}
+    >
+      {children}
+    </h3>
+  ),
+  hr: () => (
+    <hr
+      style={{ border: "none", borderTop: "1px solid #333", margin: "8px 0" }}
+    />
+  ),
+  blockquote: ({ children }: { children?: React.ReactNode }) => (
+    <blockquote
+      style={{
+        borderLeft: "3px solid #FFD700",
+        paddingLeft: 10,
+        color: "#aaa",
+        margin: "6px 0",
+      }}
+    >
+      {children}
+    </blockquote>
+  ),
+};
+
+// ── Main component ────────────────────────────────────────────────────────────
 export default function CommandChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      id: "welcome",
+      id: "sys-init",
       role: "system",
       content:
         'XPS Intelligence AI ready. Ask me about leads, contractors, or type "scrape epoxy contractors in Ohio" to trigger the pipeline.',
@@ -146,17 +314,22 @@ export default function CommandChat() {
   const [sessionId] = useState(() => `session-${Date.now()}`);
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const buildHistory = (): LLMChatMessage[] =>
+    messages
+      .filter((m) => m.role !== "system")
+      .slice(-20)
+      .map((m) => ({
+        role: m.role as "user" | "assistant",
+        content: m.content,
+      }));
+
   const addMessage = (msg: Omit<ChatMessage, "id" | "timestamp">) => {
-    const full: ChatMessage = {
-      ...msg,
-      id: `${Date.now()}-${Math.random()}`,
-      timestamp: new Date(),
-    };
+    const full: ChatMessage = { ...msg, id: genId(), timestamp: new Date() };
     setMessages((prev) => [...prev, full]);
-    setTimeout(
-      () => bottomRef.current?.scrollIntoView({ behavior: "smooth" }),
-      50,
-    );
     return full.id;
   };
 
@@ -166,15 +339,15 @@ export default function CommandChat() {
     );
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || loading) return;
-
     const userText = input.trim();
+    if (!userText || loading) return;
     setInput("");
     setLoading(true);
 
     addMessage({ role: "user", content: userText });
+    const assistantId = addMessage({ role: "assistant", content: "…" });
 
     try {
       if (isRuntimeCommand(userText)) {
@@ -244,7 +417,16 @@ export default function CommandChat() {
   };
 
   return (
-    <div className="flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        background: "#050505",
+        border: "1px solid #222",
+        borderRadius: 12,
+      }}
+    >
       {/* Header */}
       <div className="flex items-center gap-2 border-b border-gray-100 px-4 py-3">
         <Bot className="h-4 w-4 text-blue-500" />
@@ -257,52 +439,137 @@ export default function CommandChat() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto space-y-3 p-4">
+      <div
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          padding: "16px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
+        }}
+      >
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+            style={{
+              display: "flex",
+              justifyContent: msg.role === "user" ? "flex-end" : "flex-start",
+            }}
           >
             <div
-              className={`max-w-[80%] rounded-xl px-3 py-2 text-sm ${
-                msg.role === "user"
-                  ? "bg-blue-500 text-white"
+              style={{
+                maxWidth: "90%",
+                padding: "10px 14px",
+                borderRadius: 10,
+                fontSize: 13,
+                lineHeight: 1.5,
+                ...(msg.role === "user"
+                  ? {
+                      background: "#1a1a00",
+                      border: "1px solid #FFD700",
+                      color: "#FFD700",
+                    }
                   : msg.role === "system"
-                    ? "bg-gray-100 text-gray-500 italic text-xs"
-                    : "bg-gray-50 border border-gray-200 text-gray-800"
-              }`}
+                    ? {
+                        background: "#0a0a0a",
+                        border: "1px solid #1a1a1a",
+                        color: "#666",
+                        fontStyle: "italic",
+                        fontSize: 12,
+                      }
+                    : {
+                        background: "#0d0d0d",
+                        border: "1px solid #222",
+                        color: "#ccc",
+                      }),
+              }}
             >
-              {msg.content}
+              {msg.role === "assistant" ? (
+                <div style={{ color: "#ccc" }}>
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={
+                      mdComponents as Record<
+                        string,
+                        React.ComponentType<React.HTMLAttributes<HTMLElement>>
+                      >
+                    }
+                  >
+                    {msg.content}
+                  </ReactMarkdown>
+                </div>
+              ) : (
+                <span style={{ whiteSpace: "pre-wrap" }}>{msg.content}</span>
+              )}
               {msg.taskStatus && <TaskCard task={msg.taskStatus} />}
             </div>
           </div>
         ))}
+        {loading && (
+          <div style={{ display: "flex", justifyContent: "flex-start" }}>
+            <div
+              style={{
+                padding: "10px 14px",
+                borderRadius: 10,
+                background: "#0d0d0d",
+                border: "1px solid #222",
+                color: "#555",
+                fontSize: 13,
+              }}
+            >
+              <span style={{ animation: "pulse 1s infinite" }}>
+                ⚡ Thinking…
+              </span>
+            </div>
+          </div>
+        )}
         <div ref={bottomRef} />
       </div>
 
       {/* Input */}
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-2 border-t border-gray-100 px-4 py-3"
+        style={{
+          display: "flex",
+          gap: 8,
+          padding: "12px 16px",
+          borderTop: "1px solid #1a1a1a",
+        }}
       >
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="scrape epoxy contractors in Texas…"
-          className="flex-1 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-800 placeholder-gray-400 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
+          placeholder="Ask me anything — scrape leads, analyze data, run audits…"
           disabled={loading}
+          style={{
+            flex: 1,
+            background: "#111",
+            border: "1px solid #333",
+            borderRadius: 8,
+            color: "#fff",
+            fontSize: "0.875rem",
+            outline: "none",
+            padding: "0.5rem 0.75rem",
+          }}
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="flex items-center gap-1.5 rounded-lg bg-blue-500 px-3 py-2 text-sm font-medium text-white hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          style={{
+            background: loading || !input.trim() ? "#333" : "#FFD700",
+            border: "none",
+            borderRadius: 8,
+            color: loading || !input.trim() ? "#666" : "#000",
+            cursor: loading || !input.trim() ? "not-allowed" : "pointer",
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            padding: "0.5rem 1rem",
+            transition: "all 0.15s",
+          }}
         >
-          {loading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Send className="h-4 w-4" />
-          )}
+          {loading ? "⌛" : "➤ Send"}
         </button>
       </form>
     </div>

@@ -6,8 +6,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 function getApiBase() {
-  if (typeof window === "undefined") return "http://localhost:8000";
-  return process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  if (typeof window === "undefined") return "http://localhost:3099";
+  return process.env.NEXT_PUBLIC_API_URL || "http://localhost:3099";
 }
 
 function getStaticBase() {

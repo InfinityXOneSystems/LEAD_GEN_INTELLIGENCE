@@ -80,7 +80,7 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@v1
         with:
-          app-id: ${{ secrets.GH_APP_ID }}
+          app-id: "2494652"  # Infinity Orchestrator App (hardcoded; only private key secret needed)
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
           repositories: >-
             XPS_INTELLIGENCE_SYSTEM,
@@ -363,7 +363,7 @@ jobs:
           if [ -n "${{ needs.validate.outputs.app_token }}" ]; then
             echo "🔐 **Auth**: Infinity Orchestrator GitHub App token" >> $GITHUB_STEP_SUMMARY
           else
-            echo "⚠️ **Auth**: GITHUB_TOKEN fallback (set GH_APP_ID + GH_APP_PRIVATE_KEY for full access)" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ **Auth**: GITHUB_TOKEN fallback (add GH_APP_PRIVATE_KEY secret for Infinity Orchestrator full access)" >> $GITHUB_STEP_SUMMARY
           fi
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "_Dispatcher v${{ env.DISPATCHER_VERSION }} — $(date -u +%Y-%m-%dT%H:%M:%SZ)_" >> $GITHUB_STEP_SUMMARY

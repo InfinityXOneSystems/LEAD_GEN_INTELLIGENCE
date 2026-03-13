@@ -257,3 +257,209 @@ ON CONFLICT (version) DO NOTHING;
 INSERT INTO schema_version (version, description)
 VALUES (2, 'Extended schema: users, settings, agent_tasks, agent_runs, scrape_tasks, scrape_results, audit_logs, vector_embeddings')
 ON CONFLICT (version) DO NOTHING;
+
+-- ── Epoxy & Floor Contractor Database ────────────────────────────────────
+CREATE TABLE IF NOT EXISTS epoxy_floor_contractors (
+  id                  SERIAL PRIMARY KEY,
+  company_name        TEXT        NOT NULL,
+  owner_name          TEXT,
+  dba_name            TEXT,
+  phone               TEXT,
+  phone_2             TEXT,
+  email               TEXT,
+  email_2             TEXT,
+  website             TEXT,
+  linkedin_url        TEXT,
+  facebook_url        TEXT,
+  instagram_url       TEXT,
+  address             TEXT,
+  city                TEXT        NOT NULL DEFAULT '',
+  state               TEXT        NOT NULL DEFAULT '',
+  zip                 TEXT,
+  county              TEXT,
+  country             TEXT        NOT NULL DEFAULT 'US',
+  lat                 NUMERIC(10,7),
+  lng                 NUMERIC(10,7),
+  industry            TEXT        DEFAULT 'flooring',
+  sub_industry        TEXT,
+  keywords            TEXT[],
+  services            TEXT[],
+  rating              NUMERIC(3,1),
+  review_count        INTEGER     DEFAULT 0,
+  years_in_business   TEXT,
+  license_number      TEXT,
+  insured             BOOLEAN     DEFAULT FALSE,
+  bonded              BOOLEAN     DEFAULT FALSE,
+  lead_score          INTEGER     DEFAULT 0,
+  tier                TEXT,
+  status              TEXT        DEFAULT 'new',
+  source              TEXT,
+  source_url          TEXT,
+  metadata            JSONB,
+  date_scraped        TIMESTAMPTZ DEFAULT NOW(),
+  last_contacted      TIMESTAMPTZ,
+  last_enriched       TIMESTAMPTZ,
+  created_at          TIMESTAMPTZ DEFAULT NOW(),
+  updated_at          TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE (company_name, city, state)
+);
+
+CREATE INDEX IF NOT EXISTS idx_efc_lead_score   ON epoxy_floor_contractors (lead_score DESC);
+CREATE INDEX IF NOT EXISTS idx_efc_state        ON epoxy_floor_contractors (state);
+CREATE INDEX IF NOT EXISTS idx_efc_city         ON epoxy_floor_contractors (city);
+CREATE INDEX IF NOT EXISTS idx_efc_tier         ON epoxy_floor_contractors (tier);
+CREATE INDEX IF NOT EXISTS idx_efc_status       ON epoxy_floor_contractors (status);
+CREATE INDEX IF NOT EXISTS idx_efc_date_scraped ON epoxy_floor_contractors (date_scraped DESC);
+
+CREATE TABLE IF NOT EXISTS contractor_services (
+  id              SERIAL PRIMARY KEY,
+  contractor_id   INTEGER     NOT NULL REFERENCES epoxy_floor_contractors(id) ON DELETE CASCADE,
+  service_name    TEXT        NOT NULL,
+  service_slug    TEXT,
+  notes           TEXT,
+  created_at      TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE (contractor_id, service_name)
+);
+
+CREATE TABLE IF NOT EXISTS contractor_reviews (
+  id              SERIAL PRIMARY KEY,
+  contractor_id   INTEGER     NOT NULL REFERENCES epoxy_floor_contractors(id) ON DELETE CASCADE,
+  platform        TEXT,
+  rating          NUMERIC(2,1),
+  reviewer_name   TEXT,
+  review_text     TEXT,
+  review_url      TEXT,
+  reviewed_at     TIMESTAMPTZ,
+  scraped_at      TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_cr_contractor ON contractor_reviews (contractor_id);
+
+CREATE TABLE IF NOT EXISTS outreach_campaigns (
+  id                  SERIAL PRIMARY KEY,
+  campaign_name       TEXT        NOT NULL,
+  campaign_type       TEXT        DEFAULT 'email',
+  target_industry     TEXT        DEFAULT 'flooring',
+  target_region       TEXT,
+  target_tier         TEXT,
+  subject             TEXT,
+  body_template       TEXT,
+  status              TEXT        DEFAULT 'draft',
+  sent_count          INTEGER     DEFAULT 0,
+  open_count          INTEGER     DEFAULT 0,
+  reply_count         INTEGER     DEFAULT 0,
+  conversion_count    INTEGER     DEFAULT 0,
+  scheduled_at        TIMESTAMPTZ,
+  started_at          TIMESTAMPTZ,
+  completed_at        TIMESTAMPTZ,
+  created_at          TIMESTAMPTZ DEFAULT NOW(),
+  updated_at          TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- ── Vision Cortex Intelligence Database ──────────────────────────────────
+CREATE TABLE IF NOT EXISTS vision_cortex_sources (
+  id                          SERIAL PRIMARY KEY,
+  source_id                   TEXT        NOT NULL UNIQUE,
+  name                        TEXT        NOT NULL,
+  url                         TEXT        NOT NULL,
+  category                    TEXT        NOT NULL,
+  feed_type                   TEXT        DEFAULT 'rss',
+  active                      BOOLEAN     DEFAULT TRUE,
+  scrape_interval_minutes     INTEGER     DEFAULT 60,
+  last_scraped_at             TIMESTAMPTZ,
+  items_scraped               INTEGER     DEFAULT 0,
+  errors_consecutive          INTEGER     DEFAULT 0,
+  created_at                  TIMESTAMPTZ DEFAULT NOW(),
+  updated_at                  TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS vision_cortex_items (
+  id                      SERIAL PRIMARY KEY,
+  source_id               INTEGER     REFERENCES vision_cortex_sources(id) ON DELETE SET NULL,
+  source_slug             TEXT,
+  source_name             TEXT,
+  category                TEXT,
+  title                   TEXT        NOT NULL,
+  url                     TEXT,
+  summary                 TEXT,
+  full_text               TEXT,
+  author                  TEXT,
+  tags                    TEXT[],
+  relevance_score         INTEGER     DEFAULT 0,
+  sentiment_score         INTEGER     DEFAULT 0,
+  keywords_extracted      TEXT[],
+  primary_category        TEXT,
+  secondary_categories    TEXT[],
+  is_opportunity          BOOLEAN     DEFAULT FALSE,
+  is_risk                 BOOLEAN     DEFAULT FALSE,
+  is_trending             BOOLEAN     DEFAULT FALSE,
+  content_hash            TEXT,
+  is_duplicate            BOOLEAN     DEFAULT FALSE,
+  published_at            TIMESTAMPTZ,
+  scraped_at              TIMESTAMPTZ DEFAULT NOW(),
+  processed_at            TIMESTAMPTZ,
+  created_at              TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE (content_hash)
+);
+
+CREATE INDEX IF NOT EXISTS idx_vci_relevance    ON vision_cortex_items (relevance_score DESC);
+CREATE INDEX IF NOT EXISTS idx_vci_category     ON vision_cortex_items (category);
+CREATE INDEX IF NOT EXISTS idx_vci_scraped      ON vision_cortex_items (scraped_at DESC);
+CREATE INDEX IF NOT EXISTS idx_vci_opportunity  ON vision_cortex_items (is_opportunity) WHERE is_opportunity = TRUE;
+CREATE INDEX IF NOT EXISTS idx_vci_trending     ON vision_cortex_items (is_trending) WHERE is_trending = TRUE;
+
+CREATE TABLE IF NOT EXISTS vision_cortex_briefings (
+  id              SERIAL PRIMARY KEY,
+  briefing_date   DATE        NOT NULL UNIQUE,
+  title           TEXT,
+  summary         TEXT,
+  markdown_content TEXT,
+  stats           JSONB,
+  top_keywords    TEXT[],
+  top_opportunities INTEGER[],
+  generated_at    TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS vision_cortex_trends (
+  id              SERIAL PRIMARY KEY,
+  trend_date      DATE        NOT NULL,
+  keyword         TEXT        NOT NULL,
+  category        TEXT,
+  mention_count   INTEGER     DEFAULT 1,
+  avg_relevance   NUMERIC(5,2) DEFAULT 0,
+  velocity        INTEGER     DEFAULT 0,
+  created_at      TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE (trend_date, keyword)
+);
+
+CREATE INDEX IF NOT EXISTS idx_vct_date     ON vision_cortex_trends (trend_date DESC);
+CREATE INDEX IF NOT EXISTS idx_vct_keyword  ON vision_cortex_trends (keyword);
+CREATE INDEX IF NOT EXISTS idx_vct_mentions ON vision_cortex_trends (mention_count DESC);
+
+CREATE TABLE IF NOT EXISTS invention_proposals (
+  id                  SERIAL PRIMARY KEY,
+  title               TEXT        NOT NULL,
+  description         TEXT,
+  problem_statement   TEXT,
+  proposed_solution   TEXT,
+  target_market       TEXT,
+  industry            TEXT,
+  tags                TEXT[],
+  source_item_ids     INTEGER[],
+  status              TEXT        DEFAULT 'proposed',
+  opportunity_score   NUMERIC(5,2) DEFAULT 0,
+  ai_analysis         TEXT,
+  metadata            JSONB,
+  generated_at        TIMESTAMPTZ DEFAULT NOW(),
+  evaluated_at        TIMESTAMPTZ,
+  created_at          TIMESTAMPTZ DEFAULT NOW(),
+  updated_at          TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_ip_score     ON invention_proposals (opportunity_score DESC);
+CREATE INDEX IF NOT EXISTS idx_ip_status    ON invention_proposals (status);
+
+-- ── Seed schema versions ──────────────────────────────────────────────────
+INSERT INTO schema_version (version, description)
+VALUES (3, 'Epoxy & floor contractor database + Vision Cortex intelligence tables')
+ON CONFLICT (version) DO NOTHING;

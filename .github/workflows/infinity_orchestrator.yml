@@ -60,7 +60,7 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@v1
         with:
-          app-id: ${{ secrets.GH_APP_ID }}
+          app-id: "2494652"  # Infinity Orchestrator App (hardcoded; only private key secret needed)
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
           repositories: >-
             XPS_INTELLIGENCE_SYSTEM,
@@ -113,7 +113,7 @@ jobs:
         env:
           STAGE: ${{ steps.stage.outputs.stage }}
           # Expose App credentials for sub-scripts (e.g. publish_leads_to_repos.py)
-          GH_APP_ID: ${{ secrets.GH_APP_ID }}
+          GH_APP_ID: "2494652"  # Infinity Orchestrator App ID
           GH_APP_PRIVATE_KEY: ${{ secrets.GH_APP_PRIVATE_KEY }}
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}
         run: |
