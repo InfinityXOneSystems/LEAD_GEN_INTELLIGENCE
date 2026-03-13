@@ -8,7 +8,7 @@ name: 🚂 Deploy & Validate Railway Backend
 #   RAILWAY_SERVICE  — Railway service ID or name (default: XPS_INTELLIGENCE_SYSTEM)
 #
 # Optional variables:
-#   RAILWAY_BACKEND_URL — Production Railway URL (defaults to xpsintelligencesystem-production.up.railway.app)
+#   RAILWAY_BACKEND_URL — Production Railway URL (defaults to https://xps-intelligence.up.railway.app)
 
 on:
   push:
@@ -36,7 +36,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  RAILWAY_BACKEND_URL: ${{ vars.RAILWAY_BACKEND_URL || 'https://xpsintelligencesystem-production.up.railway.app' }}
+  RAILWAY_BACKEND_URL: ${{ vars.RAILWAY_BACKEND_URL || 'https://xps-intelligence.up.railway.app' }}
 
 jobs:
   # ── Job 1: Run Node.js gateway tests ─────────────────────────────────────
