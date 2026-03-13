@@ -50,15 +50,15 @@ function StatusBar({ backendUrl }: { backendUrl: string }) {
 
   const label =
     status === "healthy"
-      ? "Backend: HEALTHY"
+      ? "● CONNECTED"
       : status === "degraded"
-        ? "Backend: DEGRADED"
-        : "Backend: Checking…";
+        ? "● DEGRADED"
+        : "● Connecting…";
 
   return (
     <div style={styles.statusBar}>
       <span style={{ ...styles.dot, background: dotColour }} />
-      <span style={styles.statusLabel}>{label}</span>
+      <span style={{ ...styles.statusLabel, color: dotColour }}>{label}</span>
       {details?.uptime !== undefined && (
         <span style={styles.statusMeta}>
           Uptime: {Math.round(details.uptime)}s

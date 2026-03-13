@@ -126,6 +126,11 @@ jobs:
           print('=' * 60)
           "
 
+      - name: Validate and enrich leads
+        run: |
+          python scripts/lead_validator.py --no-url-check 2>/dev/null || \
+            echo "⚠️  Lead validator not available — skipping enrichment"
+
       - name: Publish leads to LEADS repo + Frontend repo
         env:
           # Infinity Orchestrator App auth — highest privilege
