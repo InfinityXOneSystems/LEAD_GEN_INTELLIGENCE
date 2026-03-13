@@ -17,13 +17,14 @@ COPY . .
 
 # Set NODE_ENV so Express and dependencies use production mode
 ENV NODE_ENV=production
-# Default port 3000 (matches NEXT_PUBLIC_API_URL default and frontend expectation)
+# Default port — Railway overrides PORT at runtime via its own environment
+# variable injection.  The app reads process.env.PORT so this default is only
+# used for local Docker runs (e.g. docker run -p 3000:3000).
 ENV PORT=3000
-ENV NODE_ENV=production
 
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-  CMD curl -f http://localhost:3000/api/health || exit 1
+  CMD sh -c "curl -f http://localhost:${PORT}/api/health || exit 1"
 
 CMD ["node", "server.js"]
