@@ -42,6 +42,7 @@ permissions:
   contents: write
   pull-requests: write
   issues: write
+  actions: write
 
 concurrency:
   group: conflict-resolver-${{ github.ref }}
@@ -439,3 +440,130 @@ jobs:
             echo "| Resolver ran | ${{ needs.resolve.result }} |"
             echo "| Repository clean | $([ -z '$REMAINING' ] && echo '✅ Yes' || echo '⚠️ Partial') |"
           } >> $GITHUB_STEP_SUMMARY
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # Job 4: Auto-merge PR once repository is conflict-free
+  # Only fires on pull_request events (has PR context) after a clean resolution.
+  # ────────────────────────────────────────────────────────────────────────────
+  auto_merge:
+    name: 🔀 Auto-Merge (post conflict resolution)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [detect, resolve, verify]
+    if: |
+      github.event_name == 'pull_request' &&
+      needs.resolve.result == 'success'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate Infinity Orchestrator App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: "2494652"
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+        continue-on-error: true
+
+      - name: Resolve auth token
+        id: token
+        run: |
+          if [ -n "${{ steps.app-token.outputs.token }}" ]; then
+            echo "token=${{ steps.app-token.outputs.token }}" >> $GITHUB_OUTPUT
+            echo "✅ Using Infinity Orchestrator GitHub App token"
+          else
+            echo "token=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+            echo "⚠️  Falling back to GITHUB_TOKEN"
+          fi
+
+      - name: Confirm branch is conflict-free before merging
+        id: pre_merge_check
+        run: |
+          REMAINING=$(grep -rl "^<<<<<<< " . \
+            --include="*.py" --include="*.js" --include="*.ts" \
+            --include="*.tsx" --include="*.json" --include="*.yml" \
+            --include="*.yaml" --include="*.md" --include="*.txt" \
+            --include="*.sh" --include="*.gitignore" \
+            2>/dev/null | grep -v "\.git/" | grep -v "node_modules/" || true)
+
+          if [ -n "$REMAINING" ]; then
+            echo "clean=false" >> $GITHUB_OUTPUT
+            echo "⚠️  Conflicts still present — skipping auto-merge."
+            echo "$REMAINING"
+          else
+            echo "clean=true" >> $GITHUB_OUTPUT
+            echo "✅ Branch is conflict-free — proceeding with auto-merge."
+          fi
+
+      - name: Auto-merge PR via GitHub CLI
+        if: steps.pre_merge_check.outputs.clean == 'true'
+        id: merge
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+        run: |
+          PR="${{ github.event.pull_request.number }}"
+          REPO="${{ github.repository }}"
+
+          STATE=$(gh pr view "$PR" --repo "$REPO" \
+            --json state,isDraft,mergeable \
+            --jq '{state:.state,isDraft:.isDraft,mergeable:.mergeable}')
+
+          IS_OPEN=$(echo "$STATE"   | python3 -c "import sys,json; print(json.load(sys.stdin).get('state',''))")
+          IS_DRAFT=$(echo "$STATE"  | python3 -c "import sys,json; print(json.load(sys.stdin).get('isDraft',''))")
+          MERGEABLE=$(echo "$STATE" | python3 -c "import sys,json; print(json.load(sys.stdin).get('mergeable',''))")
+
+          if [ "$IS_OPEN" != "OPEN" ]; then
+            echo "ℹ️  PR #$PR is not open (state: $IS_OPEN) — nothing to merge."
+            exit 0
+          fi
+
+          if [ "$IS_DRAFT" = "True" ]; then
+            echo "Converting draft PR to ready for review..."
+            gh pr ready "$PR" --repo "$REPO" || true
+          fi
+
+          echo "Merging PR #$PR (squash)..."
+          printf "Auto-merged by Autonomous Conflict Resolver after successful conflict resolution.\n" \
+            > /tmp/merge_body.txt
+
+          gh pr merge "$PR" \
+            --repo "$REPO" \
+            --squash \
+            --subject "Merge PR #${PR}: conflicts auto-resolved and merged" \
+            --body-file /tmp/merge_body.txt \
+            --delete-branch 2>&1 || {
+              echo "⚠️  gh pr merge returned non-zero (branch delete may have failed) — checking actual merge status..."
+              FINAL_STATE=$(gh pr view "$PR" --repo "$REPO" --json state --jq '.state' 2>/dev/null || echo "UNKNOWN")
+              if [ "$FINAL_STATE" = "MERGED" ]; then
+                echo "✅ PR #$PR is confirmed merged."
+              else
+                echo "❌ PR #$PR merge failed (state: $FINAL_STATE)."
+                exit 1
+              fi
+            }
+
+          echo "✅ PR #$PR merged successfully after autonomous conflict resolution."
+          echo "merged=true" >> $GITHUB_OUTPUT
+
+      - name: Write auto-merge summary
+        if: always()
+        run: |
+          PR="${{ github.event.pull_request.number }}"
+          TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          {
+            echo "## 🔀 Auto-Merge After Conflict Resolution"
+            echo ""
+            echo "**Timestamp:** ${TS}"
+            echo "**PR:** #${PR}"
+            echo "**Repo:** ${{ github.repository }}"
+            echo ""
+            echo "| Step | Status |"
+            echo "|------|--------|"
+            echo "| Conflicts resolved | ${{ needs.resolve.result }} |"
+            echo "| Pre-merge clean check | ${{ steps.pre_merge_check.outputs.clean }} |"
+            echo "| Merge | ${{ steps.merge.outcome }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
