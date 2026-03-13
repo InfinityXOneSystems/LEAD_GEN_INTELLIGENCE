@@ -8,6 +8,11 @@ const path = require("path");
 const express = require("express");
 const cors = require("cors");
 
+const {
+  tierFromScore,
+  loadLeadsFromFile,
+} = require("./lib/lead_utils");
+
 const app = express();
 
 // Allow all origins — required for Vercel/GitHub Pages frontend access
@@ -18,13 +23,6 @@ app.use(express.json());
 
 const ROOT = path.join(__dirname);
 const LEADS_DIR = path.join(ROOT, "leads");
-
-/** Determine tier label from numeric score. */
-function tierFromScore(score) {
-  if (score >= 75) return "hot";
-  if (score >= 50) return "warm";
-  return "cold";
-}
 
 /**
  * Normalise a raw scraper/PostgreSQL lead into the API response shape.
@@ -73,25 +71,7 @@ function normalizeLeadForApi(lead, index) {
   };
 }
 
-/** Read and parse a JSON file; return [] on any error. */
-function readJsonSafe(filePath) {
-  try {
-    const raw = fs.readFileSync(filePath, "utf8");
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : parsed.leads || parsed.data || [];
-  } catch (_) {
-    return [];
-  }
-}
-
 /** Load leads from local JSON files produced by the shadow scraper pipeline. */
-function loadLeadsFromFile() {
-  const scored = path.join(LEADS_DIR, "scored_leads.json");
-  const raw = path.join(LEADS_DIR, "leads.json");
-  if (fs.existsSync(scored)) return readJsonSafe(scored);
-  if (fs.existsSync(raw)) return readJsonSafe(raw);
-  return [];
-}
 
 // Lazy Railway Postgres lead store (uses DATABASE_URL or DATABASE_HOST env vars)
 let _pgStore = null;
@@ -123,10 +103,10 @@ async function fetchLeads({ limit = 500, industry, minScore, tier } = {}) {
         "[server] PostgreSQL unavailable, falling back to file:",
         err.message,
       );
-      leads = loadLeadsFromFile();
+      leads = loadLeadsFromFile(LEADS_DIR);
     }
   } else {
-    leads = loadLeadsFromFile();
+    leads = loadLeadsFromFile(LEADS_DIR);
   }
 
   // Normalize to API shape
@@ -245,13 +225,13 @@ app.post("/api/chat/send", async (req, res) => {
     if (store) {
       const rows = await store.getAllLeads(1);
       // getAllLeads returns rows; rough count from file as proxy
-      leadCount = loadLeadsFromFile().length || rows.length;
+      leadCount = loadLeadsFromFile(LEADS_DIR).length || rows.length;
     } else {
-      leadCount = loadLeadsFromFile().length;
+      leadCount = loadLeadsFromFile(LEADS_DIR).length;
     }
   } catch (_) {
     try {
-      leadCount = loadLeadsFromFile().length;
+      leadCount = loadLeadsFromFile(LEADS_DIR).length;
     } catch (__) {
       /* ignore */
     }
@@ -368,11 +348,36 @@ app.get("/api/agents", (_req, res) => {
   return res.json(agents);
 });
 
-// ── 404 catch-all ────────────────────────────────────────────────────────────
+// ── Serve Vite React frontend (production static build) ─────────────────────
+// When the Dockerfile.gateway builds the frontend into frontend/dist/, Express
+// serves the compiled SPA at every non-API route so that the Railway service
+// handles both the JSON API and the UI from a single container.
 
-app.use((req, res) => {
-  res.status(404).json({ error: `Route ${req.method} ${req.path} not found` });
-});
+const FRONTEND_DIST = path.join(__dirname, "frontend", "dist");
+
+if (fs.existsSync(FRONTEND_DIST)) {
+  // Serve static assets (JS, CSS, images, …)
+  app.use(express.static(FRONTEND_DIST));
+
+  // SPA catch-all: read index.html once at start-up and serve from memory
+  // so that each request does not perform a file-system access.
+  // API routes registered above take priority over this catch-all.
+  const INDEX_HTML = fs.readFileSync(
+    path.join(FRONTEND_DIST, "index.html"),
+    "utf8",
+  );
+  app.get("*", (_req, res) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(INDEX_HTML);
+  });
+} else {
+  // No compiled frontend present (local dev / CI) — return JSON 404.
+  app.use((req, res) => {
+    res
+      .status(404)
+      .json({ error: `Route ${req.method} ${req.path} not found` });
+  });
+}
 
 // ── Start server ─────────────────────────────────────────────────────────────
 

@@ -48,7 +48,7 @@ concurrency:
 env:
   VERCEL_ORG_ID:  ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  RAILWAY_BACKEND: https://xpsintelligencesystem-production.up.railway.app
+  RAILWAY_BACKEND: https://xps-intelligence.up.railway.app
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Job 1: Build & Lint
