@@ -379,6 +379,14 @@ if (fs.existsSync(FRONTEND_DIST)) {
   // Serve static assets (JS, CSS, images, …)
   app.use(express.static(FRONTEND_DIST));
 
+  // JSON 404 for unknown /api/* routes to keep API contract consistent
+  // with the non-frontend branch (always return JSON for API endpoints).
+  app.use("/api", (req, res) => {
+    res
+      .status(404)
+      .json({ error: `Route ${req.method} ${req.path} not found` });
+  });
+
   // SPA catch-all: read index.html once at start-up and serve from memory
   // so that each request does not perform a file-system access.
   // API routes registered above take priority over this catch-all.
