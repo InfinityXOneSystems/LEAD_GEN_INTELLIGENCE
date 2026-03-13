@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { Bot, Loader2, Send, X } from "lucide-react";
-import toast from "react-hot-toast";
+import { useState, useRef, useEffect, CSSProperties } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   sendCommand,
   sendChatMessage,
-  getTaskStatus,
   pollTaskUntilDone,
   type TaskStatusResponse,
   type RuntimeCommandRequest,
@@ -22,92 +21,95 @@ interface ChatMessage {
   timestamp: Date;
 }
 
+// Easily extensible list of contractor/trade keywords used in scrape command detection
+const SCRAPE_KEYWORDS = [
+  "epoxy", "flooring", "tile", "carpet", "hardwood", "vinyl", "concrete",
+  "roofing", "hvac", "plumbing", "electrical", "solar", "painting",
+  "siding", "pool", "landscaping", "fence", "deck", "drywall", "insulation",
+  "waterproofing", "garage", "foundation", "windows", "doors",
+];
+
 // Commands that should also dispatch a backend runtime task
 const COMMAND_PATTERNS: Array<{
   test: (s: string) => boolean;
   build: (s: string) => RuntimeCommandRequest;
 }> = [
   {
-    test: (s) => /scrape|find|search|lead/i.test(s),
-    build: (s) => ({ command: "run_scraper", target: s, parameters: { query: s } }),
-  },
-  {
-    test: (s) => /seo|audit/i.test(s),
+    test: (s) => /\b(scrape|find|discover|search|get)\b.*(leads?|contractors?|businesses?)/i.test(s),
     build: (s) => {
-      const url = s.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i)?.[0] ?? s;
-      return { command: "run_seo_audit", target: url, parameters: {} };
+      const kw = s.match(new RegExp(`\\b(${SCRAPE_KEYWORDS.join("|")})\\b`, "i"))?.[0] ?? "contractor";
+      const city = s.match(/\b(in|near|around)\s+([A-Za-z\s]+(?:,\s*[A-Z]{2})?)/i)?.[2]?.trim() ?? "";
+      return { command: "scrape_leads", command_type: "scrape", params: { keyword: `${kw} contractor`, location: city }, priority: 5, timeout_seconds: 60 };
     },
   },
   {
-    test: (s) => /social|linkedin|facebook/i.test(s),
-    build: (s) => {
-      const url = s.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i)?.[0] ?? s;
-      return { command: "run_social_scan", target: url, parameters: {} };
-    },
-  },
-  {
-    test: (s) => /browse|navigate|visit/i.test(s),
-    build: (s) => {
-      const url = s.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i)?.[0] ?? s;
-      return { command: "run_browser", target: url, parameters: { action: "navigate" } };
-    },
+    test: (s) => /\baudit\b/i.test(s),
+    build: () => ({ command: "run_audit", command_type: "audit", params: {}, priority: 3, timeout_seconds: 120 }),
   },
 ];
 
-function detectCommand(input: string): RuntimeCommandRequest | null {
-  const match = COMMAND_PATTERNS.find((p) => p.test(input));
-  return match ? match.build(input) : null;
-}
+function genId() { return Math.random().toString(36).slice(2, 10); }
 
-function StatusBadge({ status }: { status: string }) {
-  const colours: Record<string, string> = {
-    queued: "bg-gray-100 text-gray-600",
-    running: "bg-blue-100 text-blue-700 animate-pulse",
-    completed: "bg-green-100 text-green-700",
-    failed: "bg-red-100 text-red-700",
-  };
-  return (
-    <span
-      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${colours[status] ?? "bg-gray-100 text-gray-600"}`}
-    >
-      {status}
-    </span>
-  );
-}
-
+// ── Task status badge ──────────────────────────────────────────────────────────
 function TaskCard({ task }: { task: TaskStatusResponse }) {
-  const [expanded, setExpanded] = useState(false);
+  const done = task.status === "completed" || task.status === "failed";
+  const colour = task.status === "completed" ? "#4ade80" : task.status === "failed" ? "#f87171" : "#FFD700";
   return (
-    <div className="mt-2 rounded-lg border border-gray-200 bg-gray-50 p-3 text-xs">
-      <div className="flex items-center justify-between gap-2">
-        <span className="font-mono text-gray-500">
-          {task.task_id.slice(0, 8)}…
-        </span>
-        <StatusBadge status={task.status} />
-        <button
-          onClick={() => setExpanded((v) => !v)}
-          className="ml-auto text-gray-400 hover:text-gray-600"
-        >
-          {expanded ? <X size={12} /> : <span className="text-xs">logs</span>}
-        </button>
-      </div>
-      {task.error && <p className="mt-1 text-red-600">{task.error}</p>}
-      {expanded && task.logs.length > 0 && (
-        <pre className="mt-2 max-h-40 overflow-y-auto rounded bg-gray-900 p-2 text-green-400 text-[10px]">
-          {task.logs.join("\n")}
-        </pre>
+    <div style={{ marginTop: 8, padding: "4px 8px", background: "#111", borderRadius: 6, fontSize: 11, display: "flex", alignItems: "center", gap: 6 }}>
+      <span style={{ width: 7, height: 7, borderRadius: "50%", background: colour, display: "inline-block", flexShrink: 0 }} />
+      <span style={{ color: "#666" }}>{task.task_id?.slice(0, 12)}…</span>
+      <span style={{ color: colour, fontWeight: 600 }}>{task.status}</span>
+      {done && task.logs?.length > 0 && (
+        <details style={{ marginLeft: 4 }}>
+          <summary style={{ cursor: "pointer", color: "#888", fontSize: 10 }}>logs</summary>
+          <pre style={{ color: "#aaa", marginTop: 4, fontSize: 10 }}>{task.logs.join("\n")}</pre>
+        </details>
       )}
     </div>
   );
 }
 
+// ── Markdown render components (dark theme) ──────────────────────────────────
+const MD_TABLE: CSSProperties = { borderCollapse: "collapse", width: "100%", marginTop: 8, marginBottom: 8, fontSize: 12 };
+const MD_TH: CSSProperties = { background: "#111", color: "#FFD700", padding: "4px 8px", textAlign: "left", fontWeight: 600, border: "1px solid #333" };
+const MD_TD: CSSProperties = { padding: "4px 8px", border: "1px solid #222", color: "#ccc" };
+const MD_CODE: CSSProperties = { background: "#1a1a1a", color: "#4ade80", padding: "2px 6px", borderRadius: 4, fontSize: 12, fontFamily: "monospace" };
+const MD_PRE: CSSProperties = { background: "#0d0d0d", border: "1px solid #333", borderRadius: 6, padding: "10px 12px", overflowX: "auto", margin: "8px 0" };
+const MD_STRONG: CSSProperties = { color: "#FFD700", fontWeight: 700 };
+const MD_P: CSSProperties = { margin: "4px 0", lineHeight: 1.6 };
+const MD_LI: CSSProperties = { marginBottom: 2 };
+const MD_UL: CSSProperties = { paddingLeft: 18, margin: "4px 0" };
+
+const mdComponents = {
+  table: ({ children }: { children?: React.ReactNode }) => <table style={MD_TABLE}>{children}</table>,
+  thead: ({ children }: { children?: React.ReactNode }) => <thead>{children}</thead>,
+  tbody: ({ children }: { children?: React.ReactNode }) => <tbody>{children}</tbody>,
+  tr: ({ children }: { children?: React.ReactNode }) => <tr>{children}</tr>,
+  th: ({ children }: { children?: React.ReactNode }) => <th style={MD_TH}>{children}</th>,
+  td: ({ children }: { children?: React.ReactNode }) => <td style={MD_TD}>{children}</td>,
+  code: ({ inline, children }: { inline?: boolean; children?: React.ReactNode }) =>
+    inline ? <code style={MD_CODE}>{children}</code> : <pre style={MD_PRE}><code style={{ ...MD_CODE, background: "none", padding: 0 }}>{children}</code></pre>,
+  strong: ({ children }: { children?: React.ReactNode }) => <strong style={MD_STRONG}>{children}</strong>,
+  p: ({ children }: { children?: React.ReactNode }) => <p style={MD_P}>{children}</p>,
+  li: ({ children }: { children?: React.ReactNode }) => <li style={MD_LI}>{children}</li>,
+  ul: ({ children }: { children?: React.ReactNode }) => <ul style={MD_UL}>{children}</ul>,
+  ol: ({ children }: { children?: React.ReactNode }) => <ol style={{ ...MD_UL, listStyleType: "decimal" }}>{children}</ol>,
+  h1: ({ children }: { children?: React.ReactNode }) => <h1 style={{ color: "#FFD700", margin: "8px 0 4px", fontSize: 16, fontWeight: 700 }}>{children}</h1>,
+  h2: ({ children }: { children?: React.ReactNode }) => <h2 style={{ color: "#FFD700", margin: "8px 0 4px", fontSize: 14, fontWeight: 700 }}>{children}</h2>,
+  h3: ({ children }: { children?: React.ReactNode }) => <h3 style={{ color: "#FFD700", margin: "6px 0 3px", fontSize: 13, fontWeight: 600 }}>{children}</h3>,
+  hr: () => <hr style={{ border: "none", borderTop: "1px solid #333", margin: "8px 0" }} />,
+  blockquote: ({ children }: { children?: React.ReactNode }) => (
+    <blockquote style={{ borderLeft: "3px solid #FFD700", paddingLeft: 10, color: "#aaa", margin: "6px 0" }}>{children}</blockquote>
+  ),
+};
+
+// ── Main component ────────────────────────────────────────────────────────────
 export default function CommandChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      id: "welcome",
+      id: "sys-init",
       role: "system",
-      content:
-        "XPS Intelligence AI ready. Ask me anything — I can scrape contractors, analyze leads, run audits, or answer questions about your data. Try: \"Find epoxy floor contractors in Houston, TX\"",
+      content: 'XPS Intelligence AI ready. Ask me anything — I can scrape contractors, analyze leads, run audits, or answer questions about your data. Try: "Find epoxy floor contractors in Houston, TX"',
       timestamp: new Date(),
     },
   ]);
@@ -115,155 +117,153 @@ export default function CommandChat() {
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  // Build history array for multi-turn LLM context
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   const buildHistory = (): LLMChatMessage[] =>
     messages
-      .filter((m) => m.role === "user" || m.role === "assistant")
+      .filter((m) => m.role !== "system")
       .slice(-20)
       .map((m) => ({ role: m.role as "user" | "assistant", content: m.content }));
 
   const addMessage = (msg: Omit<ChatMessage, "id" | "timestamp">) => {
-    const full: ChatMessage = {
-      ...msg,
-      id: `${Date.now()}-${Math.random()}`,
-      timestamp: new Date(),
-    };
+    const full: ChatMessage = { ...msg, id: genId(), timestamp: new Date() };
     setMessages((prev) => [...prev, full]);
-    setTimeout(
-      () => bottomRef.current?.scrollIntoView({ behavior: "smooth" }),
-      50,
-    );
     return full.id;
   };
 
   const updateMessage = (id: string, patch: Partial<ChatMessage>) => {
-    setMessages((prev) =>
-      prev.map((m) => (m.id === id ? { ...m, ...patch } : m)),
-    );
+    setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, ...patch } : m)));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || loading) return;
-
     const userText = input.trim();
+    if (!userText || loading) return;
     setInput("");
     setLoading(true);
 
     addMessage({ role: "user", content: userText });
-
-    // Placeholder while waiting for LLM response
-    const assistantId = addMessage({
-      role: "assistant",
-      content: "⏳ Thinking…",
-    });
+    const assistantId = addMessage({ role: "assistant", content: "…" });
 
     try {
-      // Always call the LLM for a natural language response
       const history = buildHistory();
-      const chatPromise = sendChatMessage(userText, history);
+      const chatResp = await sendChatMessage(userText, history);
 
-      // Optionally also dispatch a backend runtime task for action commands
-      const cmd = detectCommand(userText);
-      let taskPromise: Promise<{ task_id: string }> | null = null;
-      if (cmd) {
-        taskPromise = sendCommand(cmd).catch(() => null as never);
-      }
-
-      // Await LLM response first
-      const chatResp = await chatPromise;
       updateMessage(assistantId, { content: chatResp.reply });
 
-      // If a task was dispatched, append task status card
-      if (taskPromise && cmd) {
-        const taskResp = await taskPromise.catch(() => null);
+      // Optionally also dispatch a runtime command
+      const pattern = COMMAND_PATTERNS.find((p) => p.test(userText));
+      if (pattern) {
+        const cmd = pattern.build(userText);
+        const taskResp = await sendCommand(cmd).catch(() => null);
         if (taskResp?.task_id) {
           const taskId = taskResp.task_id;
           updateMessage(assistantId, {
-            content: chatResp.reply,
             taskId,
             taskStatus: { task_id: taskId, status: "queued", logs: [] },
           });
-
           pollTaskUntilDone(taskId, {
             intervalMs: 2000,
             timeoutMs: 120_000,
-            onUpdate: (task) => {
-              updateMessage(assistantId, { taskStatus: task });
-            },
-          }).catch(() => {/* ignore poll errors */});
+            onUpdate: (task) => updateMessage(assistantId, { taskStatus: task }),
+          }).catch(() => {/* ignore */});
         }
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Request failed";
-      toast.error(message);
-      updateMessage(assistantId, { content: `❌ Error: ${message}` });
+      const msg = err instanceof Error ? err.message : "Request failed";
+      updateMessage(assistantId, { content: `❌ Error: ${msg}` });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "#050505", border: "1px solid #222", borderRadius: 12 }}>
       {/* Header */}
-      <div className="flex items-center gap-2 border-b border-gray-100 px-4 py-3">
-        <Bot className="h-4 w-4 text-blue-500" />
-        <h2 className="text-sm font-semibold text-gray-700">
-          XPS Intelligence AI Agent
-        </h2>
-        <span className="ml-auto text-xs text-gray-400">Powered by Groq</span>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "12px 16px", borderBottom: "1px solid #1a1a1a" }}>
+        <span style={{ fontSize: 18 }}>🤖</span>
+        <h2 style={{ color: "#FFD700", fontSize: 15, fontWeight: 700, margin: 0 }}>XPS Intelligence AI Agent</h2>
+        <span style={{ marginLeft: "auto", fontSize: 11, color: "#555" }}>Powered by Groq</span>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto space-y-3 p-4">
+      <div style={{ flex: 1, overflowY: "auto", padding: "16px", display: "flex", flexDirection: "column", gap: 12 }}>
         {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-          >
-            <div
-              className={`max-w-[85%] rounded-xl px-3 py-2 text-sm ${
-                msg.role === "user"
-                  ? "bg-blue-500 text-white"
-                  : msg.role === "system"
-                    ? "bg-gray-100 text-gray-500 italic text-xs"
-                    : "bg-gray-50 border border-gray-200 text-gray-800 whitespace-pre-wrap"
-              }`}
-            >
-              {msg.content}
+          <div key={msg.id} style={{ display: "flex", justifyContent: msg.role === "user" ? "flex-end" : "flex-start" }}>
+            <div style={{
+              maxWidth: "90%",
+              padding: "10px 14px",
+              borderRadius: 10,
+              fontSize: 13,
+              lineHeight: 1.5,
+              ...(msg.role === "user"
+                ? { background: "#1a1a00", border: "1px solid #FFD700", color: "#FFD700" }
+                : msg.role === "system"
+                  ? { background: "#0a0a0a", border: "1px solid #1a1a1a", color: "#666", fontStyle: "italic", fontSize: 12 }
+                  : { background: "#0d0d0d", border: "1px solid #222", color: "#ccc" }),
+            }}>
+              {msg.role === "assistant" ? (
+                <div style={{ color: "#ccc" }}>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents as Record<string, React.ComponentType<React.HTMLAttributes<HTMLElement>>>}>
+                    {msg.content}
+                  </ReactMarkdown>
+                </div>
+              ) : (
+                <span style={{ whiteSpace: "pre-wrap" }}>{msg.content}</span>
+              )}
               {msg.taskStatus && <TaskCard task={msg.taskStatus} />}
             </div>
           </div>
         ))}
+        {loading && (
+          <div style={{ display: "flex", justifyContent: "flex-start" }}>
+            <div style={{ padding: "10px 14px", borderRadius: 10, background: "#0d0d0d", border: "1px solid #222", color: "#555", fontSize: 13 }}>
+              <span style={{ animation: "pulse 1s infinite" }}>⚡ Thinking…</span>
+            </div>
+          </div>
+        )}
         <div ref={bottomRef} />
       </div>
 
       {/* Input */}
-      <form
-        onSubmit={handleSubmit}
-        className="flex items-center gap-2 border-t border-gray-100 px-4 py-3"
-      >
+      <form onSubmit={handleSubmit} style={{ display: "flex", gap: 8, padding: "12px 16px", borderTop: "1px solid #1a1a1a" }}>
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask me anything — scrape leads, analyze data, run audits…"
-          className="flex-1 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-800 placeholder-gray-400 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
           disabled={loading}
+          style={{
+            flex: 1,
+            background: "#111",
+            border: "1px solid #333",
+            borderRadius: 8,
+            color: "#fff",
+            fontSize: "0.875rem",
+            outline: "none",
+            padding: "0.5rem 0.75rem",
+          }}
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="flex items-center gap-1.5 rounded-lg bg-blue-500 px-3 py-2 text-sm font-medium text-white hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          style={{
+            background: loading || !input.trim() ? "#333" : "#FFD700",
+            border: "none",
+            borderRadius: 8,
+            color: loading || !input.trim() ? "#666" : "#000",
+            cursor: loading || !input.trim() ? "not-allowed" : "pointer",
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            padding: "0.5rem 1rem",
+            transition: "all 0.15s",
+          }}
         >
-          {loading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Send className="h-4 w-4" />
-          )}
+          {loading ? "⌛" : "➤ Send"}
         </button>
       </form>
     </div>
   );
 }
-

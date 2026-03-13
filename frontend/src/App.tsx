@@ -97,6 +97,38 @@ interface Lead {
   tier?: string;
 }
 
+// ── Lead API response normalizer ───────────────────────────────────────────────
+/** Handles the three possible shapes returned by the gateway /api/leads route:
+ *  1. Lead[]                                (plain array)
+ *  2. { leads: Lead[]; total: number }      (unwrapped)
+ *  3. { success: true; data: { leads: Lead[]; total: number } }  (wrapped — default gateway format)
+ */
+function normaliseLeadsResponse(
+  body: unknown,
+): { list: Lead[]; total: number } {
+  if (Array.isArray(body)) {
+    return { list: body as Lead[], total: (body as Lead[]).length };
+  }
+  if (body && typeof body === "object") {
+    const obj = body as Record<string, unknown>;
+    // Unwrapped: { leads, total }
+    if (Array.isArray(obj.leads)) {
+      return { list: obj.leads as Lead[], total: (obj.total as number) ?? (obj.leads as Lead[]).length };
+    }
+    // Wrapped: { success, data: { leads, total } }
+    if (obj.data && typeof obj.data === "object") {
+      const inner = obj.data as Record<string, unknown>;
+      if (Array.isArray(inner.leads)) {
+        return { list: inner.leads as Lead[], total: (inner.total as number) ?? (inner.leads as Lead[]).length };
+      }
+      if (Array.isArray(inner)) {
+        return { list: inner as unknown as Lead[], total: (inner as unknown as Lead[]).length };
+      }
+    }
+  }
+  return { list: [], total: 0 };
+}
+
 function LeadsPanel() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [total, setTotal] = useState(0);
@@ -108,23 +140,9 @@ function LeadsPanel() {
     let mounted = true;
     const doFetch = async () => {
       try {
-        const res = await apiClient.get<
-          { leads: Lead[]; total: number } | { data: Lead[] } | Lead[]
-        >("/api/leads?limit=100");
+        const res = await apiClient.get("/api/leads?limit=100");
         if (!mounted) return;
-        let list: Lead[] = [];
-        let count = 0;
-        if (Array.isArray(res.data)) {
-          list = res.data;
-          count = list.length;
-        } else if ("leads" in res.data && Array.isArray(res.data.leads)) {
-          list = res.data.leads;
-          count =
-            (res.data as { leads: Lead[]; total: number }).total ?? list.length;
-        } else if ("data" in res.data && Array.isArray(res.data.data)) {
-          list = res.data.data;
-          count = list.length;
-        }
+        const { list, total: count } = normaliseLeadsResponse(res.data);
         setLeads(list);
         setTotal(count);
       } catch (err: unknown) {
@@ -135,9 +153,7 @@ function LeadsPanel() {
       }
     };
     doFetch();
-    return () => {
-      mounted = false;
-    };
+    return () => { mounted = false; };
   }, []);
 
   const filtered = search
