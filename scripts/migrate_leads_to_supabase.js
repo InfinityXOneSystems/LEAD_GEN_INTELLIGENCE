@@ -19,10 +19,10 @@
 
 require("dotenv").config();
 
-const fs = require("fs");
 const path = require("path");
 
 const { upsertLeads } = require("../db/supabaseLeadStore");
+const { readJsonSafe } = require("../lib/lead_utils");
 
 const ROOT = path.join(__dirname, "..");
 
@@ -34,23 +34,6 @@ const LEAD_FILES = [
   path.join(ROOT, "data", "leads", "leads.json"),
   path.join(ROOT, "data", "leads", "validated_leads.json"),
 ];
-
-/**
- * Safely load a JSON array from a file.
- * Returns [] if the file is missing, empty, or malformed.
- */
-function loadJson(filePath) {
-  if (!fs.existsSync(filePath)) return [];
-  try {
-    const raw = fs.readFileSync(filePath, "utf8").trim();
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (err) {
-    console.warn(`[migrate] Could not parse ${filePath}: ${err.message}`);
-    return [];
-  }
-}
 
 /**
  * Deduplicate leads by (company_name/company + city + state) before
@@ -94,7 +77,7 @@ async function main() {
   // Load all lead files
   let allLeads = [];
   for (const filePath of LEAD_FILES) {
-    const leads = loadJson(filePath);
+    const leads = readJsonSafe(filePath);
     if (leads.length > 0) {
       console.log(
         `[migrate]   Loaded ${leads.length} leads from ${path.relative(ROOT, filePath)}`,

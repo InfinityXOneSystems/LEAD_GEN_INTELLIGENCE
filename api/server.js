@@ -8,6 +8,8 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 
+const { tierFromScore } = require("../lib/lead_utils");
+
 const PORT = process.env.PORT || 3000;
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const GROQ_MODEL = "llama-3.3-70b-versatile";
@@ -56,9 +58,7 @@ const LEADS_CACHE_TTL_MS = 60_000;
  */
 function normaliseLead(l, index) {
   const score = Number(l.lead_score ?? l.score ?? 0) || 0;
-  const tier = (
-    l.tier || (score >= 75 ? "hot" : score >= 50 ? "warm" : "cold")
-  ).toLowerCase();
+  const tier = (l.tier ? l.tier.toLowerCase() : tierFromScore(score));
   const city = (l.city || "").trim();
   const state = (l.state || "").trim();
   const location = city && state ? `${city}, ${state}` : city || state || "";
