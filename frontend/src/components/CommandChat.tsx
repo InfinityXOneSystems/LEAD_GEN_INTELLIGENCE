@@ -106,12 +106,13 @@ export default function CommandChat() {
       id: "welcome",
       role: "system",
       content:
-        'XPS Intelligence Runtime ready. Type a command like "scrape epoxy contractors in Ohio" or "run SEO audit on example.com".',
+        'XPS Intelligence AI ready. Ask me about leads, contractors, or type "scrape epoxy contractors in Ohio" to trigger the pipeline.',
       timestamp: new Date(),
     },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sessionId] = useState(() => `session-${Date.now()}`);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const addMessage = (msg: Omit<ChatMessage, "id" | "timestamp">) => {
@@ -145,38 +146,62 @@ export default function CommandChat() {
     addMessage({ role: "user", content: userText });
 
     try {
-      const cmd = parseCommand(userText);
-      const { task_id } = await sendCommand(cmd);
+      if (isRuntimeCommand(userText)) {
+        // ── Runtime pipeline command (scrape / run) ───────────────────────
+        const cmd = parseRuntimeCommand(userText);
+        const { task_id } = await sendCommand(cmd);
 
-      const assistantId = addMessage({
-        role: "assistant",
-        content: `Command submitted (${cmd.command}). Polling for results…`,
-        taskId: task_id,
-        taskStatus: { task_id, status: "queued", logs: [] },
-      });
-
-      // Poll until done
-      pollTaskUntilDone(task_id, {
-        intervalMs: 2000,
-        timeoutMs: 120_000,
-        onUpdate: (task) => {
-          updateMessage(assistantId, {
-            taskStatus: task,
-            content:
-              task.status === "completed"
-                ? `✅ Task completed (${cmd.command})`
-                : task.status === "failed"
-                  ? `❌ Task failed: ${task.error ?? "unknown error"}`
-                  : `⏳ Status: ${task.status}…`,
-          });
-        },
-      }).catch((err) => {
-        updateMessage(assistantId, {
-          content: `⚠️ Polling error: ${err.message}`,
+        const assistantId = addMessage({
+          role: "assistant",
+          content: `⚙️ Command submitted (${cmd.command}). Polling for results…`,
+          taskId: task_id,
+          taskStatus: { task_id, status: "queued", logs: [] },
         });
-      });
+
+        pollTaskUntilDone(task_id, {
+          intervalMs: 2000,
+          timeoutMs: 120_000,
+          onUpdate: (task) => {
+            updateMessage(assistantId, {
+              taskStatus: task,
+              content:
+                task.status === "completed"
+                  ? `✅ Task completed (${cmd.command})`
+                  : task.status === "failed"
+                    ? `❌ Task failed: ${task.error ?? "unknown error"}`
+                    : `⏳ Status: ${task.status}…`,
+            });
+          },
+        }).catch((err) => {
+          updateMessage(assistantId, {
+            content: `⚠️ Polling error: ${err.message}`,
+          });
+        });
+      } else {
+        // ── Groq / GitHub Copilot chat (conversational) ───────────────────
+        const history: ChatHistoryMessage[] = messages
+          .filter((m) => m.role === "user" || m.role === "assistant")
+          .map((m) => ({ role: m.role as "user" | "assistant", content: m.content }));
+
+        const assistantId = addMessage({
+          role: "assistant",
+          content: "⏳ Thinking…",
+        });
+
+        const response = await sendChatMessage({
+          message: userText,
+          agentRole: "LeadAgent",
+          sessionId,
+          history,
+        });
+
+        updateMessage(assistantId, {
+          content: response.reply.content,
+          model: response.reply.model,
+        });
+      }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Command failed";
+      const message = err instanceof Error ? err.message : "Request failed";
       toast.error(message);
       addMessage({ role: "assistant", content: `❌ Error: ${message}` });
     } finally {
@@ -190,8 +215,11 @@ export default function CommandChat() {
       <div className="flex items-center gap-2 border-b border-gray-100 px-4 py-3">
         <Bot className="h-4 w-4 text-blue-500" />
         <h2 className="text-sm font-semibold text-gray-700">
-          Runtime Command Chat
+          XPS Intelligence Agent
         </h2>
+        <span className="ml-auto flex items-center gap-1 text-xs text-gray-400">
+          <Zap className="h-3 w-3" /> Groq · Copilot
+        </span>
       </div>
 
       {/* Messages */}

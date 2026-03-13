@@ -27,7 +27,7 @@ function tierFromScore(score) {
 }
 
 /**
- * Normalise a raw scraper/Supabase lead into the API response shape.
+ * Normalise a raw scraper/PostgreSQL lead into the API response shape.
  * Accepts both canonical (company_name, lead_score) and legacy (company, score) keys.
  * Returns BOTH the canonical frontend field names (company_name, lead_score, tier)
  * AND legacy aliases (company, score, status/location) so all consumers work.
@@ -93,33 +93,26 @@ function loadLeadsFromFile() {
   return [];
 }
 
-// Lazy Supabase client (only when configured)
-let _supabaseStore = null;
-function getSupabaseStore() {
-  if (_supabaseStore) return _supabaseStore;
-  const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || "";
-  const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    process.env.SUPABASE_ANON_KEY ||
-    "";
-  if (url && key) {
+// Lazy Railway Postgres lead store (uses DATABASE_URL or DATABASE_HOST env vars)
+let _pgStore = null;
+function getPgStore() {
+  if (_pgStore) return _pgStore;
+  if (process.env.DATABASE_URL || process.env.DATABASE_HOST) {
     try {
-      _supabaseStore = require("./db/supabaseLeadStore");
+      _pgStore = require("./db/leadStore");
     } catch (err) {
-      console.warn("[server] Could not load supabaseLeadStore:", err.message);
+      console.warn("[server] Could not load leadStore:", err.message);
     }
   }
-  return _supabaseStore;
+  return _pgStore;
 }
 
 /**
- * Fetch leads from Supabase when configured, otherwise load from scraped JSON
- * files produced by the shadow scraper pipeline.
+ * Fetch leads from Railway PostgreSQL when configured, otherwise fall back
+ * to scraped JSON files produced by the shadow scraper pipeline.
  */
 async function fetchLeads({ limit = 500, industry, minScore, tier } = {}) {
-  const store = getSupabaseStore();
+  const store = getPgStore();
   let leads = [];
 
   if (store) {
@@ -127,7 +120,7 @@ async function fetchLeads({ limit = 500, industry, minScore, tier } = {}) {
       leads = await store.getAllLeads(limit);
     } catch (err) {
       console.warn(
-        "[server] Supabase unavailable, falling back to file:",
+        "[server] PostgreSQL unavailable, falling back to file:",
         err.message,
       );
       leads = loadLeadsFromFile();
@@ -245,15 +238,20 @@ app.post("/api/chat/send", async (req, res) => {
       .json({ error: "No LLM configured: set GROQ_API_KEY or GITHUB_TOKEN" });
   }
 
-  // Build lead count context for the system prompt
-  const leadCount = (() => {
-    try {
-      const leads = loadLeadsFromFile();
-      return leads.length;
-    } catch (_) {
-      return 0;
+  // Build lead count context for the system prompt (best-effort, non-blocking)
+  let leadCount = 0;
+  try {
+    const store = getPgStore();
+    if (store) {
+      const rows = await store.getAllLeads(1);
+      // getAllLeads returns rows; rough count from file as proxy
+      leadCount = loadLeadsFromFile().length || rows.length;
+    } else {
+      leadCount = loadLeadsFromFile().length;
     }
-  })();
+  } catch (_) {
+    try { leadCount = loadLeadsFromFile().length; } catch (__) { /* ignore */ }
+  }
 
   const systemPrompt =
     `You are XPS Intelligence — an autonomous AI agent for contractor lead generation. ` +
