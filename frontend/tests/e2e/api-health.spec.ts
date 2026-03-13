@@ -8,8 +8,7 @@
 import { test, expect } from "@playwright/test";
 
 const BACKEND =
-  process.env.VITE_API_URL ||
-  "https://xpsintelligencesystem-production.up.railway.app";
+  process.env.VITE_API_URL || "https://xps-intelligence.up.railway.app";
 
 test.describe("Backend API Health — Railway", () => {
   test("GET /health returns 200", async ({ request }) => {

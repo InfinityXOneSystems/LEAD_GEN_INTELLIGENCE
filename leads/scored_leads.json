@@ -7182,6 +7182,60 @@
     "rank": 268
   },
   {
+    "company": "Exotic Concrete Polishing and Floors, LLC",
+    "phone": "(561) 307-7748",
+    "email": "",
+    "website": "http://exoticconcretepolishingandfloorsllc.localsearch.com",
+    "address": "243 SW Marathon AvePort Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "concrete polishing",
+    "category": "concrete polishing",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Concrete",
+    "industry_detected": "Concrete",
+    "lead_score": 45,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 20,
+      "geographic_priority": 0
+    },
+    "rank": 269
+  },
+  {
+    "company": "Treasure Coast Concrete Polishing",
+    "phone": "(888) 590-1101",
+    "email": "",
+    "website": "http://treasurecoastconcretepolishing.localsearch.com",
+    "address": "Port Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "concrete polishing",
+    "category": "concrete polishing",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Concrete",
+    "industry_detected": "Concrete",
+    "lead_score": 45,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 20,
+      "geographic_priority": 0
+    },
+    "rank": 270
+  },
+  {
     "company": "Epoxy Rockford",
     "phone": "",
     "website": "",
@@ -7205,7 +7259,7 @@
       "industry_relevance": 20,
       "geographic_priority": 10
     },
-    "rank": 269
+    "rank": 271
   },
   {
     "company": "Rockford Auto Repair",
@@ -7231,7 +7285,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 270
+    "rank": 272
   },
   {
     "company": "Carpenter's Auto Repair",
@@ -7257,7 +7311,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 271
+    "rank": 273
   },
   {
     "company": "AA Heavy Truck Repair",
@@ -7283,7 +7337,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 272
+    "rank": 274
   },
   {
     "company": "Brynolf Manufacturing Inc",
@@ -7309,7 +7363,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 273
+    "rank": 275
   },
   {
     "company": "Fleet Maintenance & Repair Inc.",
@@ -7335,7 +7389,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 274
+    "rank": 276
   },
   {
     "company": "Epoxy Flooring",
@@ -7361,7 +7415,7 @@
       "industry_relevance": 20,
       "geographic_priority": 10
     },
-    "rank": 275
+    "rank": 277
   },
   {
     "company": "Ricart Automotive Mega Mall",
@@ -7387,7 +7441,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 276
+    "rank": 278
   },
   {
     "company": "Nash Distribution Columbus Warehouse",
@@ -7413,7 +7467,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 277
+    "rank": 279
   },
   {
     "company": "World Distribution Services Warehouse Columbus",
@@ -7439,7 +7493,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 278
+    "rank": 280
   },
   {
     "company": "Office Depot Max Distribution Center",
@@ -7465,7 +7519,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 279
+    "rank": 281
   },
   {
     "company": "Clopay Corporation - Columbus Distribution Center",
@@ -7491,7 +7545,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 280
+    "rank": 282
   },
   {
     "company": "Lowes Distribution Center",
@@ -7517,7 +7571,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 281
+    "rank": 283
   },
   {
     "company": "Arizona Epoxy Systems",
@@ -7543,7 +7597,7 @@
       "industry_relevance": 20,
       "geographic_priority": 10
     },
-    "rank": 282
+    "rank": 284
   },
   {
     "company": "Epoxy Floors",
@@ -7569,7 +7623,7 @@
       "industry_relevance": 20,
       "geographic_priority": 10
     },
-    "rank": 283
+    "rank": 285
   },
   {
     "company": "Concrete Polishing",
@@ -7595,7 +7649,7 @@
       "industry_relevance": 20,
       "geographic_priority": 10
     },
-    "rank": 284
+    "rank": 286
   },
   {
     "company": "Mesa Concrete Staining",
@@ -7621,7 +7675,7 @@
       "industry_relevance": 20,
       "geographic_priority": 10
     },
-    "rank": 285
+    "rank": 287
   },
   {
     "company": "Concrete Finishing, Inc",
@@ -7647,7 +7701,7 @@
       "industry_relevance": 20,
       "geographic_priority": 10
     },
-    "rank": 286
+    "rank": 288
   },
   {
     "company": "Mesa On-Site Truck Repair",
@@ -7673,7 +7727,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 287
+    "rank": 289
   },
   {
     "company": "Builderz Warehouse",
@@ -7699,7 +7753,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 288
+    "rank": 290
   },
   {
     "company": "Safeway Distribution Center",
@@ -7725,7 +7779,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 289
+    "rank": 291
   },
   {
     "company": "Epic Epoxy 614",
@@ -7751,7 +7805,7 @@
       "industry_relevance": 20,
       "geographic_priority": 10
     },
-    "rank": 290
+    "rank": 292
   },
   {
     "company": "The Home Depot Distribution Center",
@@ -7777,7 +7831,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 291
+    "rank": 293
   },
   {
     "company": "Custom Concrete Coatings",
@@ -7803,7 +7857,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 292
+    "rank": 294
   },
   {
     "company": "FM Floor Coatings",
@@ -7829,7 +7883,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 293
+    "rank": 295
   },
   {
     "company": "Floorplay Handyman Services",
@@ -7855,7 +7909,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 294
+    "rank": 296
   },
   {
     "company": "ME Coatings",
@@ -7881,7 +7935,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 295
+    "rank": 297
   },
   {
     "company": "Alpine Flooring",
@@ -7907,7 +7961,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 296
+    "rank": 298
   },
   {
     "company": "TSR Concrete Coatings",
@@ -7933,7 +7987,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 297
+    "rank": 299
   },
   {
     "company": "Floor It Remodeling",
@@ -7959,7 +8013,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 298
+    "rank": 300
   },
   {
     "company": "Kelce And Company",
@@ -7985,7 +8039,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 299
+    "rank": 301
   },
   {
     "company": "Specialty Floors Inc",
@@ -8011,7 +8065,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 300
+    "rank": 302
   },
   {
     "company": "Flooring Trends",
@@ -8037,7 +8091,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 301
+    "rank": 303
   },
   {
     "company": "J & Sons Coatings",
@@ -8063,7 +8117,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 302
+    "rank": 304
   },
   {
     "company": "S S concrete coatings llc",
@@ -8089,7 +8143,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 303
+    "rank": 305
   },
   {
     "company": "Seams Right Flooring",
@@ -8115,7 +8169,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 304
+    "rank": 306
   },
   {
     "company": "Integrity Concrete Coatings",
@@ -8141,7 +8195,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 305
+    "rank": 307
   },
   {
     "company": "A A Construction Concrete",
@@ -8167,7 +8221,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 306
+    "rank": 308
   },
   {
     "company": "Midwest Floor Shield",
@@ -8193,7 +8247,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 307
+    "rank": 309
   },
   {
     "company": "Encore Concrete Coatings",
@@ -8219,7 +8273,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 308
+    "rank": 310
   },
   {
     "company": "Blue Ribbon Premier Hardwoods",
@@ -8245,7 +8299,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 309
+    "rank": 311
   },
   {
     "company": "Extreme Concrete Coating",
@@ -8271,7 +8325,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 310
+    "rank": 312
   },
   {
     "company": "Concrete Shield Coatings Inc",
@@ -8297,7 +8351,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 311
+    "rank": 313
   },
   {
     "company": "Iron Concrete Contractors Rockford",
@@ -8323,7 +8377,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 312
+    "rank": 314
   },
   {
     "company": "Metal Prep Services Inc.",
@@ -8349,7 +8403,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 313
+    "rank": 315
   },
   {
     "company": "Armoured Exteriors",
@@ -8375,7 +8429,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 314
+    "rank": 316
   },
   {
     "company": "PAB Concrete Cutting",
@@ -8401,7 +8455,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 315
+    "rank": 317
   },
   {
     "company": "Concrete Problem Solvers",
@@ -8427,7 +8481,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 316
+    "rank": 318
   },
   {
     "company": "Brady's Waterproofing & Concrete",
@@ -8453,7 +8507,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 317
+    "rank": 319
   },
   {
     "company": "Premier Concrete Construction Inc",
@@ -8479,7 +8533,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 318
+    "rank": 320
   },
   {
     "company": "Hoffman's Surface Restoration",
@@ -8505,7 +8559,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 319
+    "rank": 321
   },
   {
     "company": "Rockford Concrete Pros",
@@ -8531,7 +8585,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 320
+    "rank": 322
   },
   {
     "company": "Superior Concrete Raising And Replacement",
@@ -8557,7 +8611,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 321
+    "rank": 323
   },
   {
     "company": "Gonzalez Concrete & Construction",
@@ -8583,7 +8637,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 322
+    "rank": 324
   },
   {
     "company": "Lawrence Construction",
@@ -8609,7 +8663,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 323
+    "rank": 325
   },
   {
     "company": "All-Concrete",
@@ -8635,7 +8689,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 324
+    "rank": 326
   },
   {
     "company": "JB Stand Concrete LLC",
@@ -8661,7 +8715,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 325
+    "rank": 327
   },
   {
     "company": "F&A concrete and rental",
@@ -8687,7 +8741,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 326
+    "rank": 328
   },
   {
     "company": "BNK Concrete LLC",
@@ -8713,7 +8767,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 327
+    "rank": 329
   },
   {
     "company": "S&J Seal Coating & Snow Plowing inc",
@@ -8739,7 +8793,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 328
+    "rank": 330
   },
   {
     "company": "Tom's Sealcoating",
@@ -8765,7 +8819,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 329
+    "rank": 331
   },
   {
     "company": "Gaard LLC",
@@ -8791,7 +8845,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 330
+    "rank": 332
   },
   {
     "company": "A.A.T. Infrared, Inc.",
@@ -8817,7 +8871,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 331
+    "rank": 333
   },
   {
     "company": "R and R Concrete Solutions",
@@ -8843,7 +8897,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 332
+    "rank": 334
   },
   {
     "company": "Gato Concrete",
@@ -8869,7 +8923,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 333
+    "rank": 335
   },
   {
     "company": "Turner Concrete",
@@ -8895,7 +8949,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 334
+    "rank": 336
   },
   {
     "company": "Alpha Concrete Restoration, Inc",
@@ -8921,7 +8975,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 335
+    "rank": 337
   },
   {
     "company": "Stateline koatings",
@@ -8947,7 +9001,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 336
+    "rank": 338
   },
   {
     "company": "Rock River Valley Painting Co",
@@ -8973,7 +9027,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 337
+    "rank": 339
   },
   {
     "company": "Valley Welding & Flame Spray",
@@ -8999,7 +9053,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 338
+    "rank": 340
   },
   {
     "company": "Quality Coating & Blasting",
@@ -9025,7 +9079,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 339
+    "rank": 341
   },
   {
     "company": "K & J Finishing Inc",
@@ -9051,7 +9105,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 340
+    "rank": 342
   },
   {
     "company": "Safeway Services of Rockford Inc.",
@@ -9077,7 +9131,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 341
+    "rank": 343
   },
   {
     "company": "Torque Spec",
@@ -9103,7 +9157,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 342
+    "rank": 344
   },
   {
     "company": "Seven Five Customs",
@@ -9129,7 +9183,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 343
+    "rank": 345
   },
   {
     "company": "Target Laser & Fabricating",
@@ -9155,7 +9209,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 344
+    "rank": 346
   },
   {
     "company": "Fox Valley Sandblasting & Powder Coating",
@@ -9181,7 +9235,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 345
+    "rank": 347
   },
   {
     "company": "MJN Powder Coating & Sandblasting",
@@ -9207,7 +9261,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 346
+    "rank": 348
   },
   {
     "company": "Bob's Blasting Service",
@@ -9233,7 +9287,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 347
+    "rank": 349
   },
   {
     "company": "Forest City Grinding Inc",
@@ -9259,7 +9313,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 348
+    "rank": 350
   },
   {
     "company": "Concrete Refinement Co.",
@@ -9285,7 +9339,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 349
+    "rank": 351
   },
   {
     "company": "M&H Total Flooring LLC",
@@ -9311,7 +9365,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 350
+    "rank": 352
   },
   {
     "company": "Rockford Quality Grinding",
@@ -9337,7 +9391,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 351
+    "rank": 353
   },
   {
     "company": "Ro-Pal Grinding Inc.",
@@ -9363,7 +9417,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 352
+    "rank": 354
   },
   {
     "company": "Unitrim Cement & Landscaping",
@@ -9389,7 +9443,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 353
+    "rank": 355
   },
   {
     "company": "Marks Auto Service of Rockford",
@@ -9415,7 +9469,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 354
+    "rank": 356
   },
   {
     "company": "Auto Clinic Of Rockford",
@@ -9441,7 +9495,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 355
+    "rank": 357
   },
   {
     "company": "Mike's Auto Service",
@@ -9467,7 +9521,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 356
+    "rank": 358
   },
   {
     "company": "T J's Auto Center Inc",
@@ -9493,7 +9547,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 357
+    "rank": 359
   },
   {
     "company": "Jon's Auto Service",
@@ -9519,7 +9573,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 358
+    "rank": 360
   },
   {
     "company": "Plaza Auto Service",
@@ -9545,7 +9599,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 359
+    "rank": 361
   },
   {
     "company": "Butitta Auto – Rockford on Alpine Rd.",
@@ -9571,7 +9625,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 360
+    "rank": 362
   },
   {
     "company": "Butitta Auto – Rockford on Main St.",
@@ -9597,7 +9651,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 361
+    "rank": 363
   },
   {
     "company": "Kurt's Lube Express & Service Center",
@@ -9623,7 +9677,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 362
+    "rank": 364
   },
   {
     "company": "C & S Auto Service",
@@ -9649,7 +9703,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 363
+    "rank": 365
   },
   {
     "company": "Twins Auto Mall",
@@ -9675,7 +9729,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 364
+    "rank": 366
   },
   {
     "company": "Forest City Motor Co",
@@ -9701,7 +9755,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 365
+    "rank": 367
   },
   {
     "company": "Bachrodt On State Supercenter",
@@ -9727,7 +9781,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 366
+    "rank": 368
   },
   {
     "company": "World Class Motors Inc",
@@ -9753,7 +9807,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 367
+    "rank": 369
   },
   {
     "company": "Wheels by R.T.",
@@ -9779,7 +9833,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 368
+    "rank": 370
   },
   {
     "company": "Rockford Auto Group LLC",
@@ -9805,7 +9859,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 369
+    "rank": 371
   },
   {
     "company": "Alpine Body Shop Inc",
@@ -9831,7 +9885,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 370
+    "rank": 372
   },
   {
     "company": "Arbisi 's City Body Shop",
@@ -9857,7 +9911,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 371
+    "rank": 373
   },
   {
     "company": "Caliber Collision",
@@ -9883,7 +9937,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 372
+    "rank": 374
   },
   {
     "company": "Anderson Body Shop",
@@ -9909,7 +9963,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 373
+    "rank": 375
   },
   {
     "company": "Dom Paris & Sons Collision Center",
@@ -9935,7 +9989,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 374
+    "rank": 376
   },
   {
     "company": "Rockford truck and trailer repair",
@@ -9961,7 +10015,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 375
+    "rank": 377
   },
   {
     "company": "K.O. Truck & Auto Service Center",
@@ -9987,7 +10041,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 376
+    "rank": 378
   },
   {
     "company": "Decker 24 HR Truck & Trailer Inc",
@@ -10013,7 +10067,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 377
+    "rank": 379
   },
   {
     "company": "Tom's Truck And Trailer Repair",
@@ -10039,7 +10093,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 378
+    "rank": 380
   },
   {
     "company": "Scouts Truck and Trailer Repair",
@@ -10065,7 +10119,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 379
+    "rank": 381
   },
   {
     "company": "Lakeside International Trucks Parts & Service",
@@ -10091,7 +10145,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 380
+    "rank": 382
   },
   {
     "company": "Spartan Truck Center",
@@ -10117,7 +10171,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 381
+    "rank": 383
   },
   {
     "company": "Kurt's Auto & Truck Center, Inc",
@@ -10143,7 +10197,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 382
+    "rank": 384
   },
   {
     "company": "Bc Truck Services Inc",
@@ -10169,7 +10223,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 383
+    "rank": 385
   },
   {
     "company": "Fleet Service Center Inc",
@@ -10195,7 +10249,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 384
+    "rank": 386
   },
   {
     "company": "Midwest Mobile Fleet Services Inc.",
@@ -10221,7 +10275,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 385
+    "rank": 387
   },
   {
     "company": "AA Fleet Repair",
@@ -10247,7 +10301,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 386
+    "rank": 388
   },
   {
     "company": "Complete Fleet Services",
@@ -10273,7 +10327,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 387
+    "rank": 389
   },
   {
     "company": "Fleet Feet Rockford",
@@ -10299,7 +10353,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 388
+    "rank": 390
   },
   {
     "company": "FleetPride",
@@ -10325,7 +10379,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 389
+    "rank": 391
   },
   {
     "company": "JM Construction Group, LLC",
@@ -10351,7 +10405,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 390
+    "rank": 392
   },
   {
     "company": "Cord Construction Co",
@@ -10377,7 +10431,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 391
+    "rank": 393
   },
   {
     "company": "Premier General Contractor",
@@ -10403,7 +10457,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 392
+    "rank": 394
   },
   {
     "company": "Building Systems, Inc.",
@@ -10429,7 +10483,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 393
+    "rank": 395
   },
   {
     "company": "MGM-K Contractors Inc.",
@@ -10455,7 +10509,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 394
+    "rank": 396
   },
   {
     "company": "Bufalo Contracting",
@@ -10481,7 +10535,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 395
+    "rank": 397
   },
   {
     "company": "TS Industries",
@@ -10507,7 +10561,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 396
+    "rank": 398
   },
   {
     "company": "Obsidian Manufacturing Industries, Inc.",
@@ -10533,7 +10587,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 397
+    "rank": 399
   },
   {
     "company": "Castle Contracting",
@@ -10559,7 +10613,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 398
+    "rank": 400
   },
   {
     "company": "Rockford Commercial Warehouse",
@@ -10585,7 +10639,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 399
+    "rank": 401
   },
   {
     "company": "Foundation Building Materials",
@@ -10611,7 +10665,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 400
+    "rank": 402
   },
   {
     "company": "Nevers and Company, Inc.",
@@ -10637,7 +10691,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 401
+    "rank": 403
   },
   {
     "company": "Richards Building Supply",
@@ -10663,7 +10717,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 402
+    "rank": 404
   },
   {
     "company": "Benson Stone Company",
@@ -10689,7 +10743,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 403
+    "rank": 405
   },
   {
     "company": "White Cap",
@@ -10715,7 +10769,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 404
+    "rank": 406
   },
   {
     "company": "Berner Food & Beverage Distribution Center",
@@ -10741,7 +10795,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 405
+    "rank": 407
   },
   {
     "company": "The Caldwell Group - Distribution Center",
@@ -10767,7 +10821,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 406
+    "rank": 408
   },
   {
     "company": "USDem Commercial Demolition Contractors",
@@ -10793,7 +10847,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 407
+    "rank": 409
   },
   {
     "company": "all jobs inc.",
@@ -10819,7 +10873,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 408
+    "rank": 410
   },
   {
     "company": "American Rigging & Millwright Service",
@@ -10845,7 +10899,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 409
+    "rank": 411
   },
   {
     "company": "Top A1 Contracting",
@@ -10871,7 +10925,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 410
+    "rank": 412
   },
   {
     "company": "ServiceMaster DSI - Rockford",
@@ -10897,7 +10951,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 411
+    "rank": 413
   },
   {
     "company": "Rockford Industrial Equipment",
@@ -10923,7 +10977,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 412
+    "rank": 414
   },
   {
     "company": "The Flooring Store at Benson Stone",
@@ -10949,7 +11003,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 413
+    "rank": 415
   },
   {
     "company": "Stateline Carpet & Flooring LLC",
@@ -10975,7 +11029,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 414
+    "rank": 416
   },
   {
     "company": "Carpetland USA",
@@ -11001,7 +11055,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 415
+    "rank": 417
   },
   {
     "company": "Ceramic tile company",
@@ -11027,7 +11081,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 416
+    "rank": 418
   },
   {
     "company": "Ramos Wood Floors LLC",
@@ -11053,7 +11107,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 417
+    "rank": 419
   },
   {
     "company": "RSD CONCRETE",
@@ -11079,7 +11133,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 418
+    "rank": 420
   },
   {
     "company": "Surface Refinishing Technology",
@@ -11105,7 +11159,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 419
+    "rank": 421
   },
   {
     "company": "Take 5 Oil Change",
@@ -11131,7 +11185,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 420
+    "rank": 422
   },
   {
     "company": "Transportation Department Maintenance Yard",
@@ -11157,7 +11211,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 421
+    "rank": 423
   },
   {
     "company": "Rockford Manufacturing Group",
@@ -11183,7 +11237,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 422
+    "rank": 424
   },
   {
     "company": "Home Services at The Home Depot",
@@ -11209,7 +11263,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 423
+    "rank": 425
   },
   {
     "company": "National Business & Industrial Center",
@@ -11235,7 +11289,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 424
+    "rank": 426
   },
   {
     "company": "Technical Maintenance Inc.",
@@ -11261,7 +11315,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 425
+    "rank": 427
   },
   {
     "company": "Benchmark Flooring Inc",
@@ -11287,7 +11341,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 426
+    "rank": 428
   },
   {
     "company": "Concrete Coating Xperts",
@@ -11313,7 +11367,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 427
+    "rank": 429
   },
   {
     "company": "Midwest Surface Coatings",
@@ -11339,7 +11393,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 428
+    "rank": 430
   },
   {
     "company": "Two Brothers Coatings, LLC",
@@ -11365,7 +11419,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 429
+    "rank": 431
   },
   {
     "company": "EverSeal Coatings",
@@ -11391,7 +11445,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 430
+    "rank": 432
   },
   {
     "company": "Bel Rock Asphalt Paving, Inc.",
@@ -11417,7 +11471,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 431
+    "rank": 433
   },
   {
     "company": "K.B.Coatings Unlimited Llc.",
@@ -11443,7 +11497,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 432
+    "rank": 434
   },
   {
     "company": "Container Depot Rockford CDCO",
@@ -11469,7 +11523,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 433
+    "rank": 435
   },
   {
     "company": "SRS Building Products",
@@ -11495,7 +11549,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 434
+    "rank": 436
   },
   {
     "company": "Aspen Construction Systems Inc",
@@ -11521,7 +11575,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 435
+    "rank": 437
   },
   {
     "company": "Advanced Concrete Raising & Replacing",
@@ -11547,7 +11601,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 436
+    "rank": 438
   },
   {
     "company": "Reyes Masonry",
@@ -11573,7 +11627,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 437
+    "rank": 439
   },
   {
     "company": "Rockford Molded Products Inc",
@@ -11599,7 +11653,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 438
+    "rank": 440
   },
   {
     "company": "Premier Concrete Coatings Columbus",
@@ -11625,7 +11679,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 439
+    "rank": 441
   },
   {
     "company": "Comer & Cross Concrete Coatings",
@@ -11651,7 +11705,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 440
+    "rank": 442
   },
   {
     "company": "GatorGuard Concrete Coatings of Columbus",
@@ -11677,7 +11731,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 441
+    "rank": 443
   },
   {
     "company": "Deco-Coat Flooring, LLC",
@@ -11703,7 +11757,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 442
+    "rank": 444
   },
   {
     "company": "XPS Xpress Columbus",
@@ -11729,7 +11783,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 443
+    "rank": 445
   },
   {
     "company": "Infinity Concrete Coatings",
@@ -11755,7 +11809,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 444
+    "rank": 446
   },
   {
     "company": "Premier Concrete Coatings",
@@ -11781,7 +11835,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 445
+    "rank": 447
   },
   {
     "company": "Solutions for Organizing Spaces",
@@ -11807,7 +11861,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 446
+    "rank": 448
   },
   {
     "company": "Your1DayFloor.com",
@@ -11833,7 +11887,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 447
+    "rank": 449
   },
   {
     "company": "Pro Flooring Installers Columbus",
@@ -11859,7 +11913,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 448
+    "rank": 450
   },
   {
     "company": "Martin Painting & Coating Co",
@@ -11885,7 +11939,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 449
+    "rank": 451
   },
   {
     "company": "Embellish By MJ",
@@ -11911,7 +11965,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 450
+    "rank": 452
   },
   {
     "company": "Permafloor, Inc.",
@@ -11937,7 +11991,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 451
+    "rank": 453
   },
   {
     "company": "Rockhound Resurfacing",
@@ -11963,7 +12017,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 452
+    "rank": 454
   },
   {
     "company": "Deco-Crete Supply",
@@ -11989,7 +12043,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 453
+    "rank": 455
   },
   {
     "company": "Columbus Stamp Concrete",
@@ -12015,7 +12069,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 454
+    "rank": 456
   },
   {
     "company": "Supreme Concrete Solutions",
@@ -12041,7 +12095,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 455
+    "rank": 457
   },
   {
     "company": "Top Level Concrete",
@@ -12067,7 +12121,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 456
+    "rank": 458
   },
   {
     "company": "Capital City Concrete",
@@ -12093,7 +12147,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 457
+    "rank": 459
   },
   {
     "company": "CKG Small Concrete & General Services",
@@ -12119,7 +12173,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 458
+    "rank": 460
   },
   {
     "company": "Royal Concrete",
@@ -12145,7 +12199,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 459
+    "rank": 461
   },
   {
     "company": "Concrete Contracting of Columbus",
@@ -12171,7 +12225,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 460
+    "rank": 462
   },
   {
     "company": "Optimus Concrete Co.",
@@ -12197,7 +12251,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 461
+    "rank": 463
   },
   {
     "company": "Samczuk Concrete & Masonry LLC",
@@ -12223,7 +12277,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 462
+    "rank": 464
   },
   {
     "company": "Ed's Concrete Construction LLC",
@@ -12249,7 +12303,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 463
+    "rank": 465
   },
   {
     "company": "Hacker's Concrete Impressions",
@@ -12275,7 +12329,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 464
+    "rank": 466
   },
   {
     "company": "Ohio Concrete Sawing & Drilling - Columbus",
@@ -12301,7 +12355,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 465
+    "rank": 467
   },
   {
     "company": "CT Concrete, LLC",
@@ -12327,7 +12381,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 466
+    "rank": 468
   },
   {
     "company": "Good Guys Improvements LLP",
@@ -12353,7 +12407,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 467
+    "rank": 469
   },
   {
     "company": "Concrete Lyftz",
@@ -12379,7 +12433,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 468
+    "rank": 470
   },
   {
     "company": "Concrete Cutting & Breaking",
@@ -12405,7 +12459,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 469
+    "rank": 471
   },
   {
     "company": "SealMaxx of Columbus",
@@ -12431,7 +12485,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 470
+    "rank": 472
   },
   {
     "company": "Maxima Concrete",
@@ -12457,7 +12511,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 471
+    "rank": 473
   },
   {
     "company": "The Stallion Concrete LLC",
@@ -12483,7 +12537,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 472
+    "rank": 474
   },
   {
     "company": "Bill Lewis Cement Contractor, LLC",
@@ -12509,7 +12563,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 473
+    "rank": 475
   },
   {
     "company": "CR Concrete Construction - Columbus",
@@ -12535,7 +12589,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 474
+    "rank": 476
   },
   {
     "company": "Alonzo Contractors Inc",
@@ -12561,7 +12615,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 475
+    "rank": 477
   },
   {
     "company": "MCL Concrete LLC",
@@ -12587,7 +12641,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 476
+    "rank": 478
   },
   {
     "company": "SmartLevel Concrete",
@@ -12613,7 +12667,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 477
+    "rank": 479
   },
   {
     "company": "Arlington Concrete",
@@ -12639,7 +12693,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 478
+    "rank": 480
   },
   {
     "company": "Dura Seal",
@@ -12665,7 +12719,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 479
+    "rank": 481
   },
   {
     "company": "Columbus Custom Concrete",
@@ -12691,7 +12745,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 480
+    "rank": 482
   },
   {
     "company": "Special Concrete Ohio LLC",
@@ -12717,7 +12771,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 481
+    "rank": 483
   },
   {
     "company": "Evans Concrete",
@@ -12743,7 +12797,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 482
+    "rank": 484
   },
   {
     "company": "Fine Line Concrete Contractors",
@@ -12769,7 +12823,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 483
+    "rank": 485
   },
   {
     "company": "Superior Concrete Columbus",
@@ -12795,7 +12849,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 484
+    "rank": 486
   },
   {
     "company": "Roman Concrete",
@@ -12821,7 +12875,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 485
+    "rank": 487
   },
   {
     "company": "Central Ohio Blasting",
@@ -12847,7 +12901,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 486
+    "rank": 488
   },
   {
     "company": "Vibrant Vision Coatings",
@@ -12873,7 +12927,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 487
+    "rank": 489
   },
   {
     "company": "S&C Blasting LLC",
@@ -12899,7 +12953,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 488
+    "rank": 490
   },
   {
     "company": "C & B Mobile Blasting",
@@ -12925,7 +12979,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 489
+    "rank": 491
   },
   {
     "company": "A1 Blasting Pros",
@@ -12951,7 +13005,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 490
+    "rank": 492
   },
   {
     "company": "Trusted Coatings",
@@ -12977,7 +13031,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 491
+    "rank": 493
   },
   {
     "company": "BlastOne International",
@@ -13003,7 +13057,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 492
+    "rank": 494
   },
   {
     "company": "MCL Power Clean Blasting Services",
@@ -13029,7 +13083,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 493
+    "rank": 495
   },
   {
     "company": "TLC Surface Restoration",
@@ -13055,7 +13109,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 494
+    "rank": 496
   },
   {
     "company": "Four Winds Sand Blasting",
@@ -13081,7 +13135,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 495
+    "rank": 497
   },
   {
     "company": "Ace Portable Sandblasting",
@@ -13107,7 +13161,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 496
+    "rank": 498
   },
   {
     "company": "RPM Powder Coating",
@@ -13133,7 +13187,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 497
+    "rank": 499
   },
   {
     "company": "Durer Shotblast LLC",
@@ -13159,7 +13213,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 498
+    "rank": 500
   },
   {
     "company": "Ohio Dustless Blasting",
@@ -13185,7 +13239,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 499
+    "rank": 501
   },
   {
     "company": "M&M Dustless Mobile Blasting",
@@ -13211,7 +13265,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 500
+    "rank": 502
   },
   {
     "company": "Soda Clean of Ohio",
@@ -13237,7 +13291,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 501
+    "rank": 503
   },
   {
     "company": "Beeline Floors",
@@ -13263,7 +13317,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 502
+    "rank": 504
   },
   {
     "company": "FS HW Flooring, LLC",
@@ -13289,7 +13343,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 503
+    "rank": 505
   },
   {
     "company": "Columbus Floor Refinishing",
@@ -13315,7 +13369,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 504
+    "rank": 506
   },
   {
     "company": "Luke's Auto",
@@ -13341,7 +13395,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 505
+    "rank": 507
   },
   {
     "company": "Weber Road Auto Service",
@@ -13367,7 +13421,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 506
+    "rank": 508
   },
   {
     "company": "Buckeye Complete Auto Care",
@@ -13393,7 +13447,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 507
+    "rank": 509
   },
   {
     "company": "Tom and Jerry's Auto Service",
@@ -13419,7 +13473,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 508
+    "rank": 510
   },
   {
     "company": "Alternative Auto Care",
@@ -13445,7 +13499,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 509
+    "rank": 511
   },
   {
     "company": "Streamline Auto",
@@ -13471,7 +13525,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 510
+    "rank": 512
   },
   {
     "company": "Mike's Foreign Car Service",
@@ -13497,7 +13551,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 511
+    "rank": 513
   },
   {
     "company": "All In Auto Service LLC",
@@ -13523,7 +13577,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 512
+    "rank": 514
   },
   {
     "company": "Ohio Autocare",
@@ -13549,7 +13603,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 513
+    "rank": 515
   },
   {
     "company": "Valentino's Car Care",
@@ -13575,7 +13629,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 514
+    "rank": 516
   },
   {
     "company": "Auto Center",
@@ -13601,7 +13655,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 515
+    "rank": 517
   },
   {
     "company": "Columbus Auto Mall",
@@ -13627,7 +13681,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 516
+    "rank": 518
   },
   {
     "company": "Germain Service Center - Germain Lexus of Easton",
@@ -13653,7 +13707,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 517
+    "rank": 519
   },
   {
     "company": "Service Center - Toyota West",
@@ -13679,7 +13733,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 518
+    "rank": 520
   },
   {
     "company": "Mark Wahlberg Chevrolet of Columbus",
@@ -13705,7 +13759,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 519
+    "rank": 521
   },
   {
     "company": "Byers Mazda Service Center",
@@ -13731,7 +13785,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 520
+    "rank": 522
   },
   {
     "company": "Service Center - Germain Mazda of Columbus",
@@ -13757,7 +13811,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 521
+    "rank": 523
   },
   {
     "company": "Subaru Service - Germain Subaru of Columbus Service Center",
@@ -13783,7 +13837,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 522
+    "rank": 524
   },
   {
     "company": "Byers Imports",
@@ -13809,7 +13863,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 523
+    "rank": 525
   },
   {
     "company": "Service & Parts Center - Germain Kia",
@@ -13835,7 +13889,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 524
+    "rank": 526
   },
   {
     "company": "Service Center - Mercedes-Benz of Easton",
@@ -13861,7 +13915,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 525
+    "rank": 527
   },
   {
     "company": "Auto Palace",
@@ -13887,7 +13941,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 526
+    "rank": 528
   },
   {
     "company": "Service Center - Germain Volkswagen of Columbus",
@@ -13913,7 +13967,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 527
+    "rank": 529
   },
   {
     "company": "Service Center - Germain Nissan",
@@ -13939,7 +13993,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 528
+    "rank": 530
   },
   {
     "company": "Kraft's Body & Fender Co",
@@ -13965,7 +14019,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 529
+    "rank": 531
   },
   {
     "company": "CARSTAR Auto Boutique Collision",
@@ -13991,7 +14045,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 530
+    "rank": 532
   },
   {
     "company": "Babylon Body Shop",
@@ -14017,7 +14071,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 531
+    "rank": 533
   },
   {
     "company": "McCombe Body Shop",
@@ -14043,7 +14097,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 532
+    "rank": 534
   },
   {
     "company": "Lane & Kenny Body Shop",
@@ -14069,7 +14123,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 533
+    "rank": 535
   },
   {
     "company": "Central Collision",
@@ -14095,7 +14149,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 534
+    "rank": 536
   },
   {
     "company": "Fix N Go Collision Center Body Shop LLC",
@@ -14121,7 +14175,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 535
+    "rank": 537
   },
   {
     "company": "Collision Solutions LLC",
@@ -14147,7 +14201,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 536
+    "rank": 538
   },
   {
     "company": "Columbus Truck & Trailer Repair LLC",
@@ -14173,7 +14227,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 537
+    "rank": 539
   },
   {
     "company": "Yourway Truck & Trailer Repair",
@@ -14199,7 +14253,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 538
+    "rank": 540
   },
   {
     "company": "ATI Truck And Trailer Repair LLC",
@@ -14225,7 +14279,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 539
+    "rank": 541
   },
   {
     "company": "FleetBarn (Truck Trailer Repair)",
@@ -14251,7 +14305,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 540
+    "rank": 542
   },
   {
     "company": "Jones Truck & Spring Repair",
@@ -14277,7 +14331,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 541
+    "rank": 543
   },
   {
     "company": "Columbus Mobile Truck Repair",
@@ -14303,7 +14357,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 542
+    "rank": 544
   },
   {
     "company": "Eastern Truck & Trailer",
@@ -14329,7 +14383,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 543
+    "rank": 545
   },
   {
     "company": "South Central Fleet Services",
@@ -14355,7 +14409,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 544
+    "rank": 546
   },
   {
     "company": "PFM Fleet Service",
@@ -14381,7 +14435,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 545
+    "rank": 547
   },
   {
     "company": "Fleet Maintenance Transportation",
@@ -14407,7 +14461,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 546
+    "rank": 548
   },
   {
     "company": "Fleet Services & Repair",
@@ -14433,7 +14487,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 547
+    "rank": 549
   },
   {
     "company": "Fleet Force",
@@ -14459,7 +14513,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 548
+    "rank": 550
   },
   {
     "company": "ProFleet Heavy Duty Truck Parts",
@@ -14485,7 +14539,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 549
+    "rank": 551
   },
   {
     "company": "Atlas Industrial Contractors, Inc.",
@@ -14511,7 +14565,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 550
+    "rank": 552
   },
   {
     "company": "Elford Inc.",
@@ -14537,7 +14591,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 551
+    "rank": 553
   },
   {
     "company": "Lamit Industries Inc.",
@@ -14563,7 +14617,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 552
+    "rank": 554
   },
   {
     "company": "ACI Construction",
@@ -14589,7 +14643,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 553
+    "rank": 555
   },
   {
     "company": "Mammoth Prefab",
@@ -14615,7 +14669,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 554
+    "rank": 556
   },
   {
     "company": "Compton Construction",
@@ -14641,7 +14695,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 555
+    "rank": 557
   },
   {
     "company": "Humble Construction",
@@ -14667,7 +14721,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 556
+    "rank": 558
   },
   {
     "company": "Columbus Liquidation Center",
@@ -14693,7 +14747,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 557
+    "rank": 559
   },
   {
     "company": "WB Construction Products, LLC",
@@ -14719,7 +14773,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 558
+    "rank": 560
   },
   {
     "company": "Terminal Warehouse Inc",
@@ -14745,7 +14799,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 559
+    "rank": 561
   },
   {
     "company": "Exterior Building Supply",
@@ -14771,7 +14825,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 560
+    "rank": 562
   },
   {
     "company": "Ohio Wholesale Liquidation Services",
@@ -14797,7 +14851,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 561
+    "rank": 563
   },
   {
     "company": "Foundation Building Materials",
@@ -14823,7 +14877,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 562
+    "rank": 564
   },
   {
     "company": "SRS Building Products",
@@ -14849,7 +14903,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 563
+    "rank": 565
   },
   {
     "company": "King Distribution Center",
@@ -14875,7 +14929,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 564
+    "rank": 566
   },
   {
     "company": "Distribution Centre",
@@ -14901,7 +14955,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 565
+    "rank": 567
   },
   {
     "company": "NCS Distribution Center",
@@ -14927,7 +14981,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 566
+    "rank": 568
   },
   {
     "company": "CDC Distributors",
@@ -14953,7 +15007,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 567
+    "rank": 569
   },
   {
     "company": "MTM Contractors LLC",
@@ -14979,7 +15033,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 568
+    "rank": 570
   },
   {
     "company": "Ohio Facility Maintenance LLC",
@@ -15005,7 +15059,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 569
+    "rank": 571
   },
   {
     "company": "Team Industrial Services Inc",
@@ -15031,7 +15085,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 570
+    "rank": 572
   },
   {
     "company": "Team Industrial Services, Inc.",
@@ -15057,7 +15111,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 571
+    "rank": 573
   },
   {
     "company": "GHM Homes Remodeling And Chimney Services, OH",
@@ -15083,7 +15137,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 572
+    "rank": 574
   },
   {
     "company": "Preventative Maintenance Service",
@@ -15109,7 +15163,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 573
+    "rank": 575
   },
   {
     "company": "City Wide Facility Solutions - Columbus",
@@ -15135,7 +15189,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 574
+    "rank": 576
   },
   {
     "company": "A1 Pro Services, LLC",
@@ -15161,7 +15215,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 575
+    "rank": 577
   },
   {
     "company": "Gimme The Dirt Ltd",
@@ -15187,7 +15241,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 576
+    "rank": 578
   },
   {
     "company": "Stratus Building Solutions of Columbus",
@@ -15213,7 +15267,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 577
+    "rank": 579
   },
   {
     "company": "Ace Handyman Services Northwest Columbus",
@@ -15239,7 +15293,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 578
+    "rank": 580
   },
   {
     "company": "Yoder & Co. Floors",
@@ -15265,7 +15319,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 579
+    "rank": 581
   },
   {
     "company": "Floor Systems & Design",
@@ -15291,7 +15345,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 580
+    "rank": 582
   },
   {
     "company": "Panel Town & Floors",
@@ -15317,7 +15371,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 581
+    "rank": 583
   },
   {
     "company": "Footprints Floors of Columbus",
@@ -15343,7 +15397,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 582
+    "rank": 584
   },
   {
     "company": "Infistruct Flooring",
@@ -15369,7 +15423,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 583
+    "rank": 585
   },
   {
     "company": "Columbus Flooring City",
@@ -15395,7 +15449,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 584
+    "rank": 586
   },
   {
     "company": "America's Floor Source - Columbus East",
@@ -15421,7 +15475,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 585
+    "rank": 587
   },
   {
     "company": "Columbus Flooring Solutions",
@@ -15447,7 +15501,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 586
+    "rank": 588
   },
   {
     "company": "Floor Coverings International",
@@ -15473,7 +15527,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 587
+    "rank": 589
   },
   {
     "company": "America's Floor Source - Columbus West",
@@ -15499,7 +15553,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 588
+    "rank": 590
   },
   {
     "company": "Galaxy Concrete Coatings of Phoenix",
@@ -15525,7 +15579,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 589
+    "rank": 591
   },
   {
     "company": "Techniquex",
@@ -15551,7 +15605,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 590
+    "rank": 592
   },
   {
     "company": "Cardinal Concrete Coatings of Phoenix",
@@ -15577,7 +15631,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 591
+    "rank": 593
   },
   {
     "company": "Barefoot Surfaces Concrete Floor Coatings",
@@ -15603,7 +15657,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 592
+    "rank": 594
   },
   {
     "company": "Desert Polymer Flooring – Tempe",
@@ -15629,7 +15683,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 593
+    "rank": 595
   },
   {
     "company": "XPS Xpress Tempe",
@@ -15655,7 +15709,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 594
+    "rank": 596
   },
   {
     "company": "The Garage Floor Company Tempe",
@@ -15681,7 +15735,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 595
+    "rank": 597
   },
   {
     "company": "Eco-CorFlex Industrial Polymers",
@@ -15707,7 +15761,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 596
+    "rank": 598
   },
   {
     "company": "E2U Store Phoenix",
@@ -15733,7 +15787,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 597
+    "rank": 599
   },
   {
     "company": "Quick Response Floor Coatings",
@@ -15759,7 +15813,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 598
+    "rank": 600
   },
   {
     "company": "Pro-Surfacing Inc",
@@ -15785,7 +15839,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 599
+    "rank": 601
   },
   {
     "company": "First Class Coatings",
@@ -15811,7 +15865,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 600
+    "rank": 602
   },
   {
     "company": "The Chip Floor Company LLC",
@@ -15837,7 +15891,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 601
+    "rank": 603
   },
   {
     "company": "Cardinal Concrete Coatings",
@@ -15863,7 +15917,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 602
+    "rank": 604
   },
   {
     "company": "Valley Concrete Coatings and Polishing",
@@ -15889,7 +15943,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 603
+    "rank": 605
   },
   {
     "company": "Best Floor Coatings",
@@ -15915,7 +15969,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 604
+    "rank": 606
   },
   {
     "company": "Floor Daddy",
@@ -15941,7 +15995,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 605
+    "rank": 607
   },
   {
     "company": "Next Level Coatings",
@@ -15967,7 +16021,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 606
+    "rank": 608
   },
   {
     "company": "Rock Star Coating Pros",
@@ -15993,7 +16047,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 607
+    "rank": 609
   },
   {
     "company": "AZ Stain Concrete",
@@ -16019,7 +16073,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 608
+    "rank": 610
   },
   {
     "company": "Baker's Travertine Power Clean",
@@ -16045,7 +16099,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 609
+    "rank": 611
   },
   {
     "company": "Legendary Concrete Tempe",
@@ -16071,7 +16125,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 610
+    "rank": 612
   },
   {
     "company": "Four Peaks",
@@ -16097,7 +16151,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 611
+    "rank": 613
   },
   {
     "company": "Royal Touch Concrete LLC",
@@ -16123,7 +16177,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 612
+    "rank": 614
   },
   {
     "company": "BC Coatings",
@@ -16149,7 +16203,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 613
+    "rank": 615
   },
   {
     "company": "Atlantic Concrete Coatings Inc",
@@ -16175,7 +16229,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 614
+    "rank": 616
   },
   {
     "company": "Supreme Concrete Company",
@@ -16201,7 +16255,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 615
+    "rank": 617
   },
   {
     "company": "Papago concrete",
@@ -16227,7 +16281,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 616
+    "rank": 618
   },
   {
     "company": "Beyond Stone Solutions",
@@ -16253,7 +16307,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 617
+    "rank": 619
   },
   {
     "company": "All-Cut Concrete Cutting",
@@ -16279,7 +16333,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 618
+    "rank": 620
   },
   {
     "company": "Apache Concrete Cutting Inc",
@@ -16305,7 +16359,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 619
+    "rank": 621
   },
   {
     "company": "Hometown Concrete",
@@ -16331,7 +16385,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 620
+    "rank": 622
   },
   {
     "company": "Arizona Foundation Solutions LLC",
@@ -16357,7 +16411,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 621
+    "rank": 623
   },
   {
     "company": "KP Concrete",
@@ -16383,7 +16437,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 622
+    "rank": 624
   },
   {
     "company": "Arizona Concrete Specialists",
@@ -16409,7 +16463,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 623
+    "rank": 625
   },
   {
     "company": "Earthcraft Concrete",
@@ -16435,7 +16489,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 624
+    "rank": 626
   },
   {
     "company": "Casper's Concrete Contractors",
@@ -16461,7 +16515,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 625
+    "rank": 627
   },
   {
     "company": "Fresco Deck & Patio Coatings",
@@ -16487,7 +16541,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 626
+    "rank": 628
   },
   {
     "company": "Tennyson Foundation Repair",
@@ -16513,7 +16567,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 627
+    "rank": 629
   },
   {
     "company": "Scottsdale Concrete Contractors",
@@ -16539,7 +16593,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 628
+    "rank": 630
   },
   {
     "company": "JM Concrete Pros",
@@ -16565,7 +16619,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 629
+    "rank": 631
   },
   {
     "company": "StrataLock USA - Foundation Repair - Phoenix (Headquarters)",
@@ -16591,7 +16645,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 630
+    "rank": 632
   },
   {
     "company": "Dalinghaus Foundation Repair",
@@ -16617,7 +16671,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 631
+    "rank": 633
   },
   {
     "company": "Accurate Concrete and Fence LLC",
@@ -16643,7 +16697,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 632
+    "rank": 634
   },
   {
     "company": "Empire Paving & Maintenance LLC",
@@ -16669,7 +16723,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 633
+    "rank": 635
   },
   {
     "company": "Mobile Mix Concrete Delivery and Pumping",
@@ -16695,7 +16749,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 634
+    "rank": 636
   },
   {
     "company": "ABC Asphalt LLC",
@@ -16721,7 +16775,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 635
+    "rank": 637
   },
   {
     "company": "Stamped Concrete",
@@ -16747,7 +16801,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 636
+    "rank": 638
   },
   {
     "company": "Selective Concrete",
@@ -16773,7 +16827,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 637
+    "rank": 639
   },
   {
     "company": "Imagine Architectural Concrete",
@@ -16799,7 +16853,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 638
+    "rank": 640
   },
   {
     "company": "Setcrete Construction L.L.C.",
@@ -16825,7 +16879,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 639
+    "rank": 641
   },
   {
     "company": "Paradise Hardscapes - Pavers & Turf - Phoenix AZ",
@@ -16851,7 +16905,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 640
+    "rank": 642
   },
   {
     "company": "Kaizen Concrete LLC",
@@ -16877,7 +16931,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 641
+    "rank": 643
   },
   {
     "company": "V Stained Concrete, LLC",
@@ -16903,7 +16957,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 642
+    "rank": 644
   },
   {
     "company": "Arizona Creative Surfaces",
@@ -16929,7 +16983,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 643
+    "rank": 645
   },
   {
     "company": "Sledge Concrete Coatings",
@@ -16955,7 +17009,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 644
+    "rank": 646
   },
   {
     "company": "BRIKS COATINGS & SANDBLASTING LLC",
@@ -16981,7 +17035,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 645
+    "rank": 647
   },
   {
     "company": "Pro-Strip Media Blasting & Powder Coating",
@@ -17007,7 +17061,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 646
+    "rank": 648
   },
   {
     "company": "American Soda Blasters",
@@ -17033,7 +17087,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 647
+    "rank": 649
   },
   {
     "company": "Ace Sandblasting",
@@ -17059,7 +17113,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 648
+    "rank": 650
   },
   {
     "company": "Extreme Media Blasting",
@@ -17085,7 +17139,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 649
+    "rank": 651
   },
   {
     "company": "Southwest Surface Blasting",
@@ -17111,7 +17165,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 650
+    "rank": 652
   },
   {
     "company": "Tempe Abrasives, Inc",
@@ -17137,7 +17191,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 651
+    "rank": 653
   },
   {
     "company": "B&B Sandblasting & Industrial Finishes",
@@ -17163,7 +17217,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 652
+    "rank": 654
   },
   {
     "company": "ROYal Blasting Arizona",
@@ -17189,7 +17243,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 653
+    "rank": 655
   },
   {
     "company": "State 48 Mobile Blasting",
@@ -17215,7 +17269,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 654
+    "rank": 656
   },
   {
     "company": "PRO Blast, LLC",
@@ -17241,7 +17295,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 655
+    "rank": 657
   },
   {
     "company": "AZ SANDBLASTING",
@@ -17267,7 +17321,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 656
+    "rank": 658
   },
   {
     "company": "Powder Coat It",
@@ -17293,7 +17347,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 657
+    "rank": 659
   },
   {
     "company": "SM Powder Coating & Sandblasting",
@@ -17319,7 +17373,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 658
+    "rank": 660
   },
   {
     "company": "Strip Your Ride Media Blasting",
@@ -17345,7 +17399,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 659
+    "rank": 661
   },
   {
     "company": "FozWorks Powder Coating",
@@ -17371,7 +17425,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 660
+    "rank": 662
   },
   {
     "company": "Arizona Home Floors Dustless Tile Removal",
@@ -17397,7 +17451,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 661
+    "rank": 663
   },
   {
     "company": "DustRam Dust Free Tile Removal Services and Tools",
@@ -17423,7 +17477,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 662
+    "rank": 664
   },
   {
     "company": "Natural Stone Care Inc",
@@ -17449,7 +17503,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 663
+    "rank": 665
   },
   {
     "company": "Surface Envy",
@@ -17475,7 +17529,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 664
+    "rank": 666
   },
   {
     "company": "Total Floor Removal",
@@ -17501,7 +17555,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 665
+    "rank": 667
   },
   {
     "company": "The Car Shop",
@@ -17527,7 +17581,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 666
+    "rank": 668
   },
   {
     "company": "Cary's Auto Service",
@@ -17553,7 +17607,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 667
+    "rank": 669
   },
   {
     "company": "Gene's Auto Worx",
@@ -17579,7 +17633,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 668
+    "rank": 670
   },
   {
     "company": "Sun Devil Auto",
@@ -17605,7 +17659,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 669
+    "rank": 671
   },
   {
     "company": "Arizona Auto Care",
@@ -17631,7 +17685,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 670
+    "rank": 672
   },
   {
     "company": "Autoplex Auto Service",
@@ -17657,7 +17711,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 671
+    "rank": 673
   },
   {
     "company": "Camelback Toyota",
@@ -17683,7 +17737,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 672
+    "rank": 674
   },
   {
     "company": "iAUTOHAUS",
@@ -17709,7 +17763,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 673
+    "rank": 675
   },
   {
     "company": "Tempe Ram Service Center",
@@ -17735,7 +17789,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 674
+    "rank": 676
   },
   {
     "company": "CARS LAND SERVICE CENTER LLC",
@@ -17761,7 +17815,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 675
+    "rank": 677
   },
   {
     "company": "Tempe Chrysler Dodge Jeep Ram",
@@ -17787,7 +17841,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 676
+    "rank": 678
   },
   {
     "company": "Sports & Collector Car Center",
@@ -17813,7 +17867,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 677
+    "rank": 679
   },
   {
     "company": "Bill Luke Tempe - Alfa Romeo & Fiat",
@@ -17839,7 +17893,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 678
+    "rank": 680
   },
   {
     "company": "LeSueur Car Company",
@@ -17865,7 +17919,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 679
+    "rank": 681
   },
   {
     "company": "Sports Car Service Center",
@@ -17891,7 +17945,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 680
+    "rank": 682
   },
   {
     "company": "AutoNation Toyota Tempe",
@@ -17917,7 +17971,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 681
+    "rank": 683
   },
   {
     "company": "Arizona Collision Center - Tempe Body Shop and Collision Repair",
@@ -17943,7 +17997,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 682
+    "rank": 684
   },
   {
     "company": "Tempe Collision Center",
@@ -17969,7 +18023,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 683
+    "rank": 685
   },
   {
     "company": "Campus Body Salon Ltd. (Collision Center)",
@@ -17995,7 +18049,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 684
+    "rank": 686
   },
   {
     "company": "Fix Auto Tempe",
@@ -18021,7 +18075,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 685
+    "rank": 687
   },
   {
     "company": "MGA Collision Center",
@@ -18047,7 +18101,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 686
+    "rank": 688
   },
   {
     "company": "PCC Collision",
@@ -18073,7 +18127,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 687
+    "rank": 689
   },
   {
     "company": "Reyes Body Shop",
@@ -18099,7 +18153,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 688
+    "rank": 690
   },
   {
     "company": "Brightwood Collision Center",
@@ -18125,7 +18179,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 689
+    "rank": 691
   },
   {
     "company": "AutoCrafters",
@@ -18151,7 +18205,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 690
+    "rank": 692
   },
   {
     "company": "Vision Collision",
@@ -18177,7 +18231,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 691
+    "rank": 693
   },
   {
     "company": "Tempe Mobile Truck Repair",
@@ -18203,7 +18257,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 692
+    "rank": 694
   },
   {
     "company": "JT's Auto & Diesel",
@@ -18229,7 +18283,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 693
+    "rank": 695
   },
   {
     "company": "PHX Truck & Trailer Repair",
@@ -18255,7 +18309,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 694
+    "rank": 696
   },
   {
     "company": "KC Diesel Shop",
@@ -18281,7 +18335,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 695
+    "rank": 697
   },
   {
     "company": "CT Truck and Trailer Shop",
@@ -18307,7 +18361,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 696
+    "rank": 698
   },
   {
     "company": "AJ's Auto Works Inc./SXS Extreme Rehab/GAK Trailer repair",
@@ -18333,7 +18387,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 697
+    "rank": 699
   },
   {
     "company": "Just Better Fleet Service",
@@ -18359,7 +18413,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 698
+    "rank": 700
   },
   {
     "company": "Chapman Commercial Vehicle Service Center",
@@ -18385,7 +18439,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 699
+    "rank": 701
   },
   {
     "company": "Enterprise Fleet Management",
@@ -18411,7 +18465,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 700
+    "rank": 702
   },
   {
     "company": "Nearby Fleet Services",
@@ -18437,7 +18491,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 701
+    "rank": 703
   },
   {
     "company": "Chapman Commercial & Fleet",
@@ -18463,7 +18517,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 702
+    "rank": 704
   },
   {
     "company": "Freeway Towing & Storage - Tempe",
@@ -18489,7 +18543,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 703
+    "rank": 705
   },
   {
     "company": "Yota Pros Llc",
@@ -18515,7 +18569,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 704
+    "rank": 706
   },
   {
     "company": "Granite Reef Service Center, Inc",
@@ -18541,7 +18595,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 705
+    "rank": 707
   },
   {
     "company": "Kitchell Fleet Services",
@@ -18567,7 +18621,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 706
+    "rank": 708
   },
   {
     "company": "Matador Construction",
@@ -18593,7 +18647,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 707
+    "rank": 709
   },
   {
     "company": "Big-D Construction Southwest",
@@ -18619,7 +18673,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 708
+    "rank": 710
   },
   {
     "company": "TEPCON Construction, Inc.",
@@ -18645,7 +18699,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 709
+    "rank": 711
   },
   {
     "company": "Arizona Corporate Builders LLC",
@@ -18671,7 +18725,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 710
+    "rank": 712
   },
   {
     "company": "Boiler and Pressure Vessel Inspections - Arizona LLC",
@@ -18697,7 +18751,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 711
+    "rank": 713
   },
   {
     "company": "Infinity Builders - Tempe Remodeling & Construction",
@@ -18723,7 +18777,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 712
+    "rank": 714
   },
   {
     "company": "GTI Contractors Llc",
@@ -18749,7 +18803,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 713
+    "rank": 715
   },
   {
     "company": "DSM Arizona Inc.",
@@ -18775,7 +18829,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 714
+    "rank": 716
   },
   {
     "company": "Arrow Indian Contractors",
@@ -18801,7 +18855,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 715
+    "rank": 717
   },
   {
     "company": "Sonoran Sky Contracting",
@@ -18827,7 +18881,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 716
+    "rank": 718
   },
   {
     "company": "Portal Warehousing | Co-Warehousing & Logistics Space in Phoenix",
@@ -18853,7 +18907,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 717
+    "rank": 719
   },
   {
     "company": "Commercial Construction Products",
@@ -18879,7 +18933,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 718
+    "rank": 720
   },
   {
     "company": "The Contractor Guys",
@@ -18905,7 +18959,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 719
+    "rank": 721
   },
   {
     "company": "Earth Friendly Building Materials LLC",
@@ -18931,7 +18985,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 720
+    "rank": 722
   },
   {
     "company": "Manufacturers Floor Covering Outlet",
@@ -18957,7 +19011,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 721
+    "rank": 723
   },
   {
     "company": "Best Priced Flooring Co",
@@ -18983,7 +19037,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 722
+    "rank": 724
   },
   {
     "company": "Vortex Doors",
@@ -19009,7 +19063,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 723
+    "rank": 725
   },
   {
     "company": "Optum Home Solutions, LLC",
@@ -19035,7 +19089,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 724
+    "rank": 726
   },
   {
     "company": "Steady Install, Inc.",
@@ -19061,7 +19115,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 725
+    "rank": 727
   },
   {
     "company": "Phoenix Winsupply",
@@ -19087,7 +19141,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 726
+    "rank": 728
   },
   {
     "company": "Expressions Home Gallery Distribution Center",
@@ -19113,7 +19167,7 @@
       "industry_relevance": 15,
       "geographic_priority": 10
     },
-    "rank": 727
+    "rank": 729
   },
   {
     "company": "Moxie Distribution Inc",
@@ -19139,7 +19193,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 728
+    "rank": 730
   },
   {
     "company": "Daikin Comfort",
@@ -19165,7 +19219,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 729
+    "rank": 731
   },
   {
     "company": "ProEthic Building Services",
@@ -19191,7 +19245,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 730
+    "rank": 732
   },
   {
     "company": "ProSource of Tempe",
@@ -19217,7 +19271,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 731
+    "rank": 733
   },
   {
     "company": "A-Resilient Contracting",
@@ -19243,7 +19297,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 732
+    "rank": 734
   },
   {
     "company": "CMP General Contracting LLC",
@@ -19269,7 +19323,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 733
+    "rank": 735
   },
   {
     "company": "Iron Horse Companies LLC",
@@ -19295,7 +19349,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 734
+    "rank": 736
   },
   {
     "company": "Industrial Power Solutions",
@@ -19321,7 +19375,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 735
+    "rank": 737
   },
   {
     "company": "Southland Industries",
@@ -19347,7 +19401,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 736
+    "rank": 738
   },
   {
     "company": "MG Service Solutions LLC.",
@@ -19373,7 +19427,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 737
+    "rank": 739
   },
   {
     "company": "Modern Industries",
@@ -19399,7 +19453,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 738
+    "rank": 740
   },
   {
     "company": "Zona Floors",
@@ -19425,7 +19479,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 739
+    "rank": 741
   },
   {
     "company": "McFarland and Son Flooring",
@@ -19451,7 +19505,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 740
+    "rank": 742
   },
   {
     "company": "Next Step Floors Llc",
@@ -19477,7 +19531,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 741
+    "rank": 743
   },
   {
     "company": "State 48 Floors",
@@ -19503,7 +19557,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 742
+    "rank": 744
   },
   {
     "company": "New Interior Finishes",
@@ -19529,7 +19583,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 743
+    "rank": 745
   },
   {
     "company": "Amazing Flooring Solutions",
@@ -19555,7 +19609,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 744
+    "rank": 746
   },
   {
     "company": "AZ Supreme Flooring LLC",
@@ -19581,7 +19635,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 745
+    "rank": 747
   },
   {
     "company": "Let Us Floor You",
@@ -19607,7 +19661,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 746
+    "rank": 748
   },
   {
     "company": "Next Level Concrete Coatings",
@@ -19633,7 +19687,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 747
+    "rank": 749
   },
   {
     "company": "Apex Floor Coating",
@@ -19659,7 +19713,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 748
+    "rank": 750
   },
   {
     "company": "Revolutionary Floor Coatings",
@@ -19685,7 +19739,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 749
+    "rank": 751
   },
   {
     "company": "Pro Edge Floor Coatings",
@@ -19711,7 +19765,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 750
+    "rank": 752
   },
   {
     "company": "Legacy Concrete - Columbus",
@@ -19737,7 +19791,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 751
+    "rank": 753
   },
   {
     "company": "Daniel's concrete",
@@ -19763,7 +19817,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 752
+    "rank": 754
   },
   {
     "company": "Gibsons Concrete",
@@ -19789,7 +19843,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 753
+    "rank": 755
   },
   {
     "company": "Andrew's Concrete",
@@ -19815,7 +19869,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 754
+    "rank": 756
   },
   {
     "company": "Ronk Construction",
@@ -19841,7 +19895,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 755
+    "rank": 757
   },
   {
     "company": "Custom Concrete Plus",
@@ -19867,7 +19921,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 756
+    "rank": 758
   },
   {
     "company": "P&M Concrete LLC & Patio Restoration",
@@ -19893,7 +19947,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 757
+    "rank": 759
   },
   {
     "company": "Performance Powder Coating",
@@ -19919,7 +19973,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 758
+    "rank": 760
   },
   {
     "company": "Columbus Powder Coat",
@@ -19945,7 +19999,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 759
+    "rank": 761
   },
   {
     "company": "Master-Blaster Power Wash",
@@ -19971,7 +20025,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 760
+    "rank": 762
   },
   {
     "company": "MVPowdercoating",
@@ -19997,7 +20051,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 761
+    "rank": 763
   },
   {
     "company": "Rhino Shield Columbus",
@@ -20023,7 +20077,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 762
+    "rank": 764
   },
   {
     "company": "DDC Mobile Blasting",
@@ -20049,7 +20103,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 763
+    "rank": 765
   },
   {
     "company": "M Work",
@@ -20075,7 +20129,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 764
+    "rank": 766
   },
   {
     "company": "Stone Mart",
@@ -20101,7 +20155,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 765
+    "rank": 767
   },
   {
     "company": "The Columbus Distributing Company",
@@ -20127,7 +20181,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 766
+    "rank": 768
   },
   {
     "company": "Superior Flooring AZ",
@@ -20153,7 +20207,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 767
+    "rank": 769
   },
   {
     "company": "Marcel Painting",
@@ -20179,7 +20233,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 768
+    "rank": 770
   },
   {
     "company": "Arizona Flooring & Installation LLC",
@@ -20205,7 +20259,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 769
+    "rank": 771
   },
   {
     "company": "Diamond Coatings, AZ",
@@ -20231,7 +20285,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 770
+    "rank": 772
   },
   {
     "company": "Clear Cut Concrete",
@@ -20257,7 +20311,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 771
+    "rank": 773
   },
   {
     "company": "Cool Deck Repair AZ",
@@ -20283,7 +20337,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 772
+    "rank": 774
   },
   {
     "company": "RJ Concrete Contractor Phoenix",
@@ -20309,7 +20363,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 773
+    "rank": 775
   },
   {
     "company": "Tempe Paver Pros",
@@ -20335,7 +20389,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 774
+    "rank": 776
   },
   {
     "company": "Impressive Concrete Solutions",
@@ -20361,7 +20415,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 775
+    "rank": 777
   },
   {
     "company": "Carefree Stone Concrete Coatings",
@@ -20387,7 +20441,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 776
+    "rank": 778
   },
   {
     "company": "Ridge Concrete Coatings Plus",
@@ -20413,7 +20467,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 777
+    "rank": 779
   },
   {
     "company": "King Contracting, LLC",
@@ -20439,7 +20493,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 778
+    "rank": 780
   },
   {
     "company": "Green Pump Blasting",
@@ -20465,7 +20519,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 779
+    "rank": 781
   },
   {
     "company": "Green Wade Mobile Blasting",
@@ -20491,7 +20545,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 780
+    "rank": 782
   },
   {
     "company": "J&H Sandblasting LLC",
@@ -20517,7 +20571,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 781
+    "rank": 783
   },
   {
     "company": "Miracle Maintenance",
@@ -20543,7 +20597,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 782
+    "rank": 784
   },
   {
     "company": "Superstition Mobile Blasting",
@@ -20569,7 +20623,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 783
+    "rank": 785
   },
   {
     "company": "Kiwi Sandblasting & Painting",
@@ -20595,7 +20649,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 784
+    "rank": 786
   },
   {
     "company": "AZ Auto Doctor",
@@ -20621,7 +20675,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 785
+    "rank": 787
   },
   {
     "company": "Babbitt Motor Werks",
@@ -20647,7 +20701,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 786
+    "rank": 788
   },
   {
     "company": "VALLEY AUTO SOURCE",
@@ -20673,7 +20727,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 787
+    "rank": 789
   },
   {
     "company": "Midas",
@@ -20699,7 +20753,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 788
+    "rank": 790
   },
   {
     "company": "Hercules Industries",
@@ -20725,7 +20779,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 789
+    "rank": 791
   },
   {
     "company": "Arizona Facility Services",
@@ -20751,7 +20805,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 790
+    "rank": 792
   },
   {
     "company": "Caliente Construction Inc",
@@ -20777,7 +20831,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 791
+    "rank": 793
   },
   {
     "company": "Commercial Remodeling Contractors",
@@ -20803,7 +20857,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 792
+    "rank": 794
   },
   {
     "company": "FACT HVAC",
@@ -20829,7 +20883,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 793
+    "rank": 795
   },
   {
     "company": "M&C Services Group",
@@ -20855,7 +20909,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 794
+    "rank": 796
   },
   {
     "company": "Image Pro's",
@@ -20881,7 +20935,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 795
+    "rank": 797
   },
   {
     "company": "Schmeling Building Supply",
@@ -20907,7 +20961,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 796
+    "rank": 798
   },
   {
     "company": "Northern Illinois Concrete Lifting Inc.",
@@ -20933,7 +20987,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 797
+    "rank": 799
   },
   {
     "company": "Cream city concrete contractors",
@@ -20959,7 +21013,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 798
+    "rank": 800
   },
   {
     "company": "Early’s Stampcrete Co Inc",
@@ -20985,7 +21039,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 799
+    "rank": 801
   },
   {
     "company": "Concrete Systems, Inc.",
@@ -21011,7 +21065,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 800
+    "rank": 802
   },
   {
     "company": "Rock Valley Concrete Cutting",
@@ -21037,7 +21091,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 801
+    "rank": 803
   },
   {
     "company": "Paul Larson Concrete",
@@ -21063,7 +21117,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 802
+    "rank": 804
   },
   {
     "company": "TLD Construction LLC",
@@ -21089,7 +21143,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 803
+    "rank": 805
   },
   {
     "company": "Olmeca Concrete, Inc.",
@@ -21115,7 +21169,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 804
+    "rank": 806
   },
   {
     "company": "Sterling Concrete Stamping & Construction Inc",
@@ -21141,7 +21195,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 805
+    "rank": 807
   },
   {
     "company": "Ablaze Welding & Fabricating",
@@ -21167,7 +21221,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 806
+    "rank": 808
   },
   {
     "company": "Joe's Sandblasting & Painting",
@@ -21193,7 +21247,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 807
+    "rank": 809
   },
   {
     "company": "Ellis & Ellis Inc",
@@ -21219,7 +21273,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 808
+    "rank": 810
   },
   {
     "company": "Lou Bachrodt Auto Mall",
@@ -21245,7 +21299,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 809
+    "rank": 811
   },
   {
     "company": "Lou Bachrodt Chevrolet Service Center",
@@ -21271,7 +21325,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 810
+    "rank": 812
   },
   {
     "company": "Byrider Rockford",
@@ -21297,7 +21351,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 811
+    "rank": 813
   },
   {
     "company": "Anderson Rock River Ford",
@@ -21323,7 +21377,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 812
+    "rank": 814
   },
   {
     "company": "Anderson's Rock River Ford Service",
@@ -21349,7 +21403,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 813
+    "rank": 815
   },
   {
     "company": "Blain's Farm & Fleet Tires and Auto Service Center - Rockford, IL",
@@ -21375,7 +21429,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 814
+    "rank": 816
   },
   {
     "company": "Anderson Chrysler Dodge Jeep Ram",
@@ -21401,7 +21455,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 815
+    "rank": 817
   },
   {
     "company": "Napleton Care Rockford",
@@ -21427,7 +21481,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 816
+    "rank": 818
   },
   {
     "company": "Lou Bachrodt Chevrolet",
@@ -21453,7 +21507,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 817
+    "rank": 819
   },
   {
     "company": "Sinnissippi Motors",
@@ -21479,7 +21533,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 818
+    "rank": 820
   },
   {
     "company": "BENNY & SONS BODY SHOP, INC.",
@@ -21505,7 +21559,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 819
+    "rank": 821
   },
   {
     "company": "Kar Kraft Inc.",
@@ -21531,7 +21585,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 820
+    "rank": 822
   },
   {
     "company": "Parson's General Body Shop",
@@ -21557,7 +21611,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 821
+    "rank": 823
   },
   {
     "company": "Quality Auto Inc Collision Center",
@@ -21583,7 +21637,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 822
+    "rank": 824
   },
   {
     "company": "LSC Body Shop",
@@ -21609,7 +21663,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 823
+    "rank": 825
   },
   {
     "company": "Gerber Collision & Glass",
@@ -21635,7 +21689,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 824
+    "rank": 826
   },
   {
     "company": "Auto Enhancers Inc.",
@@ -21661,7 +21715,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 825
+    "rank": 827
   },
   {
     "company": "McVeigh's Truck Center Inc",
@@ -21687,7 +21741,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 826
+    "rank": 828
   },
   {
     "company": "Meiborg Enterprises",
@@ -21713,7 +21767,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 827
+    "rank": 829
   },
   {
     "company": "FleetPride Service Center",
@@ -21739,7 +21793,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 828
+    "rank": 830
   },
   {
     "company": "TA Truck Service",
@@ -21765,7 +21819,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 829
+    "rank": 831
   },
   {
     "company": "Fleet Service",
@@ -21791,7 +21845,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 830
+    "rank": 832
   },
   {
     "company": "Blain's Farm & Fleet Tires and Auto Service Center - Loves Park, IL",
@@ -21817,7 +21871,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 831
+    "rank": 833
   },
   {
     "company": "Blain's Farm & Fleet - Rockford, Illinois",
@@ -21843,7 +21897,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 832
+    "rank": 834
   },
   {
     "company": "Rockford Specialties Co",
@@ -21869,7 +21923,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 833
+    "rank": 835
   },
   {
     "company": "Accelerated Machine Design and Engineering LLC",
@@ -21895,7 +21949,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 834
+    "rank": 836
   },
   {
     "company": "Andco Kitchens & Baths, Inc.",
@@ -21921,7 +21975,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 835
+    "rank": 837
   },
   {
     "company": "ABC Supply Co. Inc.",
@@ -21947,7 +22001,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 836
+    "rank": 838
   },
   {
     "company": "Construction Specialties",
@@ -21973,7 +22027,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 837
+    "rank": 839
   },
   {
     "company": "Pierce Distribution Services",
@@ -21999,7 +22053,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 838
+    "rank": 840
   },
   {
     "company": "Senator International",
@@ -22025,7 +22079,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 839
+    "rank": 841
   },
   {
     "company": "Northern Illinois Service Co.",
@@ -22051,7 +22105,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 840
+    "rank": 842
   },
   {
     "company": "Lonnie's Carpetmax",
@@ -22077,7 +22131,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 841
+    "rank": 843
   },
   {
     "company": "Lind Boomer Flooring, Remodeling & Construction.",
@@ -22103,7 +22157,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 842
+    "rank": 844
   },
   {
     "company": "Canyon Flooring, Kitchen & Bath",
@@ -22129,7 +22183,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 843
+    "rank": 845
   },
   {
     "company": "BMB Flooring & More L.L.C.",
@@ -22155,7 +22209,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 844
+    "rank": 846
   },
   {
     "company": "Blain's Farm & Fleet - Loves Park, Illinois",
@@ -22181,7 +22235,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 845
+    "rank": 847
   },
   {
     "company": "Auto Solutions of Rockford",
@@ -22207,7 +22261,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 846
+    "rank": 848
   },
   {
     "company": "Auto Works Inc",
@@ -22233,7 +22287,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 847
+    "rank": 849
   },
   {
     "company": "Gaddis & Son Inc",
@@ -22259,7 +22313,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 848
+    "rank": 850
   },
   {
     "company": "Central Ohio Concrete Cutting",
@@ -22285,7 +22339,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 849
+    "rank": 851
   },
   {
     "company": "Donley Concrete Cutting Company",
@@ -22311,7 +22365,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 850
+    "rank": 852
   },
   {
     "company": "Two Brothers Concrete LLC",
@@ -22337,7 +22391,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 851
+    "rank": 853
   },
   {
     "company": "Premier Asphalt and Concrete",
@@ -22363,7 +22417,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 852
+    "rank": 854
   },
   {
     "company": "Benchmark Concrete",
@@ -22389,7 +22443,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 853
+    "rank": 855
   },
   {
     "company": "King Concrete's Design Impressions",
@@ -22415,7 +22469,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 854
+    "rank": 856
   },
   {
     "company": "Sam The Concrete Man Columbus",
@@ -22441,7 +22495,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 855
+    "rank": 857
   },
   {
     "company": "Koated Metal & Graphics LLC",
@@ -22467,7 +22521,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 856
+    "rank": 858
   },
   {
     "company": "Columbus Luxury Cars LLC",
@@ -22493,7 +22547,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 857
+    "rank": 859
   },
   {
     "company": "Mark Wahlberg Chevy Columbus Service Center",
@@ -22519,7 +22573,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 858
+    "rank": 860
   },
   {
     "company": "Bexley Motorcar Company",
@@ -22545,7 +22599,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 859
+    "rank": 861
   },
   {
     "company": "Ricart Hyundai Service",
@@ -22571,7 +22625,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 860
+    "rank": 862
   },
   {
     "company": "Mark Wahlberg Buick GMC Service Center",
@@ -22597,7 +22651,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 861
+    "rank": 863
   },
   {
     "company": "Keen's Body Shop",
@@ -22623,7 +22677,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 862
+    "rank": 864
   },
   {
     "company": "Diesel Mobile Truck & Trailer Repair, LLC",
@@ -22649,7 +22703,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 863
+    "rank": 865
   },
   {
     "company": "Singh Truck & Trailer Repair Shop",
@@ -22675,7 +22729,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 864
+    "rank": 866
   },
   {
     "company": "Ferguson Construction",
@@ -22701,7 +22755,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 865
+    "rank": 867
   },
   {
     "company": "REC Construction LTD",
@@ -22727,7 +22781,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 866
+    "rank": 868
   },
   {
     "company": "Setterlin Building Company",
@@ -22753,7 +22807,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 867
+    "rank": 869
   },
   {
     "company": "Miles-McClellan Construction",
@@ -22779,7 +22833,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 868
+    "rank": 870
   },
   {
     "company": "Construction One Inc",
@@ -22805,7 +22859,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 869
+    "rank": 871
   },
   {
     "company": "Brexton Construction LLC",
@@ -22831,7 +22885,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 870
+    "rank": 872
   },
   {
     "company": "Aluf Plastics",
@@ -22857,7 +22911,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 871
+    "rank": 873
   },
   {
     "company": "Columbus Builders Supply",
@@ -22883,7 +22937,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 872
+    "rank": 874
   },
   {
     "company": "United Building Materials",
@@ -22909,7 +22963,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 873
+    "rank": 875
   },
   {
     "company": "Interior Supply Inc.",
@@ -22935,7 +22989,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 874
+    "rank": 876
   },
   {
     "company": "Dismas Distribution Services",
@@ -22961,7 +23015,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 875
+    "rank": 877
   },
   {
     "company": "CED Central Ohio",
@@ -22987,7 +23041,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 876
+    "rank": 878
   },
   {
     "company": "Shoemaker Industrial Solutions",
@@ -23013,7 +23067,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 877
+    "rank": 879
   },
   {
     "company": "Superior Building Services, LLC.",
@@ -23039,7 +23093,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 878
+    "rank": 880
   },
   {
     "company": "Circle Building Services, Inc.",
@@ -23065,7 +23119,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 879
+    "rank": 881
   },
   {
     "company": "MnA Repairs & Home Maintenance",
@@ -23091,7 +23145,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 880
+    "rank": 882
   },
   {
     "company": "Superior Home Maintenance Co.",
@@ -23117,7 +23171,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 881
+    "rank": 883
   },
   {
     "company": "A-Core Concrete Specialists of Arizona",
@@ -23143,7 +23197,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 882
+    "rank": 884
   },
   {
     "company": "Cool Concrete Creations LLC",
@@ -23169,7 +23223,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 883
+    "rank": 885
   },
   {
     "company": "Dustless Tile Removal, A Division of Diversified Construction, LLC",
@@ -23195,7 +23249,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 884
+    "rank": 886
   },
   {
     "company": "Midway Nissan",
@@ -23221,7 +23275,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 885
+    "rank": 887
   },
   {
     "company": "AutoNation Toyota Tempe Service Center",
@@ -23247,7 +23301,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 886
+    "rank": 888
   },
   {
     "company": "Chapman Chevrolet",
@@ -23273,7 +23327,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 887
+    "rank": 889
   },
   {
     "company": "Southwest Auto Center",
@@ -23299,7 +23353,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 888
+    "rank": 890
   },
   {
     "company": "Kaizen Collision Center - Tempe",
@@ -23325,7 +23379,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 889
+    "rank": 891
   },
   {
     "company": "Chapman Collision Tempe",
@@ -23351,7 +23405,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 890
+    "rank": 892
   },
   {
     "company": "Master Tech Collision",
@@ -23377,7 +23431,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 891
+    "rank": 893
   },
   {
     "company": "Emergency Roadside Truck and Trailer Repair",
@@ -23403,7 +23457,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 892
+    "rank": 894
   },
   {
     "company": "Onsite Truck & Equipment Repair",
@@ -23429,7 +23483,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 893
+    "rank": 895
   },
   {
     "company": "USPS Vehicle Maintenance Facility",
@@ -23455,7 +23509,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 894
+    "rank": 896
   },
   {
     "company": "East Valley Bus Operations and Maintenance",
@@ -23481,7 +23535,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 895
+    "rank": 897
   },
   {
     "company": "Okland Construction Company, Inc.",
@@ -23507,7 +23561,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 896
+    "rank": 898
   },
   {
     "company": "Sundt Construction Headquarters",
@@ -23533,7 +23587,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 897
+    "rank": 899
   },
   {
     "company": "Performance Contracting Inc",
@@ -23559,7 +23613,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 898
+    "rank": 900
   },
   {
     "company": "Building Materials Outlet",
@@ -23585,7 +23639,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 899
+    "rank": 901
   },
   {
     "company": "Stardust Building Supplies",
@@ -23611,7 +23665,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 900
+    "rank": 902
   },
   {
     "company": "Chasse Building Team",
@@ -23637,7 +23691,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 901
+    "rank": 903
   },
   {
     "company": "The Dump Luxe Furniture Outlet",
@@ -23663,7 +23717,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 902
+    "rank": 904
   },
   {
     "company": "L & H Industrial",
@@ -23689,7 +23743,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 903
+    "rank": 905
   },
   {
     "company": "KDC Construction",
@@ -23715,7 +23769,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 904
+    "rank": 906
   },
   {
     "company": "Raven Industries AZ LLC",
@@ -23741,7 +23795,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 905
+    "rank": 907
   },
   {
     "company": "Arizona Flooring & Interiors LLC",
@@ -23767,7 +23821,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 906
+    "rank": 908
   },
   {
     "company": "Burton Metal Finishing Inc.& Powder Coating",
@@ -23793,7 +23847,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 907
+    "rank": 909
   },
   {
     "company": "Upper Arlington Fleet Management",
@@ -23819,7 +23873,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 908
+    "rank": 910
   },
   {
     "company": "Professional Towing & Recovery LLC",
@@ -23845,7 +23899,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 909
+    "rank": 911
   },
   {
     "company": "SDB Contracting Services",
@@ -23871,7 +23925,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 910
+    "rank": 912
   },
   {
     "company": "Regalia Flooring, installation and refinishing",
@@ -23897,7 +23951,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 911
+    "rank": 913
   },
   {
     "company": "amigos flat concrete",
@@ -23923,7 +23977,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 912
+    "rank": 914
   },
   {
     "company": "Serrano's Concrete",
@@ -23949,7 +24003,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 913
+    "rank": 915
   },
   {
     "company": "Campos Construction Inc",
@@ -23975,7 +24029,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 914
+    "rank": 916
   },
   {
     "company": "Creative Concrete & Landscape",
@@ -24001,7 +24055,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 915
+    "rank": 917
   },
   {
     "company": "Auto Beautifiers",
@@ -24027,7 +24081,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 916
+    "rank": 918
   },
   {
     "company": "P M Body Shop",
@@ -24053,7 +24107,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 917
+    "rank": 919
   },
   {
     "company": "Maggio Truck Center",
@@ -24079,7 +24133,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 918
+    "rank": 920
   },
   {
     "company": "JX Truck Center - Rockford",
@@ -24105,7 +24159,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 919
+    "rank": 921
   },
   {
     "company": "J & A Fleet Maintenenace",
@@ -24131,7 +24185,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 920
+    "rank": 922
   },
   {
     "company": "AAR",
@@ -24157,7 +24211,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 921
+    "rank": 923
   },
   {
     "company": "Meiborg Brothers Inc",
@@ -24183,7 +24237,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 922
+    "rank": 924
   },
   {
     "company": "Moman Construction",
@@ -24209,7 +24263,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 923
+    "rank": 925
   },
   {
     "company": "IMI Precision Engineering Rockford",
@@ -24235,7 +24289,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 924
+    "rank": 926
   },
   {
     "company": "RMI Steel",
@@ -24261,7 +24315,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 925
+    "rank": 927
   },
   {
     "company": "Miller Engineering Co",
@@ -24287,7 +24341,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 926
+    "rank": 928
   },
   {
     "company": "Auto Outlets USA",
@@ -24313,7 +24367,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 927
+    "rank": 929
   },
   {
     "company": "Equipment Depot - Rockford",
@@ -24339,7 +24393,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 928
+    "rank": 930
   },
   {
     "company": "Briggs Floor Sanding & Refinishing",
@@ -24365,7 +24419,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 929
+    "rank": 931
   },
   {
     "company": "A-1 Concrete Leveling Columbus",
@@ -24391,7 +24445,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 930
+    "rank": 932
   },
   {
     "company": "Madina Truck and Trailer Repair",
@@ -24417,7 +24471,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 931
+    "rank": 933
   },
   {
     "company": "D&A Truck And Trailer Repair",
@@ -24443,7 +24497,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 932
+    "rank": 934
   },
   {
     "company": "T.I.G Fleet Service Columbus",
@@ -24469,7 +24523,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 933
+    "rank": 935
   },
   {
     "company": "Columbus City Schools Fort Hayes Bus Compound & Fleet Service Center",
@@ -24495,7 +24549,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 934
+    "rank": 936
   },
   {
     "company": "Columbus City Schools Frebis Bus Compound and Fleet Service Center",
@@ -24521,7 +24575,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 935
+    "rank": 937
   },
   {
     "company": "L&W Supply - Columbus, OH",
@@ -24547,7 +24601,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 936
+    "rank": 938
   },
   {
     "company": "Action Industrial Services",
@@ -24573,7 +24627,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 937
+    "rank": 939
   },
   {
     "company": "World Distribution Services Container Transload Facility",
@@ -24599,7 +24653,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 938
+    "rank": 940
   },
   {
     "company": "Distribution International",
@@ -24625,7 +24679,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 939
+    "rank": 941
   },
   {
     "company": "Distributor Service Inc.",
@@ -24651,7 +24705,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 940
+    "rank": 942
   },
   {
     "company": "Defense Supply Center Columbus",
@@ -24677,7 +24731,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 941
+    "rank": 943
   },
   {
     "company": "Legacy Maintenance Services, LLC",
@@ -24703,7 +24757,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 942
+    "rank": 944
   },
   {
     "company": "Temcon Concrete Construction Co",
@@ -24729,7 +24783,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 943
+    "rank": 945
   },
   {
     "company": "Spartan Concrete",
@@ -24755,7 +24809,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 944
+    "rank": 946
   },
   {
     "company": "Gorilla Industrial Coatings",
@@ -24781,7 +24835,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 945
+    "rank": 947
   },
   {
     "company": "Gerber Collision & Glass",
@@ -24807,7 +24861,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 946
+    "rank": 948
   },
   {
     "company": "FNF Construction Inc",
@@ -24833,7 +24887,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 947
+    "rank": 949
   },
   {
     "company": "Contractors Wardrobe",
@@ -24859,7 +24913,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 948
+    "rank": 950
   },
   {
     "company": "Delta Diversified Enterprises Inc",
@@ -24885,7 +24939,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 949
+    "rank": 951
   },
   {
     "company": "InteriorWorx Commercial Flooring",
@@ -24911,7 +24965,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 950
+    "rank": 952
   },
   {
     "company": "Ohio Valley Cardinal Health",
@@ -24937,7 +24991,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 951
+    "rank": 953
   },
   {
     "company": "Buick GMC Tempe Service",
@@ -24963,7 +25017,1276 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 952
+    "rank": 954
+  },
+  {
+    "company": "Coastal Flooring",
+    "phone": "(772) 871-7900",
+    "email": "",
+    "website": "https://www.coastalflooring.net",
+    "address": "8532 S Us Highway 1 # 1Port St Lucie, FL 34952",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "flooring contractors",
+    "category": "flooring contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 955
+  },
+  {
+    "company": "PSL Flooring",
+    "phone": "(772) 777-1293",
+    "email": "",
+    "website": "https://www.pslflooring.com",
+    "address": "573 SW Biltmore StPort St Lucie, FL 34983",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "flooring contractors",
+    "category": "flooring contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 956
+  },
+  {
+    "company": "KC Tile Restoration",
+    "phone": "(772) 774-3433",
+    "email": "",
+    "website": "https://kctile.com",
+    "address": "1860 SW Fountainview Blvd Ste 100Port St Lucie, FL 34986",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "flooring contractors",
+    "category": "flooring contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 957
+  },
+  {
+    "company": "Ace Handyman Services Port St Lucie",
+    "phone": "(772) 242-0260",
+    "email": "",
+    "website": "https://www.acehandymanservices.com/offices/port-st-lucie",
+    "address": "10026 S Us Highway 1Port St Lucie, FL 34952",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "flooring contractors",
+    "category": "flooring contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 958
+  },
+  {
+    "company": "Gotcha Covered Flooring",
+    "phone": "(772) 323-5067",
+    "email": "",
+    "website": "https://www.gotchacoveredflooring.com/flooring-contractor",
+    "address": "2073 SW Beekman StPort St Lucie, FL 34953",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "flooring contractors",
+    "category": "flooring contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 959
+  },
+  {
+    "company": "Six-S Flooring",
+    "phone": "(772) 207-7151",
+    "email": "",
+    "website": "http://www.sixsflooring.com",
+    "address": "500 NW University BlvdPort St Lucie, FL 34986",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "flooring contractors",
+    "category": "flooring contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 960
+  },
+  {
+    "company": "Discount Carpet Shop At Home",
+    "phone": "(772) 340-4479",
+    "email": "",
+    "website": "http://discountcarpetoutlet.com//?gtnjs=1",
+    "address": "Port Saint Lucie 34953Port Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "epoxy flooring",
+    "category": "epoxy flooring",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 961
+  },
+  {
+    "company": "Jay's Floors & More Inc",
+    "phone": "(772) 335-3000",
+    "email": "",
+    "website": "http://jaysfloorsmoreinc.localsearch.com",
+    "address": "1720 SE Port St Lucie BlvdPort Saint Lucie, FL 34952",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "epoxy flooring",
+    "category": "epoxy flooring",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 962
+  },
+  {
+    "company": "Mid State Flooring",
+    "phone": "(772) 453-9575",
+    "email": "",
+    "website": "http://midstateflooring.localsearch.com",
+    "address": "Port Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "epoxy flooring",
+    "category": "epoxy flooring",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 963
+  },
+  {
+    "company": "Anthony's Flooring Designs",
+    "phone": "(954) 347-0814",
+    "email": "",
+    "website": "http://anthonysflooringdesigns.localsearch.com",
+    "address": "575 NW Mercantile Pl Ste 108Port Saint Lucie, FL 34986",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "epoxy flooring",
+    "category": "epoxy flooring",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 964
+  },
+  {
+    "company": "Pierpont Hardwood Flooring Group LLC",
+    "phone": "(772) 237-2855",
+    "email": "",
+    "website": "http://pierponthardwoodflooringgroupllcfl.localsearch.com",
+    "address": "533 SW Leona DrPort Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "epoxy flooring",
+    "category": "epoxy flooring",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 965
+  },
+  {
+    "company": "Valado's Flooring",
+    "phone": "(772) 251-5481",
+    "email": "",
+    "website": "https://flooringportsaintlucie.com",
+    "address": "Port Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "epoxy flooring",
+    "category": "epoxy flooring",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 966
+  },
+  {
+    "company": "Swat 24 LLC",
+    "phone": "(772) 286-7928",
+    "email": "",
+    "website": "http://www.swat24.com",
+    "address": "Port St Lucie, FL 34983",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "tile installation",
+    "category": "tile installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 967
+  },
+  {
+    "company": "Bluecat Tile & Grout",
+    "phone": "(772) 530-5121",
+    "email": "",
+    "website": "https://tileandcarpetcleaningpros.com",
+    "address": "782 SE Evans AvePort St Lucie, FL 34984",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "tile installation",
+    "category": "tile installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 968
+  },
+  {
+    "company": "Bowlero Port St. Lucie",
+    "phone": "(772) 800-7328",
+    "email": "",
+    "website": "https://www.bowlero.com/location/bowlero-port-st-lucie?utm_source=extnet&utm_medium=organic&utm_campaign=yext_listings",
+    "address": "1600 NW Courtyard CirPort St Lucie, FL 34986",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "tile installation",
+    "category": "tile installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 969
+  },
+  {
+    "company": "Carpet One",
+    "phone": "(772) 335-5005",
+    "email": "",
+    "website": "http://yellowpages.com/port-saint-lucie-fl/mip/affordable-flooring-816820",
+    "address": "8860 S Us Highway 1Port Saint Lucie, FL 34952",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "carpet installation",
+    "category": "carpet installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 970
+  },
+  {
+    "company": "Flooring By Carpets",
+    "phone": "(772) 878-4707",
+    "email": "",
+    "website": "http://www.carpetsetcpsl.com",
+    "address": "1374 SE Huffman RdPort Saint Lucie, FL 34952",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "carpet installation",
+    "category": "carpet installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 971
+  },
+  {
+    "company": "Scott A Concannon Inc",
+    "phone": "(863) 801-3767",
+    "email": "",
+    "website": "http://scottaconcannoninc.localsearch.com",
+    "address": "Serving thePort St Lucie Area",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "carpet installation",
+    "category": "carpet installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 972
+  },
+  {
+    "company": "Joseph B Concrete Perfection",
+    "phone": "(772) 240-6170",
+    "email": "",
+    "website": "http://josephbconcreteperfection.localsearch.com",
+    "address": "Port St Lucie, FL 34986",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "concrete polishing",
+    "category": "concrete polishing",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 973
+  },
+  {
+    "company": "A & G Concrete Pools Inc",
+    "phone": "(772) 878-7752",
+    "email": "",
+    "website": "https://angpools.com",
+    "address": "8880 Glades Cut Off RdPort St Lucie, FL 34986",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "concrete polishing",
+    "category": "concrete polishing",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 974
+  },
+  {
+    "company": "K G Concrete & Development",
+    "phone": "(772) 971-4153",
+    "email": "",
+    "website": "http://kgconcretellc.com",
+    "address": "725 SE Portage AvePort Saint Lucie, FL 34984",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "concrete polishing",
+    "category": "concrete polishing",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 975
+  },
+  {
+    "company": "Randy Joe Littlefield Lawns",
+    "phone": "(772) 380-5663",
+    "email": "",
+    "website": "http://randyjoelittlefieldlawns.localsearch.com",
+    "address": "631 SW Everett CtPort Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "concrete polishing",
+    "category": "concrete polishing",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 976
+  },
+  {
+    "company": "Restoration Technology",
+    "phone": "(772) 621-2645",
+    "email": "",
+    "website": "http://restorationtechnology.localsearch.com",
+    "address": "600 SW Darwin BlvdPort Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "concrete polishing",
+    "category": "concrete polishing",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 977
+  },
+  {
+    "company": "Public Works Department",
+    "phone": "(772) 871-5100",
+    "email": "",
+    "website": "https://www.cityofpsl.com/Home/Components/Calendar/Event/3232/1912",
+    "address": "450 SW Thornhill DrPort Saint Lucie, FL 34984",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "concrete polishing",
+    "category": "concrete polishing",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 978
+  },
+  {
+    "company": "Restoration Concrete Inc",
+    "phone": "(772) 340-1370",
+    "email": "",
+    "website": "http://yellowpages.com/port-saint-lucie-fl/mip/restoration-concrete-inc-10418925",
+    "address": "3370 SE East Snow RdPort Saint Lucie, FL 34984",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "concrete polishing",
+    "category": "concrete polishing",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 979
+  },
+  {
+    "company": "Surface Tek",
+    "phone": "(772) 812-5347",
+    "email": "",
+    "website": "http://surfacetek.org",
+    "address": "541 SW LawlerPort Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "concrete polishing",
+    "category": "concrete polishing",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 980
+  },
+  {
+    "company": "Mosley & Son Construction Inc",
+    "phone": "(772) 888-0334",
+    "email": "",
+    "website": "http://www.mosleyandson.com/",
+    "address": "1400 SE Monterey RdStuart, FL 34994",
+    "city": "Stuart",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 981
+  },
+  {
+    "company": "Mr. Handyman Serving Vero Beach and Jupiter",
+    "phone": "(772) 510-2305",
+    "email": "",
+    "website": "https://www.mrhandyman.com/vero-beach-jupiter",
+    "address": "7811 SW Ellipse Way Ste C1Stuart, FL 34997",
+    "city": "Stuart",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 982
+  },
+  {
+    "company": "DiFrancesco Construction",
+    "phone": "(772) 672-3360",
+    "email": "",
+    "website": "https://difrancescoconstructioninc.localsearch.com",
+    "address": "Serving thePort St Lucie Area",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 983
+  },
+  {
+    "company": "John Jacobs Construction",
+    "phone": "(772) 882-8334",
+    "email": "",
+    "website": "http://www.johnjacobsconstruction.com",
+    "address": "4701 Oleander AveFort Pierce, FL 34982",
+    "city": "Fort Pierce",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 984
+  },
+  {
+    "company": "Bob's Plumbing Repair Service",
+    "phone": "(772) 878-4605",
+    "email": "",
+    "website": "http://bobsplumbingrepairservice.localsearch.com",
+    "address": "155 SW Lakehurst DrPort Saint Lucie, FL 34983",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 985
+  },
+  {
+    "company": "Solace Roofing",
+    "phone": "(772) 446-3096",
+    "email": "",
+    "website": "https://solaceroofing.com",
+    "address": "550 SE Port St Lucie Blvd Unit 6Port St Lucie, FL 34984",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 986
+  },
+  {
+    "company": "Atlantic Concrete Cutting & Breaking",
+    "phone": "(561) 667-9008",
+    "email": "",
+    "website": "http://atlanticconcretecuttingbreakingfl.localsearch.com",
+    "address": "661 SW Stillman AvePort St Lucie, FL 34953",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 987
+  },
+  {
+    "company": "Auto Sprinkler",
+    "phone": "(772) 212-1200",
+    "email": "",
+    "website": "https://autosprinkler.com",
+    "address": "515 SE Nome Dr Unit NULLPort St Lucie, FL 34984",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 988
+  },
+  {
+    "company": "Home Crete Homes",
+    "phone": "(772) 873-6707",
+    "email": "",
+    "website": "http://www.homecretehomes.com",
+    "address": "3785 SW Savona BlvdPort St Lucie, FL 34953",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 989
+  },
+  {
+    "company": "Floor & Decor",
+    "phone": "(772) 301-6013",
+    "email": "",
+    "website": "https://www.flooranddecor.com/store/port_st_lucie/fl/34953/191",
+    "address": "2260 SW Gatlin BlvdPort St Lucie, FL 34953",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "epoxy flooring",
+    "category": "epoxy flooring",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 990
+  },
+  {
+    "company": "Lowe's Home Improvement",
+    "phone": "(772) 204-7160",
+    "email": "",
+    "website": "https://www.lowes.com/store/FL-Port-St.-Lucie/2349?cm_mmc=lod-_-c-_-lcl-_-awr-_-yxt-_-res-_-2349-_-na-_-0-_-0&y_source=1_MTE4NDAxNi01NTMtbG9jYXRpb24ud2Vic2l0ZQ%3D%3D",
+    "address": "701 NW Saint Lucie West BlvdPort St Lucie, FL 34986",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "epoxy flooring",
+    "category": "epoxy flooring",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 991
+  },
+  {
+    "company": "M L Miller Carpet & Vinyl Installation Inc",
+    "phone": "(772) 538-6478",
+    "email": "",
+    "website": "http://mlmillercarpetvinylinstallationinc.localsearch.com",
+    "address": "1605 90th AveVero Beach, FL 32966",
+    "city": "Vero Beach",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "vinyl flooring installation",
+    "category": "vinyl flooring installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 992
+  },
+  {
+    "company": "Jupiter LVP & Vinyl Flooring",
+    "phone": "(561) 768-4109",
+    "email": "",
+    "website": "https://voxservices.net/service/flooring-in-jupiter-fl/118235/jupiter-lvp-vinyl-flooring",
+    "address": "1001 N Us Highway 1Jupiter, FL 33477",
+    "city": "Jupiter",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "vinyl flooring installation",
+    "category": "vinyl flooring installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 993
+  },
+  {
+    "company": "Danny Beyer Flooring Installation",
+    "phone": "(772) 453-4496",
+    "email": "",
+    "website": "http://dannybeyerflooringinstallation.localsearch.com",
+    "address": "2226 13th Ave SWVero Beach, FL 32962",
+    "city": "Vero Beach",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "vinyl flooring installation",
+    "category": "vinyl flooring installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 994
+  },
+  {
+    "company": "Rental Center at The Home Depot",
+    "phone": "(772) 807-4889",
+    "email": "",
+    "website": "https://www.homedepot.com/l/Port-St-Lucie-South/FL/Port-Saint-Lucie/34953/6934/rentals?emt=RCEN",
+    "address": "2200 SW Gatlin BlvdPort Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "vinyl flooring installation",
+    "category": "vinyl flooring installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 995
+  },
+  {
+    "company": "Pro Desk at The Home Depot",
+    "phone": "(772) 873-4802",
+    "email": "",
+    "website": "https://www.homedepot.com/l/West-Port-St-Lucie/FL/Port-Saint-Lucie/34986/6376/pro-desk?emt=PROEN",
+    "address": "700 SW Saint Lucie West BlvdPort Saint Lucie, FL 34986",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "vinyl flooring installation",
+    "category": "vinyl flooring installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 996
+  },
+  {
+    "company": "Leaf Home Stair Lift",
+    "phone": "(833) 376-8129",
+    "email": "",
+    "website": "https://www.leafhome.com/stair-lift?y_source=1_MjA0MDU0MjMwOC01NTMtbG9jYXRpb24ud2Vic2l0ZQ%3D%3D",
+    "address": "686 NW Enterprise DrPort St Lucie, FL 34986",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 997
+  },
+  {
+    "company": "Toll Brothers at Tesoro Club",
+    "phone": "(772) 675-0900",
+    "email": "",
+    "website": "https://www.tollbrothers.com/luxury-homes-for-sale/Florida/Toll-Brothers-at-Tesoro-Club?utm_source=Yext&utm_medium=Local+Listings&utm_campaign=Yext+Community+Local+Listings&utm_content=Community+Link&y_source=1_OTMxMjE4ODMtNTUzLWxvY2F0aW9uLndlYnNpdGU%3D",
+    "address": "126 SE Calmo CirPort St Lucie, FL 34984",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 998
+  },
+  {
+    "company": "Stonelight Roofing",
+    "phone": "(772) 380-7055",
+    "email": "",
+    "website": "https://www.stonelightroofing.com",
+    "address": "500 NW Peacock Blvd Ste 116Port St Lucie, FL 34986",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 999
+  },
+  {
+    "company": "A S P Construction Inc",
+    "phone": "(772) 878-7590",
+    "email": "",
+    "website": "http://asp-construction.org",
+    "address": "2313 SW Fern CirPort Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 1000
+  },
+  {
+    "company": "Anne Painting & Handyman LLC",
+    "phone": "(772) 789-0241",
+    "email": "",
+    "website": "http://painterfortpierce.com",
+    "address": "Fort Pierce, FL 34950",
+    "city": "Fort Pierce",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 25,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 25,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 1001
   },
   {
     "company": "mr sealer inc",
@@ -24989,7 +26312,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 953
+    "rank": 1002
   },
   {
     "company": "Foxy Flooring",
@@ -25015,7 +26338,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 954
+    "rank": 1003
   },
   {
     "company": "Cobra Concrete Cutting Services Co.",
@@ -25041,7 +26364,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 955
+    "rank": 1004
   },
   {
     "company": "F & S Concrete Co",
@@ -25067,7 +26390,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 956
+    "rank": 1005
   },
   {
     "company": "Beechner Heat Treating Company Inc.",
@@ -25093,7 +26416,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 957
+    "rank": 1006
   },
   {
     "company": "Sub Source Inc",
@@ -25119,7 +26442,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 958
+    "rank": 1007
   },
   {
     "company": "Northern Illinois Eco-Blasting",
@@ -25145,7 +26468,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 959
+    "rank": 1008
   },
   {
     "company": "Speedway Auto Mall",
@@ -25171,7 +26494,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 960
+    "rank": 1009
   },
   {
     "company": "Alonso's Body Shop",
@@ -25197,7 +26520,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 961
+    "rank": 1010
   },
   {
     "company": "FAST LANE FLEET SERVICES",
@@ -25223,7 +26546,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 962
+    "rank": 1011
   },
   {
     "company": "Rockford Structures Construction Company",
@@ -25249,7 +26572,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 963
+    "rank": 1012
   },
   {
     "company": "PCI",
@@ -25275,7 +26598,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 964
+    "rank": 1013
   },
   {
     "company": "Fastenal Fulfillment Center",
@@ -25301,7 +26624,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 965
+    "rank": 1014
   },
   {
     "company": "ABM - Facility Services",
@@ -25327,7 +26650,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 966
+    "rank": 1015
   },
   {
     "company": "Midwest Millwright Services Inc.",
@@ -25353,7 +26676,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 967
+    "rank": 1016
   },
   {
     "company": "Surface Maintenance Services Inc",
@@ -25379,7 +26702,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 968
+    "rank": 1017
   },
   {
     "company": "Rock Valley Industries LLC",
@@ -25405,7 +26728,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 969
+    "rank": 1018
   },
   {
     "company": "Contemporary Hammer Works Inc",
@@ -25431,7 +26754,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 970
+    "rank": 1019
   },
   {
     "company": "ROCKFORD CONTRACTORS",
@@ -25457,7 +26780,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 971
+    "rank": 1020
   },
   {
     "company": "MDM Construction Supply, LLC",
@@ -25483,7 +26806,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 972
+    "rank": 1021
   },
   {
     "company": "Gunite Corporation",
@@ -25509,7 +26832,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 973
+    "rank": 1022
   },
   {
     "company": "Area Erectors, Inc.",
@@ -25535,7 +26858,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 974
+    "rank": 1023
   },
   {
     "company": "General Mills Corp. (United Facilities, Inc.)",
@@ -25561,7 +26884,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 975
+    "rank": 1024
   },
   {
     "company": "Commercial Flooring Contractors",
@@ -25587,7 +26910,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 976
+    "rank": 1025
   },
   {
     "company": "Concrete Contractors",
@@ -25613,7 +26936,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 977
+    "rank": 1026
   },
   {
     "company": "True Grit Soda Blasting",
@@ -25639,7 +26962,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 978
+    "rank": 1027
   },
   {
     "company": "Limitless Blasting & Restorations LLC.",
@@ -25665,7 +26988,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 979
+    "rank": 1028
   },
   {
     "company": "Columbus Fleet Management",
@@ -25691,7 +27014,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 980
+    "rank": 1029
   },
   {
     "company": "Fleet Management Department-Columbus",
@@ -25717,7 +27040,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 981
+    "rank": 1030
   },
   {
     "company": "Franklin County Fleet Management",
@@ -25743,7 +27066,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 982
+    "rank": 1031
   },
   {
     "company": "Fleet Management Office",
@@ -25769,7 +27092,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 983
+    "rank": 1032
   },
   {
     "company": "Messer Construction Co. - Columbus Regional Office",
@@ -25795,7 +27118,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 984
+    "rank": 1033
   },
   {
     "company": "TKS Industrial Company",
@@ -25821,7 +27144,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 985
+    "rank": 1034
   },
   {
     "company": "BASF Corporation",
@@ -25847,7 +27170,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 986
+    "rank": 1035
   },
   {
     "company": "COLUMBUS P&DC",
@@ -25873,7 +27196,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 987
+    "rank": 1036
   },
   {
     "company": "Integrated Building Systems",
@@ -25899,7 +27222,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 988
+    "rank": 1037
   },
   {
     "company": "Midwest Maintenance Service & Repair INC",
@@ -25925,7 +27248,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 989
+    "rank": 1038
   },
   {
     "company": "Ohio Construction Maintenance",
@@ -25951,7 +27274,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 990
+    "rank": 1039
   },
   {
     "company": "Commercial Flooring Columbus",
@@ -25977,7 +27300,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 991
+    "rank": 1040
   },
   {
     "company": "Arizona Drilling & Blasting",
@@ -26003,7 +27326,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 992
+    "rank": 1041
   },
   {
     "company": "Pristine Cleaning Blasting",
@@ -26029,7 +27352,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 993
+    "rank": 1042
   },
   {
     "company": "BKS Arizona",
@@ -26055,7 +27378,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 994
+    "rank": 1043
   },
   {
     "company": "Platinum Transportation Service",
@@ -26081,7 +27404,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 995
+    "rank": 1044
   },
   {
     "company": "Valley Metro Operations & Maintenance Center",
@@ -26107,7 +27430,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 996
+    "rank": 1045
   },
   {
     "company": "Chandler Street Maintenance",
@@ -26133,7 +27456,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 997
+    "rank": 1046
   },
   {
     "company": "Tempe ABM Office",
@@ -26159,7 +27482,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 998
+    "rank": 1047
   },
   {
     "company": "Core Fleet Management",
@@ -26185,7 +27508,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 999
+    "rank": 1048
   },
   {
     "company": "TDIndustries, Inc.",
@@ -26211,7 +27534,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 1000
+    "rank": 1049
   },
   {
     "company": "Metropolitan Maintenance Services",
@@ -26237,7 +27560,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 1001
+    "rank": 1050
   },
   {
     "company": "Swift Industrial Repair",
@@ -26263,7 +27586,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 1002
+    "rank": 1051
   },
   {
     "company": "Franklin County Engineer West Maintenance Facility",
@@ -26289,7 +27612,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 1003
+    "rank": 1052
   },
   {
     "company": "Arizona Fleet Service",
@@ -26315,7 +27638,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 1004
+    "rank": 1053
   },
   {
     "company": "US Diversified Services Llc",
@@ -26341,7 +27664,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 1005
+    "rank": 1054
   },
   {
     "company": "Rmp Construction",
@@ -26367,7 +27690,7 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 1006
+    "rank": 1055
   },
   {
     "company": "KDC Service & Maintenance",
@@ -26393,6 +27716,87 @@
       "industry_relevance": 0,
       "geographic_priority": 10
     },
-    "rank": 1007
+    "rank": 1056
+  },
+  {
+    "company": "Carpets By Five-Four",
+    "phone": "(772) 242-4780",
+    "email": "",
+    "website": "",
+    "address": "3947 U.S. Highway 1, Fort Pierce, FL 34982",
+    "city": "Fort Pierce",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "flooring contractors",
+    "category": "flooring contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 20,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 20,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 1057
+  },
+  {
+    "company": "Affordable Flooring",
+    "phone": "(772) 398-1320",
+    "email": "",
+    "website": "",
+    "address": "1602 SE Village Green DrPort Saint Lucie, FL 34952",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "flooring contractors",
+    "category": "flooring contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 20,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 20,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 1058
+  },
+  {
+    "company": "RC Tile Installation Co",
+    "phone": "(772) 285-7466",
+    "email": "",
+    "website": "",
+    "address": "Port St Lucie, FL 34983",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "tile installation",
+    "category": "tile installation",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-13",
+    "industry": "Unknown",
+    "industry_detected": "Unknown",
+    "lead_score": 20,
+    "tier": "COLD",
+    "score_breakdown": {
+      "contact_completeness": 20,
+      "business_quality": 0,
+      "industry_relevance": 0,
+      "geographic_priority": 0
+    },
+    "rank": 1059
   }
 ]
