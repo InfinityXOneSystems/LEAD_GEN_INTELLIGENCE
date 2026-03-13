@@ -44,7 +44,7 @@ async function runMigrations() {
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
       console.log(`[migrate] Attempt ${attempt}/${MAX_RETRIES} — running knex migrate:latest …`);
-      const result = execSync("npx knex migrate:latest --knexfile knexfile.js", {
+      execSync("npx knex migrate:latest --knexfile knexfile.js", {
         stdio: ["inherit", "inherit", "pipe"],
         env: { ...process.env },
       });
@@ -54,12 +54,12 @@ async function runMigrations() {
       // Capture stderr for a human-readable failure reason
       const stderrText = err.stderr ? err.stderr.toString().trim() : "";
       const reason = stderrText.includes("ECONNREFUSED")
-        ? "Database not reachable (ECONNREFUSED) — Postgres may still be starting"
+        ? "PostgreSQL not reachable (ECONNREFUSED) — database may still be starting"
         : stderrText.includes("password")
-        ? "Database authentication failed — check PGPASSWORD / DATABASE_URL"
+        ? "PostgreSQL authentication failed — check PGPASSWORD / DATABASE_URL"
         : stderrText.includes("ETIMEDOUT")
-        ? "Database connection timed out — check PGHOST and network"
-        : stderrText.split("\n")[0].slice(0, 200) || (err.message || String(err));
+        ? "PostgreSQL connection timed out — check PGHOST and network configuration"
+        : stderrText.split("\n")[0].slice(0, 200) || (err.message || "unknown error running knex migrate:latest");
       console.error(`[migrate] ❌ Migration attempt ${attempt} failed: ${reason}`);
 
       if (attempt < MAX_RETRIES) {
