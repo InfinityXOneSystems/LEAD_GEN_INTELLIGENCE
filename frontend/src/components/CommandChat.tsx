@@ -1,15 +1,14 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Bot, Loader2, Send, X } from "lucide-react";
+import { Bot, Loader2, Send, X, Zap } from "lucide-react";
 import toast from "react-hot-toast";
 import {
   sendCommand,
-  getTaskStatus,
   pollTaskUntilDone,
   type TaskStatusResponse,
-  type RuntimeCommandRequest,
 } from "@/lib/runtimeClient";
+import { sendChatMessage, type ChatHistoryMessage } from "@/lib/chatClient";
 
 interface ChatMessage {
   id: string;
@@ -17,61 +16,46 @@ interface ChatMessage {
   content: string;
   taskId?: string;
   taskStatus?: TaskStatusResponse;
+  model?: string;
   timestamp: Date;
 }
+}
 
-function parseCommand(input: string): RuntimeCommandRequest {
+/**
+ * Detect whether the user input is an explicit pipeline/scraper command
+ * (vs a conversational message for the LLM).
+ */
+function isRuntimeCommand(input: string): boolean {
+  const lower = input.toLowerCase().trim();
+  return (
+    lower.startsWith("scrape ") ||
+    lower.startsWith("run ") ||
+    lower.startsWith("execute ") ||
+    lower.includes("run pipeline") ||
+    lower.includes("run scraper") ||
+    lower.includes("run outreach")
+  );
+}
+
+function parseRuntimeCommand(input: string) {
   const lower = input.toLowerCase().trim();
 
-  if (
-    lower.includes("scrape") ||
-    lower.includes("find") ||
-    lower.includes("search")
-  ) {
-    return {
-      command: "run_scraper",
-      target: input,
-      parameters: { query: input },
-    };
+  if (lower.includes("scrape") || lower.includes("find") || lower.includes("search")) {
+    return { command: "run_scraper", target: input, parameters: { query: input } };
   }
   if (lower.includes("seo") || lower.includes("audit")) {
     const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
-    return {
-      command: "run_seo_audit",
-      target: urlMatch?.[0] ?? input,
-      parameters: {},
-    };
+    return { command: "run_seo_audit", target: urlMatch?.[0] ?? input, parameters: {} };
   }
-  if (
-    lower.includes("social") ||
-    lower.includes("linkedin") ||
-    lower.includes("facebook")
-  ) {
+  if (lower.includes("social") || lower.includes("linkedin") || lower.includes("facebook")) {
     const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
-    return {
-      command: "run_social_scan",
-      target: urlMatch?.[0] ?? input,
-      parameters: {},
-    };
+    return { command: "run_social_scan", target: urlMatch?.[0] ?? input, parameters: {} };
   }
-  if (
-    lower.includes("browse") ||
-    lower.includes("navigate") ||
-    lower.includes("visit")
-  ) {
+  if (lower.includes("browse") || lower.includes("navigate") || lower.includes("visit")) {
     const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
-    return {
-      command: "run_browser",
-      target: urlMatch?.[0] ?? input,
-      parameters: { action: "navigate" },
-    };
+    return { command: "run_browser", target: urlMatch?.[0] ?? input, parameters: { action: "navigate" } };
   }
-
-  return {
-    command: "health_check",
-    target: null,
-    parameters: { original_input: input },
-  };
+  return { command: "health_check", target: null, parameters: { original_input: input } };
 }
 
 function StatusBadge({ status }: { status: string }) {

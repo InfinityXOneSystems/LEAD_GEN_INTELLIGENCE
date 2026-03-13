@@ -29,28 +29,42 @@ function tierFromScore(score) {
 /**
  * Normalise a raw scraper/Supabase lead into the API response shape.
  * Accepts both canonical (company_name, lead_score) and legacy (company, score) keys.
+ * Returns BOTH the canonical frontend field names (company_name, lead_score, tier)
+ * AND legacy aliases (company, score, status/location) so all consumers work.
  */
 function normalizeLeadForApi(lead, index) {
-  const company = lead.company_name || lead.company || "";
-  const score = parseInt(lead.lead_score || lead.score || 0, 10);
+  const company_name = lead.company_name || lead.company || "";
+  const lead_score = parseInt(lead.lead_score ?? lead.score ?? 0, 10);
   const city = lead.city || "";
   const state = lead.state || "";
   const location = [city, state].filter(Boolean).join(", ") || lead.address || "";
   const industry = lead.industry || lead.category || lead.keyword || "";
-  const tier = (lead.tier || "").toLowerCase();
-  const status = tier || tierFromScore(score);
+  // Preserve original uppercase tier; derive from score only if missing
+  const rawTier = lead.tier || "";
+  const tier = rawTier
+    ? rawTier.toUpperCase()
+    : tierFromScore(lead_score).toUpperCase();
+  const status = tier.toLowerCase();
 
   return {
+    // ── canonical frontend fields ────────────────────────────────────────
     id: lead.id || lead._id || String(index + 1),
-    company,
+    company_name,
+    city,
+    state,
+    lead_score,
+    tier,
+    // ── legacy / convenience aliases ─────────────────────────────────────
+    company: company_name,
+    score: lead_score,
+    location,
+    status,
+    // ── contact / enrichment fields ──────────────────────────────────────
     email: lead.email || null,
     phone: lead.phone || null,
-    score,
-    location,
-    industry,
-    status,
-    // extra fields useful for dashboards
     website: lead.website || null,
+    address: lead.address || null,
+    industry,
     rating: lead.rating != null ? parseFloat(lead.rating) : null,
     reviews: lead.reviews != null ? parseInt(lead.reviews, 10) : null,
     source: lead.source || null,
@@ -150,6 +164,55 @@ function getGroqClient() {
   return _groqClient;
 }
 
+/**
+ * Call GitHub Copilot chat completions API.
+ * Uses GITHUB_TOKEN with the copilot chat completions endpoint.
+ */
+async function callCopilotChat(messages) {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) throw new Error("GITHUB_TOKEN not set");
+
+  const body = JSON.stringify({
+    model: "claude-3.7-sonnet",
+    messages,
+    max_tokens: 1024,
+  });
+
+  const https = require("https");
+  return new Promise((resolve, reject) => {
+    const options = {
+      hostname: "api.githubcopilot.com",
+      path: "/chat/completions",
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Copilot-Integration-Id": "xps-intelligence-agent",
+        Accept: "application/json",
+      },
+    };
+    const req = https.request(options, (res) => {
+      let data = "";
+      res.on("data", (chunk) => (data += chunk));
+      res.on("end", () => {
+        try {
+          const parsed = JSON.parse(data);
+          if (res.statusCode >= 400) {
+            reject(new Error(`Copilot API error ${res.statusCode}: ${data}`));
+          } else {
+            resolve(parsed.choices?.[0]?.message?.content || "");
+          }
+        } catch (e) {
+          reject(e);
+        }
+      });
+    });
+    req.on("error", reject);
+    req.write(body);
+    req.end();
+  });
+}
+
 // ── Health check ────────────────────────────────────────────────────────────
 
 app.get("/api/health", (_req, res) => {
@@ -160,37 +223,69 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
-// ── Chat endpoint (Groq LLM) ────────────────────────────────────────────────
+// ── Chat endpoint (Groq LLM → GitHub Copilot fallback) ─────────────────────
 
 app.post("/api/chat/send", async (req, res) => {
-  const { message, agentRole, sessionId } = req.body;
+  const { message, agentRole, sessionId, history } = req.body;
 
   if (!message) {
     return res.status(400).json({ error: "message is required" });
   }
 
   const groqKey = process.env.GROQ_API_KEY;
-  if (!groqKey) {
-    return res.status(503).json({ error: "GROQ_API_KEY not configured" });
+  const ghToken = process.env.GITHUB_TOKEN;
+
+  if (!groqKey && !ghToken) {
+    return res
+      .status(503)
+      .json({ error: "No LLM configured: set GROQ_API_KEY or GITHUB_TOKEN" });
   }
 
+  // Build lead count context for the system prompt
+  const leadCount = (() => {
+    try {
+      const leads = loadLeadsFromFile();
+      return leads.length;
+    } catch (_) {
+      return 0;
+    }
+  })();
+
+  const systemPrompt =
+    `You are XPS Intelligence — an autonomous AI agent for contractor lead generation. ` +
+    `Role: ${agentRole || "LeadAgent"}. ` +
+    `The platform currently has ${leadCount} real contractor leads scraped via the shadow headless scraper. ` +
+    `You help users find, score, and contact high-value flooring, epoxy, roofing and construction contractors. ` +
+    `Provide concise, actionable responses. When asked about leads, reference the real data available.`;
+
+  // Build messages array with optional history
+  const messages = [{ role: "system", content: systemPrompt }];
+  if (Array.isArray(history)) {
+    for (const h of history) {
+      if (h && (h.role === "user" || h.role === "assistant") && h.content) {
+        messages.push({ role: h.role, content: String(h.content) });
+      }
+    }
+  }
+  messages.push({ role: "user", content: message });
+
   try {
-    const groq = getGroqClient();
+    let replyContent;
 
-    const completion = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
-      messages: [
-        {
-          role: "system",
-          content: `You are XPS Intelligence Agent. Role: ${agentRole || "General"}. Provide actionable insights for contractor lead generation.`,
-        },
-        { role: "user", content: message },
-      ],
-      max_tokens: 1024,
-    });
+    if (groqKey) {
+      // ── Primary: Groq ──────────────────────────────────────────────────
+      const groq = getGroqClient();
+      const completion = await groq.chat.completions.create({
+        model: "llama-3.3-70b-versatile",
+        messages,
+        max_tokens: 1024,
+      });
+      replyContent = completion.choices[0]?.message?.content || "No response";
+    } else {
+      // ── Fallback: GitHub Copilot ───────────────────────────────────────
+      replyContent = await callCopilotChat(messages);
+    }
 
-    const replyContent =
-      completion.choices[0]?.message?.content || "No response";
     const replyId = crypto.randomUUID();
     const msgId = crypto.randomUUID();
 
@@ -200,18 +295,17 @@ app.post("/api/chat/send", async (req, res) => {
         id: replyId,
         role: "assistant",
         content: replyContent,
-        agentRole: agentRole || "GeneralAgent",
+        agentRole: agentRole || "LeadAgent",
         timestamp: new Date().toISOString(),
         status: "sent",
+        model: groqKey ? "groq:llama-3.3-70b-versatile" : "copilot:claude-3.7-sonnet",
       },
-      agentRole: agentRole || "GeneralAgent",
+      agentRole: agentRole || "LeadAgent",
       sessionId: sessionId || crypto.randomUUID(),
     });
   } catch (err) {
     console.error("[Chat] Error:", err.message);
-    return res
-      .status(500)
-      .json({ error: "Chat request failed" });
+    return res.status(500).json({ error: "Chat request failed" });
   }
 });
 
