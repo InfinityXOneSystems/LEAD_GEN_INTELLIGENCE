@@ -37,7 +37,8 @@ function normalizeLeadForApi(lead, index) {
   const lead_score = parseInt(lead.lead_score ?? lead.score ?? 0, 10);
   const city = lead.city || "";
   const state = lead.state || "";
-  const location = [city, state].filter(Boolean).join(", ") || lead.address || "";
+  const location =
+    [city, state].filter(Boolean).join(", ") || lead.address || "";
   const industry = lead.industry || lead.category || lead.keyword || "";
   // Preserve original uppercase tier; derive from score only if missing
   const rawTier = lead.tier || "";
@@ -77,7 +78,7 @@ function readJsonSafe(filePath) {
   try {
     const raw = fs.readFileSync(filePath, "utf8");
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : (parsed.leads || parsed.data || []);
+    return Array.isArray(parsed) ? parsed : parsed.leads || parsed.data || [];
   } catch (_) {
     return [];
   }
@@ -125,7 +126,10 @@ async function fetchLeads({ limit = 500, industry, minScore, tier } = {}) {
     try {
       leads = await store.getAllLeads(limit);
     } catch (err) {
-      console.warn("[server] Supabase unavailable, falling back to file:", err.message);
+      console.warn(
+        "[server] Supabase unavailable, falling back to file:",
+        err.message,
+      );
       leads = loadLeadsFromFile();
     }
   } else {
@@ -298,7 +302,9 @@ app.post("/api/chat/send", async (req, res) => {
         agentRole: agentRole || "LeadAgent",
         timestamp: new Date().toISOString(),
         status: "sent",
-        model: groqKey ? "groq:llama-3.3-70b-versatile" : "copilot:claude-3.7-sonnet",
+        model: groqKey
+          ? "groq:llama-3.3-70b-versatile"
+          : "copilot:claude-3.7-sonnet",
       },
       agentRole: agentRole || "LeadAgent",
       sessionId: sessionId || crypto.randomUUID(),
