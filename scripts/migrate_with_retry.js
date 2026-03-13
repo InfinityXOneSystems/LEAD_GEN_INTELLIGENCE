@@ -1,165 +1,91 @@
+#!/usr/bin/env node
 "use strict";
+
 /**
  * scripts/migrate_with_retry.js
  * ================================
- * Runs Knex migrations with automatic PostgreSQL connection retries.
+ * Run Knex database migrations with retry logic so that Railway's
+ * preDeployCommand waits for Postgres to become ready before migrating.
  *
- * Railway starts the app container and the PostgreSQL container at nearly
- * the same time. The Postgres service may take a few seconds to become
- * healthy. This script polls for connectivity (up to WAIT_SECONDS) before
- * running migrations so the startup never fails with ECONNREFUSED.
+ * Exits 0 on success OR after exhausting retries so the gateway always starts.
  *
- * Usage (called from package.json "db:migrate"):
+ * Usage:
  *   node scripts/migrate_with_retry.js
  *
- * Environment variables (all optional — resolved via knexfile.js):
- *   PGHOST / DATABASE_URL / DATABASE_URL etc.
- *   DB_WAIT_SECONDS   — max seconds to wait for DB (default 60)
- *   DB_RETRY_INTERVAL — seconds between retries (default 3)
+ * Env vars honoured:
+ *   DATABASE_URL          — full Postgres connection string (Railway default)
+ *   MIGRATE_MAX_RETRIES   — maximum attempts            (default: 10)
+ *   MIGRATE_RETRY_DELAY   — milliseconds between retries (default: 5000)
+ *   SKIP_MIGRATIONS       — set to "true" to skip entirely (CI / no-DB)
  */
 
 require("dotenv").config();
 
 const { execSync } = require("child_process");
-const { Client } = require("pg");
 
-const WAIT_SECONDS = parseInt(process.env.DB_WAIT_SECONDS || "60", 10);
-const RETRY_INTERVAL = parseInt(process.env.DB_RETRY_INTERVAL || "3", 10);
-const NODE_ENV = process.env.NODE_ENV || "development";
+const MAX_RETRIES = parseInt(process.env.MIGRATE_MAX_RETRIES || "10", 10);
+const RETRY_DELAY_MS = parseInt(process.env.MIGRATE_RETRY_DELAY || "5000", 10);
 
-// ── Build a pg.Client connection config from the same env vars as knexfile ──
-function buildPgConfig() {
-  const connStr =
-    process.env.DATABASE_URL ||
-    process.env.DATABASE_PUBLIC_URL ||
-    process.env.POSTGRES_URL ||
-    null;
-
-  if (connStr) {
-    const needsSsl =
-      connStr.includes("railway.app") || connStr.includes("neon.tech");
-    return {
-      connectionString: connStr,
-      ssl: needsSsl ? { rejectUnauthorized: false } : false,
-      connectionTimeoutMillis: 5000,
-    };
-  }
-
-  return {
-    host: process.env.PGHOST || process.env.DATABASE_HOST || "localhost",
-    port: parseInt(
-      process.env.PGPORT || process.env.DATABASE_PORT || "5432",
-      10,
-    ),
-    database:
-      process.env.PGDATABASE ||
-      process.env.POSTGRES_DB ||
-      process.env.DATABASE_NAME ||
-      "railway",
-    user:
-      process.env.PGUSER ||
-      process.env.POSTGRES_USER ||
-      process.env.DATABASE_USER ||
-      "postgres",
-    password:
-      process.env.PGPASSWORD ||
-      process.env.POSTGRES_PASSWORD ||
-      process.env.DATABASE_PASSWORD ||
-      "",
-    ssl: false,
-    connectionTimeoutMillis: 5000,
-  };
+if (process.env.SKIP_MIGRATIONS === "true") {
+  console.log("[migrate] SKIP_MIGRATIONS=true — skipping.");
+  process.exit(0);
 }
 
-async function waitForPostgres() {
-  const cfg = buildPgConfig();
-  const target = cfg.connectionString
-    ? cfg.connectionString.replace(/:[^:@]+@/, ":***@") // mask password
-    : `${cfg.host}:${cfg.port}/${cfg.database}`;
-
-  console.log(
-    `[db:migrate] Waiting for PostgreSQL at ${target} (up to ${WAIT_SECONDS}s)…`,
+if (
+  !process.env.DATABASE_URL &&
+  !process.env.DATABASE_HOST &&
+  !process.env.PGHOST
+) {
+  console.warn(
+    "[migrate] No DATABASE_URL or DATABASE_HOST found — skipping migrations.",
   );
+  process.exit(0);
+}
 
-  const deadline = Date.now() + WAIT_SECONDS * 1000;
-  let attempt = 0;
-
-  while (Date.now() < deadline) {
-    attempt++;
-    const client = new Client(cfg);
-    try {
-      await client.connect();
-      await client.query("SELECT 1");
-      await client.end();
-      console.log(`[db:migrate] PostgreSQL ready after ${attempt} attempt(s).`);
-      return true;
-    } catch (err) {
-      const remaining = Math.ceil((deadline - Date.now()) / 1000);
-      console.log(
-        `[db:migrate] Attempt ${attempt}: not ready (${err.code || err.message}). ` +
-          `Retrying in ${RETRY_INTERVAL}s… (${remaining}s remaining)`,
-      );
-      try {
-        await client.end();
-      } catch (_) {}
-      await new Promise((r) => setTimeout(r, RETRY_INTERVAL * 1000));
-    }
-  }
-
-  console.error(
-    `[db:migrate] PostgreSQL did not become ready within ${WAIT_SECONDS}s.`,
-  );
-  return false;
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function runMigrations() {
-  const ready = await waitForPostgres();
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      console.log(
+        `[migrate] Attempt ${attempt}/${MAX_RETRIES} — running knex migrate:latest …`,
+      );
+      execSync("npx knex migrate:latest --knexfile knexfile.js", {
+        stdio: ["inherit", "inherit", "pipe"],
+        env: { ...process.env },
+      });
+      console.log("[migrate] ✅ Migrations completed successfully.");
+      return true;
+    } catch (err) {
+      // Capture stderr for a human-readable failure reason
+      const stderrText = err.stderr ? err.stderr.toString().trim() : "";
+      const reason = stderrText.includes("ECONNREFUSED")
+        ? "PostgreSQL not reachable (ECONNREFUSED) — database may still be starting"
+        : stderrText.includes("password")
+          ? "PostgreSQL authentication failed — check PGPASSWORD / DATABASE_URL"
+          : stderrText.includes("ETIMEDOUT")
+            ? "PostgreSQL connection timed out — check PGHOST and network configuration"
+            : stderrText.split("\n")[0].slice(0, 200) ||
+              err.message ||
+              "unknown error running knex migrate:latest";
+      console.error(
+        `[migrate] ❌ Migration attempt ${attempt} failed: ${reason}`,
+      );
 
-  if (!ready) {
-    // NOTE: We intentionally exit 0 so the Railway container starts and passes
-    // the health-check.  Migrations will auto-run on the next deploy once the
-    // database is reachable.  The gateway degrades gracefully for DB-less routes.
-    console.warn(
-      "[db:migrate] ⚠️  DEGRADED MODE — database unreachable, migrations skipped.",
-    );
-    console.warn(
-      "[db:migrate]    The gateway will start but database-backed routes may fail.",
-    );
-    console.warn(
-      "[db:migrate]    Migrations will be retried on next deploy or manual restart.",
-    );
-    process.env.DB_MIGRATIONS_SKIPPED = "true";
-    process.exit(0);
+      if (attempt < MAX_RETRIES) {
+        console.log(`[migrate] Retrying in ${RETRY_DELAY_MS / 1000}s …`);
+        await sleep(RETRY_DELAY_MS);
+      }
+    }
   }
 
-  try {
-    console.log(
-      `[db:migrate] Running knex migrate:latest (NODE_ENV=${NODE_ENV})…`,
-    );
-    execSync(
-      `NODE_ENV=${NODE_ENV} npx knex migrate:latest --knexfile knexfile.js`,
-      {
-        stdio: "inherit",
-        env: process.env,
-      },
-    );
-    console.log("[db:migrate] ✅ Migrations complete.");
-    process.exit(0);
-  } catch (err) {
-    console.error("[db:migrate] ❌ Migration failed:", err.message);
-    console.warn(
-      "[db:migrate] ⚠️  DEGRADED MODE — starting gateway with incomplete migrations.",
-    );
-    console.warn(
-      "[db:migrate]    Check Railway logs and re-deploy to retry migrations.",
-    );
-    // Exit 0 so the gateway starts and the health-check passes.
-    // Operators must check logs for migration errors after deploy.
-    process.exit(0);
-  }
+  console.error(`[migrate] ⚠️  All ${MAX_RETRIES} migration attempts failed.`);
+  console.error("[migrate] Continuing anyway so the gateway can start.");
+  return false;
 }
 
-runMigrations().catch((err) => {
-  console.error("[db:migrate] Unexpected error:", err);
-  process.exit(0); // always start the gateway
+runMigrations().then(() => {
+  process.exit(0);
 });

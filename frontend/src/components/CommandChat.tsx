@@ -1,16 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect, CSSProperties, type FormEvent } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { useState, useRef } from "react";
+import { Bot, Loader2, Send, X, Zap } from "lucide-react";
+import toast from "react-hot-toast";
 import {
   sendCommand,
-  sendChatMessage,
   pollTaskUntilDone,
   type TaskStatusResponse,
-  type RuntimeCommandRequest,
-  type ChatMessage as LLMChatMessage,
 } from "@/lib/runtimeClient";
+import { sendChatMessage, type ChatHistoryMessage } from "@/lib/chatClient";
 
 interface ChatMessage {
   id: string;
@@ -18,79 +16,93 @@ interface ChatMessage {
   content: string;
   taskId?: string;
   taskStatus?: TaskStatusResponse;
+  model?: string;
   timestamp: Date;
 }
 
-// Easily extensible list of contractor/trade keywords used in scrape command detection
-const SCRAPE_KEYWORDS = [
-  "epoxy",
-  "flooring",
-  "tile",
-  "carpet",
-  "hardwood",
-  "vinyl",
-  "concrete",
-  "roofing",
-  "hvac",
-  "plumbing",
-  "electrical",
-  "solar",
-  "painting",
-  "siding",
-  "pool",
-  "landscaping",
-  "fence",
-  "deck",
-  "drywall",
-  "insulation",
-  "waterproofing",
-  "garage",
-  "foundation",
-  "windows",
-  "doors",
-];
+/**
+ * Detect whether the user input is an explicit pipeline/scraper command
+ * (vs a conversational message for the LLM).
+ */
+function isRuntimeCommand(input: string): boolean {
+  const lower = input.toLowerCase().trim();
+  return (
+    lower.startsWith("scrape ") ||
+    lower.startsWith("run ") ||
+    lower.startsWith("execute ") ||
+    lower.includes("run pipeline") ||
+    lower.includes("run scraper") ||
+    lower.includes("run outreach")
+  );
+}
 
-// Commands that should also dispatch a backend runtime task
-const COMMAND_PATTERNS: Array<{
-  test: (s: string) => boolean;
-  build: (s: string) => RuntimeCommandRequest;
-}> = [
-  {
-    test: (s) =>
-      /\b(scrape|find|discover|search|get)\b.*(leads?|contractors?|businesses?)/i.test(
-        s,
-      ),
-    build: (s) => {
-      const kw =
-        s.match(new RegExp(`\\b(${SCRAPE_KEYWORDS.join("|")})\\b`, "i"))?.[0] ??
-        "contractor";
-      const city =
-        s
-          .match(/\b(in|near|around)\s+([A-Za-z\s]+(?:,\s*[A-Z]{2})?)/i)?.[2]
-          ?.trim() ?? "";
-      return {
-        command: "scrape_leads",
-        command_type: "scrape",
-        params: { keyword: `${kw} contractor`, location: city },
-        priority: 5,
-        timeout_seconds: 60,
-      };
-    },
-  },
-  {
-    test: (s) => /\baudit\b/i.test(s),
-    build: () => ({
-      command: "run_audit",
-      command_type: "audit",
-      params: {},
-      priority: 3,
-      timeout_seconds: 120,
-    }),
-  },
-];
+function parseRuntimeCommand(input: string) {
+  const lower = input.toLowerCase().trim();
 
-function genId() {
-  return Math.random().toString(36).slice(2, 10);
+  if (
+    lower.includes("scrape") ||
+    lower.includes("find") ||
+    lower.includes("search")
+  ) {
+    return {
+      command: "run_scraper",
+      target: input,
+      parameters: { query: input },
+    };
+  }
+  if (lower.includes("seo") || lower.includes("audit")) {
+    const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
+    return {
+      command: "run_seo_audit",
+      target: urlMatch?.[0] ?? input,
+      parameters: {},
+    };
+  }
+  if (
+    lower.includes("social") ||
+    lower.includes("linkedin") ||
+    lower.includes("facebook")
+  ) {
+    const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
+    return {
+      command: "run_social_scan",
+      target: urlMatch?.[0] ?? input,
+      parameters: {},
+    };
+  }
+  if (
+    lower.includes("browse") ||
+    lower.includes("navigate") ||
+    lower.includes("visit")
+  ) {
+    const urlMatch = input.match(/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}/i);
+    return {
+      command: "run_browser",
+      target: urlMatch?.[0] ?? input,
+      parameters: { action: "navigate" },
+    };
+  }
+  return {
+    command: "health_check",
+    target: null,
+    parameters: { original_input: input },
+  };
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const colours: Record<string, string> = {
+    queued: "bg-gray-100 text-gray-600",
+    running: "bg-blue-100 text-blue-700 animate-pulse",
+    completed: "bg-green-100 text-green-700",
+    failed: "bg-red-100 text-red-700",
+  };
+  return (
+    <span
+      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${colours[status] ?? "bg-gray-100 text-gray-600"}`}
+    >
+      {status}
+    </span>
+  );
 }
 
 // ── Task status badge ──────────────────────────────────────────────────────────
@@ -293,12 +305,13 @@ export default function CommandChat() {
       id: "sys-init",
       role: "system",
       content:
-        'XPS Intelligence AI ready. Ask me anything — I can scrape contractors, analyze leads, run audits, or answer questions about your data. Try: "Find epoxy floor contractors in Houston, TX"',
+        'XPS Intelligence AI ready. Ask me about leads, contractors, or type "scrape epoxy contractors in Ohio" to trigger the pipeline.',
       timestamp: new Date(),
     },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sessionId] = useState(() => `session-${Date.now()}`);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -337,35 +350,67 @@ export default function CommandChat() {
     const assistantId = addMessage({ role: "assistant", content: "…" });
 
     try {
-      const history = buildHistory();
-      const chatResp = await sendChatMessage(userText, history);
+      if (isRuntimeCommand(userText)) {
+        // ── Runtime pipeline command (scrape / run) ───────────────────────
+        const cmd = parseRuntimeCommand(userText);
+        const { task_id } = await sendCommand(cmd);
 
-      updateMessage(assistantId, { content: chatResp.reply });
+        const assistantId = addMessage({
+          role: "assistant",
+          content: `⚙️ Command submitted (${cmd.command}). Polling for results…`,
+          taskId: task_id,
+          taskStatus: { task_id, status: "queued", logs: [] },
+        });
 
-      // Optionally also dispatch a runtime command
-      const pattern = COMMAND_PATTERNS.find((p) => p.test(userText));
-      if (pattern) {
-        const cmd = pattern.build(userText);
-        const taskResp = await sendCommand(cmd).catch(() => null);
-        if (taskResp?.task_id) {
-          const taskId = taskResp.task_id;
+        pollTaskUntilDone(task_id, {
+          intervalMs: 2000,
+          timeoutMs: 120_000,
+          onUpdate: (task) => {
+            updateMessage(assistantId, {
+              taskStatus: task,
+              content:
+                task.status === "completed"
+                  ? `✅ Task completed (${cmd.command})`
+                  : task.status === "failed"
+                    ? `❌ Task failed: ${task.error ?? "unknown error"}`
+                    : `⏳ Status: ${task.status}…`,
+            });
+          },
+        }).catch((err) => {
           updateMessage(assistantId, {
-            taskId,
-            taskStatus: { task_id: taskId, status: "queued", logs: [] },
+            content: `⚠️ Polling error: ${err.message}`,
           });
-          pollTaskUntilDone(taskId, {
-            intervalMs: 2000,
-            timeoutMs: 120_000,
-            onUpdate: (task) =>
-              updateMessage(assistantId, { taskStatus: task }),
-          }).catch(() => {
-            /* ignore */
-          });
-        }
+        });
+      } else {
+        // ── Groq / GitHub Copilot chat (conversational) ───────────────────
+        const history: ChatHistoryMessage[] = messages
+          .filter(
+            (m): m is ChatMessage & { role: "user" | "assistant" } =>
+              m.role === "user" || m.role === "assistant",
+          )
+          .map((m) => ({ role: m.role, content: m.content }));
+
+        const assistantId = addMessage({
+          role: "assistant",
+          content: "⏳ Thinking…",
+        });
+
+        const response = await sendChatMessage({
+          message: userText,
+          agentRole: "LeadAgent",
+          sessionId,
+          history,
+        });
+
+        updateMessage(assistantId, {
+          content: response.reply.content,
+          model: response.reply.model,
+        });
       }
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Request failed";
-      updateMessage(assistantId, { content: `❌ Error: ${msg}` });
+      const message = err instanceof Error ? err.message : "Request failed";
+      toast.error(message);
+      addMessage({ role: "assistant", content: `❌ Error: ${message}` });
     } finally {
       setLoading(false);
     }
@@ -383,23 +428,13 @@ export default function CommandChat() {
       }}
     >
       {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          padding: "12px 16px",
-          borderBottom: "1px solid #1a1a1a",
-        }}
-      >
-        <span style={{ fontSize: 18 }}>🤖</span>
-        <h2
-          style={{ color: "#FFD700", fontSize: 15, fontWeight: 700, margin: 0 }}
-        >
-          XPS Intelligence AI Agent
+      <div className="flex items-center gap-2 border-b border-gray-100 px-4 py-3">
+        <Bot className="h-4 w-4 text-blue-500" />
+        <h2 className="text-sm font-semibold text-gray-700">
+          XPS Intelligence Agent
         </h2>
-        <span style={{ marginLeft: "auto", fontSize: 11, color: "#555" }}>
-          Powered by Groq
+        <span className="ml-auto flex items-center gap-1 text-xs text-gray-400">
+          <Zap className="h-3 w-3" /> Groq · Copilot
         </span>
       </div>
 

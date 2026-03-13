@@ -8,15 +8,15 @@ name: 🚂 Deploy & Validate Railway Backend
 #   RAILWAY_SERVICE  — Railway service ID or name (default: XPS_INTELLIGENCE_SYSTEM)
 #
 # Optional variables:
-#   RAILWAY_BACKEND_URL — Production Railway URL (defaults to https://xps-intelligence.up.railway.app)
+#   RAILWAY_BACKEND_URL — Production Railway URL (defaults to xps-intelligence.up.railway.app)
 
 on:
   push:
     branches: [main]
     paths:
-      - "backend/**"
       - "api/**"
       - "db/**"
+      - "scripts/migrate_with_retry.js"
       - "Dockerfile.gateway"
       - "Procfile"
       - "railway.json"
@@ -195,54 +195,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli
-
-      - name: Deploy backend service to Railway
-        if: ${{ secrets.RAILWAY_TOKEN != '' }}
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: |
-          railway up \
-            --service backend \
-            --detach \
-            --yes
-        working-directory: backend
-
-      - name: Skip deploy (no token configured)
-        if: ${{ secrets.RAILWAY_TOKEN == '' }}
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: |
-          echo "[INFO] RAILWAY_TOKEN secret not set — skipping Railway deployment."
-          echo "[INFO] To enable auto-deploy, add RAILWAY_TOKEN to repository secrets:"
-          echo "[INFO]   GitHub → Settings → Secrets → Actions → New repository secret"
-
-  # ── Step 3: Health check ───────────────────────────────────────────────────
-  healthcheck:
-    name: Health Check
-    runs-on: ubuntu-latest
-    needs: deploy
-    if: success()
-
-    permissions: {}
-
-    steps:
-      - name: Wait for Railway to deploy
-        run: sleep 20
-
-      - name: Verify /health endpoint
-        env:
-          RAILWAY_BACKEND_URL: ${{ vars.RAILWAY_BACKEND_URL || 'https://xpsintelligencesystem-production.up.railway.app' }}
-        run: |
-          URL="${RAILWAY_BACKEND_URL}/health"
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "$URL" || echo "000")
-          if [ "$HTTP_CODE" = "200" ]; then
-            echo "[OK] Health check passed — backend is live at $URL"
-          else
-            echo "[WARN] Health check returned HTTP $HTTP_CODE — service may still be warming up"
-          fi
-        continue-on-error: true
       - name: Check Railway token
         id: token-check
         run: |

@@ -2,54 +2,48 @@
 
 const { Pool } = require("pg");
 
-// ── Connection resolution — matches the same priority as knexfile.js ─────────
-// 1. DATABASE_URL (full connection string set by Railway)
-// 2. PG* standard vars (set directly by Railway PostgreSQL service)
-// 3. DATABASE_HOST / DATABASE_NAME / etc. (legacy local-dev names)
-// 4. localhost fallback (local dev only)
-
+/**
+ * Build pg Pool config.
+ *
+ * Priority order (Railway-compatible):
+ *   1. DATABASE_URL  — full connection string provided by Railway postgres addon
+ *   2. Individual DATABASE_HOST / PORT / NAME / USER / PASSWORD vars
+ *
+ * When DATABASE_URL points to a Railway private network address (*.railway.internal)
+ * SSL is disabled because the private network is already encrypted.  External
+ * public connections (*.railway.app / *.up.railway.app) require SSL without
+ * certificate verification since Railway uses ephemeral certs.
+ */
 function buildPoolConfig() {
-  const connStr =
-    process.env.DATABASE_URL ||
-    process.env.DATABASE_PUBLIC_URL ||
-    process.env.POSTGRES_URL ||
-    null;
-
-  if (connStr) {
-    const needsSsl =
-      connStr.includes("railway.app") || connStr.includes("neon.tech");
+  const url = process.env.DATABASE_URL || "";
+  if (url) {
+    const isPrivate =
+      url.includes(".railway.internal") || url.includes("localhost");
     return {
-      connectionString: connStr,
-      ssl: needsSsl ? { rejectUnauthorized: false } : false,
+      connectionString: url,
+      // Private-network connections (*.railway.internal) run inside Railway's
+      // encrypted overlay network — SSL at the TCP layer is not required.
+      // Public Railway URLs use ephemeral self-signed certs, so we accept them
+      // without CA verification.  This is a known Railway deployment pattern;
+      // see https://docs.railway.app/databases/postgresql#connecting.
+      ssl: isPrivate ? false : { rejectUnauthorized: false },
     };
   }
 
+  // Fall back to individual vars (local dev / legacy deployments)
   return {
-    host: process.env.PGHOST || process.env.DATABASE_HOST || "localhost",
-    port: parseInt(
-      process.env.PGPORT || process.env.DATABASE_PORT || "5432",
-      10,
-    ),
-    database:
-      process.env.PGDATABASE ||
-      process.env.POSTGRES_DB ||
-      process.env.DATABASE_NAME ||
-      "lead_intelligence",
-    user:
-      process.env.PGUSER ||
-      process.env.POSTGRES_USER ||
-      process.env.DATABASE_USER ||
-      "lead_admin",
-    password:
-      process.env.PGPASSWORD ||
-      process.env.POSTGRES_PASSWORD ||
-      process.env.DATABASE_PASSWORD ||
-      "",
+    host: process.env.DATABASE_HOST || "localhost",
+    port: parseInt(process.env.DATABASE_PORT || "5432", 10),
+    database: process.env.DATABASE_NAME || "lead_intelligence",
+    user: process.env.DATABASE_USER || "lead_admin",
+    password: process.env.DATABASE_PASSWORD || "",
     ssl:
       process.env.DATABASE_SSL === "true"
         ? {
             rejectUnauthorized:
-              process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== "false",
+              process.env.DATABASE_SSL_REJECT_UNAUTHORIZED === "false"
+                ? false
+                : true,
           }
         : false,
   };
@@ -57,6 +51,7 @@ function buildPoolConfig() {
 
 const pool = new Pool(buildPoolConfig());
 
+const pool = new Pool(poolConfig);
 pool.on("error", (err) => {
   console.error("Unexpected PostgreSQL pool error:", err.message);
 });
