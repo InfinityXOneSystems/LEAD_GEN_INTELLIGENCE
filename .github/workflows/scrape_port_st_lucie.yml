@@ -59,22 +59,29 @@ jobs:
           if [ -z "$MAX" ]; then MAX=25; fi
           python scripts/scrape_port_st_lucie.py $ARGS --max-per-keyword "$MAX"
 
+      # YAML multiline indentation note (110% Protocol):
+      # All lines inside a `run: |` literal block scalar MUST be indented at
+      # least as far as the first content line (here: 12 spaces / 6 levels of
+      # 2-space YAML indent).  This applies even to embedded multi-line strings
+      # passed to interpreters (e.g. `python3 -c "..."`).  YAML strips the
+      # block indentation when building the string value, so Python receives
+      # the code without leading whitespace — no IndentationError occurs.
       - name: Show PSL lead count
         run: |
           if [ -f leads/port_st_lucie_leads.json ]; then
             COUNT=$(python3 -c "import json; d=json.load(open('leads/port_st_lucie_leads.json')); print(len(d))" 2>/dev/null || echo 0)
             echo "✅ Port St Lucie leads: $COUNT"
             python3 -c "
-import json
-leads = json.load(open('leads/port_st_lucie_leads.json'))
-hot  = sum(1 for l in leads if l.get('tier') == 'HOT')
-warm = sum(1 for l in leads if l.get('tier') == 'WARM')
-cold = sum(1 for l in leads if l.get('tier') == 'COLD')
-print(f'  HOT: {hot}  WARM: {warm}  COLD: {cold}')
-print()
-for l in leads[:5]:
-    print(f'  {l[\"company\"]} | {l[\"phone\"]} | {l[\"city\"]}, {l[\"state\"]} | {l.get(\"website\",\"\")}')
-"
+          import json
+          leads = json.load(open('leads/port_st_lucie_leads.json'))
+          hot  = sum(1 for l in leads if l.get('tier') == 'HOT')
+          warm = sum(1 for l in leads if l.get('tier') == 'WARM')
+          cold = sum(1 for l in leads if l.get('tier') == 'COLD')
+          print(f'  HOT: {hot}  WARM: {warm}  COLD: {cold}')
+          print()
+          for l in leads[:5]:
+              print(f'  {l[\"company\"]} | {l[\"phone\"]} | {l[\"city\"]}, {l[\"state\"]} | {l.get(\"website\",\"\")}')
+          "
           fi
 
       - name: Commit scraped leads
@@ -104,30 +111,30 @@ for l in leads[:5]:
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f leads/port_st_lucie_leads.json ]; then
             python3 - << 'PYEOF'
-import json, os
-leads = json.load(open("leads/port_st_lucie_leads.json"))
-hot  = sum(1 for l in leads if l.get("tier") == "HOT")
-warm = sum(1 for l in leads if l.get("tier") == "WARM")
-cold = sum(1 for l in leads if l.get("tier") == "COLD")
+          import json, os
+          leads = json.load(open("leads/port_st_lucie_leads.json"))
+          hot  = sum(1 for l in leads if l.get("tier") == "HOT")
+          warm = sum(1 for l in leads if l.get("tier") == "WARM")
+          cold = sum(1 for l in leads if l.get("tier") == "COLD")
 
-with open(os.environ.get("GITHUB_STEP_SUMMARY", "/dev/null"), "a") as f:
-    f.write(f"| Metric | Value |\n")
-    f.write(f"|--------|-------|\n")
-    f.write(f"| Total leads | {len(leads)} |\n")
-    f.write(f"| 🔥 HOT | {hot} |\n")
-    f.write(f"| 🌡 WARM | {warm} |\n")
-    f.write(f"| 🧊 COLD | {cold} |\n")
-    f.write(f"\n### Top 10 Leads\n\n")
-    f.write("| Company | Phone | City | Website | Score |\n")
-    f.write("|---------|-------|------|---------|-------|\n")
-    for l in leads[:10]:
-        company = l.get("company", "")
-        phone   = l.get("phone", "")
-        city    = f"{l.get('city','')}, {l.get('state','')}"
-        website = l.get("website", "")
-        score   = l.get("lead_score", 0)
-        tier    = l.get("tier", "")
-        web_link = f"[link]({website})" if website else "—"
-        f.write(f"| {company} | {phone} | {city} | {web_link} | {score} ({tier}) |\n")
-PYEOF
+          with open(os.environ.get("GITHUB_STEP_SUMMARY", "/dev/null"), "a") as f:
+              f.write(f"| Metric | Value |\n")
+              f.write(f"|--------|-------|\n")
+              f.write(f"| Total leads | {len(leads)} |\n")
+              f.write(f"| 🔥 HOT | {hot} |\n")
+              f.write(f"| 🌡 WARM | {warm} |\n")
+              f.write(f"| 🧊 COLD | {cold} |\n")
+              f.write(f"\n### Top 10 Leads\n\n")
+              f.write("| Company | Phone | City | Website | Score |\n")
+              f.write("|---------|-------|------|---------|-------|\n")
+              for l in leads[:10]:
+                  company = l.get("company", "")
+                  phone   = l.get("phone", "")
+                  city    = f"{l.get('city','')}, {l.get('state','')}"
+                  website = l.get("website", "")
+                  score   = l.get("lead_score", 0)
+                  tier    = l.get("tier", "")
+                  web_link = f"[link]({website})" if website else "—"
+                  f.write(f"| {company} | {phone} | {city} | {web_link} | {score} ({tier}) |\n")
+          PYEOF
           fi
