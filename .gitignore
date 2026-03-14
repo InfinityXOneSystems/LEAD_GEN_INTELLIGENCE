@@ -148,3 +148,5 @@ test*.db
 *.test.db
 capture.cjs
 take_ss.cjs
+
+output/
