@@ -27,7 +27,7 @@ permissions:
 
 env:
   VERCEL_PRODUCTION_URL: https://xps-intelligence.vercel.app
-  RAILWAY_BACKEND_URL: https://xpsintelligencesystem-production.up.railway.app
+  RAILWAY_BACKEND_URL: https://xps-intelligence.up.railway.app
   SUPABASE_URL: https://nxfbfbipjsfzoefpgrof.supabase.co
 
 jobs:

@@ -48,7 +48,7 @@ concurrency:
 env:
   VERCEL_ORG_ID:  ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  RAILWAY_BACKEND: https://xpsintelligencesystem-production.up.railway.app
+  RAILWAY_BACKEND: https://xps-intelligence.up.railway.app
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Job 1: Build & Lint
@@ -89,7 +89,7 @@ jobs:
       - name: Build
         id: build
         env:
-          VITE_API_URL: ${{ env.RAILWAY_BACKEND }}
+          VITE_API_URL: ${{ env.RAILWAY_BACKEND }}/api
           VITE_ENV: ${{ github.ref_name == 'main' && 'production' || github.ref_name == 'staging' && 'staging' || 'development' }}
         run: npm run build
 
@@ -238,7 +238,7 @@ jobs:
           DEPLOY_URL=$(vercel deploy $PROD_FLAG \
             --token=${{ secrets.VERCEL_TOKEN }} \
             --yes \
-            --build-env VITE_API_URL=${{ env.RAILWAY_BACKEND }} \
+            --build-env VITE_API_URL=${{ env.RAILWAY_BACKEND }}/api \
             --build-env VITE_ENV=${{ steps.env_gate.outputs.vercel_env }} \
             2>&1 | tail -1)
 
