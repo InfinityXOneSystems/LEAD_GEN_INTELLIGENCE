@@ -24,14 +24,14 @@ on:
       api_url:
         description: 'Backend API URL'
         required: false
-        default: 'https://xpsintelligencesystem-production.up.railway.app'
+        default: 'https://xps-intelligence.up.railway.app/api'
 
 permissions:
   contents: read
   pull-requests: write
 
 env:
-  RAILWAY_BACKEND: https://xpsintelligencesystem-production.up.railway.app
+  RAILWAY_BACKEND: https://xps-intelligence.up.railway.app
 
 jobs:
   playwright:
@@ -66,7 +66,7 @@ jobs:
 
       - name: Build frontend
         env:
-          VITE_API_URL: ${{ github.event.inputs.api_url || env.RAILWAY_BACKEND }}
+          VITE_API_URL: ${{ github.event.inputs.api_url || format('{0}/api', env.RAILWAY_BACKEND) }}
           VITE_ENV: ci
         run: npm run build
 
@@ -75,7 +75,7 @@ jobs:
         env:
           CI: true
           PLAYWRIGHT_BASE_URL: ${{ github.event.inputs.base_url || 'http://localhost:4173' }}
-          VITE_API_URL: ${{ github.event.inputs.api_url || env.RAILWAY_BACKEND }}
+          VITE_API_URL: ${{ github.event.inputs.api_url || format('{0}/api', env.RAILWAY_BACKEND) }}
         run: |
           npx playwright test \
             --project=${{ matrix.project }} \

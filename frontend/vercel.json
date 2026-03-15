@@ -14,7 +14,7 @@
   },
 
   "env": {
-    "VITE_API_URL": "https://xps-intelligence.up.railway.app",
+    "VITE_API_URL": "https://xps-intelligence.up.railway.app/api",
     "VITE_GATEWAY_URL": "https://xps-intelligence.up.railway.app",
     "VITE_ENV": "production"
   },

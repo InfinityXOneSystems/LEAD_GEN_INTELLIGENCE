@@ -6,8 +6,25 @@ __pycache__/
 
 # Virtual env
 venv/
+.venv/
 .env
 .env.*
+
+# Node – exclude ALL node_modules so COPY . . in Dockerfile.gateway never
+# copies host-built binaries into the container image (would bloat the image
+# and could break native modules compiled for a different platform/arch).
+node_modules/
+frontend/node_modules/
+dashboard/node_modules/
+
+# Build artefacts – source is copied from the repo; compiled output is built
+# inside the container and must not be stale-cached from the host.
+frontend/dist/
+frontend/.vite/
+frontend/playwright-report/
+frontend/test-results/
+dashboard/.next/
+dashboard/out/
 
 # Git
 .git
@@ -18,8 +35,7 @@ logs/
 *.log
 
 # Docker
-Dockerfile
-docker-compose.yml
+docker-compose*.yml
 
 # IDE
 .vscode
@@ -28,3 +44,15 @@ docker-compose.yml
 # OS
 .DS_Store
 Thumbs.db
+
+# Test / CI artefacts
+coverage/
+*.lcov
+*.xml
+htmlcov/
+.pytest_cache/
+
+# Docs (not needed at runtime)
+docs/
+AUDIT/
+*.md
