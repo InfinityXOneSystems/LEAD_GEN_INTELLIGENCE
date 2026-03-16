@@ -1,14 +1,14 @@
 # Lead Export — Columbus, OH
 
-> Generated: 2026-03-11
+> Generated: 2026-03-16
 
-**Total leads:** 329
+**Total leads:** 1302
 
 | Tier | Count |
 |------|-------|
 | HOT  | 9  |
-| WARM | 67 |
-| COLD | 253 |
+| WARM | 94 |
+| COLD | 1199 |
 
 ## Top Leads
 
