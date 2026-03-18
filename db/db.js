@@ -76,4 +76,3 @@ async function initSchema() {
 }
 
 module.exports = { query, initSchema, pool };
-
