@@ -256,10 +256,7 @@
     "reviews": 56,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:44:32.917Z",
-    "_merged_from": [
-      "Southwest Surface Blasting",
-      "Southwest Auto Center"
-    ],
+    "_merged_from": ["Southwest Surface Blasting", "Southwest Auto Center"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -282,10 +279,7 @@
     "reviews": 72,
     "source": "yelp",
     "scrapedAt": "2026-03-11T14:45:02.917Z",
-    "_merged_from": [
-      "Tempe Abrasives, Inc",
-      "Tempe Auto Repair"
-    ],
+    "_merged_from": ["Tempe Abrasives, Inc", "Tempe Auto Repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -396,9 +390,7 @@
     "reviews": 61,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:47:32.917Z",
-    "_merged_from": [
-      "Sun Devil Auto"
-    ],
+    "_merged_from": ["Sun Devil Auto"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -539,9 +531,7 @@
     "reviews": 98,
     "source": "yelp",
     "scrapedAt": "2026-03-11T14:50:02.917Z",
-    "_merged_from": [
-      "Ohio Garage Interiors Columbus"
-    ],
+    "_merged_from": ["Ohio Garage Interiors Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -660,10 +650,7 @@
     "reviews": 26,
     "source": "yelp",
     "scrapedAt": "2026-03-11T14:52:02.917Z",
-    "_merged_from": [
-      "Arch City Deck Solutions",
-      "Arch City Solutions"
-    ],
+    "_merged_from": ["Arch City Deck Solutions", "Arch City Solutions"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -918,9 +905,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:10.281Z",
-    "_merged_from": [
-      "S S concrete coatings llc"
-    ],
+    "_merged_from": ["S S concrete coatings llc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -942,9 +927,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:10.281Z",
-    "_merged_from": [
-      "Flooring Trends"
-    ],
+    "_merged_from": ["Flooring Trends"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -1176,9 +1159,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:10.296Z",
-    "_merged_from": [
-      "Superior Epoxy Flooring"
-    ],
+    "_merged_from": ["Superior Epoxy Flooring"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -1347,10 +1328,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:34.693Z",
-    "_merged_from": [
-      "Concrete Systems, Inc.",
-      "Concrete Coating Xperts"
-    ],
+    "_merged_from": ["Concrete Systems, Inc.", "Concrete Coating Xperts"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -1670,9 +1648,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:50.935Z",
-    "_merged_from": [
-      "Rock Valley Industries LLC"
-    ],
+    "_merged_from": ["Rock Valley Industries LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -1977,9 +1953,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:39:59.108Z",
-    "_merged_from": [
-      "Cord Construction Co"
-    ],
+    "_merged_from": ["Cord Construction Co"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2085,9 +2059,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:07.242Z",
-    "_merged_from": [
-      "AAR"
-    ],
+    "_merged_from": ["AAR"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2151,9 +2123,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:15.344Z",
-    "_merged_from": [
-      "RSD CONCRETE"
-    ],
+    "_merged_from": ["RSD CONCRETE"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2301,9 +2271,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:23.477Z",
-    "_merged_from": [
-      "Stateline Carpet & Flooring LLC"
-    ],
+    "_merged_from": ["Stateline Carpet & Flooring LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2619,9 +2587,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:23.619Z",
-    "_merged_from": [
-      "Forest City Motor Co"
-    ],
+    "_merged_from": ["Forest City Motor Co"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2773,9 +2739,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.597Z",
-    "_merged_from": [
-      "Auto Solutions of Rockford"
-    ],
+    "_merged_from": ["Auto Solutions of Rockford"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2881,9 +2845,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.597Z",
-    "_merged_from": [
-      "C & S Auto Service"
-    ],
+    "_merged_from": ["C & S Auto Service"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -2968,9 +2930,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.597Z",
-    "_merged_from": [
-      "Butitta Auto – Rockford on Main St."
-    ],
+    "_merged_from": ["Butitta Auto – Rockford on Main St."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3118,9 +3078,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.706Z",
-    "_merged_from": [
-      "Lou Bachrodt Chevrolet"
-    ],
+    "_merged_from": ["Lou Bachrodt Chevrolet"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3226,9 +3184,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:31.706Z",
-    "_merged_from": [
-      "Anderson's Rock River Ford Service"
-    ],
+    "_merged_from": ["Anderson's Rock River Ford Service"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3632,9 +3588,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.683Z",
-    "_merged_from": [
-      "Auto Enhancers Inc."
-    ],
+    "_merged_from": ["Auto Enhancers Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3845,9 +3799,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Scouts Truck and Trailer Repair"
-    ],
+    "_merged_from": ["Scouts Truck and Trailer Repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3953,9 +3905,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Meiborg Brothers Inc"
-    ],
+    "_merged_from": ["Meiborg Brothers Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -3998,11 +3948,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Fleet Service Center Inc",
-      "Fleet Service",
-      "FleetPride"
-    ],
+    "_merged_from": ["Fleet Service Center Inc", "Fleet Service", "FleetPride"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4066,9 +4012,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:39.784Z",
-    "_merged_from": [
-      "Bc Truck Services Inc"
-    ],
+    "_merged_from": ["Bc Truck Services Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4195,9 +4139,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:47.776Z",
-    "_merged_from": [
-      "Fleet Maintenance & Repair Inc."
-    ],
+    "_merged_from": ["Fleet Maintenance & Repair Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4219,9 +4161,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:47.776Z",
-    "_merged_from": [
-      "Midwest Millwright Services Inc."
-    ],
+    "_merged_from": ["Midwest Millwright Services Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4243,9 +4183,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:47.776Z",
-    "_merged_from": [
-      "J&A Fleet Maintenance"
-    ],
+    "_merged_from": ["J&A Fleet Maintenance"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -4729,9 +4667,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T14:40:55.876Z",
-    "_merged_from": [
-      "Lowe's Distribution Center"
-    ],
+    "_merged_from": ["Lowe's Distribution Center"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -5740,9 +5676,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T18:38:26.767Z",
-    "_merged_from": [
-      "Elegant Epoxy FloorCare"
-    ],
+    "_merged_from": ["Elegant Epoxy FloorCare"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -6084,9 +6018,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T18:38:59.588Z",
-    "_merged_from": [
-      "Epoxy Floor Chicago"
-    ],
+    "_merged_from": ["Epoxy Floor Chicago"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -6853,9 +6785,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:23:54.464Z",
-    "_merged_from": [
-      "Elite Fence of Columbus"
-    ],
+    "_merged_from": ["Elite Fence of Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -6877,9 +6807,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:23:54.464Z",
-    "_merged_from": [
-      "The Garage Door Guy LLC"
-    ],
+    "_merged_from": ["The Garage Door Guy LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -6985,9 +6913,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:23:54.464Z",
-    "_merged_from": [
-      "Garage Door Repair Columbus Ohio"
-    ],
+    "_merged_from": ["Garage Door Repair Columbus Ohio"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -7093,9 +7019,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:24:03.782Z",
-    "_merged_from": [
-      "PRO Roofing Solutions Columbus"
-    ],
+    "_merged_from": ["PRO Roofing Solutions Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -7159,9 +7083,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:24:10.952Z",
-    "_merged_from": [
-      "Refloor"
-    ],
+    "_merged_from": ["Refloor"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -7363,9 +7285,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:24:36.297Z",
-    "_merged_from": [
-      "Roman Concrete"
-    ],
+    "_merged_from": ["Roman Concrete"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -7387,9 +7307,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:24:36.297Z",
-    "_merged_from": [
-      "Concrete Contractors"
-    ],
+    "_merged_from": ["Concrete Contractors"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -7537,9 +7455,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:24:37.241Z",
-    "_merged_from": [
-      "Central Ohio Blasting"
-    ],
+    "_merged_from": ["Central Ohio Blasting"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -7561,9 +7477,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:24:37.241Z",
-    "_merged_from": [
-      "MCL Concrete LLC"
-    ],
+    "_merged_from": ["MCL Concrete LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8011,9 +7925,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:24:53.916Z",
-    "_merged_from": [
-      "Daniel's concrete"
-    ],
+    "_merged_from": ["Daniel's concrete"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8077,9 +7989,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:02.176Z",
-    "_merged_from": [
-      "Superior Fence & Rail of Columbus"
-    ],
+    "_merged_from": ["Superior Fence & Rail of Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8143,9 +8053,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:09.271Z",
-    "_merged_from": [
-      "DDC Mobile Blasting"
-    ],
+    "_merged_from": ["DDC Mobile Blasting"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8188,9 +8096,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:09.271Z",
-    "_merged_from": [
-      "Trusted Remediation"
-    ],
+    "_merged_from": ["Trusted Remediation"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8422,9 +8328,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:09.271Z",
-    "_merged_from": [
-      "Ohio Heating"
-    ],
+    "_merged_from": ["Ohio Heating"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8572,9 +8476,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:17.440Z",
-    "_merged_from": [
-      "All Ohio Masonry Restoration"
-    ],
+    "_merged_from": ["All Ohio Masonry Restoration"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8789,9 +8691,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:17.440Z",
-    "_merged_from": [
-      "auto repair"
-    ],
+    "_merged_from": ["auto repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8876,9 +8776,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:17.440Z",
-    "_merged_from": [
-      "Ohio Custodial Maintenance"
-    ],
+    "_merged_from": ["Ohio Custodial Maintenance"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8921,9 +8819,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:18.771Z",
-    "_merged_from": [
-      "Auto Palace"
-    ],
+    "_merged_from": ["Auto Palace"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -8991,9 +8887,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:18.771Z",
-    "_merged_from": [
-      "Columbus Tree Services"
-    ],
+    "_merged_from": ["Columbus Tree Services"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9082,9 +8976,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:18.771Z",
-    "_merged_from": [
-      "Service Center - Germain Volkswagen of Columbus"
-    ],
+    "_merged_from": ["Service Center - Germain Volkswagen of Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9429,9 +9321,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:25.640Z",
-    "_merged_from": [
-      "Central City Tires"
-    ],
+    "_merged_from": ["Central City Tires"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9626,9 +9516,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:27.128Z",
-    "_merged_from": [
-      "D&A Truck And Trailer Repair"
-    ],
+    "_merged_from": ["D&A Truck And Trailer Repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9650,9 +9538,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:27.128Z",
-    "_merged_from": [
-      "Eastern Truck & Trailer"
-    ],
+    "_merged_from": ["Eastern Truck & Trailer"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9863,9 +9749,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:33.839Z",
-    "_merged_from": [
-      "D&S Fleet Maintenance"
-    ],
+    "_merged_from": ["D&S Fleet Maintenance"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9887,9 +9771,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:33.839Z",
-    "_merged_from": [
-      "Fleet Management Office"
-    ],
+    "_merged_from": ["Fleet Management Office"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9911,9 +9793,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:33.839Z",
-    "_merged_from": [
-      "Franklin County Engineer West Maintenance Facility"
-    ],
+    "_merged_from": ["Franklin County Engineer West Maintenance Facility"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -9977,9 +9857,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:33.839Z",
-    "_merged_from": [
-      "Southwestern Tile & Marble Co"
-    ],
+    "_merged_from": ["Southwestern Tile & Marble Co"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10022,9 +9900,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:33.839Z",
-    "_merged_from": [
-      "Fleet Maintenance Transportation"
-    ],
+    "_merged_from": ["Fleet Maintenance Transportation"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10238,10 +10114,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:35.544Z",
-    "_merged_from": [
-      "ACI Construction",
-      "Ronk Construction"
-    ],
+    "_merged_from": ["ACI Construction", "Ronk Construction"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10431,9 +10304,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:35.544Z",
-    "_merged_from": [
-      "Complete General Construction"
-    ],
+    "_merged_from": ["Complete General Construction"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10668,9 +10539,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:42.055Z",
-    "_merged_from": [
-      "The Exterior Living Company"
-    ],
+    "_merged_from": ["The Exterior Living Company"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10839,9 +10708,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:43.838Z",
-    "_merged_from": [
-      "Distribution Centre"
-    ],
+    "_merged_from": ["Distribution Centre"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10947,9 +10814,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:43.838Z",
-    "_merged_from": [
-      "NCS Distribution Center"
-    ],
+    "_merged_from": ["NCS Distribution Center"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11139,9 +11004,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:50.241Z",
-    "_merged_from": [
-      "Ohio Flooring & Kitchen Cabinets"
-    ],
+    "_merged_from": ["Ohio Flooring & Kitchen Cabinets"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11205,9 +11068,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:50.241Z",
-    "_merged_from": [
-      "Team Industrial Services, Inc."
-    ],
+    "_merged_from": ["Team Industrial Services, Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11565,9 +11426,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:52.154Z",
-    "_merged_from": [
-      "Commercial Pools Inc"
-    ],
+    "_merged_from": ["Commercial Pools Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11656,9 +11515,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:52.154Z",
-    "_merged_from": [
-      "Floor Coverings International of East Columbus, OH"
-    ],
+    "_merged_from": ["Floor Coverings International of East Columbus, OH"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11743,9 +11600,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:58.412Z",
-    "_merged_from": [
-      "Superior Flooring AZ"
-    ],
+    "_merged_from": ["Superior Flooring AZ"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11899,9 +11754,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:58.412Z",
-    "_merged_from": [
-      "Arizona Valley Epoxy"
-    ],
+    "_merged_from": ["Arizona Valley Epoxy"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11923,10 +11776,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:58.412Z",
-    "_merged_from": [
-      "Epoxy Strong Phoenix",
-      "Epoxy Floors"
-    ],
+    "_merged_from": ["Epoxy Strong Phoenix", "Epoxy Floors"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -11948,9 +11798,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:58.412Z",
-    "_merged_from": [
-      "Cardinal Concrete Coatings"
-    ],
+    "_merged_from": ["Cardinal Concrete Coatings"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12098,9 +11946,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:26:00.590Z",
-    "_merged_from": [
-      "Garage Force of the Valley - East"
-    ],
+    "_merged_from": ["Garage Force of the Valley - East"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12374,9 +12220,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:26:25.766Z",
-    "_merged_from": [
-      "Best Priced Flooring Co"
-    ],
+    "_merged_from": ["Best Priced Flooring Co"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12440,9 +12284,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:26:25.766Z",
-    "_merged_from": [
-      "Easy Epoxy"
-    ],
+    "_merged_from": ["Easy Epoxy"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12632,9 +12474,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:26:39.790Z",
-    "_merged_from": [
-      "Concrete Finishing, Inc"
-    ],
+    "_merged_from": ["Concrete Finishing, Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12887,9 +12727,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:26:42.344Z",
-    "_merged_from": [
-      "Apache Concrete Cutting Inc"
-    ],
+    "_merged_from": ["Apache Concrete Cutting Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -12974,9 +12812,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:26:42.344Z",
-    "_merged_from": [
-      "Arizona Flooring & Installation LLC"
-    ],
+    "_merged_from": ["Arizona Flooring & Installation LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -13487,9 +13323,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:26:58.936Z",
-    "_merged_from": [
-      "Kaizen Collision Center - Tempe"
-    ],
+    "_merged_from": ["Kaizen Collision Center - Tempe"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -13637,9 +13471,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:12.940Z",
-    "_merged_from": [
-      "Arizona Flooring & Interiors LLC"
-    ],
+    "_merged_from": ["Arizona Flooring & Interiors LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -13682,9 +13514,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:12.940Z",
-    "_merged_from": [
-      "AZ SANDBLASTING"
-    ],
+    "_merged_from": ["AZ SANDBLASTING"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14168,9 +13998,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:21.127Z",
-    "_merged_from": [
-      "CARS LAND SERVICE CENTER LLC"
-    ],
+    "_merged_from": ["CARS LAND SERVICE CENTER LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14192,9 +14020,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:21.127Z",
-    "_merged_from": [
-      "Elite Auto Repair"
-    ],
+    "_merged_from": ["Elite Auto Repair"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14405,9 +14231,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:21.127Z",
-    "_merged_from": [
-      "Arizona Custom Blends Manufacturing"
-    ],
+    "_merged_from": ["Arizona Custom Blends Manufacturing"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14471,9 +14295,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:23.945Z",
-    "_merged_from": [
-      "Midas"
-    ],
+    "_merged_from": ["Midas"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14495,9 +14317,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:23.945Z",
-    "_merged_from": [
-      "AutoNation Toyota Tempe"
-    ],
+    "_merged_from": ["AutoNation Toyota Tempe"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14540,9 +14360,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:23.945Z",
-    "_merged_from": [
-      "Bill Luke Tempe - Alfa Romeo & Fiat"
-    ],
+    "_merged_from": ["Bill Luke Tempe - Alfa Romeo & Fiat"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14606,9 +14424,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:23.945Z",
-    "_merged_from": [
-      "Sports Car Service Center"
-    ],
+    "_merged_from": ["Sports Car Service Center"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14630,10 +14446,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:23.945Z",
-    "_merged_from": [
-      "Chapman Collision Tempe",
-      "Chapman Commercial & Fleet"
-    ],
+    "_merged_from": ["Chapman Collision Tempe", "Chapman Commercial & Fleet"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -14697,9 +14510,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:29.394Z",
-    "_merged_from": [
-      "MGA Collision Center"
-    ],
+    "_merged_from": ["MGA Collision Center"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -15141,9 +14952,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:32.168Z",
-    "_merged_from": [
-      "DSM Arizona Inc."
-    ],
+    "_merged_from": ["DSM Arizona Inc."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -15921,9 +15730,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:40.365Z",
-    "_merged_from": [
-      "Tempe Mechanical"
-    ],
+    "_merged_from": ["Tempe Mechanical"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -16113,9 +15920,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:45.681Z",
-    "_merged_from": [
-      "Commercial Remodeling Contractors"
-    ],
+    "_merged_from": ["Commercial Remodeling Contractors"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -16137,9 +15942,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:45.681Z",
-    "_merged_from": [
-      "Contractors Wardrobe"
-    ],
+    "_merged_from": ["Contractors Wardrobe"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -16896,9 +16699,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:27:56.778Z",
-    "_merged_from": [
-      "State 48 Epoxy"
-    ],
+    "_merged_from": ["State 48 Epoxy"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -17067,10 +16868,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:42:17.845Z",
-    "_merged_from": [
-      "Master Clean",
-      "Master Chimney LLC"
-    ],
+    "_merged_from": ["Master Clean", "Master Chimney LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -17302,10 +17100,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:43:07.347Z",
-    "_merged_from": [
-      "Custom Deck & Porch",
-      "Custom Countertops LLC"
-    ],
+    "_merged_from": ["Custom Deck & Porch", "Custom Countertops LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -18384,9 +18179,7 @@
     "reviews": 0,
     "source": "yellowpages",
     "scrapedAt": "2026-03-13",
-    "_merged_from": [
-      "Prianti's Flooring Service"
-    ],
+    "_merged_from": ["Prianti's Flooring Service"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -18893,9 +18686,7 @@
     "reviews": 0,
     "source": "yellowpages",
     "scrapedAt": "2026-03-13",
-    "_merged_from": [
-      "Restoration Concrete Inc"
-    ],
+    "_merged_from": ["Restoration Concrete Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -19966,9 +19757,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:46:09.984Z",
-    "_merged_from": [
-      "Buckeye Softwash"
-    ],
+    "_merged_from": ["Buckeye Softwash"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -20158,9 +19947,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:46:10.092Z",
-    "_merged_from": [
-      "Nature Stone"
-    ],
+    "_merged_from": ["Nature Stone"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -20392,10 +20179,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:46:26.426Z",
-    "_merged_from": [
-      "Affordable Granite",
-      "Affordable Movers"
-    ],
+    "_merged_from": ["Affordable Granite", "Affordable Movers"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -20984,10 +20768,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:46:59.342Z",
-    "_merged_from": [
-      "Premier Home Exterior",
-      "The Premier Pool Co."
-    ],
+    "_merged_from": ["Premier Home Exterior", "The Premier Pool Co."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -21114,9 +20895,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:47:07.518Z",
-    "_merged_from": [
-      "Lang Stone - Exterior Stone"
-    ],
+    "_merged_from": ["Lang Stone - Exterior Stone"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -21180,9 +20959,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:47:07.518Z",
-    "_merged_from": [
-      "Classic Air"
-    ],
+    "_merged_from": ["Classic Air"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -21204,9 +20981,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:47:07.518Z",
-    "_merged_from": [
-      "Miracle Motor Mart"
-    ],
+    "_merged_from": ["Miracle Motor Mart"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -21228,9 +21003,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:47:07.518Z",
-    "_merged_from": [
-      "Discount Tire"
-    ],
+    "_merged_from": ["Discount Tire"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -21294,9 +21067,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:47:07.518Z",
-    "_merged_from": [
-      "GS Marble & Granite"
-    ],
+    "_merged_from": ["GS Marble & Granite"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -21318,9 +21089,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:47:15.624Z",
-    "_merged_from": [
-      "Precision Garage Door of Westerville"
-    ],
+    "_merged_from": ["Precision Garage Door of Westerville"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -21495,9 +21264,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:47:23.787Z",
-    "_merged_from": [
-      "Creative Earthscapes Inc,"
-    ],
+    "_merged_from": ["Creative Earthscapes Inc,"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -21540,9 +21307,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:47:23.787Z",
-    "_merged_from": [
-      "Capital Tree Service LLC"
-    ],
+    "_merged_from": ["Capital Tree Service LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -21564,9 +21329,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:47:31.964Z",
-    "_merged_from": [
-      "CleanTurn"
-    ],
+    "_merged_from": ["CleanTurn"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -21798,9 +21561,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:47:31.964Z",
-    "_merged_from": [
-      "True Clean Prowash"
-    ],
+    "_merged_from": ["True Clean Prowash"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -22095,9 +21856,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:13.143Z",
-    "_merged_from": [
-      "Cap City Decks & Patios"
-    ],
+    "_merged_from": ["Cap City Decks & Patios"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -22203,9 +21962,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:13.143Z",
-    "_merged_from": [
-      "AAA Roofing Co."
-    ],
+    "_merged_from": ["AAA Roofing Co."],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -22248,9 +22005,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:13.143Z",
-    "_merged_from": [
-      "AC Roofing & Siding"
-    ],
+    "_merged_from": ["AC Roofing & Siding"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -22293,9 +22048,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:13.143Z",
-    "_merged_from": [
-      "Ramos Roofing"
-    ],
+    "_merged_from": ["Ramos Roofing"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -22695,9 +22448,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:29.483Z",
-    "_merged_from": [
-      "Metal Roofing of Columbus"
-    ],
+    "_merged_from": ["Metal Roofing of Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -22740,9 +22491,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:29.483Z",
-    "_merged_from": [
-      "Ohio Power Solutions, LLC"
-    ],
+    "_merged_from": ["Ohio Power Solutions, LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -22932,9 +22681,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:38.198Z",
-    "_merged_from": [
-      "Professional Gutter & Drain"
-    ],
+    "_merged_from": ["Professional Gutter & Drain"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -22956,9 +22703,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:38.198Z",
-    "_merged_from": [
-      "Ohio Spray Foam Insulation"
-    ],
+    "_merged_from": ["Ohio Spray Foam Insulation"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -23043,9 +22788,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:53.767Z",
-    "_merged_from": [
-      "Ohio Pro Group"
-    ],
+    "_merged_from": ["Ohio Pro Group"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -23655,10 +23398,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:02.624Z",
-    "_merged_from": [
-      "US Quality Construction",
-      "SM Quality Construction LLC"
-    ],
+    "_merged_from": ["US Quality Construction", "SM Quality Construction LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -23827,9 +23567,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:18.813Z",
-    "_merged_from": [
-      "Renew Paving & Sealing, LLC"
-    ],
+    "_merged_from": ["Renew Paving & Sealing, LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -23917,9 +23655,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:19.060Z",
-    "_merged_from": [
-      "Schumacher Homes of Columbus South, OH"
-    ],
+    "_merged_from": ["Schumacher Homes of Columbus South, OH"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -24340,9 +24076,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:27.185Z",
-    "_merged_from": [
-      "Buckeye Custom Cabinets & Closets"
-    ],
+    "_merged_from": ["Buckeye Custom Cabinets & Closets"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -24679,9 +24413,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:35.150Z",
-    "_merged_from": [
-      "Plumbing One, LLC"
-    ],
+    "_merged_from": ["Plumbing One, LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -24955,9 +24687,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:35.150Z",
-    "_merged_from": [
-      "R & T Yoder Electric, Inc - Central Columbus"
-    ],
+    "_merged_from": ["R & T Yoder Electric, Inc - Central Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -25273,9 +25003,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:51.314Z",
-    "_merged_from": [
-      "Quality Pools Inc"
-    ],
+    "_merged_from": ["Quality Pools Inc"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -25384,9 +25112,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:52.576Z",
-    "_merged_from": [
-      "Ohio Tree Care"
-    ],
+    "_merged_from": ["Ohio Tree Care"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -25702,9 +25428,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:50:00.819Z",
-    "_merged_from": [
-      "Sears Heating and Cooling"
-    ],
+    "_merged_from": ["Sears Heating and Cooling"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -25852,9 +25576,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:50:00.819Z",
-    "_merged_from": [
-      "Airtron Heating & Air Conditioning"
-    ],
+    "_merged_from": ["Airtron Heating & Air Conditioning"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -26926,9 +26648,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:50:50.902Z",
-    "_merged_from": [
-      "TGE Solar"
-    ],
+    "_merged_from": ["TGE Solar"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -27181,9 +26901,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:51:08.361Z",
-    "_merged_from": [
-      "No Drip Painting, LLC"
-    ],
+    "_merged_from": ["No Drip Painting, LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -27814,9 +27532,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:51:33.998Z",
-    "_merged_from": [
-      "Simply Drywall"
-    ],
+    "_merged_from": ["Simply Drywall"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -28153,9 +27869,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:51:33.998Z",
-    "_merged_from": [
-      "Perfectos Inc., LLC"
-    ],
+    "_merged_from": ["Perfectos Inc., LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -28387,9 +28101,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:51:43.358Z",
-    "_merged_from": [
-      "Champion Replacement Windows of Columbus"
-    ],
+    "_merged_from": ["Champion Replacement Windows of Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -28432,9 +28144,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:51:43.358Z",
-    "_merged_from": [
-      "Koala Insulation of Central Ohio"
-    ],
+    "_merged_from": ["Koala Insulation of Central Ohio"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -28540,9 +28250,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:51:43.358Z",
-    "_merged_from": [
-      "Installing groups and builders LLC"
-    ],
+    "_merged_from": ["Installing groups and builders LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -28732,9 +28440,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:51:51.857Z",
-    "_merged_from": [
-      "Ideal Siding Worthington"
-    ],
+    "_merged_from": ["Ideal Siding Worthington"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -28987,9 +28693,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:51:51.857Z",
-    "_merged_from": [
-      "Oaks Roofing & Siding"
-    ],
+    "_merged_from": ["Oaks Roofing & Siding"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -29074,9 +28778,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:52:04.155Z",
-    "_merged_from": [
-      "Ohio Cast Stone Co LLC"
-    ],
+    "_merged_from": ["Ohio Cast Stone Co LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -29963,9 +29665,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:52:20.361Z",
-    "_merged_from": [
-      "Scioto Green Gardens + Landscaping"
-    ],
+    "_merged_from": ["Scioto Green Gardens + Landscaping"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -30113,9 +29813,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:52:20.361Z",
-    "_merged_from": [
-      "Backyard Oasis Pools, LLC"
-    ],
+    "_merged_from": ["Backyard Oasis Pools, LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -30284,9 +29982,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:52:24.844Z",
-    "_merged_from": [
-      "Lawn Love - Columbus"
-    ],
+    "_merged_from": ["Lawn Love - Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -30791,9 +30487,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:52:28.430Z",
-    "_merged_from": [
-      "Premier Pools & Spas"
-    ],
+    "_merged_from": ["Premier Pools & Spas"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -31445,9 +31139,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:52:44.601Z",
-    "_merged_from": [
-      "Mae Fence Company"
-    ],
+    "_merged_from": ["Mae Fence Company"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -31973,9 +31665,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:53:00.825Z",
-    "_merged_from": [
-      "Serenity Clean of Columbus"
-    ],
+    "_merged_from": ["Serenity Clean of Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -32249,9 +31939,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:53:08.923Z",
-    "_merged_from": [
-      "Ohio Packers & Movers"
-    ],
+    "_merged_from": ["Ohio Packers & Movers"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -32273,11 +31961,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:53:17.039Z",
-    "_merged_from": [
-      "The Cabinet Shop",
-      "Cabinets To Go",
-      "The Cabinet Maker"
-    ],
+    "_merged_from": ["The Cabinet Shop", "Cabinets To Go", "The Cabinet Maker"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -32299,9 +31983,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:53:17.039Z",
-    "_merged_from": [
-      "IWC Cabinetry"
-    ],
+    "_merged_from": ["IWC Cabinetry"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -32659,9 +32341,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:53:29.643Z",
-    "_merged_from": [
-      "Granite Direct"
-    ],
+    "_merged_from": ["Granite Direct"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -32683,10 +32363,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:53:29.643Z",
-    "_merged_from": [
-      "Granite Tops and More",
-      "Granite & Quartz of Columbus"
-    ],
+    "_merged_from": ["Granite Tops and More", "Granite & Quartz of Columbus"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -32876,9 +32553,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:53:41.411Z",
-    "_merged_from": [
-      "Steve Byerly Masonry"
-    ],
+    "_merged_from": ["Steve Byerly Masonry"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -32963,9 +32638,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:53:41.411Z",
-    "_merged_from": [
-      "Fire Stone Masonry"
-    ],
+    "_merged_from": ["Fire Stone Masonry"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -34163,9 +33836,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:54:13.747Z",
-    "_merged_from": [
-      "Power Wash Solutions, LLC"
-    ],
+    "_merged_from": ["Power Wash Solutions, LLC"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -34922,10 +34593,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:54:42.488Z",
-    "_merged_from": [
-      "Tire Discounters",
-      "Tire Max-On"
-    ],
+    "_merged_from": ["Tire Discounters", "Tire Max-On"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -34968,9 +34636,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:54:42.488Z",
-    "_merged_from": [
-      "Salts Tire"
-    ],
+    "_merged_from": ["Salts Tire"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -35521,9 +35187,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:55:06.795Z",
-    "_merged_from": [
-      "Rainbow Environmental Services"
-    ],
+    "_merged_from": ["Rainbow Environmental Services"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -36393,9 +36057,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:55:26.475Z",
-    "_merged_from": [
-      "All My Sons Moving & Storage"
-    ],
+    "_merged_from": ["All My Sons Moving & Storage"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -36711,9 +36373,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:55:31.120Z",
-    "_merged_from": [
-      "Real World Commercial Cleaning"
-    ],
+    "_merged_from": ["Real World Commercial Cleaning"],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -36756,9 +36416,7 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:55:31.120Z",
-    "_merged_from": [
-      "Pristine Clean Services"
-    ],
+    "_merged_from": ["Pristine Clean Services"],
     "_validation": {
       "valid": true,
       "errors": [],
