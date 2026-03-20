@@ -636,7 +636,10 @@
       "Columbus Stone Mason",
       "Columbus Auto Repair",
       "Columbus Cleaning Service",
-      "Columbus Janitor Supply Co"
+      "Columbus Janitor Supply Co",
+      "Columbus Concrete Coatings",
+      "Columbus Suburban Construction",
+      "Columbus Basement Company"
     ],
     "_validation": {
       "valid": true,
@@ -6678,7 +6681,8 @@
     "_merged_from": [
       "Premier Concrete Coatings",
       "Premier Concrete Coatings Westerville Ohio",
-      "PREMIER CUSTOM CLOSETS-Columbus"
+      "PREMIER CUSTOM CLOSETS-Columbus",
+      "Premier counter top sales, LLC"
     ],
     "_validation": {
       "valid": true,
@@ -7277,7 +7281,8 @@
       "Columbus Tree Care",
       "Columbus Tree Company LLC",
       "Columbus Pool Management",
-      "Columbus Cabinets"
+      "Columbus Cabinets",
+      "Columbus Junk Cars Express"
     ],
     "_validation": {
       "valid": true,
@@ -8962,13 +8967,14 @@
     "country": "USA",
     "keyword": "car dealership service center",
     "category": "General",
-    "rating": 4.8,
+    "rating": 4.9,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:18.771Z",
     "_merged_from": [
       "Service Center - Mercedes-Benz of Easton",
-      "Service Center - Germain Nissan"
+      "Service Center - Germain Nissan",
+      "Service Center - Germain Mazda West"
     ],
     "_validation": {
       "valid": true,
@@ -9838,15 +9844,18 @@
     "country": "USA",
     "keyword": "fleet maintenance facility",
     "category": "General",
-    "rating": 3,
+    "rating": 4.1,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:33.839Z",
+    "_merged_from": [
+      "Columbus Bath & Basement Remodeling"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
       "warnings": [],
-      "score": 30
+      "score": 35
     }
   },
   {
@@ -10240,7 +10249,8 @@
     "scrapedAt": "2026-03-11T20:25:35.544Z",
     "_merged_from": [
       "ACI Construction",
-      "Ronk Construction"
+      "Ronk Construction",
+      "Cahill Construction, Inc."
     ],
     "_validation": {
       "valid": true,
@@ -10301,10 +10311,13 @@
     "country": "USA",
     "keyword": "manufacturing facility contractor",
     "category": "General",
-    "rating": 4,
+    "rating": 4.1,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:35.544Z",
+    "_merged_from": [
+      "ITC Manufacturing"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10368,6 +10381,9 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:35.544Z",
+    "_merged_from": [
+      "B7 Construction"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -10688,10 +10704,13 @@
     "country": "USA",
     "keyword": "warehouse contractor",
     "category": "General",
-    "rating": 4.3,
+    "rating": 4.7,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-11T20:25:42.055Z",
+    "_merged_from": [
+      "Columbus Bath Design"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -20388,13 +20407,14 @@
     "country": "USA",
     "keyword": "bamboo flooring installer",
     "category": "General",
-    "rating": 4.9,
+    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:46:26.426Z",
     "_merged_from": [
       "Affordable Granite",
-      "Affordable Movers"
+      "Affordable Movers",
+      "Affordable Professional Plumbing"
     ],
     "_validation": {
       "valid": true,
@@ -20986,7 +21006,8 @@
     "scrapedAt": "2026-03-16T21:46:59.342Z",
     "_merged_from": [
       "Premier Home Exterior",
-      "The Premier Pool Co."
+      "The Premier Pool Co.",
+      "Premier Clean"
     ],
     "_validation": {
       "valid": true,
@@ -21430,7 +21451,8 @@
       "RiteRug Flooring & Carpet - East",
       "RiteRug Flooring & Carpet - Grandview",
       "RiteRug Flooring & Carpet - New Albany",
-      "RiteRug Flooring & Carpet - Dublin"
+      "RiteRug Flooring & Carpet - Dublin",
+      "RiteRug Flooring & Carpet - Westerville"
     ],
     "_validation": {
       "valid": true,
@@ -22028,15 +22050,18 @@
     "country": "USA",
     "keyword": "commercial flooring contractor",
     "category": "General",
-    "rating": 0,
+    "rating": 4.6,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:04.971Z",
+    "_merged_from": [
+      "Legacy Roofing"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
       "warnings": [],
-      "score": 30
+      "score": 35
     }
   },
   {
@@ -22249,7 +22274,8 @@
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:13.143Z",
     "_merged_from": [
-      "AC Roofing & Siding"
+      "AC Roofing & Siding",
+      "Arrow Roofing and Siding"
     ],
     "_validation": {
       "valid": true,
@@ -22272,6 +22298,9 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:48:13.143Z",
+    "_merged_from": [
+      "Broadview Exteriors"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -23487,6 +23516,9 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:02.362Z",
+    "_merged_from": [
+      "Owens Construction"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -23743,6 +23775,9 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:10.530Z",
+    "_merged_from": [
+      "Simple Bath + Kitchen"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -24951,12 +24986,13 @@
     "country": "USA",
     "keyword": "plumbing contractor",
     "category": "General",
-    "rating": 4.9,
+    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:35.150Z",
     "_merged_from": [
-      "R & T Yoder Electric, Inc - Central Columbus"
+      "R & T Yoder Electric, Inc - Central Columbus",
+      "R & T Yoder HVAC, Inc - Columbus"
     ],
     "_validation": {
       "valid": true,
@@ -25385,7 +25421,8 @@
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:49:52.576Z",
     "_merged_from": [
-      "Ohio Tree Care"
+      "Ohio Tree Care",
+      "Only Water Heaters"
     ],
     "_validation": {
       "valid": true,
@@ -26401,6 +26438,9 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:50:25.574Z",
+    "_merged_from": [
+      "The Electric Connection"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -26502,10 +26542,13 @@
     "country": "USA",
     "keyword": "commercial electrician",
     "category": "General",
-    "rating": 4.5,
+    "rating": 4.9,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:50:33.842Z",
+    "_merged_from": [
+      "Excel Electrical Services LLC"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -27177,12 +27220,13 @@
     "country": "USA",
     "keyword": "painting contractor",
     "category": "General",
-    "rating": 4.9,
+    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:51:08.361Z",
     "_merged_from": [
-      "No Drip Painting, LLC"
+      "No Drip Painting, LLC",
+      "Pristine Paving"
     ],
     "_validation": {
       "valid": true,
@@ -30285,7 +30329,8 @@
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:52:24.844Z",
     "_merged_from": [
-      "Lawn Love - Columbus"
+      "Lawn Love - Columbus",
+      "Lawn Squad of Columbus"
     ],
     "_validation": {
       "valid": true,
@@ -31147,10 +31192,13 @@
     "country": "USA",
     "keyword": "deck builder",
     "category": "General",
-    "rating": 4.3,
+    "rating": 5,
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:52:41.015Z",
+    "_merged_from": [
+      "Deck Dynasty"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -32685,7 +32733,8 @@
     "scrapedAt": "2026-03-16T21:53:29.643Z",
     "_merged_from": [
       "Granite Tops and More",
-      "Granite & Quartz of Columbus"
+      "Granite & Quartz of Columbus",
+      "Grant Mason Columbus"
     ],
     "_validation": {
       "valid": true,
@@ -34187,6 +34236,9 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:54:13.747Z",
+    "_merged_from": [
+      "Cleantech"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -36864,6 +36916,9 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:55:31.120Z",
+    "_merged_from": [
+      "Anago Commercial Cleaning"
+    ],
     "_validation": {
       "valid": true,
       "errors": [],
@@ -37053,6 +37108,1923 @@
     "reviews": 0,
     "source": "google_maps",
     "scrapedAt": "2026-03-16T21:55:34.589Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Alliance Group Roofing Company",
+    "phone": "(800) 822-7663",
+    "email": "",
+    "website": "https://alliancegroupllc.com",
+    "address": "615 NW Enterprise DrPort St Lucie, FL 34986",
+    "city": "Port St Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-17",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 70
+    }
+  },
+  {
+    "company": "D S General Contractors Inc",
+    "phone": "(772) 335-0035",
+    "email": "",
+    "website": "http://www.dsgeneralcontractors.com",
+    "address": "2032 SE Giffen AvePort Saint Lucie, FL 34952",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-17",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 70
+    }
+  },
+  {
+    "company": "TNT Builders of Florida",
+    "phone": "(772) 344-9400",
+    "email": "",
+    "website": "https://www.tntbuilders.net/contact",
+    "address": "981 SW Biltmore StPort Saint Lucie, FL 34983",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-17",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 70
+    }
+  },
+  {
+    "company": "Southeast Construction Associates, Inc",
+    "phone": "(772) 201-4043",
+    "email": "",
+    "website": "http://southeastconstructionassociatesinc.localsearch.com",
+    "address": "Fort Pierce, FL 34982",
+    "city": "Fort Pierce",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-17",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 70
+    }
+  },
+  {
+    "company": "Ron Harry & Sons Inc",
+    "phone": "(772) 879-1710",
+    "email": "",
+    "website": "http://ronharrysonsinc.localsearch.com",
+    "address": "1014 SW Estaugh AvePort Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-17",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 70
+    }
+  },
+  {
+    "company": "Citadel Construction Corp",
+    "phone": "(772) 871-9141",
+    "email": "",
+    "website": "http://citadelconstructioncorp.localsearch.com",
+    "address": "3757 SW Ottawa StPort Saint Lucie, FL 34953",
+    "city": "Port Saint Lucie",
+    "state": "FL",
+    "country": "USA",
+    "keyword": "general contractors",
+    "category": "general contractors",
+    "rating": 0,
+    "reviews": 0,
+    "source": "yellowpages",
+    "scrapedAt": "2026-03-17",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 70
+    }
+  },
+  {
+    "company": "CR Concrete Services LLC",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "concrete resurfacing contractor",
+    "category": "Concrete",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:27:28.546Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Advance Hardwood Floor Care llc",
+    "phone": "",
+    "website": "",
+    "address": "4.4",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "hardwood floor installation",
+    "category": "General",
+    "rating": 4.4,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:28:01.451Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Old School Hardwood Flooring",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "hardwood floor installation",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:28:01.451Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Canal Flooring Outlet",
+    "phone": "",
+    "website": "",
+    "address": "4.6",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "LVP flooring contractor",
+    "category": "General",
+    "rating": 4.6,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:28:34.606Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "MSI Columbus",
+    "phone": "",
+    "website": "",
+    "address": "4.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "natural stone flooring",
+    "category": "General",
+    "rating": 4.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:28:59.232Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Empire Today - Columbus, OH",
+    "phone": "",
+    "website": "",
+    "address": "4.2",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "carpet installation company",
+    "category": "General",
+    "rating": 4.2,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:29:15.616Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Clean Rite Carpet Cleaning LLC",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "carpet cleaning company",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:29:23.804Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Surfaces Construction Group",
+    "phone": "",
+    "website": "",
+    "address": "4.6",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "gymnasium flooring contractor",
+    "category": "General",
+    "rating": 4.6,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:29:40.600Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Krause Brothers Flooring",
+    "phone": "",
+    "website": "",
+    "address": "4.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "commercial flooring contractor",
+    "category": "General",
+    "rating": 4.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:29:57.072Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Sunset Roofing Co",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "roofing contractor",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:30:05.022Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Right Way Roofing",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "roof replacement company",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:30:05.229Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "All Seasons Roofing & Construction",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "commercial roofing contractor",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:30:13.423Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Mueller Roofing Distributors",
+    "phone": "",
+    "website": "",
+    "address": "4.5",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "shingle roofing company",
+    "category": "General",
+    "rating": 4.5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:30:21.630Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Elite Exteriors Unlimited",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "EPDM roofing contractor",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:30:37.887Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "PNE Homes",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "custom home builder",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:31:10.812Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Prestige Basement Finishing",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "basement finishing contractor",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:31:19.113Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Gates Basement Finishing",
+    "phone": "",
+    "website": "",
+    "address": "4.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "basement finishing contractor",
+    "category": "General",
+    "rating": 4.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:31:19.113Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Mid-State Basement Systems",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "basement finishing contractor",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:31:19.113Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Erie Home Basement Solutions",
+    "phone": "",
+    "website": "",
+    "address": "4.5",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "basement finishing contractor",
+    "category": "General",
+    "rating": 4.5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:31:19.113Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Ohio Basement Authority",
+    "phone": "",
+    "website": "",
+    "address": "4.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "basement finishing contractor",
+    "category": "General",
+    "rating": 4.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:31:19.113Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "FINISHED BASEMENTS PLUS INC.",
+    "phone": "",
+    "website": "",
+    "address": "4.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "basement finishing contractor",
+    "category": "General",
+    "rating": 4.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:31:19.113Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "MB Plumbing",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "residential plumber",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:31:27.355Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "The Service People, Inc.",
+    "phone": "",
+    "website": "",
+    "address": "4.7",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "emergency plumber",
+    "category": "General",
+    "rating": 4.7,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:31:35.562Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Only Drains",
+    "phone": "",
+    "website": "",
+    "address": "4.6",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "drain cleaning company",
+    "category": "General",
+    "rating": 4.6,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:31:43.504Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Flush Drains & Vassco Utility Maintenance",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "drain cleaning company",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:31:43.504Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "4 Seasons Air",
+    "phone": "",
+    "website": "",
+    "address": "4.7",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "air conditioning contractor",
+    "category": "General",
+    "rating": 4.7,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:32:00.013Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "All-Knight, Inc.",
+    "phone": "",
+    "website": "",
+    "address": "4.6",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "ductwork contractor",
+    "category": "General",
+    "rating": 4.6,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:32:16.538Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Penn Electric",
+    "phone": "",
+    "website": "",
+    "address": "4.3",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "electrical contractor",
+    "category": "General",
+    "rating": 4.3,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:32:16.714Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "R & T Yoder Electric, Inc - Grove City",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "residential electrician",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:32:24.805Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "My Electric Works",
+    "phone": "",
+    "website": "",
+    "address": "4.7",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "electrical panel upgrade",
+    "category": "General",
+    "rating": 4.7,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:32:33.247Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "McNaughton-McKay Electric Company - Columbus",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "electrical panel upgrade",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:32:33.247Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Haas Painting Company, LLC",
+    "phone": "",
+    "website": "",
+    "address": "4.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "painting contractor",
+    "category": "General",
+    "rating": 4.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:32:58.347Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Renew Paint & Power Wash",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "exterior painting contractor",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:33:06.556Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Pinpoint Painting and Renovation",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "cabinet painting contractor",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:33:23.023Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "North Central Insulation",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "insulation contractor",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:33:31.348Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Freedom Roofing, Windows and Siding LLC",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "siding contractor",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:33:39.638Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "IDI: Insulation Distributors Inc.",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "spray foam insulation",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:33:39.712Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Thomas Door Controls Inc",
+    "phone": "",
+    "website": "",
+    "address": "4.4",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "door installation contractor",
+    "category": "General",
+    "rating": 4.4,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:34:04.325Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "All Pro Overhead Door Systems",
+    "phone": "",
+    "website": "",
+    "address": "4.6",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "garage door installer",
+    "category": "General",
+    "rating": 4.6,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:34:04.614Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Door Depot",
+    "phone": "",
+    "website": "",
+    "address": "4.6",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "garage door installer",
+    "category": "General",
+    "rating": 4.6,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:34:04.614Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Hedge Landscape LLC",
+    "phone": "",
+    "website": "",
+    "address": "4.5",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "landscaping company",
+    "category": "General",
+    "rating": 4.5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:34:12.573Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Peabody Landscape Group",
+    "phone": "",
+    "website": "",
+    "address": "4.1",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "landscaping company",
+    "category": "General",
+    "rating": 4.1,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:34:12.573Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Pinnacle Landscaping",
+    "phone": "",
+    "website": "",
+    "address": "4.3",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "landscaping company",
+    "category": "General",
+    "rating": 4.3,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:34:12.573Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "High 5 Landscaping",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "lawn care service",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:34:12.798Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Custom Turf",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "lawn care service",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:34:12.798Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "A Woman's Touch Tree Care LLC.",
+    "phone": "",
+    "website": "",
+    "address": "4.7",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "tree service company",
+    "category": "General",
+    "rating": 4.7,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:34:20.832Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Spas Direct Inc",
+    "phone": "",
+    "website": "",
+    "address": "4.5",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "swimming pool builder",
+    "category": "General",
+    "rating": 4.5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:34:53.945Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Cooks Cabinets",
+    "phone": "",
+    "website": "",
+    "address": "4.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "kitchen cabinet installer",
+    "category": "General",
+    "rating": 4.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:35:10.628Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "R D Cook Co",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "custom cabinet maker",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:35:18.599Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Cornerstone Masonry, Inc.",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "masonry contractor",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:35:35.086Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Petruzzi Concrete & Masonry",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "brick contractor",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:35:35.324Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "SiteOne Stone Center",
+    "phone": "",
+    "website": "",
+    "address": "4.6",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "stone contractor",
+    "category": "General",
+    "rating": 4.6,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:35:43.212Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Charles Brothers Asphalt & Sealcoating",
+    "phone": "",
+    "website": "",
+    "address": "4.7",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "asphalt paving company",
+    "category": "General",
+    "rating": 4.7,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:35:51.614Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Jet-Seal",
+    "phone": "",
+    "website": "",
+    "address": "4.4",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "asphalt paving company",
+    "category": "General",
+    "rating": 4.4,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:35:51.614Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Heiberger Paving, Inc.",
+    "phone": "",
+    "website": "",
+    "address": "4.2",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "asphalt paving company",
+    "category": "General",
+    "rating": 4.2,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:35:51.614Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Surface Pro Asphalt Paving Co",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "asphalt paving company",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:35:51.614Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Hotsy Equipment Company",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "pressure washing company",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:07.959Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Fix Auto Columbus",
+    "phone": "",
+    "website": "",
+    "address": "4.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "auto body shop",
+    "category": "General",
+    "rating": 4.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:24.411Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Three-C Body Shops, Inc.",
+    "phone": "",
+    "website": "",
+    "address": "4.3",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "auto body shop",
+    "category": "General",
+    "rating": 4.3,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:24.411Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Wbt Truck Repair",
+    "phone": "",
+    "website": "",
+    "address": "4.5",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "truck repair shop",
+    "category": "General",
+    "rating": 4.5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:24.438Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Discount Tires Plus - New & Used Tires Columbus,OH Tire & Mechanical Shop Sales Experts",
+    "phone": "",
+    "website": "",
+    "address": "4.7",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "tire shop",
+    "category": "General",
+    "rating": 4.7,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:32.719Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Dolab Used & New Tires fairwood tires",
+    "phone": "",
+    "website": "",
+    "address": "4.3",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "tire shop",
+    "category": "General",
+    "rating": 4.3,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:32.719Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Boyd's Bethel Centre Tire & Service",
+    "phone": "",
+    "website": "",
+    "address": "4.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "tire shop",
+    "category": "General",
+    "rating": 4.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:32.719Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "BROTHERS Tire Shop",
+    "phone": "",
+    "website": "",
+    "address": "4.5",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "tire shop",
+    "category": "General",
+    "rating": 4.5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:32.719Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Bob's Tires",
+    "phone": "",
+    "website": "",
+    "address": "4.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "tire shop",
+    "category": "General",
+    "rating": 4.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:32.719Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Tire Guys and Service",
+    "phone": "",
+    "website": "",
+    "address": "4.7",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "tire shop",
+    "category": "General",
+    "rating": 4.7,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:32.719Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "State Tire & Service",
+    "phone": "",
+    "website": "",
+    "address": "4.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "tire shop",
+    "category": "General",
+    "rating": 4.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:32.719Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "NTB-National Tire & Battery",
+    "phone": "",
+    "website": "",
+    "address": "4.4",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "tire shop",
+    "category": "General",
+    "rating": 4.4,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:32.719Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Pep Boys Auto Service & Tires",
+    "phone": "",
+    "website": "",
+    "address": "4.1",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "tire shop",
+    "category": "General",
+    "rating": 4.1,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:32.719Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Patton Warehousing",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "warehouse contractor",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:41.021Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Spartan Logistics",
+    "phone": "",
+    "website": "",
+    "address": "3.8",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "distribution center contractor",
+    "category": "General",
+    "rating": 3.8,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:49.258Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 30
+    }
+  },
+  {
+    "company": "Walmart Distribution Center",
+    "phone": "",
+    "website": "",
+    "address": "3.7",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "distribution center contractor",
+    "category": "General",
+    "rating": 3.7,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:49.258Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 30
+    }
+  },
+  {
+    "company": "Hydro Mechanical",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "industrial maintenance contractor",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:49.282Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "WeGetTheMoldOut",
+    "phone": "",
+    "website": "",
+    "address": "4.6",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "mold remediation contractor",
+    "category": "General",
+    "rating": 4.6,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:57.564Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Pure Maintenance of Ohio",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "mold remediation contractor",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:36:57.564Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Restorerz Emergency Services",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "fire damage restoration",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:37:05.869Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "ServiceMaster Restoration by Neverman Construction Company",
+    "phone": "",
+    "website": "",
+    "address": "3.5",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "fire damage restoration",
+    "category": "General",
+    "rating": 3.5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:37:05.869Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 30
+    }
+  },
+  {
+    "company": "HEPA Environmental Services, Inc.",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "asbestos removal company",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:37:14.070Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Protect Environmental",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "asbestos removal company",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:37:14.070Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Home Commercial Inspections LLC",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "asbestos removal company",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:37:14.070Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Purefoys Professionals LLC 2",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "junk removal service",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:37:14.125Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Mr. Mover",
+    "phone": "",
+    "website": "",
+    "address": "4.7",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "moving company local",
+    "category": "General",
+    "rating": 4.7,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:37:22.279Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Day One Commercial Cleaning",
+    "phone": "",
+    "website": "",
+    "address": "5.0",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "cleaning service commercial",
+    "category": "General",
+    "rating": 5,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:37:22.323Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "EV CLEANING SERVICES LLC",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "cleaning service commercial",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:37:22.323Z",
+    "_validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "score": 35
+    }
+  },
+  {
+    "company": "Camilas House Cleaning Services Columbus",
+    "phone": "",
+    "website": "",
+    "address": "4.9",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "keyword": "cleaning service commercial",
+    "category": "General",
+    "rating": 4.9,
+    "reviews": 0,
+    "source": "google_maps",
+    "scrapedAt": "2026-03-20T14:37:22.323Z",
     "_validation": {
       "valid": true,
       "errors": [],
