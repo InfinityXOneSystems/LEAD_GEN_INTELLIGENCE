@@ -1,0 +1,1417 @@
+company,phone,email,website,address,city,state,rating,reviews,lead_score,tier
+Columbus Epoxy Flooring Co.,(614) 555-2101,info@columbusepoxy.com,https://columbusepoxy.com,"1400 Goodale Blvd, Columbus, OH 43212",Columbus,OH,4.8,77,95,HOT
+Ohio Garage Transformations,(614) 555-2303,quote@ohiogaragetransform.com,https://ohiogaragetransform.com,"2250 W Broad St, Columbus, OH 43204",Columbus,OH,4.9,98,90,HOT
+Arch City Decorative Concrete,(614) 555-2707,contact@archcityconcrete.com,https://archcityconcrete.com,"620 N High St, Columbus, OH 43215",Columbus,OH,4.5,26,90,HOT
+Heartland Surface Prep,(614) 555-2404,bids@heartlandprep.com,https://heartlandprep.com,"3700 Refugee Rd, Columbus, OH 43232",Columbus,OH,4.5,34,88,HOT
+Olentangy Concrete Resurfacing,(614) 555-2808,service@olentangyconcrete.com,https://olentangyconcrete.com,"1120 Morse Rd, Columbus, OH 43229",Columbus,OH,4.4,18,82,HOT
+Columbus Concrete Grinding & Sealing,(614) 555-3010,info@columbusgrinding.com,https://columbusgrinding.com,"6700 Huntley Rd, Columbus, OH 43229",Columbus,OH,4.3,15,82,HOT
+Buckeye Concrete & Polishing,(614) 555-2202,hello@buckeyeconcrete.com,https://buckeyeconcrete.com,"800 Yard St, Columbus, OH 43212",Columbus,OH,4.7,52,75,HOT
+Columbus Industrial Coatings LLC,(614) 555-2606,sales@columbusindustrial.com,https://columbusindustrial.com,"5555 Westerville Rd, Columbus, OH 43231",Columbus,OH,4.7,59,75,HOT
+Metro Metallic Floors Columbus,(614) 555-2909,quote@metrometallicfloors.com,https://metrometallicfloors.com,"2301 Stringtown Rd, Grove City, OH 43123",Columbus,OH,4.8,66,75,HOT
+Capital City Floor Coatings,(614) 555-2505,info@capitalfloorcoatings.com,https://capitalfloorcoatings.com,"490 E Livingston Ave, Columbus, OH 43215",Columbus,OH,4.6,43,70,WARM
+Columbus Epoxy Flooring,,,,5.0,Columbus,OH,5,0,55,WARM
+Columbus Garage Floor Coating,,,,4.7,Columbus,OH,4.7,0,55,WARM
+Columbus Epoxy Floors,,,,5.0,Columbus,OH,5,0,55,WARM
+Epoxy Flooring Columbus,,,,5.0,Columbus,OH,5,0,55,WARM
+"Showroom Floors Ltd, Epoxy Floors, Columbus, Oh",,,,4.7,Columbus,OH,4.7,0,55,WARM
+Ideal Garage Floor Coatings,,,,4.9,Columbus,OH,4.9,0,55,WARM
+Elite Epoxy Coatings of Columbus,,,,5.0,Columbus,OH,5,0,55,WARM
+Spaulding's Epoxy Floor Coating,,,,5.0,Columbus,OH,5,0,55,WARM
+Epoxy and Polished Floors of Columbus,,,,5.0,Columbus,OH,5,0,55,WARM
+Infinite Designs Epoxy Solutions of North Columbus,,,,4.8,Columbus,OH,4.8,0,55,WARM
+Global Epoxy LLC,,,,5.0,Columbus,OH,5,0,55,WARM
+MACH ONE Epoxy Floors of Columbus West,,,,5.0,Columbus,OH,5,0,55,WARM
+Decorative Concrete Central Ohio,,,,5.0,Columbus,OH,5,0,55,WARM
+J&G Epoxy Coatings,,,,5.0,Columbus,OH,5,0,55,WARM
+Wyckoff Epoxy Flooring,,,,5.0,Columbus,OH,5,0,55,WARM
+Masters Epoxy,,,,5.0,Columbus,OH,5,0,55,WARM
+Epoxy Flooring Cincinnati,,,,5.0,Columbus,OH,5,0,55,WARM
+AR Epoxy Flooring,,,,5.0,Columbus,OH,5,0,55,WARM
+Kettering Epoxy Flooring,,,,4.8,Columbus,OH,4.8,0,55,WARM
+Epoxy Flooring Masters,,,,5.0,Columbus,OH,5,0,55,WARM
+Buckeye Epoxy Flooring,,,,5.0,Columbus,OH,5,0,55,WARM
+DuraFloor Epoxy Pros,,,,4.8,Columbus,OH,4.8,0,55,WARM
+Decorative Epoxy Experts LLC,,,,5.0,Columbus,OH,5,0,55,WARM
+Hitchcock Surface Prep,,,,5.0,Columbus,OH,5,0,53,WARM
+Ohio Garage Interiors Columbus,,,,5.0,Columbus,OH,5,0,50,WARM
+"Leaf Home Garage Flooring, LLC",,,,4.8,Columbus,OH,4.8,0,50,WARM
+Garage Coating Pros,,,,5.0,Columbus,OH,5,0,50,WARM
+Garage Force of Columbus NE,,,,5.0,Columbus,OH,5,0,50,WARM
+GarageExperts of Columbus,,,,4.6,Columbus,OH,4.6,0,50,WARM
+One Call Auto Mechanic,,,,4.9,Columbus,OH,4.9,0,50,WARM
+All Hours Automotive Repair,,,,4.8,Columbus,OH,4.8,0,50,WARM
+Luke's Auto Repair - Grandview,,,,4.7,Columbus,OH,4.7,0,50,WARM
+Clintonville Automotive Repair Service,,,,4.6,Columbus,OH,4.6,0,50,WARM
+Avenue Auto Repair,,,,4.7,Columbus,OH,4.7,0,50,WARM
+Urban Auto Repairs,,,,4.8,Columbus,OH,4.8,0,50,WARM
+The JAM Shop Auto Repair,,,,5.0,Columbus,OH,5,0,50,WARM
+J Auto Repair LLC.,,,,5.0,Columbus,OH,5,0,50,WARM
+Luke's Auto Repair - Upper Arlington,,,,4.8,Columbus,OH,4.8,0,50,WARM
+Glacier Auto Repair,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Fine Line Auto Body Grandview / OSU,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Auto Body Specialist,,,,4.6,Columbus,OH,4.6,0,50,WARM
+Fine Line Auto Body-Lewis Center,,,,4.8,Columbus,OH,4.8,0,50,WARM
+Fine Line Auto Body Alum Creek,,,,4.7,Columbus,OH,4.7,0,50,WARM
+Fine Line Auto Body North High,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Fine Line Auto Body at Twins Buick GMC,,,,4.8,Columbus,OH,4.8,0,50,WARM
+King Collision Auto Repair,,,,4.7,Columbus,OH,4.7,0,50,WARM
+Fine Line Auto Body South High,,,,4.8,Columbus,OH,4.8,0,50,WARM
+Rife's Auto Body - Grandview,,,,4.6,Columbus,OH,4.6,0,50,WARM
+Fine Line Auto Body - Bethel Road,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Car Pro Auto Body,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Semi Truck Repair Center & Parking,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Big Boyz Mobile Truck Repair Service,,,,4.5,Columbus,OH,4.5,0,50,WARM
+CMH Truck Repair LLC,,,,4.8,Columbus,OH,4.8,0,50,WARM
+Diesel Truck Repair Roadservice 24/7,,,,4.5,Columbus,OH,4.5,0,50,WARM
+Elite Truck Mobile Diesel Mechanic,,,,5.0,Columbus,OH,5,0,50,WARM
+Columbus Fleet Maintenance,,,,5.0,Columbus,OH,5,0,50,WARM
+Dublin City Fleet Maintenance,,,,4.5,Columbus,OH,4.5,0,50,WARM
+Fleet Maintenance Service of Ohio,,,,4.8,Columbus,OH,4.8,0,50,WARM
+D&S Fleet Maintenance,,,,5.0,Columbus,OH,5,0,50,WARM
+"Columbus Design & Manufacturing, LLC",,,,5.0,Columbus,OH,5,0,50,WARM
+Appian Manufacturing Corporation,,,,4.7,Columbus,OH,4.7,0,50,WARM
+Patrick Manufacturing,,,,5.0,Columbus,OH,5,0,50,WARM
+Steel Warehouse Co Inc,,,,5.0,Columbus,OH,5,0,50,WARM
+The Glass Block Warehouse,,,,5.0,Columbus,OH,5,0,50,WARM
+The Columbus Warehouse,,,,4.8,Columbus,OH,4.8,0,50,WARM
+Prime Auto Repairs,,,,4.7,Columbus,OH,4.7,0,50,WARM
+Harolds Automotive,,,,4.8,Columbus,OH,4.8,0,50,WARM
+T & S Plumbing & Mechanical,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Crawford Mechanical Services,,,,4.7,Columbus,OH,4.7,0,50,WARM
+JA Mechanical LLC,,,,5.0,Columbus,OH,5,0,50,WARM
+"Carpenter Mechanical, LLC",,,,4.7,Columbus,OH,4.7,0,50,WARM
+Pedersen Mechanical Insulation,,,,4.5,Columbus,OH,4.5,0,50,WARM
+"Innovative Door Systems, LLC(Garage Door Repair)",,,,5.0,Columbus,OH,5,0,50,WARM
+Precision Garage Door of Columbus,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Don's Garage Door Repair,,,,4.8,Columbus,OH,4.8,0,50,WARM
+Apex Garage Door Services,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Columbus Garage Door Pros,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Wammack's Garage Door Repair,,,,5.0,Columbus,OH,5,0,50,WARM
+Over & Above Garage Doors,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Blue Line Garage Door Repair Columbus Ohio LLC,,,,5.0,Columbus,OH,5,0,50,WARM
+Precision Garage Door of Hilliard,,,,4.9,Columbus,OH,4.9,0,50,WARM
+The Garage Door Guy LLC,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Local Garage Door Repair Dublin Ohio LLC,,,,4.8,Columbus,OH,4.8,0,50,WARM
+Upper Arlington Garage Door Repair LLC,,,,5.0,Columbus,OH,5,0,50,WARM
+Garage Door Repair Lewis Center LLC,,,,4.8,Columbus,OH,4.8,0,50,WARM
+Precision Garage Door of Westerville,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Garage Door Repair Columbus Ohio,,,,5.0,Columbus,OH,5,0,50,WARM
+Spartan Techs Garage Door Repair Columbus,,,,4.8,Columbus,OH,4.8,0,50,WARM
+OGD Overhead Garage Door,,,,4.7,Columbus,OH,4.7,0,50,WARM
+The Patio Room Factory Inc,,,,5.0,Columbus,OH,5,0,50,WARM
+Jody Plant Masonry,,,,4.9,Columbus,OH,4.9,0,50,WARM
+Imports Plus Automotive,,,,4.9,Columbus,OH,4.9,0,50,WARM
+The Service Company- Complete Truck Repair,,,,5.0,Columbus,OH,5,0,50,WARM
+Wbt Truck Repair,,,,4.5,Columbus,OH,4.5,0,50,WARM
+"Discount Tires Plus - New & Used Tires Columbus,OH Tire & Mechanical Shop Sales Experts",,,,4.7,Columbus,OH,4.7,0,50,WARM
+Hydro Mechanical,,,,5.0,Columbus,OH,5,0,50,WARM
+Columbus Truck Repair,,,,4.3,Columbus,OH,4.3,0,45,COLD
+"Dr. Diesel's Truck Repair, LLC",,,,4.2,Columbus,OH,4.2,0,45,COLD
+Wiers Fleet Service & Truck Repair Columbus,,,,4.4,Columbus,OH,4.4,0,45,COLD
+All Fleet Maintenance,,,,4.3,Columbus,OH,4.3,0,45,COLD
+GTW Manufacturing LLC,,,,4.0,Columbus,OH,4,0,45,COLD
+Cardinal Health Distribution center,,,,4.0,Columbus,OH,4,0,45,COLD
+Columbus Distribution Center Napa,,,,4.4,Columbus,OH,4.4,0,45,COLD
+No Hassle Auto Repair & Moblie Services,,,,4.4,Columbus,OH,4.4,0,45,COLD
+auto repair,,,,4.4,Columbus,OH,4.4,0,45,COLD
+Germain Automotive Group,,,,4.2,Columbus,OH,4.2,0,45,COLD
+TP Mechanical Contractors,,,,4.1,Columbus,OH,4.1,0,45,COLD
+ITC Manufacturing,,,,4.1,Columbus,OH,4.1,0,45,COLD
+Epoxy Flooring,,,,· 3108 Gallant Dr,Columbus,OH,0,0,40,COLD
+Ricart Automotive Mega Mall,,,,3.8,Columbus,OH,3.8,0,40,COLD
+Nash Distribution Columbus Warehouse,,,,3.7,Columbus,OH,3.7,0,40,COLD
+World Distribution Services Warehouse Columbus,,,,3.6,Columbus,OH,3.6,0,40,COLD
+Office Depot Max Distribution Center,,,,3.7,Columbus,OH,3.7,0,40,COLD
+Clopay Corporation - Columbus Distribution Center,,,,3.6,Columbus,OH,3.6,0,40,COLD
+Lowes Distribution Center,,,,3.7,Columbus,OH,3.7,0,40,COLD
+Epic Epoxy 614,,,,1.0,Columbus,OH,1,0,40,COLD
+The Home Depot Distribution Center,,,,3.6,Columbus,OH,3.6,0,40,COLD
+Columbus Auto Repair,,,,3.7,Columbus,OH,3.7,0,40,COLD
+Speer Mechanical,,,,3.5,Columbus,OH,3.5,0,40,COLD
+Walmart Distribution Center,,,,3.7,Columbus,OH,3.7,0,40,COLD
+Premier Concrete Coatings Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Comer & Cross Concrete Coatings,,,,4.9,Columbus,OH,4.9,0,35,COLD
+GatorGuard Concrete Coatings of Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"Deco-Coat Flooring, LLC",,,,4.9,Columbus,OH,4.9,0,35,COLD
+XPS Xpress Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Infinity Concrete Coatings,,,,5.0,Columbus,OH,5,0,35,COLD
+Premier Concrete Coatings,,,,5.0,Columbus,OH,5,0,35,COLD
+Solutions for Organizing Spaces,,,,5.0,Columbus,OH,5,0,35,COLD
+Your1DayFloor.com,,,,5.0,Columbus,OH,5,0,35,COLD
+Pro Flooring Installers Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Martin Painting & Coating Co,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Embellish By MJ,,,,5.0,Columbus,OH,5,0,35,COLD
+"Permafloor, Inc.",,,,5.0,Columbus,OH,5,0,35,COLD
+Rockhound Resurfacing,,,,5.0,Columbus,OH,5,0,35,COLD
+Deco-Crete Supply,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Columbus Stamp Concrete,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Supreme Concrete Solutions,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Top Level Concrete,,,,5.0,Columbus,OH,5,0,35,COLD
+Capital City Concrete,,,,4.8,Columbus,OH,4.8,0,35,COLD
+CKG Small Concrete & General Services,,,,5.0,Columbus,OH,5,0,35,COLD
+Royal Concrete,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Concrete Contracting of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Optimus Concrete Co.,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Samczuk Concrete & Masonry LLC,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Ed's Concrete Construction LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Hacker's Concrete Impressions,,,,5.0,Columbus,OH,5,0,35,COLD
+Ohio Concrete Sawing & Drilling - Columbus,,,,4.5,Columbus,OH,4.5,0,35,COLD
+"CT Concrete, LLC",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Good Guys Improvements LLP,,,,5.0,Columbus,OH,5,0,35,COLD
+Concrete Lyftz,,,,5.0,Columbus,OH,5,0,35,COLD
+Concrete Cutting & Breaking,,,,5.0,Columbus,OH,5,0,35,COLD
+SealMaxx of Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Maxima Concrete,,,,4.9,Columbus,OH,4.9,0,35,COLD
+The Stallion Concrete LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+"Bill Lewis Cement Contractor, LLC",,,,4.7,Columbus,OH,4.7,0,35,COLD
+CR Concrete Construction - Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Alonzo Contractors Inc,,,,4.9,Columbus,OH,4.9,0,35,COLD
+MCL Concrete LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+SmartLevel Concrete,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Arlington Concrete,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Dura Seal,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Columbus Custom Concrete,,,,5.0,Columbus,OH,5,0,35,COLD
+Special Concrete Ohio LLC,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Evans Concrete,,,,5.0,Columbus,OH,5,0,35,COLD
+Fine Line Concrete Contractors,,,,5.0,Columbus,OH,5,0,35,COLD
+Superior Concrete Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Roman Concrete,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Central Ohio Blasting,,,,5.0,Columbus,OH,5,0,35,COLD
+Vibrant Vision Coatings,,,,4.7,Columbus,OH,4.7,0,35,COLD
+S&C Blasting LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+C & B Mobile Blasting,,,,5.0,Columbus,OH,5,0,35,COLD
+A1 Blasting Pros,,,,5.0,Columbus,OH,5,0,35,COLD
+Trusted Coatings,,,,5.0,Columbus,OH,5,0,35,COLD
+BlastOne International,,,,4.8,Columbus,OH,4.8,0,35,COLD
+MCL Power Clean Blasting Services,,,,5.0,Columbus,OH,5,0,35,COLD
+TLC Surface Restoration,,,,5.0,Columbus,OH,5,0,35,COLD
+Four Winds Sand Blasting,,,,5.0,Columbus,OH,5,0,35,COLD
+Ace Portable Sandblasting,,,,5.0,Columbus,OH,5,0,35,COLD
+RPM Powder Coating,,,,5.0,Columbus,OH,5,0,35,COLD
+Durer Shotblast LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Ohio Dustless Blasting,,,,5.0,Columbus,OH,5,0,35,COLD
+M&M Dustless Mobile Blasting,,,,5.0,Columbus,OH,5,0,35,COLD
+Soda Clean of Ohio,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Beeline Floors,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"FS HW Flooring, LLC",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Columbus Floor Refinishing,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Luke's Auto,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Weber Road Auto Service,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Buckeye Complete Auto Care,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Tom and Jerry's Auto Service,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Alternative Auto Care,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Streamline Auto,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Mike's Foreign Car Service,,,,4.8,Columbus,OH,4.8,0,35,COLD
+All In Auto Service LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Ohio Autocare,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Valentino's Car Care,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Auto Center,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Columbus Auto Mall,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Germain Service Center - Germain Lexus of Easton,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Service Center - Toyota West,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Mark Wahlberg Chevrolet of Columbus,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Byers Mazda Service Center,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Service Center - Germain Mazda of Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Subaru Service - Germain Subaru of Columbus Service Center,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Byers Imports,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Service & Parts Center - Germain Kia,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Service Center - Mercedes-Benz of Easton,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Auto Palace,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Service Center - Germain Volkswagen of Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Service Center - Germain Nissan,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Kraft's Body & Fender Co,,,,4.8,Columbus,OH,4.8,0,35,COLD
+CARSTAR Auto Boutique Collision,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Babylon Body Shop,,,,5.0,Columbus,OH,5,0,35,COLD
+McCombe Body Shop,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Lane & Kenny Body Shop,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Central Collision,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Fix N Go Collision Center Body Shop LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Collision Solutions LLC,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Columbus Truck & Trailer Repair LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Yourway Truck & Trailer Repair,,,,4.9,Columbus,OH,4.9,0,35,COLD
+ATI Truck And Trailer Repair LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+FleetBarn (Truck Trailer Repair),,,,5.0,Columbus,OH,5,0,35,COLD
+Jones Truck & Spring Repair,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Columbus Mobile Truck Repair,,,,3.4,Columbus,OH,3.4,0,35,COLD
+Eastern Truck & Trailer,,,,4.5,Columbus,OH,4.5,0,35,COLD
+South Central Fleet Services,,,,5.0,Columbus,OH,5,0,35,COLD
+PFM Fleet Service,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Fleet Maintenance Transportation,,,,· 3880 Southwest Blvd,Columbus,OH,0,0,35,COLD
+Fleet Services & Repair,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Fleet Force,,,,4.8,Columbus,OH,4.8,0,35,COLD
+ProFleet Heavy Duty Truck Parts,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"Atlas Industrial Contractors, Inc.",,,,4.7,Columbus,OH,4.7,0,35,COLD
+Elford Inc.,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Lamit Industries Inc.,,,,5.0,Columbus,OH,5,0,35,COLD
+ACI Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+Mammoth Prefab,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Compton Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+Humble Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Liquidation Center,,,,4.5,Columbus,OH,4.5,0,35,COLD
+"WB Construction Products, LLC",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Terminal Warehouse Inc,,,,3.2,Columbus,OH,3.2,0,35,COLD
+Exterior Building Supply,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Ohio Wholesale Liquidation Services,,,,5.0,Columbus,OH,5,0,35,COLD
+Foundation Building Materials,,,,4.8,Columbus,OH,4.8,0,35,COLD
+SRS Building Products,,,,4.5,Columbus,OH,4.5,0,35,COLD
+King Distribution Center,,,,3.4,Columbus,OH,3.4,0,35,COLD
+Distribution Centre,,,,5.0,Columbus,OH,5,0,35,COLD
+NCS Distribution Center,,,,1.7,Columbus,OH,1.7,0,35,COLD
+CDC Distributors,,,,4.5,Columbus,OH,4.5,0,35,COLD
+MTM Contractors LLC,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Ohio Facility Maintenance LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Team Industrial Services Inc,,,,5.0,Columbus,OH,5,0,35,COLD
+"Team Industrial Services, Inc.",,,,5.0,Columbus,OH,5,0,35,COLD
+"GHM Homes Remodeling And Chimney Services, OH",,,,5.0,Columbus,OH,5,0,35,COLD
+Preventative Maintenance Service,,,,5.0,Columbus,OH,5,0,35,COLD
+City Wide Facility Solutions - Columbus,,,,4.6,Columbus,OH,4.6,0,35,COLD
+"A1 Pro Services, LLC",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Gimme The Dirt Ltd,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Stratus Building Solutions of Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Ace Handyman Services Northwest Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Yoder & Co. Floors,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Floor Systems & Design,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Panel Town & Floors,,,,5.0,Columbus,OH,5,0,35,COLD
+Footprints Floors of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Infistruct Flooring,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Columbus Flooring City,,,,5.0,Columbus,OH,5,0,35,COLD
+America's Floor Source - Columbus East,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Columbus Flooring Solutions,,,,5.0,Columbus,OH,5,0,35,COLD
+Floor Coverings International,,,,5.0,Columbus,OH,5,0,35,COLD
+America's Floor Source - Columbus West,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Next Level Concrete Coatings,,,,5.0,Columbus,OH,5,0,35,COLD
+Apex Floor Coating,,,,5.0,Columbus,OH,5,0,35,COLD
+Revolutionary Floor Coatings,,,,5.0,Columbus,OH,5,0,35,COLD
+Pro Edge Floor Coatings,,,,5.0,Columbus,OH,5,0,35,COLD
+Legacy Concrete - Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Daniel's concrete,,,,5.0,Columbus,OH,5,0,35,COLD
+Gibsons Concrete,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Andrew's Concrete,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Ronk Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+Custom Concrete Plus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+P&M Concrete LLC & Patio Restoration,,,,5.0,Columbus,OH,5,0,35,COLD
+Performance Powder Coating,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Powder Coat,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Master-Blaster Power Wash,,,,4.8,Columbus,OH,4.8,0,35,COLD
+MVPowdercoating,,,,5.0,Columbus,OH,5,0,35,COLD
+Rhino Shield Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+DDC Mobile Blasting,,,,4.7,Columbus,OH,4.7,0,35,COLD
+M Work,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Stone Mart,,,,5.0,Columbus,OH,5,0,35,COLD
+The Columbus Distributing Company,,,,5.0,Columbus,OH,5,0,35,COLD
+Trujillo Quality Concrete,,,,5.0,Columbus,OH,5,0,35,COLD
+ON Concrete Design LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Premier Concrete Coatings Westerville Ohio,,,,5.0,Columbus,OH,5,0,35,COLD
+Complete Restoration Services,,,,5.0,Columbus,OH,5,0,35,COLD
+Ohio Hardwood Floors LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+1 DAY Refinishing Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Davila Floors & Tile,,,,5.0,Columbus,OH,5,0,35,COLD
+Refloor,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Unique Hardwood Flooring LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+GC Hardwood Flooring & Supply,,,,5.0,Columbus,OH,5,0,35,COLD
+Fabulous Floors Columbus,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Flawless Floors & More,,,,5.0,Columbus,OH,5,0,35,COLD
+Mr Felix Floor Inc,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Mr. Sandless Columbus OH,,,,5.0,Columbus,OH,5,0,35,COLD
+Nature Floors LLC,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Lasting Impressions Hardwood Floors,,,,5.0,Columbus,OH,5,0,35,COLD
+Bates Hardwood Floors LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+N-Hance Wood Refinishing of Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Flooring Wholesale Outlet,,,,4.6,Columbus,OH,4.6,0,35,COLD
+America's Floor Source - Columbus North,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Levi's 4 Floors,,,,4.7,Columbus,OH,4.7,0,35,COLD
+GGC Flooring,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Diamond Carpet & Flooring Installation,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Affordable Custom Flooring,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Floor Coverings International of East Columbus, OH",,,,4.9,Columbus,OH,4.9,0,35,COLD
+BUCKEYE FLOORS | Direct Wholesale Supplier,,,,5.0,Columbus,OH,5,0,35,COLD
+Floors Revolution/Wholesale Price,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Six Floors Down,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Pegasus Floor & Tile,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"Jeff Thacker Master Tiler, LLC",,,,4.7,Columbus,OH,4.7,0,35,COLD
+ALLTEAMATE LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Best Tile Shine,,,,4.9,Columbus,OH,4.9,0,35,COLD
+BackSplash Kings,,,,5.0,Columbus,OH,5,0,35,COLD
+CML Tiling & Cleaning Services LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Jaime Tile Services,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Phoenix tile works LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Florida Tile,,,,4.5,Columbus,OH,4.5,0,35,COLD
+CarifaTile,,,,5.0,Columbus,OH,5,0,35,COLD
+Beltran Tiles LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Terry Spriggs Tile,,,,5.0,Columbus,OH,5,0,35,COLD
+Aisle Tile,,,,5.0,Columbus,OH,5,0,35,COLD
+Revive Bathroom Remodel Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+New Bath Today,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Fast Bath Makeover,,,,5.0,Columbus,OH,5,0,35,COLD
+Bath Experts,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Dream Baths,,,,4.8,Columbus,OH,4.8,0,35,COLD
+West Shore Home,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Bath Tune-Up of Columbus North,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Easy Bath,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Premier Remodeling,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Ohio Flooring & Kitchen Cabinets,,,,5.0,Columbus,OH,5,0,35,COLD
+Emser Tile,,,,5.0,Columbus,OH,5,0,35,COLD
+ProSource of Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Stone Center Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+"Mont Surfaces by Mont Granite, Inc.",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Distinctive Marble & Granite,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Modlich Stoneworks Inc.,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Miracle Stoneworks LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Granite,,,,5.0,Columbus,OH,5,0,35,COLD
+Stone City,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Discount Granite & Home Supply,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Wallstone Countertop, Cabinetry & Shower Surrounds",,,,4.9,Columbus,OH,4.9,0,35,COLD
+MARBLELIFE® of Central Ohio,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Konkus Marble & Granite,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Southwestern Tile & Marble Co,,,,5.0,Columbus,OH,5,0,35,COLD
+Slate Tile Roofers,,,,5.0,Columbus,OH,5,0,35,COLD
+The Durable Slate Company,,,,4.7,Columbus,OH,4.7,0,35,COLD
+DeMarco Inc.,,,,4.9,Columbus,OH,4.9,0,35,COLD
+RiteRug Flooring & Carpet Outlet - Columbus,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Carpet Ladies Company,,,,4.7,Columbus,OH,4.7,0,35,COLD
+RiteRug Flooring & Carpet - East,,,,4.8,Columbus,OH,4.8,0,35,COLD
+RiteRug Flooring & Carpet - Grandview,,,,4.7,Columbus,OH,4.7,0,35,COLD
+MCT Carpet Care,,,,5.0,Columbus,OH,5,0,35,COLD
+Carpet Repair Service,,,,5.0,Columbus,OH,5,0,35,COLD
+Clean Extreme,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Martin Carpet Cleaning Company,,,,4.9,Columbus,OH,4.9,0,35,COLD
+King of Kings Carpet Cleaning,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Stanley Steemer,,,,4.9,Columbus,OH,4.9,0,35,COLD
+The Carpet Doctors LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Completely Clean,,,,5.0,Columbus,OH,5,0,35,COLD
+All Seasons Carpet Cleaning,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Borchers Rug & Carpet Cleaning Company,,,,4.8,Columbus,OH,4.8,0,35,COLD
+JS Steam-Works,,,,5.0,Columbus,OH,5,0,35,COLD
+Signature Carpet & Floor Care,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Technicare Home Pros,,,,5.0,Columbus,OH,5,0,35,COLD
+True Clean Carpet & Tile,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Teasdale Fenton Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Downey Clean Carpet Cleaning,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Eco friendly carpet cleaning,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Pro Steam,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Brilliant Dry Carpet Care,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Evans Carpet Junkyard Inc,,,,4.7,Columbus,OH,4.7,0,35,COLD
+K.A. Menendian Rug & Carpet Gallery,,,,4.8,Columbus,OH,4.8,0,35,COLD
+RiteRug Flooring & Carpet - Dublin,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Rug Gallery,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Advantage Flooring Services, LTD",,,,4.8,Columbus,OH,4.8,0,35,COLD
+C.A.S.E. Discount Flooring of Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+"Continental Floors, a Diverzify Company",,,,5.0,Columbus,OH,5,0,35,COLD
+Cap City Restoration,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Supreme Roofing & Exterior,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Mighty Dog Roofing of Columbus West,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Bradford,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Walker Roofing & Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+Able Roofing,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Roof Revivers,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Acme Roofing and Siding,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Broadview Roofing,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Roofing Company,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Gator Roofing,,,,5.0,Columbus,OH,5,0,35,COLD
+JF Baker Roofing Company,,,,5.0,Columbus,OH,5,0,35,COLD
+Martin & Sons roofer,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Roof King & Restoration,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Garcia & Sons Roofing Company,,,,4.8,Columbus,OH,4.8,0,35,COLD
+The Roof Detective,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Muth & Company Roofing,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Ramos Roofing,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Summit Building & Roofing,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Cardinal Roofing and Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+PRO Roofing Solutions Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Lifetime Quality Roofing,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Hayes & Sons Roof Repair,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Storm Guard Roofing of Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Residential & Commercial Roofing Company Across Ohio | Ultimates Roofing,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Victors Home Solutions,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Affordable Home services (Roof Savers),,,,5.0,Columbus,OH,5,0,35,COLD
+Near Me Roofing,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Commercial Roofing,,,,5.0,Columbus,OH,5,0,35,COLD
+Innovative Roofing Systems,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Allied Roofing Inc,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Highmark Renovations Roofing Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Metal Roofing of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Metal Roof Pro,,,,5.0,Columbus,OH,5,0,35,COLD
+GMR Metal Roofs Ohio,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Ohio Metal Roofing,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Roofing & Siding Experts.,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Cavalier Metal Roofing,,,,5.0,Columbus,OH,5,0,35,COLD
+Roof Ohio,,,,5.0,Columbus,OH,5,0,35,COLD
+Hernandez & Sons Roofing,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Schottenstein Building Products,,,,4.9,Columbus,OH,4.9,0,35,COLD
+AAA Roofing Co.,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Williams & Sons Roofers,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Top Roofing & Windows,,,,4.9,Columbus,OH,4.9,0,35,COLD
+TEGO,,,,5.0,Columbus,OH,5,0,35,COLD
+Professional Roofing Contractors LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Ohio Roofing Solutions,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Dons General Contracting Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Steller Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+Old 2 New LLC Columbus General Contractor/ Builder / Remodeling,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Ohio Property Brothers,,,,4.9,Columbus,OH,4.9,0,35,COLD
+J.S. Brown & Co.,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Capital City Construction & Remodeling,,,,5.0,Columbus,OH,5,0,35,COLD
+Wingler Construction & Remodeling,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Nicholson Builders,,,,4.8,Columbus,OH,4.8,0,35,COLD
+True North Builders LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Combat Contracting,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Nova Design Build - Home Remodeling Co.,,,,5.0,Columbus,OH,5,0,35,COLD
+Lutton Construction,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Elite Home Remodeling, Inc.",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Rulaco Remodeling,,,,4.8,Columbus,OH,4.8,0,35,COLD
+The Cleary Company,,,,4.6,Columbus,OH,4.6,0,35,COLD
+ImproveIt Home Remodeling,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Honey Do Home Improvements Llc,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Pat Scales Remodeling,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Wesney Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+Renier Construction,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Mik Homes - Kitchen and Bath Remodeling,,,,5.0,Columbus,OH,5,0,35,COLD
+DC Homes Remodeling and Renovations Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Scott Hall Remodeling,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Homecraft Remodeling,,,,4.9,Columbus,OH,4.9,0,35,COLD
+R.H. Homes Remodeling,,,,5.0,Columbus,OH,5,0,35,COLD
+ValEquity Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+CSS Kitchen Remodeling Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Kitchen Kraft,,,,4.7,Columbus,OH,4.7,0,35,COLD
+SemBro Designs Columbus - Kitchen and Bath Remodeling,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Ohio Pro Group,,,,5.0,Columbus,OH,5,0,35,COLD
+Simple Kitchen,,,,5.0,Columbus,OH,5,0,35,COLD
+Ohio's Best Home Improvement,,,,4.9,Columbus,OH,4.9,0,35,COLD
+AlphaBaths LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Creative Bath Renovations,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Renew Additions & Remodeling, LLC",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Old World Custom Homes - Columbus Model Home,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Romanelli & Hughes,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Arlington Builders,,,,5.0,Columbus,OH,5,0,35,COLD
+"Schumacher Homes of Columbus North, OH",,,,4.6,Columbus,OH,4.6,0,35,COLD
+Coppertree Homes,,,,5.0,Columbus,OH,5,0,35,COLD
+Bob Webb Homes,,,,4.7,Columbus,OH,4.7,0,35,COLD
+"America's Home Place - Sunbury, OH",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Clark Custom Builders,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Compass Homes,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Modern Tiny Living,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Corinthian Fine Homes,,,,5.0,Columbus,OH,5,0,35,COLD
+"P&D Builders, Ltd.",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Granvilla Homes,,,,5.0,Columbus,OH,5,0,35,COLD
+Derrick Layer Custom Homes,,,,5.0,Columbus,OH,5,0,35,COLD
+Old World Custom Homes of Columbus - Design Center & Office,,,,5.0,Columbus,OH,5,0,35,COLD
+Rick Wheeler LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+"Cutting Edge Remodeling, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+"Livin Good Home Renovation and Custom Design, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+Rave Remodeling and Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+Spartan Wall Repair & Basement Waterproofing,,,,5.0,Columbus,OH,5,0,35,COLD
+Hydra Basement Waterproofing,,,,5.0,Columbus,OH,5,0,35,COLD
+Swiss Remodeling,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Buckeye Basements,,,,5.0,Columbus,OH,5,0,35,COLD
+Innovate Building Solutions,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Third Space Builders LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Espinosa Restoration Services,,,,5.0,Columbus,OH,5,0,35,COLD
+All Purpose Remodeling LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+This Old Basement LLC / columbus Basement Waterproofing,,,,5.0,Columbus,OH,5,0,35,COLD
+Queen Foundation Repair,,,,5.0,Columbus,OH,5,0,35,COLD
+iDry,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Columbus Reclaimed,,,,5.0,Columbus,OH,5,0,35,COLD
+Home Improvements Unlimited LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Buckeye Basement Solutions,,,,5.0,Columbus,OH,5,0,35,COLD
+True Construction Management,,,,5.0,Columbus,OH,5,0,35,COLD
+Foley Contractors,,,,5.0,Columbus,OH,5,0,35,COLD
+Salas Home Improvements LLC.,,,,5.0,Columbus,OH,5,0,35,COLD
+MCI Construction Services,,,,5.0,Columbus,OH,5,0,35,COLD
+"The Waterworks Plumbing, Drain, Heating & Cooling",,,,4.7,Columbus,OH,4.7,0,35,COLD
+Parson Plumbing and Drains,,,,5.0,Columbus,OH,5,0,35,COLD
+1-Tom-Plumber,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Plumbing & Drain Professionals,,,,4.9,Columbus,OH,4.9,0,35,COLD
+The Local Plumber LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+"Eco Plumbers, Electricians, and HVAC Technicians",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Mr. Rooter Plumbing of Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+"Fritz Baumann & Sons, Inc.",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Doc Thompson Plumbing,,,,4.6,Columbus,OH,4.6,0,35,COLD
+"Apex Pros Plumbing, Electrical, Heating and Air",,,,4.7,Columbus,OH,4.7,0,35,COLD
+TRANSIT & FLOW,,,,4.9,Columbus,OH,4.9,0,35,COLD
+DrainMaster Drain Cleaning & Sewer Line Repair,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Roto-Rooter Plumbing & Water Cleanup,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"Plumbing One, LLC",,,,4.9,Columbus,OH,4.9,0,35,COLD
+"R & T Yoder Plumbing, Inc - Columbus",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Safe Electric and Plumbing,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Benjamin Franklin Plumbing of Columbus,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Water Heaters Plus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Plumbing Columbus & Drainage Clean,,,,5.0,Columbus,OH,5,0,35,COLD
+"Rose Plumbing, LLC",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Allegiant Plumbing Services,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Emergency Plumbing Heating & Air,,,,4.8,Columbus,OH,4.8,0,35,COLD
+SewerQuest Drain Cleaning,,,,4.8,Columbus,OH,4.8,0,35,COLD
+CPR Drain Cleaning,,,,4.5,Columbus,OH,4.5,0,35,COLD
+A+ Gutters & Drains LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Quality Drain Solutions,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Drainbusters,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Professional Gutter & Drain,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Discount Plumbing and Drains Solutions,,,,4.8,Columbus,OH,4.8,0,35,COLD
+JG Underground Drain,,,,5.0,Columbus,OH,5,0,35,COLD
+"Bassett Services: Heating, Cooling, Plumbing & Electrical (Discount Drains)",,,,4.7,Columbus,OH,4.7,0,35,COLD
+Ohio Water Heaters,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"Atlas Butler Heating, Cooling & Plumbing",,,,4.7,Columbus,OH,4.7,0,35,COLD
+"Bassett Services: Heating, Cooling, Plumbing, & Electrical",,,,4.7,Columbus,OH,4.7,0,35,COLD
+Dor-Mar Columbus Heating And Air,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"Buckeye Heating, Cooling, Plumbing & Electrical",,,,4.8,Columbus,OH,4.8,0,35,COLD
+"Logan Services A/C, Heat & Plumbing",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Sewer Pro,,,,5.0,Columbus,OH,5,0,35,COLD
+Chapman Drainage & Basement Repair,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Mayfield Plumbing And Excavation,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Ohio plumbing, home repair, and maintenance",,,,4.7,Columbus,OH,4.7,0,35,COLD
+TRUSTY SEWER & DRAIN,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Pipe & Equipment Company,,,,5.0,Columbus,OH,5,0,35,COLD
+Mc Coy Piping Services,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Worthington Air,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Hetter Heating & Cooling,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"CARE Heating and Cooling, Inc.",,,,4.9,Columbus,OH,4.9,0,35,COLD
+CJS Heating and Air,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Custom Air Conditioning and Heating Co.,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Classic Air,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Fire & Ice Heating and Air Conditioning,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Right Way Heating and Cooling,,,,5.0,Columbus,OH,5,0,35,COLD
+Thermo Pros,,,,5.0,Columbus,OH,5,0,35,COLD
+The Heating and Cooling Pro,,,,5.0,Columbus,OH,5,0,35,COLD
+Northland Heating & Air Conditioning,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Sears Heating and Cooling,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Airtron Heating & Air Conditioning,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Peterman Brothers,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"Aire-Flo Heating, Cooling & Generators",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Five Star Home Services Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Patriot Air Comfort Systems,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Quality Air Heating and Air Conditioning,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Favret Heating & Cooling,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Columbus Heating & Cooling,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Comfort Crew,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Legacy Heating and Cooling,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Franklin Heating Cooling and Refrigeration,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Brittman Heating & Ventilation LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Mighty Ducts,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Hvac Services,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Air Duct Cleaning and Dryer Vent Cleaning Of Columbus, Ohio",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Buckeye Electric of Upper Arlington,,,,4.6,Columbus,OH,4.6,0,35,COLD
+"R & T Yoder Electric, Inc - Central Columbus",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Mr. Electric of Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Quality Electric,,,,4.6,Columbus,OH,4.6,0,35,COLD
+AllGo Electricians Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Knight Electric Inc,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Columbus Electric Solutions,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Care Electric LLC,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Bradley Electric,,,,4.7,Columbus,OH,4.7,0,35,COLD
+"MD Electric of Ohio, LLC",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Trustable Electrician Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Mid-City Electric/Technologies,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Just Right Electric LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+JL Electricians Columbus,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Columbus Ohio Electrician,,,,5.0,Columbus,OH,5,0,35,COLD
+Rapid Electricians Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Electric Medic,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Mister Sparky of Greater Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Arlington Electric, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+Confident Electric,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Big City Electric,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"Harris Electrical Services, Inc.",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Elite Electric Services,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Higher Power Electric,,,,5.0,Columbus,OH,5,0,35,COLD
+KAP Electric,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Watts Up Electric Inc,,,,4.9,Columbus,OH,4.9,0,35,COLD
+NearMe Electricians Columbus,,,,4.5,Columbus,OH,4.5,0,35,COLD
+ChargePoint Charging Station,,,,4.8,Columbus,OH,4.8,0,35,COLD
+EcoHouse Solar,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Solar Panel Installation Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+BC Solar,,,,5.0,Columbus,OH,5,0,35,COLD
+Atlas Power Global,,,,5.0,Columbus,OH,5,0,35,COLD
+"YellowLite - Solar Installers in Columbus, Ohio",,,,5.0,Columbus,OH,5,0,35,COLD
+Modern Energy,,,,5.0,Columbus,OH,5,0,35,COLD
+Gold Path Solar,,,,5.0,Columbus,OH,5,0,35,COLD
+Kokosing Solar,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Ohio Power Solutions, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+Made2Serve Solar,,,,5.0,Columbus,OH,5,0,35,COLD
+Vespa Solar,,,,5.0,Columbus,OH,5,0,35,COLD
+Solar Is Your Edge,,,,5.0,Columbus,OH,5,0,35,COLD
+"Swiger Solar, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+One Nation Solar,,,,5.0,Columbus,OH,5,0,35,COLD
+Exel Solar US,,,,5.0,Columbus,OH,5,0,35,COLD
+Prim Painting,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"CertaPro Painters of Columbus, OH",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Fresh Touch Custom Painting,,,,4.9,Columbus,OH,4.9,0,35,COLD
+JNG Painting & Decorating LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Paint & Rollers,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Best Impression Painting,,,,5.0,Columbus,OH,5,0,35,COLD
+Color World Painting Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+3S Painting,,,,5.0,Columbus,OH,5,0,35,COLD
+Painter1 of Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+360° Painting of Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Creative Finishes House Painters,,,,4.7,Columbus,OH,4.7,0,35,COLD
+"Classic Papering & Painting, Inc.",,,,4.9,Columbus,OH,4.9,0,35,COLD
+"No Drip Painting, LLC",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Green Diamond Painting,,,,5.0,Columbus,OH,5,0,35,COLD
+Lengacher Painting LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Jonid’s Painting And Other Stuff,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Fresh Coat Painters of Dublin & Westerville,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Buckeye House Painting,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Second Shift Paint Company,,,,5.0,Columbus,OH,5,0,35,COLD
+R&R Pro Painting services LLC.,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Sharper Impressions Painting Co,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Commercial Painting Inc,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Henry Painting Co,,,,5.0,Columbus,OH,5,0,35,COLD
+College Works Painting,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Columbus Painting,,,,5.0,Columbus,OH,5,0,35,COLD
+Sam The Painter,,,,5.0,Columbus,OH,5,0,35,COLD
+Best Painters LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Promus Home Improvement CO.,,,,5.0,Columbus,OH,5,0,35,COLD
+Hernandez Painting Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Paint 4 You,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Stauffers Painting Systems,,,,4.9,Columbus,OH,4.9,0,35,COLD
+High End Carpentry & Painting LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+MGC Columbus Drywall - Drywall Finisher and Texture repair services,,,,5.0,Columbus,OH,5,0,35,COLD
+"Olympic Drywall, LLC.",,,,4.9,Columbus,OH,4.9,0,35,COLD
+AYPRO Drywall Solutions LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+JKJ Drywall Construction LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Abstract Drywall and Painting,,,,5.0,Columbus,OH,5,0,35,COLD
+Imperial Drywall,,,,5.0,Columbus,OH,5,0,35,COLD
+Simply Drywall,,,,5.0,Columbus,OH,5,0,35,COLD
+Aleman Taylor Drywall,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Speedy Patch Drywall Repair,,,,4.9,Columbus,OH,4.9,0,35,COLD
+New vision drywall Llc,,,,5.0,Columbus,OH,5,0,35,COLD
+HB Good and Sons Plastering Contractors,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Renova drywall and paint inc,,,,5.0,Columbus,OH,5,0,35,COLD
+"Majestic Drywall & Painting Services, LLC",,,,4.5,Columbus,OH,4.5,0,35,COLD
+Ramirez Drywall & Remodeling,,,,5.0,Columbus,OH,5,0,35,COLD
+Continental Drywall & Insulation,,,,5.0,Columbus,OH,5,0,35,COLD
+Perfectdrywallnsuch,,,,5.0,Columbus,OH,5,0,35,COLD
+NJ Drywall Service Corp,,,,5.0,Columbus,OH,5,0,35,COLD
+Cousins Home Improvement LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Ez Insulation Solution,,,,4.9,Columbus,OH,4.9,0,35,COLD
+iFOAM Insulation,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Absolute Insulation Services Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+USA Insulation of Columbus,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Greene Solutions,,,,5.0,Columbus,OH,5,0,35,COLD
+Energy Tech Insulation LLC,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Champion Solutions Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Spray Foam Genie Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Koala Insulation of North Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Foam Insulation Services LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Blown Right Insulation,,,,5.0,Columbus,OH,5,0,35,COLD
+R-Pro Insulation,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Ohio Spray Foam Insulation,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Superior Industrial Insulation,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Koala Insulation of Central Ohio,,,,5.0,Columbus,OH,5,0,35,COLD
+Extreme Spray Foam of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+RetroFoam of Central Ohio,,,,5.0,Columbus,OH,5,0,35,COLD
+Foampak,,,,5.0,Columbus,OH,5,0,35,COLD
+We Sprayin’ Insulation LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Bay Insulation Supply of Ohio Inc.,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Ideal Siding Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+"GB Contractor, Roof & Siding",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Columbus Windows and Siding Company,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Best Roofing and Siding Company,,,,5.0,Columbus,OH,5,0,35,COLD
+K.D. Yoder & Associates,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Ohio Exteriors,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Newlook Sidings Inc,,,,5.0,Columbus,OH,5,0,35,COLD
+Ideal Siding Worthington,,,,5.0,Columbus,OH,5,0,35,COLD
+APCO | The Architectural Products Company,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Home Genius Exteriors,,,,4.7,Columbus,OH,4.7,0,35,COLD
+614 Exteriors,,,,5.0,Columbus,OH,5,0,35,COLD
+Exterior Heroes,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Tri State Exteriors,,,,5.0,Columbus,OH,5,0,35,COLD
+Cedar Siding Repair,,,,5.0,Columbus,OH,5,0,35,COLD
+Evolve Roofing & Siding,,,,5.0,Columbus,OH,5,0,35,COLD
+Exterior Tech Siding And Roofing,,,,5.0,Columbus,OH,5,0,35,COLD
+Premier Home Exterior,,,,5.0,Columbus,OH,5,0,35,COLD
+Oaks Roofing & Siding,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Columbus Exterior,,,,4.9,Columbus,OH,4.9,0,35,COLD
+AC Roofing & Siding,,,,5.0,Columbus,OH,5,0,35,COLD
+US Quality Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+Sublime Exteriors,,,,5.0,Columbus,OH,5,0,35,COLD
+Window Nation,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Ohio Cosmetic Dentists,,,,4.9,Columbus,OH,4.9,0,35,COLD
+McCloud Windows,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"New view windows of worthington, LLC",,,,4.7,Columbus,OH,4.7,0,35,COLD
+Rosati Windows,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Window Gurus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Universal Windows Direct of Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Broadview Windows and Doors,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Pella Windows and Doors Showroom of Columbus, OH",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Window World of Greater Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Jackson Egress Windows,,,,4.8,Columbus,OH,4.8,0,35,COLD
+HEGG Windows & Doors,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Evolve Egress & Exteriors,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Renewal by Andersen,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Deal Direct Windows,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Zen Windows Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Americas Best Windows and Doors,,,,4.5,Columbus,OH,4.5,0,35,COLD
+The Door Company,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Columbus Window & Door,,,,5.0,Columbus,OH,5,0,35,COLD
+Deluxe Door Systems,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Mad City Windows & Baths of Columbus,,,,4.6,Columbus,OH,4.6,0,35,COLD
+All-Ohio Door and Glass,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Door Sales,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Pitzer's Landscaping,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Hidden Creek Landscaping,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Lemus Landscaping LLC,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Keny Landscape and Design,,,,5.0,Columbus,OH,5,0,35,COLD
+Bears Landscaping Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+"Lorenz Lawn & Landscape, LLC",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Kleinhenz Landscape,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Scioto Landscaping,,,,5.0,Columbus,OH,5,0,35,COLD
+JK Landscaping LLC,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Ottawa Landscapes,,,,5.0,Columbus,OH,5,0,35,COLD
+Outdoor Makeovers,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Outdoor Space Design,,,,5.0,Columbus,OH,5,0,35,COLD
+Scioto Green Gardens + Landscaping,,,,5.0,Columbus,OH,5,0,35,COLD
+Rine Landscape Group,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Landscape Management Group,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Backyard Boyz Landscaping,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Landscaping 365,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Glory To Glory Landscaping.,,,,4.6,Columbus,OH,4.6,0,35,COLD
+A&M Landscaping & Lawncare,,,,4.7,Columbus,OH,4.7,0,35,COLD
+NexGreen Lawn and Tree Care,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Greenbeard Lawn Care,,,,4.9,Columbus,OH,4.9,0,35,COLD
+DKB Lawn Care & Landscaping Service,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Lawn Doctor of Greater Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Lawn Love - Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Pinkston's Lawn Maintenance,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Tuff Green Lawn Care Service, LLC.",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Urban Yardwork,,,,5.0,Columbus,OH,5,0,35,COLD
+Lawn Care Plus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Nava Landscaping & Tree Service,,,,4.9,Columbus,OH,4.9,0,35,COLD
+BeeLeaf Lawn Mowing & Maintenance,,,,5.0,Columbus,OH,5,0,35,COLD
+Good Nature Organic Lawn Care,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Grasshuggers,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Sigmund's Lawncare Service,,,,5.0,Columbus,OH,5,0,35,COLD
+Home & Lawn Co.,,,,5.0,Columbus,OH,5,0,35,COLD
+Green Scene Lawn Care Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+ExperiGreen Lawn Care,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Columbus Tree Care,,,,5.0,Columbus,OH,5,0,35,COLD
+Scotts Tree Experts,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Basic Tree Care | Columbus Tree Cutting & Removal,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Columbus Tree Company LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Ohio Tree Care,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Columbus Tree Services,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Jacob Sauer Tree Care,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Challengers Tree Service,,,,5.0,Columbus,OH,5,0,35,COLD
+"Penningtons Tree Service-Columbus, Ohio",,,,5.0,Columbus,OH,5,0,35,COLD
+Duffey Tree Care,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Tree Service Experts.,,,,5.0,Columbus,OH,5,0,35,COLD
+Sykes Tree Service,,,,5.0,Columbus,OH,5,0,35,COLD
+Trapper's Tree Service,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Real sky tree services llc,,,,5.0,Columbus,OH,5,0,35,COLD
+Ortiz Tree Services LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Premier Tree Specialists,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Capital Tree Service LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Bluegrass Tree & Lawn,,,,5.0,Columbus,OH,5,0,35,COLD
+Trees Are My Business,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"Columbus Hardscapes, LLC - Patio Installer",,,,4.7,Columbus,OH,4.7,0,35,COLD
+Waters Hardscape Designs,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Inspired Design & Contracting,,,,5.0,Columbus,OH,5,0,35,COLD
+Mat Jones Landscape LLC,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Twinscapes LLC.,,,,5.0,Columbus,OH,5,0,35,COLD
+Patio Wizards,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Outdoor Living by Mr. Mulch,,,,5.0,Columbus,OH,5,0,35,COLD
+Cap City Decks & Patios,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Custom Deck & Porch,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Nature View Exteriors,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Patio Deck Fence Builders,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Blue Oak Patio & Landscape,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"C&R Patio Rehab, LLC",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Alberto Masonry and Home Improvement,,,,5.0,Columbus,OH,5,0,35,COLD
+Archadeck of Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Arch City Deck Solutions,,,,5.0,Columbus,OH,5,0,35,COLD
+King Kong Wood Deck,,,,5.0,Columbus,OH,5,0,35,COLD
+Woodland Deck Company,,,,4.9,Columbus,OH,4.9,0,35,COLD
+A-1 Quality Carpentry,,,,5.0,Columbus,OH,5,0,35,COLD
+Fence-N-Deck Doctors,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Tuff Deck Builders Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+The Exterior Living Company,,,,5.0,Columbus,OH,5,0,35,COLD
+Fence Company of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Reliable Fencing,,,,5.0,Columbus,OH,5,0,35,COLD
+Vasseur Fencing,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Bowden Fence Company,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Superior Fence & Rail of Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Murphy Fence LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Trudeau's Fence Company,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Arrow Fence of Ohio,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Elite Fence of Columbus,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Red Barn Fence Company,,,,4.8,Columbus,OH,4.8,0,35,COLD
+A:Z Contracting LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+S&G Fence Company,,,,4.9,Columbus,OH,4.9,0,35,COLD
+A Temporary Fence PM Ent,,,,5.0,Columbus,OH,5,0,35,COLD
+Pataskala Fence Company,,,,5.0,Columbus,OH,5,0,35,COLD
+Frost Fence LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Mae Fence Company,,,,5.0,Columbus,OH,5,0,35,COLD
+Yoder's Vinyl Fencing,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Fence Tech LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Stand Strong Fencing of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Omni Pools and Scapes,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Aquatic Creations of Ohio,,,,5.0,Columbus,OH,5,0,35,COLD
+"Backyard Oasis Pools, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+Commercial Pools Inc,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Fox Pool Service,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Premier Pools & Spas,,,,4.7,Columbus,OH,4.7,0,35,COLD
+The Premier Pool Co.,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Aqua Pools Construction LLC,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Serenity Pools,,,,5.0,Columbus,OH,5,0,35,COLD
+Easy Living Pools,,,,4.7,Columbus,OH,4.7,0,35,COLD
+"Pool Professionals Ohio, LLC.",,,,5.0,Columbus,OH,5,0,35,COLD
+Outdoor-FX Inc,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Patterson Pools,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Pools & Spas by Classic Designs,,,,4.7,Columbus,OH,4.7,0,35,COLD
+"Cover Care, LLC",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Trident Pool Services,,,,4.7,Columbus,OH,4.7,0,35,COLD
+ARK Leak Detection,,,,4.8,Columbus,OH,4.8,0,35,COLD
+The Cabinet Guys,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Cai Cabinetry,,,,5.0,Columbus,OH,5,0,35,COLD
+The Great Cabinetry Company,,,,5.0,Columbus,OH,5,0,35,COLD
+Kitchen Solvers of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Custom Cabinets,,,,5.0,Columbus,OH,5,0,35,COLD
+Arch City Cabinet Company,,,,5.0,Columbus,OH,5,0,35,COLD
+Northeast Cabinet Co LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Capital Cabinets & Countertops,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Kitchen Fronts & Wall To Wall Remodeling DBA,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Columbus Master Builders,,,,5.0,Columbus,OH,5,0,35,COLD
+Buckeye Custom Cabinets & Closets,,,,4.9,Columbus,OH,4.9,0,35,COLD
+The Cabinet Shop,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Cabinetworks Kitchens,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Columbus Cabinets City,,,,5.0,Columbus,OH,5,0,35,COLD
+Kitchen Tune-Up Columbus North,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Polaris Cabinets & Design,,,,4.8,Columbus,OH,4.8,0,35,COLD
+IWC Cabinetry,,,,4.7,Columbus,OH,4.7,0,35,COLD
+1 Stop Cabinet Shop,,,,5.0,Columbus,OH,5,0,35,COLD
+The Cabinet Maker,,,,5.0,Columbus,OH,5,0,35,COLD
+"Birdie Brennan Custom Closets & Organizing, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+PREMIER CUSTOM CLOSETS-Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Daso Custom Cabinetry,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Hazelwood Millworks Custom Carpentry & Woodworking,,,,5.0,Columbus,OH,5,0,35,COLD
+ShelfGenie of Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Columbus Cabinets,,,,5.0,Columbus,OH,5,0,35,COLD
+Nippert Custom Cabinetry,,,,5.0,Columbus,OH,5,0,35,COLD
+The Granite Guy,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Granite Depot of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Countertop Surface Solutions,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Custom Countertops LLC,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Distinctive Countertops & Kitchens,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Granite Direct,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Buckeye Rock Tops,,,,5.0,Columbus,OH,5,0,35,COLD
+Keystone Granite OH,,,,5.0,Columbus,OH,5,0,35,COLD
+Impact Flooring & Countertops,,,,5.0,Columbus,OH,5,0,35,COLD
+Granite Installation – Granite Master of Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Hardy Stone,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Granite & Quartz of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+J and R Granite Industry,,,,4.7,Columbus,OH,4.7,0,35,COLD
+GS Marble & Granite,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Midwest Quartz,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Steve Parker Masonry,,,,5.0,Columbus,OH,5,0,35,COLD
+Mark Monnette Masonry,,,,5.0,Columbus,OH,5,0,35,COLD
+The Masonry Standard Company LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Fire Stone Masonry & Chimney Repair LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Stackhouse Masonry LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Curatola Masonry,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Stone Masters Masonry,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Ford Masonry Restoration,,,,5.0,Columbus,OH,5,0,35,COLD
+Utmost Renovations,,,,5.0,Columbus,OH,5,0,35,COLD
+Fire Stone Masonry,,,,5.0,Columbus,OH,5,0,35,COLD
+The Honest Chimney & Masonry Company,,,,4.5,Columbus,OH,4.5,0,35,COLD
+MJM masonry LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Karst Masonry,,,,5.0,Columbus,OH,5,0,35,COLD
+"Daniels Masonry Restoration, Inc",,,,5.0,Columbus,OH,5,0,35,COLD
+Bucklew Basement Waterproofing & Masonry,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Capital C Masonry,,,,5.0,Columbus,OH,5,0,35,COLD
+Legacy Masonry Restoration Contractors,,,,5.0,Columbus,OH,5,0,35,COLD
+Lower Lights Ministries Community Learning Center,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Columbus Stone Mason,,,,5.0,Columbus,OH,5,0,35,COLD
+Ohio Cast Stone Co LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Reitter Stucco & Supply Co. Inc.,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Lopez the Stone Maker LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+A1 Chimney,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Master Chimney LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Blackburns Chimney Services,,,,4.7,Columbus,OH,4.7,0,35,COLD
+"Fireplace Professionals, LLC",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Accurate Chimney and Fireplace,,,,5.0,Columbus,OH,5,0,35,COLD
+The Chimney Guys,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Embers To Ashes Chimney Sweeps and Masonry,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Chimcare,,,,5.0,Columbus,OH,5,0,35,COLD
+Pro Sweep Chimney Service,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Dennison and sons chimney repair.LLC.,,,,5.0,Columbus,OH,5,0,35,COLD
+Flue Clean Chimney Sweep,,,,5.0,Columbus,OH,5,0,35,COLD
+Delaware Chimney Services,,,,5.0,Columbus,OH,5,0,35,COLD
+Breck's Paving,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Bruck Construction,,,,4.7,Columbus,OH,4.7,0,35,COLD
+"Shamrock Asphalt Services, LLC",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Kurguz Paving,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Asphalt Services of Ohio, Inc",,,,4.5,Columbus,OH,4.5,0,35,COLD
+Byrne & Jones Construction - Asphalt & Concrete,,,,5.0,Columbus,OH,5,0,35,COLD
+"Renew Paving & Sealing, LLC",,,,4.8,Columbus,OH,4.8,0,35,COLD
+"Hill's Blacktop & Concrete, Inc.",,,,4.8,Columbus,OH,4.8,0,35,COLD
+DePuy Paving Inc.,,,,5.0,Columbus,OH,5,0,35,COLD
+Executive Asphalt Paving & Sealcoating,,,,5.0,Columbus,OH,5,0,35,COLD
+Buckeye Asphalt Maintenance & Sealcoating,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Precision Asphalt Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+WM Quality Sealcoating LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+G-FORCE Parking Lot Striping of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Stillwater Pressure Washing,,,,5.0,Columbus,OH,5,0,35,COLD
+Power Washing Ohio,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Clean Life,,,,5.0,Columbus,OH,5,0,35,COLD
+Perfect Power Wash,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Bates & Sons LLC Exterior Cleaning,,,,5.0,Columbus,OH,5,0,35,COLD
+Roger That Pressure Cleaning,,,,5.0,Columbus,OH,5,0,35,COLD
+Mikes Power Washing LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Power Wash Solutions, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+Clear Water Prowash,,,,5.0,Columbus,OH,5,0,35,COLD
+Exact Prowash,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Buckeye Power Wash Services,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Pristine Power Wash,,,,4.9,Columbus,OH,4.9,0,35,COLD
+BPW Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Ghost Power Washing,,,,4.9,Columbus,OH,4.9,0,35,COLD
+True Clean Prowash,,,,5.0,Columbus,OH,5,0,35,COLD
+Buckeye Softwash,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Preferred Pressure Washing Services,,,,5.0,Columbus,OH,5,0,35,COLD
+Strong Cleaning Company,,,,5.0,Columbus,OH,5,0,35,COLD
+APX Softwash,,,,5.0,Columbus,OH,5,0,35,COLD
+Rolling Suds of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Upscale Pressure Washing,,,,5.0,Columbus,OH,5,0,35,COLD
+Capital City Soft Wash,,,,5.0,Columbus,OH,5,0,35,COLD
+Twisted Metal Collision,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Grismer Tire & Auto Service Center,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Budget Auto Fix,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Bob Caldwell Chrysler Dodge Jeep RAM,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Miracle Motor Mart,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Robinson Body Shop-Gen Repair,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Speedway bodyshop llc,,,,5.0,Columbus,OH,5,0,35,COLD
+X-Press Truck and Trailer Repair Shop,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Amar Fast Fix Enterprise LLC,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Katz Tires,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Shawn's Used & New Tires,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Tires One 1,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Thunder Tire and Service,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Ohio State Used & New Tires + Brakes,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Central City Tires,,,,4.7,Columbus,OH,4.7,0,35,COLD
+H.T Discount Tires New & Used,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Steve's Tires & Batteries,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Tire Discounters,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Salts Tire,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Tire Max-On,,,,4.6,Columbus,OH,4.6,0,35,COLD
+SM Quality Construction LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Installing groups and builders LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Turn-Key Industrial Services,,,,5.0,Columbus,OH,5,0,35,COLD
+R5 Industries - Home Repair & Renovation,,,,4.8,Columbus,OH,4.8,0,35,COLD
+PuroClean Fire & Water Experts,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"The Mold Man, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+SERVPRO of Northwest Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+SERVPRO of Northeast Columbus and SERVPRO of Gahanna,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"ECO, LLC",,,,4.8,Columbus,OH,4.8,0,35,COLD
+RestoPros of Columbus West,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Best Option Restoration of West Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+ServiceMaster,,,,4.7,Columbus,OH,4.7,0,35,COLD
+PuroClean Home Savers,,,,4.7,Columbus,OH,4.7,0,35,COLD
+BluSky Restoration Contractors,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Mold Inspection & Testing Columbus OH,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Operation Restoration,,,,4.9,Columbus,OH,4.9,0,35,COLD
+AIM Green Restoration,,,,5.0,Columbus,OH,5,0,35,COLD
+"SERVPRO of Downtown Columbus, West and Northwest Columbus, Upper Arlington",,,,5.0,Columbus,OH,5,0,35,COLD
+Rainbow Restoration of Westerville,,,,5.0,Columbus,OH,5,0,35,COLD
+Hina Environmental Solutions,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Thompson Restoration Associates,,,,4.8,Columbus,OH,4.8,0,35,COLD
+All Claims Repairs Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Dryn3 guaranteed LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+1-800 Water Damage of Columbus Northeast,,,,5.0,Columbus,OH,5,0,35,COLD
+SERVPRO of South Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Arch City Solutions,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Fire and Water Restoration,,,,5.0,Columbus,OH,5,0,35,COLD
+Total International,,,,5.0,Columbus,OH,5,0,35,COLD
+Campbell Restoration,,,,4.9,Columbus,OH,4.9,0,35,COLD
+BELFOR Property Restoration (Columbus),,,,4.5,Columbus,OH,4.5,0,35,COLD
+Lyle Environmental,,,,5.0,Columbus,OH,5,0,35,COLD
+AIO Home Services,,,,5.0,Columbus,OH,5,0,35,COLD
+"AHC, Inc.",,,,4.6,Columbus,OH,4.6,0,35,COLD
+"Ohio Technical Services, Inc.",,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Perfectos Inc., LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+We Rescue You,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Hathaway Environmental LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Midwest Environmental, Inc.",,,,5.0,Columbus,OH,5,0,35,COLD
+Savvas Ramone,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Phoenix Environmental, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+Erie Environmental | Mold | Asbestos | Radon of Sandusky,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Trusted Remediation,,,,5.0,Columbus,OH,5,0,35,COLD
+Junk King Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+1-800-GOT-JUNK? Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Two Men and a Junk Truck,,,,5.0,Columbus,OH,5,0,35,COLD
+Junk Fellas LLC - Junk Removal & Dumpster Rentals,,,,5.0,Columbus,OH,5,0,35,COLD
+Junk X,,,,5.0,Columbus,OH,5,0,35,COLD
+College Hunks Hauling Junk Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Fire Dawgs Junk Removal Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+We Haul Junk,,,,5.0,Columbus,OH,5,0,35,COLD
+The Junk Guy removal and dumpster services LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Master Junkers,,,,5.0,Columbus,OH,5,0,35,COLD
+Frog Hauling Dumpster Rental Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Cheers 2 Trash,,,,5.0,Columbus,OH,5,0,35,COLD
+Junk King Delaware,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Precision Junk Removal,,,,5.0,Columbus,OH,5,0,35,COLD
+Carter's Hauling LLC,,,,4.7,Columbus,OH,4.7,0,35,COLD
+At Your Disposal Hauling,,,,4.9,Columbus,OH,4.9,0,35,COLD
+College Hunks Hauling Junk and Moving North Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Duffy's Local Junk Removal & Hauling,,,,5.0,Columbus,OH,5,0,35,COLD
+2 Women With A Pickup Truck And Trailer Too LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+A2B Movers,,,,5.0,Columbus,OH,5,0,35,COLD
+Two Men and a Truck Moving and Storage,,,,4.8,Columbus,OH,4.8,0,35,COLD
+All American Moving and Storage,,,,4.9,Columbus,OH,4.9,0,35,COLD
+All My Sons Moving & Storage,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Leaders Moving & Storage Co.,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Krupp Moving & Storage - Columbus Movers,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Moving Ahead Services - Columbus Movers,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Integrity Moving and Storage,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Affordable Movers,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Bellhop Columbus Movers,,,,4.7,Columbus,OH,4.7,0,35,COLD
+College Hunks Moving Central Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Movers & More,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Black Tie Moving - Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+"MOVING HELP COLUMBUS OHIO Local Long Distance, Storage, Junk Removal WE BEAT COMPETITOR'S RATES",,,,4.6,Columbus,OH,4.6,0,35,COLD
+Ohio Packers & Movers,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Hercules Movers,,,,4.5,Columbus,OH,4.5,0,35,COLD
+American Moving and Storage Of Ohio,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Two Men and a Truck Moving,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Grandview Moving,,,,4.6,Columbus,OH,4.6,0,35,COLD
+MVM Moving & Storage,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Jani-King Commercial Cleaning & Janitorial Service of Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+MCS Commercial Cleaning Services,,,,5.0,Columbus,OH,5,0,35,COLD
+Real World Cleaning Services of Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Real World Commercial Cleaning,,,,5.0,Columbus,OH,5,0,35,COLD
+CP Cleaning Services,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Prime Cleaning Services LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Serenity Clean of Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+JLS Commercial And Residential Cleaning Services,,,,5.0,Columbus,OH,5,0,35,COLD
+CleanTurn,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Clean Team Columbus,,,,5.0,Columbus,OH,5,0,35,COLD
+Frederick Cleaning Service,,,,4.8,Columbus,OH,4.8,0,35,COLD
+JAN-PRO Cleaning & Disinfecting in Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Y.M.E Commercial Cleaning,,,,5.0,Columbus,OH,5,0,35,COLD
+Girlfriend's Cleaning,,,,5.0,Columbus,OH,5,0,35,COLD
+Orlandi's Cleaning,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Columbus Cleaning Service,,,,5.0,Columbus,OH,5,0,35,COLD
+CBUS Cleaning Company LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Green Clean Janitorial,,,,5.0,Columbus,OH,5,0,35,COLD
+Pristine Clean Services,,,,5.0,Columbus,OH,5,0,35,COLD
+The Buddie System Janitorial Services,,,,5.0,Columbus,OH,5,0,35,COLD
+Hand of Gold Janitorial Service LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+"Denham Janitorial Services, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+Enviro-Master of Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Columbus Janitor Supply Co,,,,4.7,Columbus,OH,4.7,0,35,COLD
+"QTS Services, LLC",,,,5.0,Columbus,OH,5,0,35,COLD
+CR Concrete Services LLC,,,,5.0,Columbus,OH,5,0,35,COLD
+Old School Hardwood Flooring,,,,5.0,Columbus,OH,5,0,35,COLD
+Canal Flooring Outlet,,,,4.6,Columbus,OH,4.6,0,35,COLD
+MSI Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Clean Rite Carpet Cleaning LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+RiteRug Flooring & Carpet - Westerville,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Surfaces Construction Group,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Krause Brothers Flooring,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Broadview Exteriors,,,,5.0,Columbus,OH,5,0,35,COLD
+Sunset Roofing Co,,,,5.0,Columbus,OH,5,0,35,COLD
+Right Way Roofing,,,,5.0,Columbus,OH,5,0,35,COLD
+All Seasons Roofing & Construction,,,,5.0,Columbus,OH,5,0,35,COLD
+Legacy Roofing,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Mueller Roofing Distributors,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Elite Exteriors Unlimited,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Owens Construction,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Columbus Bath Design,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Simple Bath + Kitchen,,,,4.7,Columbus,OH,4.7,0,35,COLD
+PNE Homes,,,,5.0,Columbus,OH,5,0,35,COLD
+Prestige Basement Finishing,,,,5.0,Columbus,OH,5,0,35,COLD
+Columbus Suburban Construction,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Columbus Basement Company,,,,5.0,Columbus,OH,5,0,35,COLD
+Gates Basement Finishing,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Mid-State Basement Systems,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Erie Home Basement Solutions,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Ohio Basement Authority,,,,4.8,Columbus,OH,4.8,0,35,COLD
+FINISHED BASEMENTS PLUS INC.,,,,4.8,Columbus,OH,4.8,0,35,COLD
+MB Plumbing,,,,5.0,Columbus,OH,5,0,35,COLD
+Affordable Professional Plumbing,,,,5.0,Columbus,OH,5,0,35,COLD
+"The Service People, Inc.",,,,4.7,Columbus,OH,4.7,0,35,COLD
+Only Drains,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Flush Drains & Vassco Utility Maintenance,,,,5.0,Columbus,OH,5,0,35,COLD
+Only Water Heaters,,,,4.9,Columbus,OH,4.9,0,35,COLD
+4 Seasons Air,,,,4.7,Columbus,OH,4.7,0,35,COLD
+"R & T Yoder HVAC, Inc - Columbus",,,,5.0,Columbus,OH,5,0,35,COLD
+"All-Knight, Inc.",,,,4.6,Columbus,OH,4.6,0,35,COLD
+"R & T Yoder Electric, Inc - Grove City",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Excel Electrical Services LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+My Electric Works,,,,4.7,Columbus,OH,4.7,0,35,COLD
+McNaughton-McKay Electric Company - Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+"Haas Painting Company, LLC",,,,4.8,Columbus,OH,4.8,0,35,COLD
+Renew Paint & Power Wash,,,,5.0,Columbus,OH,5,0,35,COLD
+Pinpoint Painting and Renovation,,,,5.0,Columbus,OH,5,0,35,COLD
+North Central Insulation,,,,5.0,Columbus,OH,5,0,35,COLD
+"Freedom Roofing, Windows and Siding LLC",,,,4.9,Columbus,OH,4.9,0,35,COLD
+IDI: Insulation Distributors Inc.,,,,5.0,Columbus,OH,5,0,35,COLD
+All Pro Overhead Door Systems,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Door Depot,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Hedge Landscape LLC,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Lawn Squad of Columbus,,,,4.7,Columbus,OH,4.7,0,35,COLD
+High 5 Landscaping,,,,5.0,Columbus,OH,5,0,35,COLD
+Custom Turf,,,,5.0,Columbus,OH,5,0,35,COLD
+A Woman's Touch Tree Care LLC.,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Deck Dynasty,,,,5.0,Columbus,OH,5,0,35,COLD
+Grant Mason Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Spas Direct Inc,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Cooks Cabinets,,,,4.8,Columbus,OH,4.8,0,35,COLD
+R D Cook Co,,,,5.0,Columbus,OH,5,0,35,COLD
+"Cornerstone Masonry, Inc.",,,,5.0,Columbus,OH,5,0,35,COLD
+Petruzzi Concrete & Masonry,,,,5.0,Columbus,OH,5,0,35,COLD
+SiteOne Stone Center,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Charles Brothers Asphalt & Sealcoating,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Pristine Paving,,,,5.0,Columbus,OH,5,0,35,COLD
+Surface Pro Asphalt Paving Co,,,,5.0,Columbus,OH,5,0,35,COLD
+Hotsy Equipment Company,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Cleantech,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Service Center - Germain Mazda West,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Fix Auto Columbus,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Boyd's Bethel Centre Tire & Service,,,,4.8,Columbus,OH,4.8,0,35,COLD
+BROTHERS Tire Shop,,,,4.5,Columbus,OH,4.5,0,35,COLD
+Bob's Tires,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Tire Guys and Service,,,,4.7,Columbus,OH,4.7,0,35,COLD
+State Tire & Service,,,,4.8,Columbus,OH,4.8,0,35,COLD
+Patton Warehousing,,,,5.0,Columbus,OH,5,0,35,COLD
+WeGetTheMoldOut,,,,4.6,Columbus,OH,4.6,0,35,COLD
+Pure Maintenance of Ohio,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Restorerz Emergency Services,,,,5.0,Columbus,OH,5,0,35,COLD
+"HEPA Environmental Services, Inc.",,,,4.9,Columbus,OH,4.9,0,35,COLD
+Protect Environmental,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Home Commercial Inspections LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Columbus Junk Cars Express,,,,5.0,Columbus,OH,5,0,35,COLD
+Purefoys Professionals LLC 2,,,,5.0,Columbus,OH,5,0,35,COLD
+Mr. Mover,,,,4.7,Columbus,OH,4.7,0,35,COLD
+Premier Clean,,,,5.0,Columbus,OH,5,0,35,COLD
+Day One Commercial Cleaning,,,,5.0,Columbus,OH,5,0,35,COLD
+EV CLEANING SERVICES LLC,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Camilas House Cleaning Services Columbus,,,,4.9,Columbus,OH,4.9,0,35,COLD
+Gaddis & Son Inc,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Central Ohio Concrete Cutting,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Donley Concrete Cutting Company,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Two Brothers Concrete LLC,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Premier Asphalt and Concrete,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Benchmark Concrete,,,,4.4,Columbus,OH,4.4,0,30,COLD
+King Concrete's Design Impressions,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Sam The Concrete Man Columbus,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Koated Metal & Graphics LLC,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Columbus Luxury Cars LLC,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Mark Wahlberg Chevy Columbus Service Center,,,,4.0,Columbus,OH,4,0,30,COLD
+Bexley Motorcar Company,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Ricart Hyundai Service,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Mark Wahlberg Buick GMC Service Center,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Keen's Body Shop,,,,4.3,Columbus,OH,4.3,0,30,COLD
+"Diesel Mobile Truck & Trailer Repair, LLC",,,,4.2,Columbus,OH,4.2,0,30,COLD
+Singh Truck & Trailer Repair Shop,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Ferguson Construction,,,,4.3,Columbus,OH,4.3,0,30,COLD
+REC Construction LTD,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Setterlin Building Company,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Miles-McClellan Construction,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Construction One Inc,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Brexton Construction LLC,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Aluf Plastics,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Columbus Builders Supply,,,,4.3,Columbus,OH,4.3,0,30,COLD
+United Building Materials,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Interior Supply Inc.,,,,4.0,Columbus,OH,4,0,30,COLD
+Dismas Distribution Services,,,,4.4,Columbus,OH,4.4,0,30,COLD
+CED Central Ohio,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Shoemaker Industrial Solutions,,,,4.2,Columbus,OH,4.2,0,30,COLD
+"Superior Building Services, LLC.",,,,4.0,Columbus,OH,4,0,30,COLD
+"Circle Building Services, Inc.",,,,4.4,Columbus,OH,4.4,0,30,COLD
+MnA Repairs & Home Maintenance,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Superior Home Maintenance Co.,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Burton Metal Finishing Inc.& Powder Coating,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Upper Arlington Fleet Management,,,,4.0,Columbus,OH,4,0,30,COLD
+"Traditional Hardwood Floors, LLC",,,,4.3,Columbus,OH,4.3,0,30,COLD
+Buckeye Hardwood,,,,4.1,Columbus,OH,4.1,0,30,COLD
+"Deible's Hardwood Floors, Inc.",,,,4.3,Columbus,OH,4.3,0,30,COLD
+Lumber Liquidators,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Floor & Decor,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Big Bobs Flooring Outlet,,,,4.2,Columbus,OH,4.2,0,30,COLD
+"50Floor: Columbus Carpet, Wood and Flooring Installation",,,,4.4,Columbus,OH,4.4,0,30,COLD
+The Tile Shop,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Hamilton Parker,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Davis Tile & Grout,,,,4.0,Columbus,OH,4,0,30,COLD
+Lang Stone - Interior Stone,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Nature Stone,,,,4.0,Columbus,OH,4,0,30,COLD
+Classico Tile & Marble,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Lang Stone - Exterior Stone,,,,4.4,Columbus,OH,4.4,0,30,COLD
+"Precision Slate & Tile Roofing Co., LTD.",,,,4.3,Columbus,OH,4.3,0,30,COLD
+"Daltile, American Olean, Marazzi Sales Service Center",,,,4.3,Columbus,OH,4.3,0,30,COLD
+Carpet King Floor Coverings,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Master Clean,,,,4.4,Columbus,OH,4.4,0,30,COLD
+RiteRug Flooring & Carpet - New Albany,,,,4.3,Columbus,OH,4.3,0,30,COLD
+The Metal Roof Company Inc.,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Dave Fox,,,,4.4,Columbus,OH,4.4,0,30,COLD
+"Arlington Construction, Inc.",,,,4.4,Columbus,OH,4.4,0,30,COLD
+"Frazier General Contractors, LLC",,,,4.4,Columbus,OH,4.4,0,30,COLD
+Transform Construction & Remodeling,,,,4.4,Columbus,OH,4.4,0,30,COLD
+CK Construction Group,,,,4.1,Columbus,OH,4.1,0,30,COLD
+"Lincoln Construction, Inc.",,,,4.0,Columbus,OH,4,0,30,COLD
+American Heritage Homes,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Diyanni Homes,,,,4.4,Columbus,OH,4.4,0,30,COLD
+"Schumacher Homes of Columbus South, OH",,,,4.4,Columbus,OH,4.4,0,30,COLD
+Columbus Plumbing Company,,,,4.0,Columbus,OH,4,0,30,COLD
+"Custom Care Plumbing, Drains and Construction",,,,4.4,Columbus,OH,4.4,0,30,COLD
+"Muetzel Plumbing, Heating & Cooling",,,,4.4,Columbus,OH,4.4,0,30,COLD
+Rescue Rooter,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Mr Water Heater Guy LLC,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Ohio Heating,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Efficient Electric Corp,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Tesla Supercharger,,,,4.3,Columbus,OH,4.3,0,30,COLD
+EV Charging Station at Goodale Park,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Tesla Destination Charger,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Blue Raven Solar,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Power Up Renewable Energy,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Solar Brokers,,,,4.4,Columbus,OH,4.4,0,30,COLD
+TGE Solar,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Freedom Forever,,,,4.3,Columbus,OH,4.3,0,30,COLD
+TASC Drywall,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Triple N Drywall And Painting,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Mariano & Bros Drywall,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Edwards/Mooney & Moses,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Installed Building Products,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Parkfield Gale Insulation,,,,4.0,Columbus,OH,4,0,30,COLD
+Champion Replacement Windows of Columbus,,,,4.0,Columbus,OH,4,0,30,COLD
+One Day Doors & Closets of Columbus,,,,4.4,Columbus,OH,4.4,0,30,COLD
+GreenScapes Landscape Co - Headquarters,,,,4.3,Columbus,OH,4.3,0,30,COLD
+LawnStarter Lawn Care Service,,,,4.0,Columbus,OH,4,0,30,COLD
+Brothers Lawn Care Services,,,,4.3,Columbus,OH,4.3,0,30,COLD
+The Davey Tree Expert Company,,,,4.0,Columbus,OH,4,0,30,COLD
+"Creative Earthscapes Inc,",,,,4.3,Columbus,OH,4.3,0,30,COLD
+Deck Masters,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Shly Deck & Fence,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Elevated Fence,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Sharon Fence Distributors,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Quality Pools Inc,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Luxury Pools and Living,,,,4.2,Columbus,OH,4.2,0,30,COLD
+614 Pools,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Sunburst Pools,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Pool-FX,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Reliable Pool Service,,,,4.3,Columbus,OH,4.3,0,30,COLD
+"Poseidon Pool Company, Inc.",,,,4.0,Columbus,OH,4,0,30,COLD
+"Surfside Pool & Spa Services, LLC",,,,4.4,Columbus,OH,4.4,0,30,COLD
+Columbus Pool Management,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Signature Cabinetry,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Affordable Granite,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Granite Tops and More,,,,4.4,Columbus,OH,4.4,0,30,COLD
+All Ohio Masonry Restoration,,,,4.0,Columbus,OH,4,0,30,COLD
+Vic Art Masonry,,,,4.0,Columbus,OH,4,0,30,COLD
+Steve Byerly Masonry,,,,4.0,Columbus,OH,4,0,30,COLD
+Snyder Brick & Block,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Stone Pillar Construction,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Central Chimney Repairs & Inspection,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Whempys Chimney Services,,,,4.4,Columbus,OH,4.4,0,30,COLD
+NAA Contractor And Chimney Sweep & Repair And Gas Fireplace Services,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Asphalt Help Paving & Sealcoating,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Pave OH - Asphalt Paving in Columbus Ohio,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Tri-County Asphalt,,,,4.2,Columbus,OH,4.2,0,30,COLD
+McCoy Paving,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Tolliver & Curl Paving Contractors,,,,4.1,Columbus,OH,4.1,0,30,COLD
+AmeriCoat Asphalt & Concrete,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Ultimate Asphalt & Sealing Company,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Hatfield Used Car Center,,,,4.0,Columbus,OH,4,0,30,COLD
+Great Lakes Hyundai of Columbus Service Center,,,,4.4,Columbus,OH,4.4,0,30,COLD
+B&B Truck & Trailer Repair,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Able Truck & Trailer Repair,,,,4.1,Columbus,OH,4.1,0,30,COLD
+May Diesel Service,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Best Deal Tires and Rims,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Steps Tires,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Pablo's New & Used Tires,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Tire Choice Auto Service Centers,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Discount Tire,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Anderson Aluminum Corporation,,,,4.3,Columbus,OH,4.3,0,30,COLD
+White Cap,,,,4.4,Columbus,OH,4.4,0,30,COLD
+"North American Environmental Services, LLC",,,,4.0,Columbus,OH,4,0,30,COLD
+Environmental Remediation Contractor,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Rainbow Environmental Services,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Advance Hardwood Floor Care llc,,,,4.4,Columbus,OH,4.4,0,30,COLD
+"Empire Today - Columbus, OH",,,,4.2,Columbus,OH,4.2,0,30,COLD
+B7 Construction,,,,4.3,Columbus,OH,4.3,0,30,COLD
+Columbus Bath & Basement Remodeling,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Penn Electric,,,,4.3,Columbus,OH,4.3,0,30,COLD
+The Electric Connection,,,,4.2,Columbus,OH,4.2,0,30,COLD
+Thomas Door Controls Inc,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Peabody Landscape Group,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Pinnacle Landscaping,,,,4.3,Columbus,OH,4.3,0,30,COLD
+"Premier counter top sales, LLC",,,,4.4,Columbus,OH,4.4,0,30,COLD
+Jet-Seal,,,,4.4,Columbus,OH,4.4,0,30,COLD
+"Heiberger Paving, Inc.",,,,4.2,Columbus,OH,4.2,0,30,COLD
+"Three-C Body Shops, Inc.",,,,4.3,Columbus,OH,4.3,0,30,COLD
+Dolab Used & New Tires fairwood tires,,,,4.3,Columbus,OH,4.3,0,30,COLD
+NTB-National Tire & Battery,,,,4.4,Columbus,OH,4.4,0,30,COLD
+Pep Boys Auto Service & Tires,,,,4.1,Columbus,OH,4.1,0,30,COLD
+Anago Commercial Cleaning,,,,4.3,Columbus,OH,4.3,0,30,COLD
+A-1 Concrete Leveling Columbus,,,,3.9,Columbus,OH,3.9,0,25,COLD
+Madina Truck and Trailer Repair,,,,3.7,Columbus,OH,3.7,0,25,COLD
+D&A Truck And Trailer Repair,,,,3.8,Columbus,OH,3.8,0,25,COLD
+T.I.G Fleet Service Columbus,,,,3.7,Columbus,OH,3.7,0,25,COLD
+Columbus City Schools Fort Hayes Bus Compound & Fleet Service Center,,,,3.7,Columbus,OH,3.7,0,25,COLD
+Columbus City Schools Frebis Bus Compound and Fleet Service Center,,,,3.6,Columbus,OH,3.6,0,25,COLD
+"L&W Supply - Columbus, OH",,,,3.9,Columbus,OH,3.9,0,25,COLD
+Action Industrial Services,,,,3.7,Columbus,OH,3.7,0,25,COLD
+World Distribution Services Container Transload Facility,,,,3.5,Columbus,OH,3.5,0,25,COLD
+Distribution International,,,,3.7,Columbus,OH,3.7,0,25,COLD
+Distributor Service Inc.,,,,3.7,Columbus,OH,3.7,0,25,COLD
+Defense Supply Center Columbus,,,,3.9,Columbus,OH,3.9,0,25,COLD
+"Legacy Maintenance Services, LLC",,,,3.9,Columbus,OH,3.9,0,25,COLD
+Ohio Valley Cardinal Health,,,,3.8,Columbus,OH,3.8,0,25,COLD
+Creative Carpet Repair Columbus,,,,3.7,Columbus,OH,3.7,0,25,COLD
+Turner,,,,3.8,Columbus,OH,3.8,0,25,COLD
+"Ruscilli Construction Co., LLC",,,,3.6,Columbus,OH,3.6,0,25,COLD
+Calhoun Plumbing,,,,3.5,Columbus,OH,3.5,0,25,COLD
+Gemini Solar LLC,,,,3.6,Columbus,OH,3.6,0,25,COLD
+Vienna Door Company,,,,3.7,Columbus,OH,3.7,0,25,COLD
+Columbus Fence Co,,,,3.5,Columbus,OH,3.5,0,25,COLD
+Guardian Fence Co LLC,,,,3.7,Columbus,OH,3.7,0,25,COLD
+"Superior Pools Plus, LLC",,,,3.6,Columbus,OH,3.6,0,25,COLD
+"Endless Summer Pool and Spa Service, LLC",,,,3.6,Columbus,OH,3.6,0,25,COLD
+Ohio Pool Services LLC,,,,3.7,Columbus,OH,3.7,0,25,COLD
+Cabinets To Go,,,,3.7,Columbus,OH,3.7,0,25,COLD
+Sheedy Paving Inc.,,,,3.8,Columbus,OH,3.8,0,25,COLD
+Asphalt Contractors LLC,,,,3.7,Columbus,OH,3.7,0,25,COLD
+Armor Paving & Sealing,,,,3.9,Columbus,OH,3.9,0,25,COLD
+AJ Asphalt,,,,3.6,Columbus,OH,3.6,0,25,COLD
+Pave Tech Asphalt Services,,,,3.7,Columbus,OH,3.7,0,25,COLD
+Toyota Direct - Service Department,,,,3.7,Columbus,OH,3.7,0,25,COLD
+K&M Used Tire,,,,3.9,Columbus,OH,3.9,0,25,COLD
+Ohio Custodial Maintenance,,,,3.9,Columbus,OH,3.9,0,25,COLD
+"Cahill Construction, Inc.",,,,3.7,Columbus,OH,3.7,0,25,COLD
+Arrow Roofing and Siding,,,,3.7,Columbus,OH,3.7,0,25,COLD
+Spartan Logistics,,,,3.8,Columbus,OH,3.8,0,25,COLD
+ServiceMaster Restoration by Neverman Construction Company,,,,3.5,Columbus,OH,3.5,0,25,COLD
+Concrete Contractors,,,,· 1345 Morse Rd,Columbus,OH,0,0,20,COLD
+True Grit Soda Blasting,,,,· 8026 Jug St,Columbus,OH,0,0,20,COLD
+Limitless Blasting & Restorations LLC.,,,,· 2980 Licking Rd,Columbus,OH,0,0,20,COLD
+Columbus Fleet Management,,,,3.0,Columbus,OH,3,0,20,COLD
+Fleet Management Department-Columbus,,,,· 4260 Morse Rd,Columbus,OH,0,0,20,COLD
+Franklin County Fleet Management,,,,· 1721 Alum Creek Dr,Columbus,OH,0,0,20,COLD
+Fleet Management Office,,,,· 4200 Surface Rd,Columbus,OH,0,0,20,COLD
+Messer Construction Co. - Columbus Regional Office,,,,3.0,Columbus,OH,3,0,20,COLD
+TKS Industrial Company,,,,3.0,Columbus,OH,3,0,20,COLD
+BASF Corporation,,,,2.4,Columbus,OH,2.4,0,20,COLD
+COLUMBUS P&DC,,,,2.7,Columbus,OH,2.7,0,20,COLD
+Integrated Building Systems,,,,3.4,Columbus,OH,3.4,0,20,COLD
+Midwest Maintenance Service & Repair INC,,,,1.0,Columbus,OH,1,0,20,COLD
+Ohio Construction Maintenance,,,,3.0,Columbus,OH,3,0,20,COLD
+Commercial Flooring Columbus,,,,1.0,Columbus,OH,1,0,20,COLD
+Franklin County Engineer West Maintenance Facility,,,,· 4444 Fisher Rd,Columbus,OH,0,0,20,COLD
+Columbus Floor Sanding,,,,2.5,Columbus,OH,2.5,0,20,COLD
+Arlington Tile & Marble,,,,· 4255 Reedbury Ln,Columbus,OH,0,0,20,COLD
+Legacy Commercial Flooring,,,,· 2475 Scioto Harper Dr,Columbus,OH,0,0,20,COLD
+"Spectra Contract Flooring, A Diverzify Company",,,,· 3031 International St,Columbus,OH,0,0,20,COLD
+Top Roof Contractors.,,,,· 1130 E Main St,Columbus,OH,0,0,20,COLD
+Complete General Construction,,,,3.4,Columbus,OH,3.4,0,20,COLD
+Perez Commercial Construction,,,,3.0,Columbus,OH,3,0,20,COLD
+Parry Custom Homes,,,,2.6,Columbus,OH,2.6,0,20,COLD
+EVgo Charging Station,,,,3.4,Columbus,OH,3.4,0,20,COLD
+Greenspot Charging Station,,,,2.6,Columbus,OH,2.6,0,20,COLD
+Blink Charging Station,,,,· 1296 Franklin Ave,Columbus,OH,0,0,20,COLD
+Ohio Solar Sales,,,,3.0,Columbus,OH,3,0,20,COLD
+JEREMY AGUILAR DRYWaLL LLC,,,,· 2340 Edmonton Rd,Columbus,OH,0,0,20,COLD
+Insulation Professionals of Ohio,,,,· 947 Goodale Blvd #131,Columbus,OH,0,0,20,COLD
+Deck Builders Columbus,,,,2.6,Columbus,OH,2.6,0,20,COLD
+Precise Deck Builders,,,,· 1201 Dublin Rd,Columbus,OH,0,0,20,COLD
+Lannis Fence,,,,3.2,Columbus,OH,3.2,0,20,COLD
+A2Z Swimming Pool Service,,,,2.7,Columbus,OH,2.7,0,20,COLD
+Columbus Pool Cleaners,,,,· 355 MacIntosh Way,Columbus,OH,0,0,20,COLD
+Columbus Masonry & Repair,,,,· 1320 Norton Ave,Columbus,OH,0,0,20,COLD
+"Columbus Asphalt Driveway Resurfacing, Sealing and Paving Company",,,,· 1415 E Dublin Granville Rd,Columbus,OH,0,0,20,COLD
+Strawser Paving Company,,,,2.4,Columbus,OH,2.4,0,20,COLD
+Columbus Concrete Coatings,,,,· 2500 Condit Dr SW,Columbus,OH,0,0,20,COLD
